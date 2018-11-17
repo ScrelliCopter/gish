@@ -22,21 +22,116 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_MATH_VECTOR_H__
 #define __GISH_MATH_VECTOR_H__
 
-/*INLINE*/ float dotproduct(float *vec1,float *vec2);
-/*INLINE*/ void crossproduct(float *result,float *vec1,float *vec2);
-/*INLINE*/ float vectorlength(float *vec1);
-/*INLINE*/ void normalizevector(float *result,float *vec1);
-/*INLINE*/ void copyvector(float *result,float *vec1);
-/*INLINE*/ void negvector(float *result,float *vec);
-/*INLINE*/ void zerovector(float *result);
-/*INLINE*/ void addvectors(float *result,float *vec,float *vec2);
-/*INLINE*/ void subtractvectors(float *result,float *vec,float *vec2);
-/*INLINE*/ void scalevector(float *result,float *vec,float scale);
-/*INLINE*/ void scaleaddvectors(float *result,float *vec,float *vec2,float scale);
-/*INLINE*/ void addvectors2(float *result,float *vec,float *vec2);
-/*INLINE*/ void subtractvectors2(float *result,float *vec,float *vec2);
-/*INLINE*/ void scalevector2(float *result,float *vec,float scale);
-/*INLINE*/ void scaleaddvectors2(float *result,float *vec,float *vec2,float scale);
+#include <string.h>
+#include <math.h>
+#include <sdl/platform.h>
+
+INLINE float dotproduct(float *vec,float *vec2)
+  {
+  return(vec[0]*vec2[0]+vec[1]*vec2[1]+vec[2]*vec2[2]);
+  }
+
+INLINE void crossproduct(float *result,float *vec,float *vec2)
+  {
+  result[0]=vec2[1]*vec[2]-vec2[2]*vec[1];
+  result[1]=vec2[2]*vec[0]-vec2[0]*vec[2];
+  result[2]=vec2[0]*vec[1]-vec2[1]*vec[0];
+  }
+
+INLINE float vectorlength(float *vec)
+  {
+  return(sqrt(vec[0]*vec[0]+vec[1]*vec[1]+vec[2]*vec[2]));
+  }
+
+INLINE void normalizevector(float *result,float *vec)
+  {
+  float vectorlengthvalue;
+
+  vectorlengthvalue=vectorlength(vec);
+  if (vectorlengthvalue!=0.0f)
+    {
+    vectorlengthvalue=1.0f/vectorlengthvalue;
+    result[0]=vec[0]*vectorlengthvalue;
+    result[1]=vec[1]*vectorlengthvalue;
+    result[2]=vec[2]*vectorlengthvalue;
+    }
+  else
+    {
+    result[0]=0.0f;
+    result[1]=0.0f;
+    result[2]=0.0f;
+    }
+  }
+
+INLINE void copyvector(float *result,float *vec)
+  {
+  memcpy(result,vec,12);
+  }
+
+INLINE void negvector(float *result,float *vec)
+  {
+  result[0]=-vec[0];
+  result[1]=-vec[1];
+  result[2]=-vec[2];
+  }
+
+INLINE void zerovector(float *result)
+  {
+  memset(result,0,12);
+  }
+
+INLINE void addvectors(float *result,float *vec,float *vec2)
+  {
+  result[0]=vec[0]+vec2[0];
+  result[1]=vec[1]+vec2[1];
+  result[2]=vec[2]+vec2[2];
+  }
+
+INLINE void subtractvectors(float *result,float *vec,float *vec2)
+  {
+  result[0]=vec[0]-vec2[0];
+  result[1]=vec[1]-vec2[1];
+  result[2]=vec[2]-vec2[2];
+  }
+
+INLINE void scalevector(float *result,float *vec,float scale)
+  {
+  result[0]=vec[0]*scale;
+  result[1]=vec[1]*scale;
+  result[2]=vec[2]*scale;
+  }
+
+INLINE void scaleaddvectors(float *result,float *vec,float *vec2,float scale)
+  {
+  result[0]=vec[0]+vec2[0]*scale;
+  result[1]=vec[1]+vec2[1]*scale;
+  result[2]=vec[2]+vec2[2]*scale;
+  }
+
+INLINE void addvectors2(float *result,float *vec,float *vec2)
+  {
+  result[0]=vec[0]+vec2[0];
+  result[1]=vec[1]+vec2[1];
+  }
+
+INLINE void subtractvectors2(float *result,float *vec,float *vec2)
+  {
+  result[0]=vec[0]-vec2[0];
+  result[1]=vec[1]-vec2[1];
+  }
+
+INLINE void scalevector2(float *result,float *vec,float scale)
+  {
+  result[0]=vec[0]*scale;
+  result[1]=vec[1]*scale;
+  }
+
+INLINE void scaleaddvectors2(float *result,float *vec,float *vec2,float scale)
+  {
+  result[0]=vec[0]+vec2[0]*scale;
+  result[1]=vec[1]+vec2[1]*scale;
+  }
+
 void resetorientation(float orientation[3][3]);
 void rotateorientation(float orientation[3][3],float *rotationvector,float rotationangle);
 

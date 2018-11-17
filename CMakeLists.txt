@@ -132,6 +132,7 @@ set(SOURCES
 	src/sdl/event.h
 	src/sdl/file.c
 	src/sdl/file.h
+	src/sdl/platform.h
 	src/sdl/video.c
 	src/sdl/video.h
 
@@ -143,7 +144,8 @@ set(SOURCES
 	src/video/texture.c
 	src/video/texture.h
 
-	src/main.c src/config.h)
+	src/config.h
+	src/main.c)
 
 add_executable(gish ${SOURCES})
 target_link_libraries(gish

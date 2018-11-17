@@ -19,80 +19,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-//#define WINDOZE 1
-#define DETLEF 1
-//#define THINKSTUPID 1
-
 #define CRYPTICSEA 1
-
-#ifdef THINKSTUPID
-#define __MACOSX__
-#endif
 
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 
-#ifdef WINDOZE
-#include <io.h>
-#include <windows.h>
-#include <winsock.h>
-#endif
 
-#ifndef WINDOZE
-#include <netinet/in.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#endif
-
-#ifdef DETLEF
-#include <sys/statfs.h>
-#endif
-
-#ifdef WINDOZE
-#include <SDL.h>
-#endif
-
-#ifndef WINDOZE
-#include <SDL/SDL.h>
-#endif
-
-#ifndef THINKSTUPID
-#include <GL/gl.h>
-#include <AL/al.h>
-#include <AL/alc.h>
-#endif
-
-#ifdef THINKSTUPID
-#include <OpenGL/gl.h>
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#endif
-
-#include "video/glext.h"
-
-#include <ogg/ogg.h>
-#include <vorbis/codec.h>
-#include <vorbis/vorbisenc.h>
-#include <vorbis/vorbisfile.h>
-
-#ifdef WINDOZE
-#define INLINE _inline
-#endif
-
-#ifdef DETLEF
-#define INLINE inline
-#endif
-
-#ifdef THINKSTUPID
-#define INLINE inline
-#endif
 
 #include <SDL/SDL.h>
 #include <GL/gl.h>

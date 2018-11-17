@@ -21,12 +21,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "level.h"
 
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <GL/gl.h>
 #include <sdl/endian.h>
 #include <sdl/file.h>
+#include <sdl/platform.h>
 #include <video/texture.h>
 #include <math/vector.h>
 #include "game.h"

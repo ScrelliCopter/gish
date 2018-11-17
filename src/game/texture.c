@@ -21,10 +21,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "texture.h"
 
-#include <unistd.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
 #include <sdl/file.h>
+#include <sdl/platform.h>
 #include <video/texture.h>
 #include <video/text.h>
 #include <input/keyboard.h>

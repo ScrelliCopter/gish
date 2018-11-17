@@ -21,9 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "audio.h"
 
-#include <unistd.h>
 #include <SDL/SDL.h>
 #include <sdl/endian.h>
+#include <sdl/platform.h>
 #include <game/game.h>
 #include <game/audio.h>
 #include <game/options.h>
