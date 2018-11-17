@@ -19,21 +19,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-INLINE float dotproduct(float *vec1,float *vec2);
-INLINE void crossproduct(float *result,float *vec1,float *vec2);
-INLINE float vectorlength(float *vec1);
-INLINE void normalizevector(float *result,float *vec1);
-INLINE void copyvector(float *result,float *vec1);
-INLINE void negvector(float *result,float *vec);
-INLINE void zerovector(float *result);
-INLINE void addvectors(float *result,float *vec,float *vec2);
-INLINE void subtractvectors(float *result,float *vec,float *vec2);
-INLINE void scalevector(float *result,float *vec,float scale);
-INLINE void scaleaddvectors(float *result,float *vec,float *vec2,float scale);
-INLINE void addvectors2(float *result,float *vec,float *vec2);
-INLINE void subtractvectors2(float *result,float *vec,float *vec2);
-INLINE void scalevector2(float *result,float *vec,float scale);
-INLINE void scaleaddvectors2(float *result,float *vec,float *vec2,float scale);
+/*INLINE*/ float dotproduct(float *vec1,float *vec2);
+/*INLINE*/ void crossproduct(float *result,float *vec1,float *vec2);
+/*INLINE*/ float vectorlength(float *vec1);
+/*INLINE*/ void normalizevector(float *result,float *vec1);
+/*INLINE*/ void copyvector(float *result,float *vec1);
+/*INLINE*/ void negvector(float *result,float *vec);
+/*INLINE*/ void zerovector(float *result);
+/*INLINE*/ void addvectors(float *result,float *vec,float *vec2);
+/*INLINE*/ void subtractvectors(float *result,float *vec,float *vec2);
+/*INLINE*/ void scalevector(float *result,float *vec,float scale);
+/*INLINE*/ void scaleaddvectors(float *result,float *vec,float *vec2,float scale);
+/*INLINE*/ void addvectors2(float *result,float *vec,float *vec2);
+/*INLINE*/ void subtractvectors2(float *result,float *vec,float *vec2);
+/*INLINE*/ void scalevector2(float *result,float *vec,float scale);
+/*INLINE*/ void scaleaddvectors2(float *result,float *vec,float *vec2,float scale);
 void resetorientation(float orientation[3][3]);
 void rotateorientation(float orientation[3][3],float *rotationvector,float rotationangle);
 
