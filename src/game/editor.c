@@ -21,6 +21,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "editor.h"
 
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/endian.h>
+#include <sdl/event.h>
+#include <video/glfunc.h>
+#include <video/texture.h>
+#include <video/text.h>
+#include "texture.h"
+#include <math/vector.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include "setup.h"
+#include "game.h"
+#include "level.h"
+#include "block.h"
+#include "prerender.h"
+#include "render.h"
+#include "lighting.h"
+#include "objedit.h"
+#include "ropeedit.h"
+#include <menu/menu.h>
+#include "mainmenu.h"
+#include "english.h"
+
 struct EDITOR editor;
 
 void editlevel(void)

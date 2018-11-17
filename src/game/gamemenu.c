@@ -21,6 +21,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gamemenu.h"
 
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <video/text.h>
+#include "audio.h"
+#include "game.h"
+#include "setup.h"
+#include "object.h"
+#include "player.h"
+#include "replay.h"
+#include <menu/menu.h>
+#include "mainmenu.h"
+#include "english.h"
+
 void postgamemenu(void)
   {
   int count;

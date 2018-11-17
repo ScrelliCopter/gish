@@ -21,6 +21,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "physics.h"
 
+#include <math/vector.h>
+#include <math/intersec.h>
+#include "game.h"
+#include "level.h"
+#include "block.h"
+#include "object.h"
+#include <physics/particle.h>
+#include <physics/bond.h>
+#include <physics/object.h>
+#include <audio/audio.h>
+#include "audio.h"
+#include "sprite.h"
+
 struct PHYSICSTEMP physicstemp;
 int numoflevellines;
 struct LEVELLINE levelline[1024];

@@ -21,6 +21,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "replay.h"
 
+#include <stdio.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <sdl/file.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <video/text.h>
+#include "game.h"
+#include "setup.h"
+#include "custom.h"
+#include "object.h"
+#include "player.h"
+#include <menu/menu.h>
+#include "mainmenu.h"
+#include "english.h"
+
 int numofreplayframes;
 struct REPLAYFRAME replayframe[65536];
 

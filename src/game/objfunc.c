@@ -21,6 +21,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "objfunc.h"
 
+#include <stdlib.h>
+#include <audio/audio.h>
+#include "audio.h"
+#include <math/math.h>
+#include <math/vector.h>
+#include "game.h"
+#include "level.h"
+#include "block.h"
+#include "object.h"
+#include <physics/bond.h>
+#include <physics/particle.h>
+#include "sprite.h"
+#include "ai.h"
+
 void objectcycle(void)
   {
   int count,count2,count3,count4;

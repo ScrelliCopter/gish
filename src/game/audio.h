@@ -22,6 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_GAME_AUDIO_H__
 #define __GISH_GAME_AUDIO_H__
 
+#ifndef THINKSTUPID
+  #include <AL/al.h>
+#else
+  #include <OpenAL/al.h>
+#endif
+
 void soundsimulation(float position[3],float orientation[3][3]);
 void playsound(int buffernum,float position[3],float velocity[3],float volume,int looping,float pitch,int objectnum,int objectsoundnum);
 void deletesound(int soundnum);

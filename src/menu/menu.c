@@ -21,6 +21,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "menu.h"
 
+#include <GL/gl.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <video/text.h>
+#include <video/texture.h>
+#include <game/options.h>
+#include <game/english.h>
+
 int numofmenuitems;
 struct MENUITEM menuitem[MAXMENUITEMS];
 int menuinputkeyboard=0;

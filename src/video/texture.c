@@ -21,6 +21,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "texture.h"
 
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <GL/gl.h>
+#include <sdl/endian.h>
+#include <sdl/file.h>
+
 char lasttextureloaded[32];
 struct TEXTURE texture[2048];
 struct TGAHEADER tgaheader;

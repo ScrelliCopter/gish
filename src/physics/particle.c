@@ -21,6 +21,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "particle.h"
 
+#include <string.h>
+#include <math/vector.h>
+#include <game/game.h>
+#include <game/block.h>
+#include <game/level.h>
+#include <game/object.h>
+#include <game/physics.h>
+#include "bond.h"
+
 int numofparticles;
 struct PARTICLE particle[16384];
 struct PARTICLETYPE particletype[16384];

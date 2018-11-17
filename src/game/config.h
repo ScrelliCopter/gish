@@ -30,4 +30,18 @@ void optionwriteint(int *ptr,char *str);
 void optionreadstring(char *ptr,char *str,int size);
 void optionwritestring(char *ptr,char *str,int size);
 
+struct CONFIG
+  {
+  int resolutionx;
+  int resolutiony;
+  int bitsperpixel;
+  int depthbits;
+  int stencilbits;
+  int fullscreen;
+  int sound;
+  int music;
+  int joystick;
+  };
+extern struct CONFIG config;
+
 #endif

@@ -21,6 +21,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "text.h"
 
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include "texture.h"
+
 unsigned char textstring2[1024];
 unsigned char textstring3[1024];
 extern struct FONT font;

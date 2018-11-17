@@ -21,6 +21,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "texture.h"
 
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <sdl/file.h>
+#include <video/texture.h>
+#include <video/text.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include "game.h"
+#include "level.h"
+#include "block.h"
+#include <menu/menu.h>
+#include "editor.h"
+#include "english.h"
+
 struct TEXTUREEDIT textureedit;
 
 void edittextures(void)

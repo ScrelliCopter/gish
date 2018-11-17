@@ -22,6 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_SDL_FILE_H__
 #define __GISH_SDL_FILE_H__
 
+#include <stdlib.h>
+#include <stdio.h>
+
 int comparestrings(const void *arg1,const void *arg2);
 int checkfilespec(char *filespec,char *filename);
 void listfiles(char *filespec,char filelist[1024][32],int directories);

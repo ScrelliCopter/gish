@@ -21,6 +21,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "animation.h"
 
+#include <unistd.h>
+#include <string.h>
+#include <math.h>
+#include <GL/gl.h>
+#include <math/vector.h>
+#include "random.h"
+#include <video/texture.h>
+#include "audio.h"
+#include <physics/particle.h>
+#include <physics/object.h>
+#include "game.h"
+#include "object.h"
+#include "sprite.h"
+
 int numofanimations;
 struct ANIMATION animation[128];
 

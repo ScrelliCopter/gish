@@ -109,6 +109,7 @@ set(SOURCES
 
 	src/math/intersec.c
 	src/math/intersec.h
+	src/math/math.h
 	src/math/vector.c
 	src/math/vector.h
 

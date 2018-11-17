@@ -21,6 +21,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "glfunc.h"
 
+#include <stdio.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include "text.h"
+
 void setupperspectiveviewport(int viewportx,int viewporty,int viewportwidth,int viewportheight,float nearplane,float farplane)
   {
   float heightwidthratio;

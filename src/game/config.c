@@ -21,6 +21,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "config.h"
 
+#include <stdio.h>
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <parser/parser.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <video/text.h>
+#include "options.h"
+#include "socket.h"
+#include <menu/menu.h>
+
+struct CONFIG config;
+
 void loadconfig(void)
   {
   int count,count2;

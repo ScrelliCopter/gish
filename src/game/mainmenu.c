@@ -21,6 +21,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "mainmenu.h"
 
+#include <stdlib.h>
+#include <time.h>
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <video/text.h>
+#include <video/texture.h>
+#include "lighting.h"
+#include <audio/audio.h>
+#include "audio.h"
+#include "music.h"
+#include "config.h"
+#include <math/vector.h>
+#include "game.h"
+#include "player.h"
+#include "object.h"
+#include "physics.h"
+#include "animation.h"
+#include "vsmode.h"
+#include <menu/menu.h>
+#include "editor.h"
+#include "options.h"
+#include "credits.h"
+#include "socket.h"
+#include "english.h"
+
 void mainmenu(void)
   {
   int count,temp;

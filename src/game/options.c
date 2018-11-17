@@ -21,6 +21,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "options.h"
 
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include "glext.h"
+#include <sdl/event.h>
+#include <sdl/video.h>
+#include <video/text.h>
+#include <video/texture.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <menu/menu.h>
+#include "english.h"
+
 struct OPTION option;
 struct CONTROL control[8];
 

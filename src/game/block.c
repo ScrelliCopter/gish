@@ -21,6 +21,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "block.h"
 
+#include <unistd.h>
+#include <stdio.h>
+#include <sdl/endian.h>
+#include <sdl/file.h>
+#include <video/texture.h>
+
 int numofpolygontemps;
 struct BLOCK block[1024];
 struct POLYGONTEMP polygontemp[16];
@@ -136,7 +142,7 @@ void loadblock(int blocknum)
     chdir("..");
   }
 
-void setupblockflags(blocknum)
+void setupblockflags(int blocknum)
   {
   int count;
 

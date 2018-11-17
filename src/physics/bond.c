@@ -21,6 +21,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "bond.h"
 
+#include <string.h>
+#include <math/vector.h>
+#include <game/object.h>
+#include "particle.h"
+
 int numofbonds;
 struct BOND bond[16384];
 struct BONDTYPE bondtype[256];

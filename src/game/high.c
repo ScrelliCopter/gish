@@ -21,6 +21,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "high.h"
 
+#include <string.h>
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <sdl/file.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <video/text.h>
+#include <audio/audio.h>
+#include "audio.h"
+#include "music.h"
+#include "game.h"
+#include "player.h"
+#include <menu/menu.h>
+#include "mainmenu.h"
+#include "replay.h"
+#include "english.h"
+
 struct HIGHSCORE highscore[32][16];
 
 void highscoremenu(int levelnum)

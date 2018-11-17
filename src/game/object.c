@@ -21,6 +21,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "object.h"
 
+#include <stdlib.h>
+#include <math.h>
+#include <math/math.h>
+#include <string.h>
+#include <GL/gl.h>
+#include <math/vector.h>
+#include "audio.h"
+#include "game.h"
+#include <physics/particle.h>
+#include <physics/bond.h>
+#include "level.h"
+#include "animation.h"
+
 int numofobjects;
 struct OBJECT object[512];
 struct OBJECTTYPE objecttype[128];

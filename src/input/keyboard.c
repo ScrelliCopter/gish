@@ -21,6 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "keyboard.h"
 
+#include <SDL/SDL.h>
+#include <string.h>
+
 unsigned char keyboard[323];
 unsigned char prevkeyboard[323];
 

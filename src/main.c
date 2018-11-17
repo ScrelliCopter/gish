@@ -82,8 +82,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <vorbis/vorbisenc.h>
 #include <vorbis/vorbisfile.h>
 
-#define pi 3.14159265359
-
 int debugit=0;
 
 #ifdef WINDOZE
@@ -98,21 +96,26 @@ int debugit=0;
 #define INLINE inline
 #endif
 
-FILE *fp;
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <game/glext.h>
+#include <sdl/endian.h>
+#include <sdl/event.h>
+#include <sdl/video.h>
+#include <video/texture.h>
+#include <video/text.h>
+#include <audio/audio.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <game/config.h>
+#include <game/options.h>
+#include <game/player.h>
+#include <menu/menu.h>
+#include <game/mainmenu.h>
+#include <game/high.h>
 
 char versiontext[]="Version 1.53";
-
-struct {
-  int resolutionx;
-  int resolutiony;
-  int bitsperpixel;
-  int depthbits;
-  int stencilbits;
-  int fullscreen;
-  int sound;
-  int music;
-  int joystick;
-  } config;
 
 const SDL_VideoInfo *sdlvideoinfo;
 SDL_PixelFormat *sdlpixelformat;

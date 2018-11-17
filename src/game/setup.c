@@ -21,6 +21,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "setup.h"
 
+#include <stdlib.h>
+#include <time.h>
+#include "random.h"
+#include "audio.h"
+#include "game.h"
+#include "level.h"
+#include <physics/particle.h>
+#include <physics/bond.h>
+#include "physics.h"
+#include "object.h"
+#include "sprite.h"
+#include "animation.h"
+#include "boss.h"
+#include "replay.h"
+#include "editor.h"
+
 void setuplevel(void)
   {
   int count,count2;

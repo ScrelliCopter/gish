@@ -21,6 +21,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "vsmode.h"
 
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <video/text.h>
+#include <audio/audio.h>
+#include "audio.h"
+#include "music.h"
+#include "game.h"
+#include "level.h"
+#include <game/player.h>
+#include <menu/menu.h>
+#include "mainmenu.h"
+#include "english.h"
+
 void versusmodemenu(int versusnum)
   {
   int count;

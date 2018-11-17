@@ -21,6 +21,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "render.h"
 
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <video/texture.h>
+#include <video/text.h>
+#include "prerender.h"
+#include "lighting.h"
+#include "sprite.h"
+#include <math/vector.h>
+#include <audio/audio.h>
+#include "game.h"
+#include "level.h"
+#include "block.h"
+#include "object.h"
+#include <physics/bond.h>
+#include <physics/particle.h>
+#include "physics.h"
+#include "editor.h"
+
 struct FRAME frame;
 
 void renderlevelback(void)

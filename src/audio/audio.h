@@ -22,6 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_AUDIO_AUDIO_H__
 #define __GISH_AUDIO_AUDIO_H__
 
+#ifndef THINKSTUPID
+  #include <AL/al.h>
+  #include <AL/alc.h>
+#else
+  #include <OpenAL/al.h>
+  #include <OpenAL/alc.h>
+#endif
+#include <vorbis/vorbisfile.h>
+
 #define OGGBUFFERSIZE 4096*8
 
 void setupaudio(void);

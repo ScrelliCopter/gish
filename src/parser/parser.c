@@ -21,6 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "parser.h"
 
+#include <stdio.h>
+#include <string.h>
+
 struct PARSER parser;
 
 void loadtextfile(char *filename)

@@ -21,6 +21,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ropeedit.h"
 
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <video/text.h>
+#include <video/glfunc.h>
+#include "render.h"
+#include "lighting.h"
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include <math/vector.h>
+#include "game.h"
+#include "level.h"
+#include <menu/menu.h>
+#include "objedit.h"
+#include "mainmenu.h"
+#include "english.h"
+
 struct ROPEEDIT ropeedit;
 
 void editlevelrope(void)

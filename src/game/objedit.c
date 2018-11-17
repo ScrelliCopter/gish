@@ -21,6 +21,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "objedit.h"
 
+#include <math.h>
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <video/texture.h>
+#include <video/text.h>
+#include <video/glfunc.h>
+#include "render.h"
+#include "lighting.h"
+#include <math/math.h>
+#include <math/vector.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include "mainmenu.h"
+#include "game.h"
+#include "setup.h"
+#include "level.h"
+#include "animation.h"
+#include <menu/menu.h>
+#include "editor.h"
+#include "english.h"
+
 void editlevelobjects(void)
   {
   int count,count2;

@@ -21,6 +21,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "level.h"
 
+#include <stdlib.h>
+#include <string.h>
+#include <GL/gl.h>
+#include <sdl/endian.h>
+#include <sdl/file.h>
+#include <video/texture.h>
+#include <math/vector.h>
+#include "game.h"
+#include "object.h"
+#include "block.h"
+#include <physics/particle.h>
+#include "physics.h"
+#include "mainmenu.h"
+#include "editor.h"
+#include "socket.h"
+
 unsigned int cryptdata[1048576];
 int textureused[512];
 struct COLLISION collision;

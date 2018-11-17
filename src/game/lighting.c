@@ -21,6 +21,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "lighting.h"
 
+#include <stdlib.h>
+#include <math.h>
+#include <math/vector.h>
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include "glext.h"
+#include <video/texture.h>
+#include "prerender.h"
+#include "render.h"
+#include "game.h"
+#include "object.h"
+#include "block.h"
+#include "level.h"
+#include <physics/particle.h>
+
 void setuplightingtextures(void)
   {
   int count,count2;

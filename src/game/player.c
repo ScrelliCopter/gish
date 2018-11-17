@@ -21,6 +21,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "player.h"
 
+#include <GL/gl.h>
+#include <sdl/event.h>
+#include <sdl/file.h>
+#include <video/text.h>
+#include <audio/audio.h>
+#include "audio.h"
+#include "music.h"
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
+#include "game.h"
+#include "setup.h"
+#include "level.h"
+#include "custom.h"
+#include <menu/menu.h>
+#include "gamemenu.h"
+#include "mainmenu.h"
+#include "high.h"
+#include "replay.h"
+#include "english.h"
+
 int playernum;
 struct PLAYER player[16];
 

@@ -21,6 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "vector.h"
 
+#include <string.h>
+#include <math.h>
+
 /*INLINE*/ float dotproduct(float *vec,float *vec2)
   {
   return(vec[0]*vec2[0]+vec[1]*vec2[1]+vec[2]*vec2[2]);
