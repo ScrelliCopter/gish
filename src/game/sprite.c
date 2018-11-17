@@ -19,6 +19,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "sprite.h"
+
 struct SPRITE sprite[256];
 
 void createsprite(int points,float position[3])

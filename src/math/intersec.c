@@ -19,6 +19,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#include "intersec.h"
+
 int lineintersectplane(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *point)
   {
   float vec[3],vec2[3],vec3[3];
