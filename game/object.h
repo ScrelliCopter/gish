@@ -37,8 +37,8 @@ void deleterope(int ropenum);
 void objecttimetolive(void);
 void createcar(float position[3],float sizex,float sizey,float mass,float friction);
 
-int numofobjects;
-struct
+extern int numofobjects;
+struct OBJECT
   {
   int type;
   int texturenum;
@@ -85,9 +85,10 @@ struct
   int rotate;
   int ai;
   int beasttype;
-  } object[512];
+  };
+extern struct OBJECT object[512];
 
-struct
+struct OBJECTTYPE
   {
   int collide[256];
   int numofpoints;
@@ -104,10 +105,11 @@ struct
     int part1;
     int part2;
     } link[256];
-  } objecttype[128];
+  };
+extern struct OBJECTTYPE objecttype[128];
 
-int numofropes;
-struct
+extern int numofropes;
+struct ROPE
   {
   int type;
   int part1;
@@ -120,4 +122,5 @@ struct
   float cyclelength;
   float cyclecount;
   float range;
-  } rope[1024];
+  };
+extern struct ROPE rope[1024];

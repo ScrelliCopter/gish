@@ -24,16 +24,17 @@ void renderlevel(void);
 void simulation(void);
 void getinputs(void);
 
-struct
+struct VIEW
   {
   float position[3];
   float orientation[3][3];
   float zoom;
   int zoomx;
   int zoomy;
-  } view;
+  };
+extern struct VIEW view;
 
-struct
+struct GAME
   {
   int pause;
   int type;
@@ -68,4 +69,5 @@ struct
   int editing;
   int godmode;
   int godparticle;
-  } game;
+  };
+extern struct GAME game;

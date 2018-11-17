@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MO_TOGGLE       8
 #define MO_SET          9
 #define MO_REPEAT      10
-#define MO_IMAGE 			 11
+#define MO_IMAGE       11
 #define MO_RESIZE      12
 #define MO_CURSOR      13
 #define MO_BACKGROUND  14
@@ -49,8 +49,8 @@ int getinputletter(int repeat,int inputflags);
 void addmenuinputchar(int charinput);
 int deleteselectedtext(void);
 
-int numofmenuitems;
-struct
+extern int numofmenuitems;
+struct MENUITEM
   {
   char label[64];
 	int x;
@@ -75,18 +75,19 @@ struct
   int background;
   void *inputpointer;
   void (*function)();
-  } menuitem[MAXMENUITEMS];
+  };
+extern struct MENUITEM menuitem[MAXMENUITEMS];
 
-int menuinputkeyboard=0;
-int menuinputselectpos;
-int menuinputcursorpos;
-int menuinputinsert;
-char menuinput[256];
-char menuinputtemp[256];
+extern int menuinputkeyboard;
+extern int menuinputselectpos;
+extern int menuinputcursorpos;
+extern int menuinputinsert;
+extern char menuinput[256];
+extern char menuinputtemp[256];
 
-int joymenunum;
-int joystickmenu=1;
+extern int joymenunum;
+extern int joystickmenu;
 
-int currentmenuitem;
+extern int currentmenuitem;
 
-char keyboardlabel[323][16];
+extern char keyboardlabel[323][16];

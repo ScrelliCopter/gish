@@ -21,13 +21,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void checkjoystick(void);
 
-int numofjoysticks;
-SDL_Joystick *joy[16];
+extern int numofjoysticks;
+extern SDL_Joystick *joy[16];
 
-int joystickenabled;
-int joystickused;
+extern int joystickenabled;
+extern int joystickused;
 
-struct {
+struct JOYSTICK
+  {
   int x;
   int y;
   float axis[2];
@@ -37,17 +38,5 @@ struct {
   int numofhats;
   int hat[4];
   char name[64];
-  } joystick[16];
-
-struct {
-  int x;
-  int y;
-  float axis[2];
-  int throttle;
-  int numofbuttons;
-  int button[32];
-  int numofhats;
-  int hat[4];
-  char name[64];
-  } prevjoystick[16];
-
+  };
+extern struct JOYSTICK joystick[16], prevjoystick[16];

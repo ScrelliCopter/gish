@@ -19,6 +19,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+ALCcontext *alcontext;
+ALCdevice *aldevice;
+
+int soundenabled;
+ALuint soundbuffer[64];
+int bufferloaded[64];
+
+OggVorbis_File oggstream[2];
+
+vorbis_info *vorbisinfo;
+vorbis_comment *vorbiscomment;
+
+ALenum oggformat;
+char oggdata[OGGBUFFERSIZE];
+
+ALuint oggsource;
+ALuint oggbuffer[2];
+
 void setupaudio(void)
   {
   int count;

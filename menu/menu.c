@@ -19,6 +19,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+int numofmenuitems;
+struct MENUITEM menuitem[MAXMENUITEMS];
+int menuinputkeyboard=0;
+int menuinputselectpos;
+int menuinputcursorpos;
+int menuinputinsert;
+char menuinput[256];
+char menuinputtemp[256];
+int joymenunum;
+int joystickmenu=1;
+int currentmenuitem;
+char keyboardlabel[323][16];
+
 void checkmenuitems(void)
   {
   int count,count2;
@@ -471,10 +484,10 @@ void setupmenuitems(void)
   strcpy(keyboardlabel[SCAN_9],"9");
   strcpy(keyboardlabel[SCAN_0],"0");
 #ifndef GERMAN
-  strcpy(keyboardlabel[SCAN_LEFT],"Ä");
-  strcpy(keyboardlabel[SCAN_RIGHT],"Å");
-  strcpy(keyboardlabel[SCAN_UP],"É");
-  strcpy(keyboardlabel[SCAN_DOWN],"Ç");
+  strcpy(keyboardlabel[SCAN_LEFT],"¬Ä");
+  strcpy(keyboardlabel[SCAN_RIGHT],"¬Å");
+  strcpy(keyboardlabel[SCAN_UP],"¬É");
+  strcpy(keyboardlabel[SCAN_DOWN],"¬Ç");
 #else
   strcpy(keyboardlabel[SCAN_LEFT],"{");
   strcpy(keyboardlabel[SCAN_RIGHT],"|");

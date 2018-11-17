@@ -19,6 +19,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+char lasttextureloaded[32];
+struct TEXTURE texture[2048];
+struct TGAHEADER tgaheader;
+
 void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
   {
   int count,count2;

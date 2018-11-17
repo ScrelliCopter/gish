@@ -37,6 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void resetorientation(float orientation[3][3]);
 void rotateorientation(float orientation[3][3],float *rotationvector,float rotationangle);
 
-float xaxis[3]={ 1.0f,0.0f,0.0f };
-float yaxis[3]={ 0.0f,1.0f,0.0f };
-float zaxis[3]={ 0.0f,0.0f,1.0f };
+static float xaxis[3]={ 1.0f,0.0f,0.0f };
+static float yaxis[3]={ 0.0f,1.0f,0.0f };
+static float zaxis[3]={ 0.0f,0.0f,1.0f };

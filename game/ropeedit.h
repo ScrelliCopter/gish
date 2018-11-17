@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void editlevelrope(void);
 void renderropeedit(void);
 
-struct
+struct ROPEEDIT
   {
   int numofpoints;
   struct
@@ -34,4 +34,5 @@ struct
   int pointnum;
   int pointhighlight;
   int texturenum;
-  } ropeedit;
+  };
+extern struct ROPEEDIT ropeedit;

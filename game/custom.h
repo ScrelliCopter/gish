@@ -29,9 +29,9 @@ void loadmappack(void);
 void savemappack(void);
 void newmappackmenu(void);
 
-char levellist[1024][32];
+extern char levellist[1024][32];
 
-struct
+struct MAPPACK
   {
   int active;
   int numoflevels;
@@ -41,14 +41,15 @@ struct
   char levelname[64][32];
   char levelmusic[64][32];
   char ending[16][64];
-  } mappack;
+  };
+extern struct MAPPACK mappack;
 
-struct
+struct PLAYERMAPPACK
   {
   int levelnum;
   int numoflives;
   int totalscore;
   int difficulty;
   int highscore;
-  } playermappack[16];
-
+  };
+extern struct PLAYERMAPPACK playermappack[16];

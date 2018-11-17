@@ -23,8 +23,8 @@ void soundsimulation(float position[3],float orientation[3][3]);
 void playsound(int buffernum,float position[3],float velocity[3],float volume,int looping,float pitch,int objectnum,int objectsoundnum);
 void deletesound(int soundnum);
 
-int numofsounds;
-struct
+extern int numofsounds;
+struct SOUND
   {
   int buffernum;
   int objectnum;
@@ -32,5 +32,5 @@ struct
   int pitchshift;
   ALuint alname;
   int delay;
-  } sound[64];
-
+  };
+extern struct SOUND sound[64];

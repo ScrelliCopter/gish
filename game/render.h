@@ -31,7 +31,7 @@ void renderparticles2(void);
 void renderobjects(void);
 void rendersprites(void);
 
-struct
+struct FRAME
   {
   int numoflights;
   struct
@@ -40,4 +40,5 @@ struct
     float color[3];
     float intensity;
     } light[16];
-  } frame;
+  };
+extern struct FRAME frame;

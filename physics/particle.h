@@ -30,8 +30,8 @@ void deleteparticle(int particlenum);
 void applyforceparticle(int particlenum,float force[3]);
 void getforceparticle(int particlenum,float force[3]);
 
-int numofparticles;
-struct
+extern int numofparticles;
+struct PARTICLE
   {
   float position[3];
   float prevposition[3];
@@ -52,9 +52,10 @@ struct
   int rendertype;
   float rendersize;
   int texturenum;
-  } particle[16384];
+  };
+extern struct PARTICLE particle[16384];
 
-struct 
+struct PARTICLETYPE
   {
   float drag;
   float gravity;
@@ -63,4 +64,5 @@ struct
   int levelcollision;
   int objectcollision;
   int rendertype;
-  } particletype[16384];
+  };
+extern struct PARTICLETYPE particletype[16384];

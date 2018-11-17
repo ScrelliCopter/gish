@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+struct OPTION option;
+struct CONTROL control[8];
+
 void optionsmenu(void)
   {
   int count,count2,count3;

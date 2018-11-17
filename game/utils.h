@@ -27,22 +27,23 @@ void starttimer(int timernum);
 void stoptimer(int timernum);
 
 #ifdef WINDOZE
-struct
+struct TIMER
   {
   __int64 starttime;
   __int64 totaltime;
-  } timer[64];
+  };
 
 __int64 timetemp;
 #endif
 
 #ifndef WINDOZE
-struct
+struct TIMER
   {
   int starttime;
   int totaltime;
-  } timer[64];
+  };
 
-int timetemp;
+extern int timetemp;
 #endif
 
+extern struct TIMER timer[64];

@@ -21,8 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void checkkeyboard(void);
 
-unsigned char keyboard[323];
-unsigned char prevkeyboard[323];
+extern unsigned char keyboard[323];
+extern unsigned char prevkeyboard[323];
 
 #define SCAN_ESC          27
 #define SCAN_0            48

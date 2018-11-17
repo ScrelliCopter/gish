@@ -27,10 +27,11 @@ int getint(void);
 float getfloat(void);
 void getstring(char *str,int size);
 
-struct
+struct PARSER
   {
   int textloc;
   int textsize;
   char text[1048576];
   char numtemp[256];
-  } parser;
+  };
+extern struct PARSER parser;

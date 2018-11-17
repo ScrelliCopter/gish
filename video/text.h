@@ -28,13 +28,14 @@ void convertscreenvertex(float vec[3],int resolutionx,int resolutiony);
 void drawbackground(int texturenum,int x,int y,int sizex,int sizey,int resolutionx,int resolutiony);
 void drawmousecursor(int texturenum,int x,int y,int textsize,float red,float green,float blue,float alpha);
 
-unsigned char textstring2[1024];
-unsigned char textstring3[1024];
+extern unsigned char textstring2[1024];
+extern unsigned char textstring3[1024];
 
-struct
+struct FONT
   {
   int sizex;
   int sizey;
   int texturenum;
   int cursornum;
-  } font;
+  };
+extern struct FONT font;

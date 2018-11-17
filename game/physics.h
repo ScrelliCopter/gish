@@ -26,7 +26,7 @@ void objectcollisionobject(int objectnum);
 void bondsimulation2(void);
 int lineintersectline2(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2);
 
-struct
+struct PHYSICSTEMP
   {
   int numofbonds;
   struct
@@ -50,10 +50,11 @@ struct
     int blocky;
     float forceapplied[2][3];
     } bond[8192];
-  } physicstemp;
+  };
+extern struct PHYSICSTEMP physicstemp;
 
-int numoflevellines;
-struct
+extern int numoflevellines;
+struct LEVELLINE
   {
   float line[2][3];
   float normal[3];
@@ -61,4 +62,5 @@ struct
   int blocknum;
   int blockx;
   int blocky;
-  } levelline[1024];
+  };
+extern struct LEVELLINE levelline[1024];

@@ -24,20 +24,22 @@ void videooptionsmenu(void);
 void drawsliderbars(void);
 void optionsmenu2(void);
 
-struct
+struct OPTION
   {
   int sound;
   int music;
   float soundvolume;
   float musicvolume;
-  } option;
+  };
+extern struct OPTION option;
 
-struct
+struct CONTROL
   {
   int key[16];
   int joysticknum;
   int axis[4];
   int button[16];
-  } control[8];
+  };
+extern struct CONTROL control[8];
 
 

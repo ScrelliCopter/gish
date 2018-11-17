@@ -24,8 +24,8 @@ void bosssimulation(void);
 void bosstimetolive(void);
 void deleteboss(int bossnum);
 
-int numofbosses;
-struct
+extern int numofbosses;
+struct BOSS
   {
   int type;
   float position[3];
@@ -38,4 +38,5 @@ struct
   int frame;
   float size[2];
   float framedelay;
-  } boss[16];
+  };
+extern struct BOSS boss[16];

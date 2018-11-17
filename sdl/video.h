@@ -21,10 +21,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void listvideomodes(void);
 
-int numofsdlvideomodes;
-struct
+extern int numofsdlvideomodes;
+struct SDLVIDEOMODE
   {
   int resolutionx;
   int resolutiony;
   int bitsperpixel;
-  } sdlvideomode[4096];
+  };
+extern struct SDLVIDEOMODE sdlvideomode[4096];

@@ -21,7 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void checksystemmessages(void);
 
-struct {
+struct WINDOWINFO
+  {
   int resolutionx;
   int resolutiony;
   int redbits;
@@ -35,5 +36,5 @@ struct {
   int shutdown;
   int minimized;
   int opengl;
-  } windowinfo;
-
+  };
+extern struct WINDOWINFO windowinfo;

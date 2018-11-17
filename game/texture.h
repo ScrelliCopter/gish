@@ -24,12 +24,13 @@ void copytexture(int texturenum,int oldtexturenum);
 void loadtilesettemp(void);
 void loadleveltiles(char *filename);
 
-struct
+struct TEXTUREEDIT
   {
   int pagenum;
   int texturenum;
   int tileset;
   int tilepagenum;
   char filename[32];
-  } textureedit;
+  };
+extern struct TEXTUREEDIT textureedit;
 

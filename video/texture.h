@@ -25,9 +25,9 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
 void generatemipmap(int texturenum);
 void setuptexture(int texturenum);
 
-char lasttextureloaded[32];
+extern char lasttextureloaded[32];
 
-struct
+struct TEXTURE
   {
   int sizex;
   int sizey;
@@ -47,13 +47,15 @@ struct
   unsigned int *normal[16];
   int glnamegloss;
   unsigned char *gloss[16];
-  } texture[2048];
+  };
+extern struct TEXTURE texture[2048];
 
-struct
+struct TGAHEADER
   {
   unsigned char imagetypecode;
   short int imagewidth;
   short int imageheight;
   unsigned char pixeldepth;
   unsigned int imagedata[1024*1024];
-  } tgaheader;
+  };
+extern struct TGAHEADER tgaheader;

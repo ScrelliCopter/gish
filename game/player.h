@@ -27,8 +27,8 @@ void playerdifficultymenu(void);
 void collectionmenu(void);
 void singlelevelmenu(void);
 
-int playernum;
-struct
+extern int playernum;
+struct PLAYER
   {
   char name[32];
   int levelnum;
@@ -38,4 +38,5 @@ struct
   int gamepassed;
   int highscore;
   int unlock[16];
-  } player[16];
+  };
+extern struct PLAYER player[16];

@@ -25,8 +25,9 @@ void savereplay(int levelnum);
 int loadreplay(char *filename);
 void replaymenu(void);
 
-int numofreplayframes;
-struct
+extern int numofreplayframes;
+struct REPLAYFRAME
   {
   unsigned char button;
-  } replayframe[65536];
+  };
+extern struct REPLAYFRAME replayframe[65536];

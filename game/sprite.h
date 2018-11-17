@@ -25,7 +25,7 @@ void deletesprite(int spritenum);
 void spritesimulation(void);
 
 int numofsprites;
-struct
+struct SPRITE
   {
   int type;
   int timetolive;
@@ -36,4 +36,5 @@ struct
   float blue;
   float alpha;
   int size;
-  } sprite[256];
+  };
+extern struct SPRITE sprite[256];

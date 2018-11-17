@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+unsigned char keyboard[323];
+unsigned char prevkeyboard[323];
+
 void checkkeyboard(void)
   {
 	memcpy(prevkeyboard,keyboard,323);

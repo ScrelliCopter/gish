@@ -26,7 +26,7 @@ void rendereditblocks(void);
 void editblock(void);
 void renderlevellines(void);
 
-struct
+struct EDITOR
   {
   int active;
   int mode;
@@ -41,5 +41,6 @@ struct
   int copysize[2];
   int copybuffer[128][128];
   int paste;
-  } editor;
+  };
+extern struct EDITOR editor;
 

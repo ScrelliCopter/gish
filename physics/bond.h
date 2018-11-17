@@ -25,8 +25,8 @@ void checkbonds(void);
 void createbond(int part1,int part2,int type,int objectnum);
 void deletebond(int bondnum);
 
-int numofbonds;
-struct
+extern int numofbonds;
+struct BOND
   {
   int part1;
   int part2;
@@ -47,9 +47,10 @@ struct
   float bondnormal[3];
   float veclength;
   float oomass;
-  } bond[16384];
+  };
+extern struct BOND bond[16384];
 
-struct
+struct BONDTYPE
   {
   float elasticity;
   float compression;
@@ -57,5 +58,6 @@ struct
   int cycles;
   int rendertype;
   float rendersize;
-  } bondtype[256];
+  };
+extern struct BONDTYPE bondtype[256];
 
