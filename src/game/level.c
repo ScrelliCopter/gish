@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "level.h"
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <GL/gl.h>
@@ -134,6 +135,7 @@ void savelevel(char *filename)
   int blocknum;
   int changeddir;
   int version;
+  FILE *fp;
 
   for (count=0;count<256;count++)
     textureused[count]=1;
@@ -259,6 +261,7 @@ void loadlevel(char *filename)
   int changeddir;
   int version;
   unsigned int x,y;
+  FILE *fp;
 
   x=0x17AF2E03;
 

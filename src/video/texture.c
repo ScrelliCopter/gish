@@ -39,6 +39,7 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
 	int red,green,blue,alpha;
   int changeddir;
   unsigned char origin;
+  FILE *fp;
 
   changeddir=chdir("texture");
 
@@ -165,6 +166,7 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
   int count,count2;
 	int red,green,blue,alpha;
   unsigned char origin;
+  FILE *fp;
 
   if ((fp=fopen(filename,"rb"))==NULL)
     {
@@ -282,6 +284,7 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
 	int red,green,blue,alpha;
   int changeddir;
   unsigned char origin;
+  FILE *fp;
 
   if (strcmp(lasttextureloaded,filename)!=0)
     {

@@ -22,6 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_GAME_MUSIC_H__
 #define __GISH_GAME_MUSIC_H__
 
+#include <stdlib.h>
+#include <vorbis/vorbisfile.h>
+
 void checkmusic(void);
 void loadoggs(void);
 size_t vorbisread(void *ptr,size_t bytesize,size_t sizetoread,void *datasource);

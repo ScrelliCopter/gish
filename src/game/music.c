@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "music.h"
 
+#include <unistd.h>
 #include <string.h>
 #include <sdl/file.h>
 #include <audio/audio.h>
@@ -134,6 +135,7 @@ void loadoggs(void)
   int count;
   int oggnum;
   int changeddir;
+  FILE *fp;
 
   changeddir=chdir("music");
 

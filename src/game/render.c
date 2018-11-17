@@ -21,6 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "render.h"
 
+#include <math.h>
+#include <math/math.h>
+#include <math/vector.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
 #include <video/texture.h>
@@ -28,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "prerender.h"
 #include "lighting.h"
 #include "sprite.h"
-#include <math/vector.h>
 #include <audio/audio.h>
 #include "game.h"
 #include "level.h"

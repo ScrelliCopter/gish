@@ -29,6 +29,7 @@ struct PARSER parser;
 void loadtextfile(char *filename)
   {
   int temp;
+  FILE *fp;
 
   parser.textsize=0;
 

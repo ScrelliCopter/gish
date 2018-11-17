@@ -425,6 +425,7 @@ void loadplayermappack(void)
   int version;
   int changeddir;
   char filename[32];
+  FILE *fp;
 
   changeddir=chdir("player");
 
@@ -467,6 +468,7 @@ void saveplayermappack(void)
   int version;
   int changeddir;
   char filename[32];
+  FILE *fp;
 
   changeddir=chdir("player");
 
@@ -504,6 +506,7 @@ void loadmappack(void)
   int count;
   int version;
   int changeddir;
+  FILE *fp;
 
   changeddir=chdir("level");
 
@@ -537,6 +540,7 @@ void savemappack(void)
   int count;
   int version;
   int changeddir;
+  FILE *fp;
 
   changeddir=chdir("level");
 

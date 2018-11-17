@@ -244,6 +244,7 @@ void saveplayers(void)
   {
   int count;
   int version;
+  FILE *fp;
 
   if ((fp=fopen("gish.pla","wb"))!=NULL)
     {
@@ -268,6 +269,7 @@ void loadplayers(void)
   {
   int count;
   int version;
+  FILE *fp;
 
   if ((fp=fopen("gish.pla","rb"))!=NULL)
     {

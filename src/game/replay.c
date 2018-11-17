@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "replay.h"
 
+#include <unistd.h>
 #include <stdio.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
@@ -83,6 +84,7 @@ void savereplay(int levelnum)
   int version;
   int changeddir;
   char filename[32];
+  FILE *fp;
 
   count=0;
   while (count<12 && player[playernum].name[count]!=0)
@@ -144,6 +146,7 @@ int loadreplay(char *filename)
   int levelnum;
   int changeddir;
   char filenametemp[32];
+  FILE *fp;
 
   count=0;
   while (count<16 && filename[count]!=0 && filename[count]!='.')

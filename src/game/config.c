@@ -149,6 +149,8 @@ void loadconfig(void)
   windowinfo.fullscreen=config.fullscreen;
   }
 
+FILE *fp;
+
 void saveconfig(void)
   {
   int count,count2;
@@ -214,6 +216,7 @@ void notsupportedmenu(void)
   char *glrenderer;
   char *glversion;
   char *ext;
+  FILE *fp;
 
   glvendor=(char *) glGetString(GL_VENDOR);
   glrenderer=(char *) glGetString(GL_RENDERER);

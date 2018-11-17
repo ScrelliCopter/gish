@@ -36,6 +36,7 @@ void saveblock(int blocknum)
   int count;
   int changeddir;
   char filename[13]="blck000.blk";
+  FILE *fp;
 
   changeddir=chdir("block");
 

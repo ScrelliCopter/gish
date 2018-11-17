@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "texture.h"
 
+#include <unistd.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
 #include <sdl/file.h>
@@ -335,6 +336,7 @@ void loadleveltiles(char *filename)
   int changeddir;
   int version;
   unsigned int x,y;
+  FILE *fp;
 
   x=0x17AF2E03;
   changeddir=chdir("level");

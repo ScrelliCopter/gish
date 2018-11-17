@@ -139,6 +139,7 @@ void screenshot(void)
   unsigned char bytetemp;
   short shorttemp;
   int inttemp;
+  FILE *fp;
 
   glReadBuffer(GL_BACK);
   glReadPixels(0,0,windowinfo.resolutionx,windowinfo.resolutiony,GL_RGBA,GL_UNSIGNED_BYTE,screenshotbuffer);

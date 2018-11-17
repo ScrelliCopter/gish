@@ -232,6 +232,7 @@ void savescores(void)
   {
   int count,count2;
   int version;
+  FILE *fp;
 
   if ((fp=fopen("gish.his","wb"))!=NULL)
     {
@@ -251,6 +252,7 @@ void loadscores(void)
   {
   int count,count2;
   int version;
+  FILE *fp;
 
   for (count=0;count<32;count++)
   for (count2=0;count2<16;count2++)
