@@ -19,7 +19,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_OBJECT_BOND_H__
+#define __GISH_OBJECT_BOND_H__
+
 void objectsimulation(void);
 int lineintersectobject(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,int objectnum,int *particlelist);
 int lineintersectobject2(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,int objectnum,int *particlelist);
 int pointintersectobject(float *intersectpoint,float *normal,float *scale,float *point,int objectnum,int objectnum2,int *particlelist);
+
+#endif

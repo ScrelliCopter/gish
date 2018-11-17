@@ -19,7 +19,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_LIGHTING_H__
+#define __GISH_GAME_LIGHTING_H__
+
 void setuplightingtextures(void);
 void renderobjectspecular(int objectnum);
 void setupframelighting(void);
 void rendershadows(void);
+
+#endif

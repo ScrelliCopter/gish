@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_OBJECT_H__
+#define __GISH_GAME_OBJECT_H__
+
 void createbox(float position[3],float sizex,float sizey,float mass,float friction);
 void createtarboy(float position[3]);
 void createwheel(float position[3],float sizex,float sizey,float mass,float friction,int anchor);
@@ -124,3 +127,5 @@ struct ROPE
   float range;
   };
 extern struct ROPE rope[1024];
+
+#endif

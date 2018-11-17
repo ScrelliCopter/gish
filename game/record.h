@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_RECORD_H__
+#define __GISH_GAME_RECORD_H__
+
 void recordframe(void);
 
 struct MOVIE
@@ -27,3 +30,5 @@ struct MOVIE
   int framenum;
   };
 extern struct MOVIE movie;
+
+#endif

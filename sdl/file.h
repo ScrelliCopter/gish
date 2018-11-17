@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_SDL_FILE_H__
+#define __GISH_SDL_FILE_H__
+
 int comparestrings(const void *arg1,const void *arg2);
 int checkfilespec(char *filespec,char *filename);
 void listfiles(char *filespec,char filelist[1024][32],int directories);
@@ -31,3 +34,5 @@ extern FWRITE2 fwrite2;
 
 size_t freadswap(void *ptr,size_t psize,size_t pnum,FILE *pfp);
 size_t fwriteswap(const void *ptr,size_t psize,size_t pnum,FILE *pfp);
+
+#endif

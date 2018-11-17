@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_PRERENDER_H__
+#define __GISH_GAME_PRERENDER_H__
+
 void setuprenderobjects(void);
 int setuprenderobjectlight(int objectnum);
 int setuprenderropelight(int ropenum,float radius);
@@ -44,3 +47,5 @@ struct OBJECTRENDER
   float alpha;
   };
 extern struct OBJECTRENDER objectrender[512];
+
+#endif

@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_CUSTOM_H__
+#define __GISH_GAME_CUSTOM_H__
+
 void custommenu(void);
 void loadlevelmenu(void);
 void playcampaignmenu(void);
@@ -53,3 +56,5 @@ struct PLAYERMAPPACK
   int highscore;
   };
 extern struct PLAYERMAPPACK playermappack[16];
+
+#endif

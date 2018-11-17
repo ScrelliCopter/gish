@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_PARTICLE_BOND_H__
+#define __GISH_PARTICLE_BOND_H__
+
 #define PHYSICSCYCLE 50.0f
 
 void particlecollisionlevel(int particlenum);
@@ -66,3 +69,5 @@ struct PARTICLETYPE
   int rendertype;
   };
 extern struct PARTICLETYPE particletype[16384];
+
+#endif

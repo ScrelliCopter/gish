@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_GAME_H__
+#define __GISH_GAME_GAME_H__
+
 void gameloop(void);
 void renderlevel(void);
 void simulation(void);
@@ -71,3 +74,5 @@ struct GAME
   int godparticle;
   };
 extern struct GAME game;
+
+#endif

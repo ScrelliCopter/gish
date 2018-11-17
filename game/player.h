@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_PLAYER_H__
+#define __GISH_GAME_PLAYER_H__
+
 void playermenu(void);
 void saveplayers(void);
 void loadplayers(void);
@@ -40,3 +43,5 @@ struct PLAYER
   int unlock[16];
   };
 extern struct PLAYER player[16];
+
+#endif

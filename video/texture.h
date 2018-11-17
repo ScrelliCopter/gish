@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_VIDEO_TEXTURE_H__
+#define __GISH_VIDEO_TEXTURE_H__
+
 void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
 void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
 void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,int sizex,int sizey);
@@ -59,3 +62,5 @@ struct TGAHEADER
   unsigned int imagedata[1024*1024];
   };
 extern struct TGAHEADER tgaheader;
+
+#endif

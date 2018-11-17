@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_MENU_MENU_H__
+#define __GISH_MENU_MENU_H__
+
 #define MAXMENUITEMS   256
 #define MO_HOTKEY       1
 #define MO_HIGHLIGHT    2
@@ -91,3 +94,5 @@ extern int joystickmenu;
 extern int currentmenuitem;
 
 extern char keyboardlabel[323][16];
+
+#endif

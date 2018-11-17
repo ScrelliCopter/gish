@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_CONFIG_H__
+#define __GISH_GAME_CONFIG_H__
+
 void loadconfig(void);
 void saveconfig(void);
 void notsupportedmenu(void);
@@ -26,3 +29,5 @@ void optionreadint(int *ptr,char *str);
 void optionwriteint(int *ptr,char *str);
 void optionreadstring(char *ptr,char *str,int size);
 void optionwritestring(char *ptr,char *str,int size);
+
+#endif

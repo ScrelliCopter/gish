@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_ENGLISH_H__
+#define __GISH_GAME_ENGLISH_H__
+
 //logic.c
 #define TXT_TOUCHDOWN_GRAY 							"Touchdown Gray!"
 #define TXT_FIELDGOAL_GRAY							"Field Goal Gray!"
@@ -427,3 +430,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TXT_LEVEL_EDITOR                "Level Editor"
 #define TXT_ADD_LEVEL                   "Add Level"
 #define TXT_DELETE_LEVEL                "Delete Level"
+
+#endif

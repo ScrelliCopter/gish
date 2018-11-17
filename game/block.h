@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_BLOCK_H__
+#define __GISH_GAME_BLOCK_H__
+
 void saveblock(int blocknum);
 void loadblock(int blocknum);
 void setupblockflags(blocknum);
@@ -48,3 +51,5 @@ struct POLYGONTEMP
   int ivertex[16][2];
   };
 extern struct POLYGONTEMP polygontemp[16];
+
+#endif

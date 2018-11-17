@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_AUDIO_AUDIO_H__
+#define __GISH_AUDIO_AUDIO_H__
+
 #define OGGBUFFERSIZE 4096*8
 
 void setupaudio(void);
@@ -44,3 +47,5 @@ extern char oggdata[OGGBUFFERSIZE];
 
 extern ALuint oggsource;
 extern ALuint oggbuffer[2];
+
+#endif

@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_LEVEL_H__
+#define __GISH_GAME_LEVEL_H__
+
 int lineintersectlevel(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint);
 void savelevel(char *filename);
 void loadlevel(char *filename);
@@ -93,3 +96,5 @@ struct LEVEL
     } rope[1024];
   };
 extern struct LEVEL level;
+
+#endif

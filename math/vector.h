@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_MATH_VECTOR_H__
+#define __GISH_MATH_VECTOR_H__
+
 /*INLINE*/ float dotproduct(float *vec1,float *vec2);
 /*INLINE*/ void crossproduct(float *result,float *vec1,float *vec2);
 /*INLINE*/ float vectorlength(float *vec1);
@@ -40,3 +43,5 @@ void rotateorientation(float orientation[3][3],float *rotationvector,float rotat
 static float xaxis[3]={ 1.0f,0.0f,0.0f };
 static float yaxis[3]={ 0.0f,1.0f,0.0f };
 static float zaxis[3]={ 0.0f,0.0f,1.0f };
+
+#endif

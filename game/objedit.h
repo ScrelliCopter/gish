@@ -19,7 +19,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_OBJEDIT_H__
+#define __GISH_GAME_OBJEDIT_H__
+
 void editlevelobjects(void);
 void renderlevelobjects(void);
 void deletelevelobject(int objectnum);
 void deletelevelrope(int ropenum);
+
+#endif

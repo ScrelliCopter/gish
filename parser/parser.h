@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_PARSER_PARSER_H__
+#define __GISH_PARSER_PARSER_H__
+
 void loadtextfile(char *filename);
 void resetparser(void);
 int findstring(char *str);
@@ -35,3 +38,5 @@ struct PARSER
   char numtemp[256];
   };
 extern struct PARSER parser;
+
+#endif

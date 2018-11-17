@@ -19,9 +19,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_MAINMENU_H__
+#define __GISH_GAME_MAINMENU_H__
+
 void mainmenu(void);
 void loadbackground(int texturenum,char *filename);
 void displaybackground(int texturenum);
 void versusmenu(void);
 void storyscreen(void);
 void introscreen(void);
+
+#endif

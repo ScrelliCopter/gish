@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_INPUT_JOYSTICK_H__
+#define __GISH_INPUT_JOYSTICK_H__
+
 void checkjoystick(void);
 
 extern int numofjoysticks;
@@ -40,3 +43,5 @@ struct JOYSTICK
   char name[64];
   };
 extern struct JOYSTICK joystick[16], prevjoystick[16];
+
+#endif

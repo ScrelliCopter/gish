@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_MUSIC_H__
+#define __GISH_GAME_MUSIC_H__
+
 void checkmusic(void);
 void loadoggs(void);
 size_t vorbisread(void *ptr,size_t bytesize,size_t sizetoread,void *datasource);
@@ -36,3 +39,5 @@ struct OGGMEMORYFILE
 extern struct OGGMEMORYFILE oggmemoryfile[16];
 
 ov_callbacks vorbiscallbacks;
+
+#endif

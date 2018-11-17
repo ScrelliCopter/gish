@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_OPTIONS_H__
+#define __GISH_GAME_OPTIONS_H__
+
 void optionsmenu(void);
 void videooptionsmenu(void);
 void drawsliderbars(void);
@@ -42,4 +45,4 @@ struct CONTROL
   };
 extern struct CONTROL control[8];
 
-
+#endif

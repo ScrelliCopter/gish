@@ -19,6 +19,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef __GISH_GAME_HIGH_H__
+#define __GISH_GAME_HIGH_H__
+
 void highscoremenu(int levelnum);
 void savescores(void);
 void loadscores(void);
@@ -29,3 +32,5 @@ struct HIGHSCORE
   int time;
   };
 extern struct HIGHSCORE highscore[32][16];
+
+#endif
