@@ -45,8 +45,9 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
 
   if ((fp=fopen(filename,"rb"))==NULL)
     {
-    if (debugit)
-      printf("Texture Load Failed: %d\n",texturenum);
+#ifdef DEBUG
+    printf("Texture Load Failed: %d\n",texturenum);
+#endif
 
     if (changeddir==0)
       chdir("..");
@@ -57,8 +58,9 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
   fread2(&tgaheader.imagetypecode,1,1,fp);
   if (tgaheader.imagetypecode!=2 && tgaheader.imagetypecode!=3)
     {
-    if (debugit)
-      printf("Texture Bad Format: %d\n",texturenum);
+#ifdef DEBUG
+    printf("Texture Bad Format: %d\n",texturenum);
+#endif
 
     fclose(fp);
 
@@ -170,8 +172,9 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
 
   if ((fp=fopen(filename,"rb"))==NULL)
     {
-    if (debugit)
-      printf("Texture Load Failed: %d\n",texturenum);
+#ifdef DEBUG
+    printf("Texture Load Failed: %d\n",texturenum);
+#endif
 
     return;
     }
@@ -180,8 +183,9 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
   fread2(&tgaheader.imagetypecode,1,1,fp);
   if (tgaheader.imagetypecode!=2 && tgaheader.imagetypecode!=3)
     {
-    if (debugit)
-      printf("Texture Bad Format: %d\n",texturenum);
+#ifdef DEBUG
+    printf("Texture Bad Format: %d\n",texturenum);
+#endif
 
     fclose(fp);
 
@@ -292,8 +296,9 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
   
     if ((fp=fopen(filename,"rb"))==NULL)
       {
-      if (debugit)
-        printf("Texture Load Failed: %d\n",texturenum);
+#ifdef DEBUG
+      printf("Texture Load Failed: %d\n",texturenum);
+#endif
 
       if (changeddir==0)
         chdir("..");
@@ -304,8 +309,9 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
     fread2(&tgaheader.imagetypecode,1,1,fp);
     if (tgaheader.imagetypecode!=2 && tgaheader.imagetypecode!=3)
       {
-      if (debugit)
-        printf("Texture Bad Format: %d\n",texturenum);
+#ifdef DEBUG
+      printf("Texture Bad Format: %d\n",texturenum);
+#endif
   
       fclose(fp);
   

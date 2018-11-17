@@ -82,8 +82,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <vorbis/vorbisenc.h>
 #include <vorbis/vorbisfile.h>
 
-int debugit=0;
-
 #ifdef WINDOZE
 #define INLINE _inline
 #endif
@@ -114,8 +112,6 @@ int debugit=0;
 #include <menu/menu.h>
 #include <game/mainmenu.h>
 #include <game/high.h>
-
-char versiontext[]="Version 1.53";
 
 const SDL_VideoInfo *sdlvideoinfo;
 SDL_PixelFormat *sdlpixelformat;

@@ -143,7 +143,7 @@ set(SOURCES
 	src/video/texture.c
 	src/video/texture.h
 
-	src/main.c)
+	src/main.c src/config.h)
 
 add_executable(gish ${SOURCES})
 target_link_libraries(gish

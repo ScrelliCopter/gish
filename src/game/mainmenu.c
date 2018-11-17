@@ -44,6 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "animation.h"
 #include "vsmode.h"
 #include <menu/menu.h>
+#include <config.h>
 #include "editor.h"
 #include "options.h"
 #include "credits.h"
@@ -309,7 +310,7 @@ void mainmenu(void)
 
     if (game.turbomode)
       drawtext(TXT_TURBO_EDITION,(640|TEXT_END),470,10,1.0f,1.0f,1.0f,1.0f);
-    drawtext(versiontext,0,470,10,1.0f,1.0f,1.0f,1.0f);
+    drawtext(VERSIONTEXT,0,470,10,1.0f,1.0f,1.0f,1.0f);
 
     drawtext(TXT_COPYRIGHT,(320|TEXT_CENTER),470,10,0.75f,0.75f,0.75f,1.0f);
 
@@ -729,7 +730,7 @@ void introscreen(void)
 
       if (game.turbomode)
         drawtext(TXT_TURBO_EDITION,(640|TEXT_END),470,10,1.0f,1.0f,1.0f,1.0f);
-      drawtext(versiontext,0,470,10,1.0f,1.0f,1.0f,1.0f);
+      drawtext(VERSIONTEXT,0,470,10,1.0f,1.0f,1.0f,1.0f);
 
       drawtext(TXT_COPYRIGHT,(320|TEXT_CENTER),470,10,0.75f,0.75f,0.75f,alpha);
       }
