@@ -14,9 +14,10 @@ add_definitions(${OPENAL_CFLAGS})
 include_directories(${SDL_INCLUDE_DIRS})
 include_directories(${OPENGL_INCLUDE_DIRS})
 include_directories(${OPENAL_INCLUDE_DIRS})
+include_directories(src)
 
 set(SOURCES
-	main.c)
+	src/main.c)
 
 add_executable(gish ${SOURCES})
 target_link_libraries(gish
