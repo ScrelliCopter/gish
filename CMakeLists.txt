@@ -93,8 +93,6 @@ set(SOURCES
 	src/game/sprite.h
 	src/game/texture.c
 	src/game/texture.h
-	src/game/tileset.c
-	src/game/tileset.h
 	src/game/utils.c
 	src/game/utils.h
 	src/game/vsmode.c
