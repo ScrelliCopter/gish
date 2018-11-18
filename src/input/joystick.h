@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_INPUT_JOYSTICK_H__
 #define __GISH_INPUT_JOYSTICK_H__
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 void checkjoystick(void);
 

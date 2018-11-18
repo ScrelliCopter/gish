@@ -21,24 +21,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "keyboard.h"
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <string.h>
 
-unsigned char keyboard[323];
-unsigned char prevkeyboard[323];
+unsigned char keyboard[SDL_NUM_SCANCODES];
+unsigned char prevkeyboard[SDL_NUM_SCANCODES];
 
 void checkkeyboard(void)
   {
-	memcpy(prevkeyboard,keyboard,323);
+  memcpy(prevkeyboard,keyboard,SDL_NUM_SCANCODES);
+  memcpy(keyboard,SDL_GetKeyboardState(NULL),SDL_NUM_SCANCODES);
 
-  memcpy(keyboard,SDL_GetKeyState(NULL),323);
-
-	if (keyboard[SDLK_KP_ENTER])
-		keyboard[SDLK_RETURN]=1;
-	if (keyboard[SDLK_RCTRL])
-		keyboard[SDLK_LCTRL]=1;
-	if (keyboard[SDLK_RSHIFT])
-		keyboard[SDLK_LSHIFT]=1;
+	if (keyboard[SDL_SCANCODE_KP_ENTER])
+		keyboard[SDL_SCANCODE_RETURN]=1;
+	if (keyboard[SDL_SCANCODE_RCTRL])
+		keyboard[SDL_SCANCODE_LCTRL]=1;
+	if (keyboard[SDL_SCANCODE_RSHIFT])
+		keyboard[SDL_SCANCODE_LSHIFT]=1;
 
   if (keyboard[SCAN_NUMLEFT])
     keyboard[SCAN_LEFT]=1;

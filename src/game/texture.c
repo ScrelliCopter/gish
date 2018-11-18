@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sdl/event.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
+#include <sdl/video.h>
 #include <video/texture.h>
 #include <video/text.h>
 #include <input/keyboard.h>
@@ -184,7 +185,7 @@ void edittextures(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (keyboard[SCAN_LFT_BRACKET] && !prevkeyboard[SCAN_LFT_BRACKET])
     if (textureedit.tileset>0)

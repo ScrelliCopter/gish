@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "options.h"
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <GL/gl.h>
 #include "glext.h"
 #include <sdl/event.h>
@@ -512,7 +512,7 @@ void optionsmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     for (count=0;count<8;count++)
     if (menuitem[count+1].active)
@@ -749,7 +749,7 @@ void videooptionsmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
     }
 
   if (menuitem[1].active)
@@ -782,10 +782,7 @@ void videooptionsmenu(void)
       SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,8);
       }
   
-    if (windowinfo.fullscreen)
-      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
-    else
-      SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
+    createwindow();
 
     for (count=0;count<2048;count++)
       if (texture[count].sizex!=0)
@@ -1347,7 +1344,7 @@ void optionsmenu2(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     for (count=0;count<8;count++)
     if (menuitem[count+1].active)

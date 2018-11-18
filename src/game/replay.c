@@ -26,10 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sdl/event.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
+#include <sdl/video.h>
+#include <video/text.h>
 #include <input/keyboard.h>
 #include <input/mouse.h>
 #include <input/joystick.h>
-#include <video/text.h>
 #include "game.h"
 #include "setup.h"
 #include "custom.h"
@@ -280,7 +281,7 @@ void replaymenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     for (count=1;count<=24;count++)
     if (pagenum+count-1<numoffiles)
@@ -353,7 +354,7 @@ void replaymenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
       {

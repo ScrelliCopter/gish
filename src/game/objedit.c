@@ -22,9 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "objedit.h"
 
 #include <math.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
+#include <sdl/video.h>
 #include <video/texture.h>
 #include <video/text.h>
 #include <video/glfunc.h>
@@ -141,7 +142,7 @@ void editlevelobjects(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (mouse.x<512 || mouse.y>224)
       {

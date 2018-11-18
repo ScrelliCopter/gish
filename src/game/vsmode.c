@@ -23,10 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <GL/gl.h>
 #include <sdl/event.h>
+#include <sdl/video.h>
+#include <video/text.h>
 #include <input/keyboard.h>
 #include <input/mouse.h>
 #include <input/joystick.h>
-#include <video/text.h>
 #include <audio/audio.h>
 #include "audio.h"
 #include "music.h"
@@ -126,7 +127,7 @@ void versusmodemenu(int versusnum)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (versusnum==0)
       strcpy(filename,"bathhouse");

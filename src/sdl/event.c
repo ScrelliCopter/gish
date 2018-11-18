@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "event.h"
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <video/texture.h>
 #include <game/game.h>
 
@@ -37,31 +37,14 @@ void checksystemmessages(void)
 
   while (SDL_PollEvent(&event))
     {
-    if (event.type==SDL_ACTIVEEVENT)
+    if (event.type==SDL_WINDOWEVENT)
       {
-      if (event.active.state&SDL_APPACTIVE)
+      if (event.window.event==SDL_WINDOWEVENT_FOCUS_LOST)
         {
-        if (event.active.gain==1)
-          {
-          if (windowinfo.fullscreen)
-            SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
-          else
-            SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
-
-          for (count=0;count<2048;count++)
-            if (texture[count].sizex!=0)
-              setuptexture(count);
-
-          windowinfo.minimized=0;
-          }
+        if(game.exit==0)
+          game.pause=1;
+        windowinfo.minimized=1;
         }
-      if (event.active.state&SDL_APPINPUTFOCUS)
-        if (event.active.gain==0)
-          {
-					if(game.exit==0)
-	          game.pause=1;	
-          windowinfo.minimized=1;
-          }
       }
     if (event.type==SDL_QUIT)
       windowinfo.shutdown=1;

@@ -23,15 +23,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <time.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
+#include <sdl/video.h>
 #include <video/text.h>
 #include <video/texture.h>
 #include "lighting.h"
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <input/joystick.h>
 #include <audio/audio.h>
 #include "audio.h"
 #include "music.h"
@@ -77,7 +78,7 @@ void mainmenu(void)
 
   drawtext(TXT_LOADING,(320|TEXT_CENTER),448,16,1.0f,1.0f,1.0f,1.0f);
 
-  SDL_GL_SwapBuffers();
+  SDL_GL_SwapWindow(sdlwindow);
 
   for (count=0;count<64;count++)
     {
@@ -318,7 +319,7 @@ void mainmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[5].active)
       {
@@ -466,7 +467,7 @@ void versusmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     for (count=1;count<=7;count++)
     if (menuitem[count].active)
@@ -526,7 +527,7 @@ void storyscreen(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
@@ -738,7 +739,7 @@ void introscreen(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)

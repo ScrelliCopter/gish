@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <GL/gl.h>
 #include <game/glext.h>
 #include <sdl/event.h>
@@ -45,47 +45,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <game/mainmenu.h>
 #include <game/high.h>
 
-const SDL_VideoInfo *sdlvideoinfo;
-SDL_PixelFormat *sdlpixelformat;
-
-Uint8 iconmask[128]={
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x00,0x00,0x00,
-0x00,0x03,0xF0,0x00,
-0x00,0x3F,0xFC,0x00,
-0x00,0xFF,0xFF,0x00,
-0x03,0xFF,0xFF,0x80,
-0x07,0xFF,0xFF,0xC0,
-0x0F,0xFF,0xFF,0xE0,
-0x0F,0xFF,0xFF,0xF0,
-0x1F,0xFF,0xFF,0xF8,
-0x3F,0xFF,0xFF,0xFC,
-0x3F,0xFF,0xFF,0xFC,
-0x7F,0xFF,0xFF,0xFE,
-0x7F,0xFF,0xFF,0xFE,
-0xFF,0xFF,0xFF,0xFE,
-0xFF,0xFF,0xFF,0xFE,
-0xFF,0xFF,0xFF,0xFE,
-0xFF,0xFF,0xFF,0xFE,
-0x7F,0xFF,0xFF,0xFE,
-0x3F,0xFF,0xFF,0xFE,
-0x0F,0xFF,0xFF,0xFE,
-0x03,0xFF,0xFF,0xFC,
-0x00,0x7F,0xFF,0xF0,
-0x00,0x00,0x00,0x00 };
-
 int main (int argc,char *argv[])
   {
   int count;
-  int flags;
+  Uint32 flags;
   const char *temp;
 
   loadconfig();
@@ -96,12 +59,12 @@ int main (int argc,char *argv[])
   if (config.joystick)
     flags|=SDL_INIT_JOYSTICK;
 
-  SDL_Init(flags);
+  if (SDL_Init(flags)!=0)
+    {
+    return(1);
+    }
 
-  sdlvideoinfo=SDL_GetVideoInfo();
-  sdlpixelformat=sdlvideoinfo->vfmt;
-  if (sdlpixelformat->BitsPerPixel==16)
-    config.bitsperpixel=16;
+  getvideoinfo();
 
   for (count=1;count<argc;count++)
     {
@@ -123,39 +86,11 @@ int main (int argc,char *argv[])
 
   listvideomodes();
 
-  SDL_WM_SetCaption("Gish","SDL");
-  SDL_WM_SetIcon(SDL_LoadBMP("gish.bmp"),iconmask);
-
-  if (windowinfo.bitsperpixel==16)
-    {
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,6);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,5);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,0);
-    }
-  if (windowinfo.bitsperpixel==32)
-    {
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,8);
-    }
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,windowinfo.depthbits);
-  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,windowinfo.stencilbits);
-  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
-
-  if (windowinfo.fullscreen)
-    SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL|SDL_FULLSCREEN);
-  else
-    SDL_SetVideoMode(windowinfo.resolutionx,windowinfo.resolutiony,windowinfo.bitsperpixel,SDL_OPENGL);
-
+  createwindow();
   loadglextentions();
 
   for (count=0;count<2048;count++)
     glGenTextures(1,&texture[count].glname);
-
-  glDisable(GL_DEPTH_TEST);
-  glDepthMask(GL_FALSE);
 
   if (config.joystick)
     {
@@ -163,8 +98,11 @@ int main (int argc,char *argv[])
     for (count=0;count<numofjoysticks;count++)
       {
       joy[count]=SDL_JoystickOpen(count);
-      temp=SDL_JoystickName(count);
-      strcpy(joystick[count].name,temp);
+      temp=SDL_JoystickName(joy[count]);
+      if (temp)
+        strcpy(joystick[count].name,temp);
+      else
+        strcpy(joystick[count].name,"Unknown");
       joystick[count].numofbuttons=SDL_JoystickNumButtons(joy[count]);
       joystick[count].numofhats=SDL_JoystickNumHats(joy[count]);
       }
@@ -188,8 +126,6 @@ int main (int argc,char *argv[])
   if (!glext.multitexture)
     {
     notsupportedmenu();
-
-    SDL_WM_IconifyWindow();
     SDL_Quit();
     return(0);
     }
@@ -206,11 +142,9 @@ int main (int argc,char *argv[])
   if (config.sound)
     shutdownaudio();
 
-  SDL_WM_IconifyWindow();
-
+  SDL_GL_DeleteContext(sdlglcontext);
+  SDL_DestroyWindow(sdlwindow);
   SDL_Quit();
 
   return(0);
   }
-
-

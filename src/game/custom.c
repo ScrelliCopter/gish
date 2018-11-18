@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <input/keyboard.h>
 #include <input/mouse.h>
 #include <input/joystick.h>
+#include <sdl/video.h>
 #include <video/text.h>
 #include <audio/audio.h>
 #include "audio.h"
@@ -96,7 +97,7 @@ void custommenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
       {
@@ -219,7 +220,7 @@ void loadlevelmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     for (count=1;count<=24;count++)
     if (pagenum+count-1<numoffiles)
@@ -319,7 +320,7 @@ void playcampaignmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     for (count=1;count<=24;count++)
     if (pagenum+count-1<numoffiles)
@@ -386,7 +387,7 @@ void campaignmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active || menuitem[2].active)
       {
@@ -625,7 +626,7 @@ void newmappackmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[2].active)
       {

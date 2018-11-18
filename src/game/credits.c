@@ -21,9 +21,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "credits.h"
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
+#include <sdl/video.h>
 #include <video/text.h>
 #include <audio/audio.h>
 #include "audio.h"
@@ -181,7 +182,7 @@ void creditsmenu(void)
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
-    SDL_GL_SwapBuffers();
+    SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
       {

@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <SDL/SDL_endian.h>
+#include <SDL_endian.h>
 
 int comparestrings(const void *arg1,const void *arg2);
 int checkfilespec(char *filespec,char *filename);
