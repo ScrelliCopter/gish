@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <string.h>
 #include <GL/gl.h>
-#include <sdl/endian.h>
+#include <SDL/SDL_endian.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
 #include <video/texture.h>
@@ -983,8 +983,9 @@ void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize)
   {
   int count;
 
-  if (bigendian)
-    byteswapdata(cryptdatasize);
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  byteswapdata(cryptdatasize);
+#endif
 
   for (count=0;count<cryptdatasize;count++)
     {
@@ -993,16 +994,18 @@ void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize)
     cryptdata[count]*=codepair;
     }
 
-  if (bigendian)
-    byteswapdata(cryptdatasize);
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  byteswapdata(cryptdatasize);
+#endif
   }
 
 void decryptdata(unsigned int code,int cryptdatasize)
   {
   int count;
 
-  if (bigendian)
-    byteswapdata(cryptdatasize);
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  byteswapdata(cryptdatasize);
+#endif
 
   for (count=0;count<cryptdatasize;count++)
     {
@@ -1011,8 +1014,9 @@ void decryptdata(unsigned int code,int cryptdatasize)
     cryptdata[count]-=code;
     }
 
-  if (bigendian)
-    byteswapdata(cryptdatasize);
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  byteswapdata(cryptdatasize);
+#endif
   }
 
 void byteswapdata(int cryptdatasize)

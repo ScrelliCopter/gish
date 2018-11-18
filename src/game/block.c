@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "block.h"
 
 #include <stdio.h>
-#include <sdl/endian.h>
+#include <SDL/SDL_endian.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
 #include <video/texture.h>
@@ -329,10 +329,11 @@ void setupblockalpha(int blocknum)
 
       while (xstart<xend)
         {
-        if (!bigendian)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
           texture[blocknum].rgba[0][yline*texture[blocknum].sizex+xstart]|=0xFF000000;
-        else
+#else
           texture[blocknum].rgba[0][yline*texture[blocknum].sizex+xstart]|=0x000000FF;
+#endif
         xstart++;
         }
       yline++;

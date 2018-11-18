@@ -24,18 +24,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <SDL/SDL_endian.h>
 
 int comparestrings(const void *arg1,const void *arg2);
 int checkfilespec(char *filespec,char *filename);
 void listfiles(char *filespec,char filelist[1024][32],int directories);
 
-typedef size_t (*FREAD2)(void *,size_t,size_t,FILE *);
-typedef size_t (*FWRITE2)(const void *,size_t,size_t,FILE *);
-
-extern FREAD2 fread2;
-extern FWRITE2 fwrite2;
-
 size_t freadswap(void *ptr,size_t psize,size_t pnum,FILE *pfp);
 size_t fwriteswap(const void *ptr,size_t psize,size_t pnum,FILE *pfp);
+
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+  #define fread2(PTR,SZ,NUM,FP) fread((PTR),(SZ),(NUM),(FP))
+  #define fwrite2(PTR,SZ,NUM,FP) fread((PTR),(SZ),(NUM),(FP))
+#else
+  #define fread2(PTR,SZ,NUM,FP) freadswap((PTR),(SZ),(NUM),(FP))
+  #define fwrite2(PTR,SZ,NUM,FP) fwriteswap((PTR),(SZ),(NUM),(FP))
+#endif
 
 #endif

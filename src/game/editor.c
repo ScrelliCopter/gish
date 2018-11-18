@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL/SDL.h>
 #include <GL/gl.h>
-#include <sdl/endian.h>
 #include <sdl/event.h>
 #include <video/glfunc.h>
 #include <video/texture.h>
@@ -805,10 +804,11 @@ void editblock(void)
       {
       for (count=0;count<texture[editor.blocknum].sizey;count++)
       for (count2=0;count2<texture[editor.blocknum].sizex;count2++)
-      if (!bigendian)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
         texture[editor.blocknum].rgba[0][count*texture[editor.blocknum].sizex+count2]&=0xFFFFFF;
-      else
+#else
         texture[editor.blocknum].rgba[0][count*texture[editor.blocknum].sizex+count2]&=0xFFFFFF00;
+#endif
 
       setupblockalpha(editor.blocknum);
 
@@ -816,12 +816,11 @@ void editblock(void)
       for (count=0;count<texture[editor.blocknum].sizey;count++)
       for (count2=0;count2<texture[editor.blocknum].sizex;count2++)
         {
-        if (!bigendian)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
         if ((texture[editor.blocknum].rgba[0][count*texture[editor.blocknum].sizex+count2]&0xFF000000)!=0xFF000000)
-          texture[editor.blocknum].isalpha=1;
-  
-        if (bigendian)
+#else
         if ((texture[editor.blocknum].rgba[0][count*texture[editor.blocknum].sizex+count2]&0x000000FF)!=0x000000FF)
+#endif
           texture[editor.blocknum].isalpha=1;
         }
 

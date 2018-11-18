@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "audio.h"
 
 #include <SDL/SDL.h>
-#include <sdl/endian.h>
 #include <sdl/platform.h>
 #include <game/game.h>
 #include <game/audio.h>
@@ -183,13 +182,14 @@ int streamogg(int buffernum)
   if (size==0)
     return(0);
 
-  if (bigendian)
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
   for (count=0;count<size/2;count++)
     {
     temp=oggdata[count*2];
     oggdata[count*2]=oggdata[count*2+1];
     oggdata[count*2+1]=temp;
     }
+#endif
 
   alBufferData(buffernum,oggformat,oggdata,size,vorbisinfo->rate);
 
@@ -225,7 +225,7 @@ void loadwav(int buffernum,char *filename)
       else
         format=AL_FORMAT_MONO16;
 
-      if (bigendian)
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
       if (format==AL_FORMAT_MONO16)
         {
         for (count=0;count<wavlength/2;count++)
@@ -235,6 +235,7 @@ void loadwav(int buffernum,char *filename)
           wavbuffer[count*2+1]=temp;
           }
         }
+#endif
 
       alBufferData(soundbuffer[buffernum],format,wavbuffer,wavlength,wavspec.freq);
       bufferloaded[buffernum]=1;

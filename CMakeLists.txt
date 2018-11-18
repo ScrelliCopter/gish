@@ -124,8 +124,6 @@ set(SOURCES
 	src/physics/particle.c
 	src/physics/particle.h
 
-	src/sdl/endian.c
-	src/sdl/endian.h
 	src/sdl/event.c
 	src/sdl/event.h
 	src/sdl/file.c

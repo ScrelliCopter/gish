@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <GL/gl.h>
 #include <sdl/platform.h>
-#include <sdl/endian.h>
 #include <sdl/file.h>
 
 struct TGAHEADER
@@ -103,28 +102,25 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
     if (alpha!=255)
       texture[texturenum].isalpha=1;
 
-    if (!bigendian)
-      {
-      if (origin==0)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==1)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==2)
-        imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==3)
-        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      }
-    else
-      {
-      if (origin==0)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==1)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==2)
-        imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==3)
-        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      }
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if (origin==0)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==1)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==2)
+      imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==3)
+      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+#else
+    if (origin==0)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==1)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==2)
+      imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==3)
+      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+#endif
     }
 
   fclose(fp);
@@ -157,16 +153,13 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
     {
     texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[count*tgaheader.imagewidth+count2];
 
-    if (!bigendian)
-      {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
-        texture[texturenum].alphamap=1;
-      }
-    else
-      {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
-        texture[texturenum].alphamap=1;
-      }
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
+      texture[texturenum].alphamap=1;
+#else
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
+      texture[texturenum].alphamap=1;
+#endif
     }
 
   free(imagedata);
@@ -232,28 +225,25 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
     if (alpha!=255)
       texture[texturenum].isalpha=1;
 
-    if (!bigendian)
-      {
-      if (origin==0)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==1)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==2)
-        imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==3)
-        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      }
-    else
-      {
-      if (origin==0)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==1)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==2)
-        imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==3)
-        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      }
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if (origin==0)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==1)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==2)
+      imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==3)
+      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+#else
+    if (origin==0)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==1)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==2)
+      imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==3)
+      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+#endif
     }
 
   fclose(fp);
@@ -282,16 +272,13 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
   for (count2=0;count2<texture[texturenum].sizex;count2++)
     {
     texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[count*tgaheader.imagewidth+count2];
-    if (!bigendian)
-      {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
-        texture[texturenum].alphamap=1;
-      }
-    else
-      {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
-        texture[texturenum].alphamap=1;
-      }
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
+      texture[texturenum].alphamap=1;
+#else
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
+      texture[texturenum].alphamap=1;
+#endif
     }
 
   free(imagedata);
@@ -359,28 +346,25 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
       else
         alpha=255;
   
-    if (!bigendian)
-      {
-      if (origin==0)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==1)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==2)
-        imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      if (origin==3)
-        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-      }
-    else
-      {
-      if (origin==0)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==1)
-        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==2)
-        imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      if (origin==3)
-        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-      }
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if (origin==0)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==1)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==2)
+      imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+    if (origin==3)
+      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+#else
+    if (origin==0)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==1)
+      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==2)
+      imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+    if (origin==3)
+      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+#endif
     }
   
     fclose(fp);
@@ -412,16 +396,13 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
   if (count2<tgaheader.imagewidth)
     {
     texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[(starty+count)*tgaheader.imagewidth+(startx+count2)];
-    if (!bigendian)
-      {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
-        texture[texturenum].alphamap=1;
-      }
-    else
-      {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
-        texture[texturenum].alphamap=1;
-      }
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
+      texture[texturenum].alphamap=1;
+#else
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
+      texture[texturenum].alphamap=1;
+#endif
     }
 
   setuptexture(texturenum);
@@ -517,22 +498,19 @@ void setuptexture(int texturenum)
   for (count=0;count<texture[texturenum].sizey;count++)
   for (count2=0;count2<texture[texturenum].sizex;count2++)
     {
-    if (!bigendian)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
       {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
-        {
-        texture[texturenum].isalpha=1;
-        texture[texturenum].alphamap=1;
-        }
+      texture[texturenum].isalpha=1;
+      texture[texturenum].alphamap=1;
       }
-    else
+#else
+    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
       {
-      if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
-        {
-        texture[texturenum].isalpha=1;
-        texture[texturenum].alphamap=1;
-        }
+      texture[texturenum].isalpha=1;
+      texture[texturenum].alphamap=1;
       }
+#endif
     }
 
   for (count=0;count<texture[texturenum].mipmaplevels;count++)

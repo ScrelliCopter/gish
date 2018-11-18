@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <game/glext.h>
-#include <sdl/endian.h>
 #include <sdl/event.h>
 #include <sdl/video.h>
 #include <video/texture.h>
@@ -88,8 +87,6 @@ int main (int argc,char *argv[])
   int count;
   int flags;
   const char *temp;
-
-  checkbigendian();
 
   loadconfig();
   loadscores();
