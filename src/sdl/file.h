@@ -35,7 +35,7 @@ size_t fwriteswap(const void *ptr,size_t psize,size_t pnum,FILE *pfp);
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
   #define fread2(PTR,SZ,NUM,FP) fread((PTR),(SZ),(NUM),(FP))
-  #define fwrite2(PTR,SZ,NUM,FP) fread((PTR),(SZ),(NUM),(FP))
+  #define fwrite2(PTR,SZ,NUM,FP) fwrite((PTR),(SZ),(NUM),(FP))
 #else
   #define fread2(PTR,SZ,NUM,FP) freadswap((PTR),(SZ),(NUM),(FP))
   #define fwrite2(PTR,SZ,NUM,FP) fwriteswap((PTR),(SZ),(NUM),(FP))
