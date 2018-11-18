@@ -39,6 +39,10 @@ void checksystemmessages(void)
     {
     if (event.type==SDL_WINDOWEVENT)
       {
+      if (event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED)
+        {
+          windowinfo.minimized=0;
+        }
       if (event.window.event==SDL_WINDOWEVENT_FOCUS_LOST)
         {
         if(game.exit==0)
