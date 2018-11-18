@@ -34,6 +34,7 @@ void createbeast(int beasttype,float position[3],float sizex,float sizey,float m
 void createbobble(int beasttype,float position[3],float sizex,float sizey,float mass,float friction);
 void createhead(float position[3],float sizex,float sizey,float mass,float friction);
 void createamber(float position[3]);
+void createareaswitch(float position[3],float sizex,float sizey);
 void creategenerator(float position[3],float mass);
 void deleteobject(int objectnum);
 void deleterope(int ropenum);
