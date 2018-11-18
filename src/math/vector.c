@@ -21,21 +21,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "vector.h"
 
-extern INLINE float dotproduct(float *vec1,float *vec2);
-extern INLINE void crossproduct(float *result,float *vec1,float *vec2);
-extern INLINE float vectorlength(float *vec1);
-extern INLINE void normalizevector(float *result,float *vec1);
-extern INLINE void copyvector(float *result,float *vec1);
-extern INLINE void negvector(float *result,float *vec);
+extern INLINE float dotproduct(const float *vec1,const float *vec2);
+extern INLINE void crossproduct(float *result,const float *vec1,const float *vec2);
+extern INLINE float vectorlength(const float *vec1);
+extern INLINE void normalizevector(float *result,const float *vec1);
+extern INLINE void copyvector(float *result,const float *vec1);
+extern INLINE void negvector(float *result,const float *vec);
 extern INLINE void zerovector(float *result);
-extern INLINE void addvectors(float *result,float *vec,float *vec2);
-extern INLINE void subtractvectors(float *result,float *vec,float *vec2);
-extern INLINE void scalevector(float *result,float *vec,float scale);
-extern INLINE void scaleaddvectors(float *result,float *vec,float *vec2,float scale);
-extern INLINE void addvectors2(float *result,float *vec,float *vec2);
-extern INLINE void subtractvectors2(float *result,float *vec,float *vec2);
-extern INLINE void scalevector2(float *result,float *vec,float scale);
-extern INLINE void scaleaddvectors2(float *result,float *vec,float *vec2,float scale);
+extern INLINE void addvectors(float *result,const float *vec,const float *vec2);
+extern INLINE void subtractvectors(float *result,const float *vec,const float *vec2);
+extern INLINE void scalevector(float *result,const float *vec,float scale);
+extern INLINE void scaleaddvectors(float *result,const float *vec,const float *vec2,float scale);
+extern INLINE void addvectors2(float *result,const float *vec,const float *vec2);
+extern INLINE void subtractvectors2(float *result,const float *vec,const float *vec2);
+extern INLINE void scalevector2(float *result,const float *vec,float scale);
+extern INLINE void scaleaddvectors2(float *result,const float *vec,const float *vec2,float scale);
 
 void resetorientation(float orientation[3][3])
   {

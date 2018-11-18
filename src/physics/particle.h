@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PHYSICSCYCLE 50.0f
 
 void particlecollisionlevel(int particlenum);
-void calculatefriction(float *nforce,float *fforce,float *normal,float cofric);
+void calculatefriction(float *nforce,float *fforce,const float *normal,float cofric);
 void particlesimulation(void);
 void particletimetolive(void);
 void createparticle(int type,float *position,float *velocity,float mass,int objectnum,int timetolive);

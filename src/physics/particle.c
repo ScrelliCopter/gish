@@ -76,7 +76,7 @@ void particlecollisionlevel(int particlenum)
     }
   }
 
-void calculatefriction(float *nforce,float *fforce,float *normal,float cofric)
+void calculatefriction(float *nforce,float *fforce,const float *normal,float cofric)
   {
   float vec[3];
   float veclength;
