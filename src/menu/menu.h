@@ -91,8 +91,6 @@ extern char menuinputtemp[256];
 extern int joymenunum;
 extern int joystickmenu;
 
-extern int currentmenuitem;
-
 extern char keyboardlabel[323][16];
 
 #endif

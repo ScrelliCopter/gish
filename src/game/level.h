@@ -36,9 +36,7 @@ void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize);
 void decryptdata(unsigned int code,int cryptdatasize);
 void byteswapdata(int cryptdatasize);
 
-unsigned int cryptdata[1048576];
-
-int textureused[512];
+extern unsigned int cryptdata[1048576];
 
 struct COLLISION
   {

@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int numofjoysticks;
 SDL_Joystick *joy[16];
-int joystickenabled;
-int joystickused;
 struct JOYSTICK joystick[16], prevjoystick[16];
 
 void checkjoystick(void)

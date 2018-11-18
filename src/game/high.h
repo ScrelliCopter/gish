@@ -26,11 +26,4 @@ void highscoremenu(int levelnum);
 void savescores(void);
 void loadscores(void);
 
-struct HIGHSCORE
-  {
-  char name[32];
-  int time;
-  };
-extern struct HIGHSCORE highscore[32][16];
-
 #endif

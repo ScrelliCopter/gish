@@ -53,14 +53,4 @@ struct TEXTURE
   };
 extern struct TEXTURE texture[2048];
 
-struct TGAHEADER
-  {
-  unsigned char imagetypecode;
-  short int imagewidth;
-  short int imageheight;
-  unsigned char pixeldepth;
-  unsigned int imagedata[1024*1024];
-  };
-extern struct TGAHEADER tgaheader;
-
 #endif

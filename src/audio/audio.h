@@ -39,9 +39,6 @@ int streamogg(int buffernum);
 void shutdownaudio(void);
 void loadwav(int buffernum,char *filename);
 
-extern ALCcontext *alcontext;
-extern ALCdevice *aldevice;
-
 extern int soundenabled;
 extern ALuint soundbuffer[64];
 extern int bufferloaded[64];
@@ -49,11 +46,8 @@ extern int bufferloaded[64];
 extern OggVorbis_File oggstream[2];
 
 extern vorbis_info *vorbisinfo;
-extern vorbis_comment *vorbiscomment;
 
 extern ALenum oggformat;
-extern char oggdata[OGGBUFFERSIZE];
-
 extern ALuint oggsource;
 extern ALuint oggbuffer[2];
 

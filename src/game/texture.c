@@ -37,7 +37,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "editor.h"
 #include "english.h"
 
-struct TEXTUREEDIT textureedit;
+struct
+  {
+  int pagenum;
+  int texturenum;
+  int tileset;
+  int tilepagenum;
+  char filename[32];
+  } textureedit;
 
 void edittextures(void)
   {

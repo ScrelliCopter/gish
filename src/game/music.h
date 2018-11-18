@@ -32,15 +32,4 @@ int vorbisseek(void *datasource,ogg_int64_t offset,int whence);
 int vorbisclose(void *datasource);
 long vorbistell(void *datasource);
 
-struct OGGMEMORYFILE
-  {
-  char *data;
-  int datasize;
-  int dataread;
-  };
-
-extern struct OGGMEMORYFILE oggmemoryfile[16];
-
-ov_callbacks vorbiscallbacks;
-
 #endif

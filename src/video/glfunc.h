@@ -29,6 +29,4 @@ void setupobjectrender(float *position,float orientation[3][3]);
 void screenshot(void);
 void setupglext(void);
 
-int screenshotbuffer[1280*960];
-
 #endif

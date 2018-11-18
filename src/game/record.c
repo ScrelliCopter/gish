@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "record.h"
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
@@ -40,6 +41,9 @@ void recordframe(void)
   short shorttemp;
   int inttemp;
   FILE *fp;
+
+  //FIXME: this is bad & inefficient but at *least* it won't overflow.
+  int* screenshotbuffer=malloc(windowinfo.resolutionx*windowinfo.resolutiony*sizeof(uint32_t));
 
   glReadBuffer(GL_BACK);
   glReadPixels(0,0,windowinfo.resolutionx,windowinfo.resolutiony,GL_RGBA,GL_UNSIGNED_BYTE,screenshotbuffer);
@@ -97,6 +101,8 @@ void recordframe(void)
       }
     fclose(fp);
     }
+
+  free(screenshotbuffer);
 
   if (changeddir==0)
     chdir("..");

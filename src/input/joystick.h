@@ -29,9 +29,6 @@ void checkjoystick(void);
 extern int numofjoysticks;
 extern SDL_Joystick *joy[16];
 
-extern int joystickenabled;
-extern int joystickused;
-
 struct JOYSTICK
   {
   int x;

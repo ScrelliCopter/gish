@@ -40,7 +40,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 int numofreplayframes;
-struct REPLAYFRAME replayframe[65536];
+struct
+  {
+  unsigned char button;
+  } replayframe[65536];
+
+void resetreplay(void)
+  {
+  numofreplayframes=0;
+  }
 
 void saveinputs(void)
   {

@@ -255,12 +255,12 @@ void setupgame(void)
   int count,count2;
 
   srand(time(NULL));
-  randomnum=0;
+  resetrnd();
 
   for (count=numofsounds-1;count>=0;count--)
     deletesound(count);
 
-  numofreplayframes=0;
+  resetreplay();
 
   game.score[0]=0;
   game.score[1]=0;

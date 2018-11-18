@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "glfunc.h"
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <GL/gl.h>
 #include <sdl/event.h>
@@ -141,6 +142,8 @@ void screenshot(void)
   int inttemp;
   FILE *fp;
 
+  int* screenshotbuffer=malloc(windowinfo.resolutionx*windowinfo.resolutiony*sizeof(uint32_t));
+
   glReadBuffer(GL_BACK);
   glReadPixels(0,0,windowinfo.resolutionx,windowinfo.resolutiony,GL_RGBA,GL_UNSIGNED_BYTE,screenshotbuffer);
 
@@ -198,4 +201,6 @@ void screenshot(void)
       }
     fclose(fp);
     }
+
+  free(screenshotbuffer);
   }

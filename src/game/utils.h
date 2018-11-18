@@ -22,33 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_GAME_UTILS_H__
 #define __GISH_GAME_UTILS_H__
 
-#ifdef WINDOZE
-void getcputime(__int64 *ptime);
-#endif
 void resettimer(int timernum);
 void starttimer(int timernum);
 void stoptimer(int timernum);
-
-#ifdef WINDOZE
-struct TIMER
-  {
-  __int64 starttime;
-  __int64 totaltime;
-  };
-
-__int64 timetemp;
-#endif
-
-#ifndef WINDOZE
-struct TIMER
-  {
-  int starttime;
-  int totaltime;
-  };
-
-extern int timetemp;
-#endif
-
-extern struct TIMER timer[64];
 
 #endif

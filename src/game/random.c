@@ -100,3 +100,8 @@ int rnd(void)
 
   return(count);
   }
+
+int resetrnd(void)
+  {
+  randomnum=0;
+  }

@@ -22,17 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_GAME_REPLAY_H__
 #define __GISH_GAME_REPLAY_H__
 
+void resetreplay(void);
 void saveinputs(void);
 void loadinputs(void);
 void savereplay(int levelnum);
 int loadreplay(char *filename);
 void replaymenu(void);
-
-extern int numofreplayframes;
-struct REPLAYFRAME
-  {
-  unsigned char button;
-  };
-extern struct REPLAYFRAME replayframe[65536];
 
 #endif

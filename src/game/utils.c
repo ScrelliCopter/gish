@@ -21,7 +21,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "utils.h"
 
+#ifdef WINDOZE
+void getcputime(__int64 *ptime);
+struct TIMER
+  {
+  __int64 starttime;
+  __int64 totaltime;
+  };
+
+__int64 timetemp;
+#else
+struct TIMER
+  {
+  int starttime;
+  int totaltime;
+  };
+
 int timetemp;
+#endif
+
 struct TIMER timer[64];
 
 #ifdef WINDOZE

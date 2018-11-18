@@ -36,9 +36,7 @@ ALuint soundbuffer[64];
 int bufferloaded[64];
 
 OggVorbis_File oggstream[2];
-
 vorbis_info *vorbisinfo;
-vorbis_comment *vorbiscomment;
 
 ALenum oggformat;
 char oggdata[OGGBUFFERSIZE];

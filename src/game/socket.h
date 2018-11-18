@@ -25,6 +25,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 unsigned int rotint(unsigned int x,int rotnum);
 void launchwebpage(char *webpagename);
 
-extern char sockdata[1024];
-
 #endif

@@ -29,16 +29,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sdl/endian.h>
 #include <sdl/file.h>
 
+struct TGAHEADER
+  {
+  unsigned char imagetypecode;
+  short int imagewidth;
+  short int imageheight;
+  unsigned char pixeldepth;
+  };
+
 char lasttextureloaded[32];
 struct TEXTURE texture[2048];
-struct TGAHEADER tgaheader;
 
 void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
   {
   int count,count2;
-	int red,green,blue,alpha;
+  unsigned int red,green,blue,alpha;
   int changeddir;
   unsigned char origin;
+  struct TGAHEADER tgaheader;
+  unsigned int* imagedata;
   FILE *fp;
 
   changeddir=chdir("texture");
@@ -78,14 +87,16 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
 
   texture[texturenum].isalpha=0;
 
+  imagedata=malloc(tgaheader.imagewidth*tgaheader.imageheight*sizeof(uint32_t));
+
   for (count=0;count<tgaheader.imageheight;count++)
   for (count2=0;count2<tgaheader.imagewidth;count2++)
     {
-    blue=fgetc(fp);
-    green=fgetc(fp);
-    red=fgetc(fp);
+    blue=(unsigned int)fgetc(fp);
+    green=(unsigned int)fgetc(fp);
+    red=(unsigned int)fgetc(fp);
     if (tgaheader.pixeldepth==32)
-      alpha=fgetc(fp);
+      alpha=(unsigned int)fgetc(fp);
     else
       alpha=255;
 
@@ -95,24 +106,24 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
     if (!bigendian)
       {
       if (origin==0)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==1)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==2)
-        tgaheader.imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==3)
-        tgaheader.imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       }
     else
       {
       if (origin==0)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==1)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==2)
-        tgaheader.imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==3)
-        tgaheader.imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       }
     }
 
@@ -144,7 +155,7 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
   for (count=0;count<texture[texturenum].sizey;count++)
   for (count2=0;count2<texture[texturenum].sizex;count2++)
     {
-    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=tgaheader.imagedata[count*tgaheader.imagewidth+count2];
+    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[count*tgaheader.imagewidth+count2];
 
     if (!bigendian)
       {
@@ -158,6 +169,8 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
       }
     }
 
+  free(imagedata);
+
   if (mipmap)
     generatemipmap(texturenum);
   setuptexture(texturenum);
@@ -166,8 +179,10 @@ void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt
 void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
   {
   int count,count2;
-	int red,green,blue,alpha;
+  unsigned int red,green,blue,alpha;
   unsigned char origin;
+  struct TGAHEADER tgaheader;
+  unsigned int* imagedata;
   FILE *fp;
 
   if ((fp=fopen(filename,"rb"))==NULL)
@@ -201,14 +216,16 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
 
   texture[texturenum].isalpha=0;
 
+  imagedata=malloc(tgaheader.imagewidth*tgaheader.imageheight*sizeof(uint32_t));
+
   for (count=0;count<tgaheader.imageheight;count++)
   for (count2=0;count2<tgaheader.imagewidth;count2++)
     {
-    blue=fgetc(fp);
-    green=fgetc(fp);
-    red=fgetc(fp);
+    blue=(unsigned int)fgetc(fp);
+    green=(unsigned int)fgetc(fp);
+    red=(unsigned int)fgetc(fp);
     if (tgaheader.pixeldepth==32)
-      alpha=fgetc(fp);
+      alpha=(unsigned int)fgetc(fp);
     else
       alpha=255;
 
@@ -218,24 +235,24 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
     if (!bigendian)
       {
       if (origin==0)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==1)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==2)
-        tgaheader.imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==3)
-        tgaheader.imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       }
     else
       {
       if (origin==0)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==1)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==2)
-        tgaheader.imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==3)
-        tgaheader.imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       }
     }
 
@@ -264,7 +281,7 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
   for (count=0;count<texture[texturenum].sizey;count++)
   for (count2=0;count2<texture[texturenum].sizex;count2++)
     {
-    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=tgaheader.imagedata[count*tgaheader.imagewidth+count2];
+    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[count*tgaheader.imagewidth+count2];
     if (!bigendian)
       {
       if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
@@ -277,6 +294,8 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
       }
     }
 
+  free(imagedata);
+
   if (mipmap)
     generatemipmap(texturenum);
   setuptexture(texturenum);
@@ -285,9 +304,11 @@ void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int 
 void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,int sizex,int sizey)
   {
   int count,count2;
-	int red,green,blue,alpha;
+  unsigned int red,green,blue,alpha;
   int changeddir;
   unsigned char origin;
+  struct TGAHEADER tgaheader;
+  unsigned int imagedata[1024*1024];
   FILE *fp;
 
   if (strcmp(lasttextureloaded,filename)!=0)
@@ -330,35 +351,35 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
     for (count=0;count<tgaheader.imageheight;count++)
     for (count2=0;count2<tgaheader.imagewidth;count2++)
       {
-      blue=fgetc(fp);
-      green=fgetc(fp);
-      red=fgetc(fp);
+      blue=(unsigned int)fgetc(fp);
+      green=(unsigned int)fgetc(fp);
+      red=(unsigned int)fgetc(fp);
       if (tgaheader.pixeldepth==32)
-        alpha=fgetc(fp);
+        alpha=(unsigned int)fgetc(fp);
       else
         alpha=255;
   
     if (!bigendian)
       {
       if (origin==0)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==1)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==2)
-        tgaheader.imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       if (origin==3)
-        tgaheader.imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
+        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
       }
     else
       {
       if (origin==0)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==1)
-        tgaheader.imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==2)
-        tgaheader.imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       if (origin==3)
-        tgaheader.imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
+        imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
       }
     }
   
@@ -390,7 +411,7 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
   for (count2=0;count2<texture[texturenum].sizex;count2++)
   if (count2<tgaheader.imagewidth)
     {
-    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=tgaheader.imagedata[(starty+count)*tgaheader.imagewidth+(startx+count2)];
+    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[(starty+count)*tgaheader.imagewidth+(startx+count2)];
     if (!bigendian)
       {
       if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)

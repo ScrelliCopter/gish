@@ -40,7 +40,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "replay.h"
 #include "english.h"
 
-struct HIGHSCORE highscore[32][16];
+struct
+  {
+  char name[32];
+  int time;
+  } highscore[32][16];
 
 void highscoremenu(int levelnum)
   {
