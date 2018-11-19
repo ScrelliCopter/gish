@@ -93,8 +93,8 @@ void createwindow(void)
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,windowinfo.stencilbits);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 
-  int windowposx=SDL_WINDOWPOS_CENTERED;
-  int windowposy=SDL_WINDOWPOS_CENTERED;
+  int windowposx=SDL_WINDOWPOS_CENTERED_DISPLAY(windowinfo.displayid);
+  int windowposy=SDL_WINDOWPOS_CENTERED_DISPLAY(windowinfo.displayid);
   Uint32 flags=SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL;
   if (windowinfo.fullscreen)
     {
