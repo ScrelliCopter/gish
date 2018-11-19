@@ -647,16 +647,20 @@ void optionsmenu(void)
   }
 
 
+#define PAGENUMVIDMODES 20
+
 void videooptionsmenu(void)
   {
   int ypos;
+  int pagenum,numpages;
+  int modecount;
   int prevvideomodenum;
   int videomodenum;
   char restext[64];
   int fullscreen;
   int bitsperpixel;
   int refreshrate;
-  int displayid;
+  int displayid,prevdisplayid;
   char *glvendor;
   char *glrenderer;
   char *glversion;
@@ -665,11 +669,18 @@ void videooptionsmenu(void)
   glrenderer=(char *) glGetString(GL_RENDERER);
   glversion=(char *) glGetString(GL_VERSION);
 
+  pagenum=0;
+  modecount=0;
   videomodenum=-1;
   for (int i=0;i<numofsdlvideomodes;i++)
     {
     if (windowinfo.displayid!=sdlvideomode[i].displayid)
       continue;
+    if (sdlvideomode[i].displaymode.w<640)
+      continue;
+
+    modecount++;
+
     if (windowinfo.resolutionx!=sdlvideomode[i].displaymode.w)
       continue;
     if (windowinfo.resolutiony!=sdlvideomode[i].displaymode.h)
@@ -680,18 +691,22 @@ void videooptionsmenu(void)
       continue;
 
     videomodenum=i;
+    pagenum=modecount/PAGENUMVIDMODES;
     break;
     }
   prevvideomodenum=videomodenum;
   fullscreen=windowinfo.fullscreen;
   bitsperpixel=windowinfo.bitsperpixel;
   refreshrate=windowinfo.refreshrate;
-  displayid=windowinfo.displayid;
+  prevdisplayid=displayid=windowinfo.displayid;
 
   resetmenuitems();
+  numpages=0;
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
     {
+
+
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -702,16 +717,23 @@ void videooptionsmenu(void)
     setmenuitem(MO_HOTKEY,SCAN_A);
 
     ypos=48;
+    modecount=0;
     for (int i=0;i<numofsdlvideomodes;i++)
       {
-      Uint32 rmask,gmask,bmask,amask;
-      int pad=0;
-
-      struct SDLVIDEOMODE *vidmode=&sdlvideomode[i];
       if (sdlvideomode[i].displaymode.w<640)
         continue;
       if (sdlvideomode[i].displayid!=displayid)
         continue;
+
+      modecount++;
+
+      if (modecount-1<pagenum*PAGENUMVIDMODES)
+        continue;
+      if (modecount-1>=pagenum*PAGENUMVIDMODES+PAGENUMVIDMODES)
+        continue;
+
+      struct SDLVIDEOMODE *vidmode=&sdlvideomode[i];
+      int pad=0;
 
       pad+=(vidmode->displaymode.w>=1000)?0:1;
       pad+=(vidmode->displaymode.h>=1000)?0:1;
@@ -726,6 +748,20 @@ void videooptionsmenu(void)
 
       ypos+=16;
       }
+    numpages=(modecount-1)/PAGENUMVIDMODES;
+
+    ypos=48+PAGENUMVIDMODES*16+4;
+    createmenuitem(TXT_PAGE_UP,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    setmenuitem(MO_HOTKEY,SCAN_PAGEUP);
+    setmenuitem(MO_SET,&pagenum,pagenum-1);
+    if (pagenum<=0)
+      setmenuitem(MO_HIGHLIGHT,0);
+
+    createmenuitem(TXT_PAGE_DOWN,(20*16)|TEXT_END,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    setmenuitem(MO_HOTKEY,SCAN_PAGEDOWN);
+    setmenuitem(MO_SET,&pagenum,pagenum+1);
+    if (pagenum>=numpages)
+      setmenuitem(MO_HIGHLIGHT,0);
 
     ypos=32;
     createmenuitem(TXT_FULLSCREEN,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
@@ -745,6 +781,11 @@ void videooptionsmenu(void)
       createmenuitem(sdldisplay[i].name,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&displayid,i);
       ypos+=16;
+      }
+    if (prevdisplayid!=displayid)
+      {
+      pagenum=0;
+      prevdisplayid=displayid;
       }
 
     checksystemmessages();
