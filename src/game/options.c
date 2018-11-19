@@ -714,7 +714,9 @@ void videooptionsmenu(void)
     createmenuitem(TXT_APPLY,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_A);
 
-    ypos=48;
+    ypos=32;
+    drawtext(TXT_RESOLUTION,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    ypos+=16;
     modecount=0;
     for (int i=0;i<numofsdlvideomodes;i++)
       {
@@ -799,8 +801,6 @@ void videooptionsmenu(void)
     checkmenuitems();
 
     setuptextdisplay();
-
-    drawtext(TXT_RESOLUTION,0,32,16,1.0f,1.0f,1.0f,1.0f);
 
     ypos=400;
     drawtext(TXT_OPENGLINFO,0,ypos,16,1.0f,1.0f,1.0f,1.0f);

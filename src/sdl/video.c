@@ -145,7 +145,6 @@ void getvideoinfo(void)
   {
   SDL_DisplayMode sdlvideoinfo;
   Uint32 rmask,gmask,bmask,amask;
-  int bpp=16;
 
   if (SDL_GetCurrentDisplayMode(0,&sdlvideoinfo)==0)
     {
