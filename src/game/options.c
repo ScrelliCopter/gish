@@ -767,10 +767,18 @@ void videooptionsmenu(void)
     drawtext(restext,144|TEXT_CENTER,ypos,12,pagerluma,pagerluma,pagerluma,1.0f);
 
     ypos=32;
+    createmenuitem(TXT_WINDOWED,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    setmenuitem(MO_SET,&fullscreen,0);
+    ypos+=16;
     createmenuitem(TXT_FULLSCREEN,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_TOGGLE,&fullscreen);
-    setmenuitem(MO_HOTKEY,SCAN_F);
-    ypos+=16*3;
+    setmenuitem(MO_SET,&fullscreen,1);
+    ypos+=16;
+    createmenuitem(TXT_BORDERLESS,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    setmenuitem(MO_SET,&fullscreen,2);
+    ypos+=16*2;
+
+    drawtext(TXT_DISPLAY,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    ypos+=16;
 
     for (int i=0;i<numofsdldisplays;i++)
       {
@@ -793,7 +801,6 @@ void videooptionsmenu(void)
     setuptextdisplay();
 
     drawtext(TXT_RESOLUTION,0,32,16,1.0f,1.0f,1.0f,1.0f);
-    drawtext(TXT_DISPLAY,340,64,16,1.0f,1.0f,1.0f,1.0f);
 
     ypos=400;
     drawtext(TXT_OPENGLINFO,0,ypos,16,1.0f,1.0f,1.0f,1.0f);

@@ -101,13 +101,15 @@ void createwindow(void)
     {
     windowposx=sdldisplay[windowinfo.displayid].bounds.x;
     windowposy=sdldisplay[windowinfo.displayid].bounds.y;
-    flags|=SDL_WINDOW_FULLSCREEN;
+    flags|=(windowinfo.fullscreen==2)?
+      SDL_WINDOW_FULLSCREEN_DESKTOP:
+      SDL_WINDOW_FULLSCREEN;
     }
 
   sdlwindow=SDL_CreateWindow("Gish", windowposx, windowposy,
     windowinfo.resolutionx,windowinfo.resolutiony,flags);
 
-  if (windowinfo.fullscreen)
+  if (windowinfo.fullscreen==1)
     {
     int videomodenum=-1;
     for (int i=0;i<numofsdlvideomodes;i++)
