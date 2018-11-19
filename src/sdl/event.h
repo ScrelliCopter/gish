@@ -36,6 +36,7 @@ struct WINDOWINFO
   int depthbits;
   int stencilbits;
   int bitsperpixel;
+  int refreshrate;
   int fullscreen;
   int shutdown;
   int minimized;

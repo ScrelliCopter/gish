@@ -655,7 +655,8 @@ void videooptionsmenu(void)
   char restext[64];
   int fullscreen;
   int bitsperpixel;
-  int displayid,lastid;
+  int refreshrate;
+  int displayid;
   char *glvendor;
   char *glrenderer;
   char *glversion;
@@ -666,17 +667,25 @@ void videooptionsmenu(void)
 
   videomodenum=-1;
   for (int i=0;i<numofsdlvideomodes;i++)
-  if (sdlvideomode[i].bitsperpixel==32)
     {
-    if (windowinfo.resolutionx==sdlvideomode[i].resolutionx)
-    if (windowinfo.resolutiony==sdlvideomode[i].resolutiony)
-    if (windowinfo.bitsperpixel==sdlvideomode[i].bitsperpixel)
-    if (windowinfo.displayid==sdlvideomode[i].displayid)
-      videomodenum=i;
+    if (windowinfo.displayid!=sdlvideomode[i].displayid)
+      continue;
+    if (windowinfo.resolutionx!=sdlvideomode[i].displaymode.w)
+      continue;
+    if (windowinfo.resolutiony!=sdlvideomode[i].displaymode.h)
+      continue;
+    if (windowinfo.bitsperpixel!=sdlvideomode[i].bitsperpixel)
+      continue;
+    if (windowinfo.refreshrate!=sdlvideomode[i].displaymode.refresh_rate)
+      continue;
+
+    videomodenum=i;
+    break;
     }
   prevvideomodenum=videomodenum;
   fullscreen=windowinfo.fullscreen;
   bitsperpixel=windowinfo.bitsperpixel;
+  refreshrate=windowinfo.refreshrate;
   displayid=windowinfo.displayid;
 
   resetmenuitems();
@@ -695,11 +704,17 @@ void videooptionsmenu(void)
     ypos=64;
     for (int i=0;i<numofsdlvideomodes;i++)
       {
+      Uint32 rmask,gmask,bmask,amask;
+
       struct SDLVIDEOMODE *vidmode=&sdlvideomode[i];
-      if (sdlvideomode[i].resolutionx<640) continue;
+      if (sdlvideomode[i].displaymode.w<640) continue;
       if (sdlvideomode[i].displayid!=displayid) continue;
 
-      snprintf(restext,sizeof(restext),"%dx%d %dbpp@%dhz",vidmode->resolutionx,vidmode->resolutiony,vidmode->bitsperpixel,vidmode->refreshrate);
+      snprintf(restext,sizeof(restext),"%dx%d %dbpp@%dhz",
+        vidmode->displaymode.w,
+        vidmode->displaymode.h,
+        vidmode->bitsperpixel,
+        vidmode->displaymode.refresh_rate);
       createmenuitem(restext,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&videomodenum,i);
 
@@ -719,15 +734,11 @@ void videooptionsmenu(void)
     setmenuitem(MO_SET,&bitsperpixel,32);
     count+=16;
     */
-    lastid=-1;
-    for (int i=0;i<numofsdlvideomodes;i++)
+    for (int i=0;i<numofsdldisplays;i++)
       {
-      if (sdlvideomode[i].displayid==lastid) continue;
-
-      snprintf(restext,sizeof(restext),"#%d",sdlvideomode[i].displayid);
+      snprintf(restext,sizeof(restext),"#%d",i);
       createmenuitem(restext,420,ypos,16,1.0f,1.0f,1.0f,1.0f);
-      setmenuitem(MO_SET,&displayid,sdlvideomode[i].displayid);
-      lastid=sdlvideomode[i].displayid;
+      setmenuitem(MO_SET,&displayid,i);
       ypos+=16;
       }
 
@@ -774,16 +785,18 @@ void videooptionsmenu(void)
     if (prevvideomodenum==videomodenum)
     if (windowinfo.fullscreen==fullscreen)
     if (windowinfo.bitsperpixel==bitsperpixel)
+    if (windowinfo.refreshrate==refreshrate)
       return;
 
     if (videomodenum==-1)
       return;
 
     windowinfo.displayid=sdlvideomode[videomodenum].displayid;
-    windowinfo.resolutionx=sdlvideomode[videomodenum].resolutionx;
-    windowinfo.resolutiony=sdlvideomode[videomodenum].resolutiony;
+    windowinfo.resolutionx=sdlvideomode[videomodenum].displaymode.w;
+    windowinfo.resolutiony=sdlvideomode[videomodenum].displaymode.h;
     windowinfo.fullscreen=fullscreen;
-    windowinfo.bitsperpixel=bitsperpixel;
+    windowinfo.bitsperpixel=sdlvideomode[videomodenum].bitsperpixel;
+    windowinfo.refreshrate=sdlvideomode[videomodenum].displaymode.refresh_rate;
     createwindow();
 
     for (int i=0;i<2048;i++)

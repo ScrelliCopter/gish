@@ -375,8 +375,6 @@ void renderobjectspecular(int objectnum)
   float scale;
   char tempcolor[4];
 
-  if (windowinfo.bitsperpixel!=32)
-    return;
   if (!glext.texture_env_dot3)
     return;
 

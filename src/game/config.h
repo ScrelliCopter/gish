@@ -32,9 +32,11 @@ void optionwritestring(char *ptr,char *str,int size);
 
 struct CONFIG
   {
+  int displayid;
   int resolutionx;
   int resolutiony;
   int bitsperpixel;
+  int refreshrate;
   int depthbits;
   int stencilbits;
   int fullscreen;

@@ -96,7 +96,30 @@ void createwindow(void)
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     windowinfo.resolutionx,windowinfo.resolutiony,flags);
 
-  SDL_SetWindowIcon(sdlwindow, SDL_LoadBMP("gish.bmp"));
+  if (windowinfo.fullscreen)
+    {
+    int videomodenum=-1;
+    for (int i=0;i<numofsdlvideomodes;i++)
+      {
+      if (windowinfo.displayid!=sdlvideomode[i].displayid)
+        continue;
+      if (windowinfo.resolutionx!=sdlvideomode[i].displaymode.w)
+        continue;
+      if (windowinfo.resolutiony!=sdlvideomode[i].displaymode.h)
+        continue;
+      if (windowinfo.bitsperpixel!=sdlvideomode[i].bitsperpixel)
+        continue;
+      if (windowinfo.refreshrate!=sdlvideomode[i].displaymode.refresh_rate)
+        continue;
+
+      videomodenum=i;
+      break;
+      }
+
+    if (videomodenum>=0)
+      SDL_SetWindowDisplayMode(sdlwindow,&sdlvideomode[videomodenum].displaymode);
+    }
+  SDL_SetWindowIcon(sdlwindow,SDL_LoadBMP("gish.bmp"));
 
   sdlglcontext=SDL_GL_CreateContext(sdlwindow);
   SDL_GL_MakeCurrent(sdlwindow,sdlglcontext);
@@ -106,6 +129,7 @@ void createwindow(void)
 }
 
 int numofsdlvideomodes;
+int numofsdldisplays;
 struct SDLVIDEOMODE sdlvideomode[4096];
 
 void getvideoinfo(void)
@@ -114,76 +138,35 @@ void getvideoinfo(void)
   Uint32 rmask,gmask,bmask,amask;
   int bpp=16;
 
-  if (SDL_GetCurrentDisplayMode(0, &sdlvideoinfo)==0)
+  if (SDL_GetCurrentDisplayMode(0,&sdlvideoinfo)==0)
     {
-    SDL_PixelFormatEnumToMasks(sdlvideoinfo.format,&bpp,&rmask,&gmask,&bmask,&amask);
-    if (bpp==16)
-      config.bitsperpixel=16;
-    }
-  else
-    {
-      config.bitsperpixel=16;
+    SDL_PixelFormatEnumToMasks(&sdlvideoinfo,&config.bitsperpixel,&rmask,&gmask,&bmask,&amask);
+    config.refreshrate=sdlvideoinfo.refresh_rate;
     }
   }
 
 void listvideomodes(void)
   {
-  int dispid;
-  int displaycount;
-  int nummodes;
-  int count;
   Uint32 rmask,gmask,bmask,amask;
-  int bpp;
-  SDL_DisplayMode sdlmode;
-
   numofsdlvideomodes=0;
+  numofsdldisplays=SDL_GetNumVideoDisplays();
 
-  displaycount=SDL_GetNumVideoDisplays();
-  if (displaycount<1)
-    goto fail;
-
-  for (dispid=0;dispid<displaycount;dispid++)
+  for (int dispid=0;dispid<numofsdldisplays;dispid++)
     {
-    nummodes=SDL_GetNumDisplayModes(dispid);
-    if (nummodes<1)
-      goto fail;
-
-    for (count=0;nummodes && count<64;count++)
+    int nummodes=SDL_GetNumDisplayModes(dispid);
+    for (int i=0;nummodes && i<64;i++)
       {
-      if (SDL_GetDisplayMode(dispid,count,&sdlmode)!=0)
-        continue;
-      if (SDL_PixelFormatEnumToMasks(sdlmode.format,&bpp,&rmask,&gmask,&bmask,&amask)==SDL_FALSE)
+      if (SDL_GetDisplayMode(dispid,i,&sdlvideomode[numofsdlvideomodes].displaymode)!=0)
         continue;
 
       sdlvideomode[numofsdlvideomodes].displayid=dispid;
-      sdlvideomode[numofsdlvideomodes].resolutionx=sdlmode.w;
-      sdlvideomode[numofsdlvideomodes].resolutiony=sdlmode.h;
-      sdlvideomode[numofsdlvideomodes].bitsperpixel=bpp;
-      sdlvideomode[numofsdlvideomodes].refreshrate=sdlmode.refresh_rate;
+      sdlvideomode[numofsdlvideomodes].bitsperpixel;
+      SDL_PixelFormatEnumToMasks(
+        sdlvideomode[numofsdlvideomodes].displaymode.format,
+        &sdlvideomode[numofsdlvideomodes].bitsperpixel,
+        &rmask,&gmask,&bmask,&amask);
       numofsdlvideomodes++;
       }
     }
-
-  return;
-
-fail:
-  sdlvideomode[numofsdlvideomodes].displayid=0;
-  sdlvideomode[numofsdlvideomodes].resolutionx=640;
-  sdlvideomode[numofsdlvideomodes].resolutiony=480;
-  sdlvideomode[numofsdlvideomodes].bitsperpixel=32;
-  sdlvideomode[numofsdlvideomodes].refreshrate=60;
-  numofsdlvideomodes++;
-  sdlvideomode[numofsdlvideomodes].displayid=0;
-  sdlvideomode[numofsdlvideomodes].resolutionx=800;
-  sdlvideomode[numofsdlvideomodes].resolutiony=600;
-  sdlvideomode[numofsdlvideomodes].bitsperpixel=32;
-  sdlvideomode[numofsdlvideomodes].refreshrate=60;
-  numofsdlvideomodes++;
-  sdlvideomode[numofsdlvideomodes].displayid=0;
-  sdlvideomode[numofsdlvideomodes].resolutionx=1024;
-  sdlvideomode[numofsdlvideomodes].resolutiony=768;
-  sdlvideomode[numofsdlvideomodes].bitsperpixel=32;
-  sdlvideomode[numofsdlvideomodes].refreshrate=60;
-  numofsdlvideomodes++;
   }
 

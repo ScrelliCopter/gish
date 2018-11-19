@@ -29,13 +29,12 @@ void getvideoinfo(void);
 void listvideomodes(void);
 
 extern int numofsdlvideomodes;
+extern int numofsdldisplays;
 struct SDLVIDEOMODE
   {
   int displayid;
-  int resolutionx;
-  int resolutiony;
+  SDL_DisplayMode displaymode;
   int bitsperpixel;
-  int refreshrate;
   };
 extern struct SDLVIDEOMODE sdlvideomode[4096];
 

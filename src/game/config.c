@@ -41,9 +41,11 @@ void loadconfig(void)
   int count,count2;
   char tempstr[32];
 
+  config.displayid=0;
   config.resolutionx=800;
   config.resolutiony=600;
   config.bitsperpixel=32;
+  config.refreshrate=60;
   config.depthbits=24;
   config.stencilbits=8;
   config.fullscreen=0;
@@ -98,9 +100,11 @@ void loadconfig(void)
     control[3].button[count+4]=count;
 
   loadtextfile("config.txt");
+  optionreadint(&config.displayid,"display=");
   optionreadint(&config.resolutionx,"screenwidth=");
   optionreadint(&config.resolutiony,"screenheight=");
   optionreadint(&config.bitsperpixel,"bitsperpixel=");
+  optionreadint(&config.refreshrate,"refreshrate=");
   optionreadint(&config.depthbits,"depthbits=");
   optionreadint(&config.stencilbits,"stencilbits=");
   optionreadint(&config.fullscreen,"fullscreen=");
@@ -142,9 +146,11 @@ void loadconfig(void)
       }
     }
 
+  windowinfo.displayid=config.displayid;
   windowinfo.resolutionx=config.resolutionx;
   windowinfo.resolutiony=config.resolutiony;
   windowinfo.bitsperpixel=config.bitsperpixel;
+  windowinfo.refreshrate=config.refreshrate;
   windowinfo.depthbits=config.depthbits;
   windowinfo.stencilbits=config.stencilbits;
   windowinfo.fullscreen=config.fullscreen;
@@ -157,9 +163,11 @@ void saveconfig(void)
   int count,count2;
   char tempstr[32];
 
+  config.displayid=windowinfo.displayid;
   config.resolutionx=windowinfo.resolutionx;
   config.resolutiony=windowinfo.resolutiony;
   config.bitsperpixel=windowinfo.bitsperpixel;
+  config.refreshrate=windowinfo.refreshrate;
   config.depthbits=windowinfo.depthbits;
   config.stencilbits=windowinfo.stencilbits;
   config.fullscreen=windowinfo.fullscreen;
@@ -167,9 +175,11 @@ void saveconfig(void)
   if ((fp=fopen("config.txt","wb"))==NULL)
     return;
 
+  optionwriteint(&config.displayid,"display=");
   optionwriteint(&config.resolutionx,"screenwidth=");
   optionwriteint(&config.resolutiony,"screenheight=");
   optionwriteint(&config.bitsperpixel,"bitsperpixel=");
+  optionwriteint(&config.refreshrate,"refreshrate=");
   optionwriteint(&config.depthbits,"depthbits=");
   optionwriteint(&config.stencilbits,"stencilbits=");
   optionwriteint(&config.fullscreen,"fullscreen=");
