@@ -63,6 +63,11 @@ static const Uint8 iconmask[128]={
 SDL_Window *sdlwindow=NULL;
 SDL_GLContext *sdlglcontext=NULL;
 
+int numofsdldisplays;
+SDL_Rect sdldisplaybounds[64];
+int numofsdlvideomodes;
+struct SDLVIDEOMODE sdlvideomode[4096];
+
 void createwindow(void)
 {
   if (sdlglcontext)
@@ -88,12 +93,17 @@ void createwindow(void)
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,windowinfo.stencilbits);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 
+  int windowposx=SDL_WINDOWPOS_CENTERED;
+  int windowposy=SDL_WINDOWPOS_CENTERED;
   Uint32 flags=SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL;
   if (windowinfo.fullscreen)
+    {
+    windowposx=sdldisplaybounds[windowinfo.displayid].x;
+    windowposy=sdldisplaybounds[windowinfo.displayid].y;
     flags|=SDL_WINDOW_FULLSCREEN;
+    }
 
-  sdlwindow=SDL_CreateWindow("Gish",
-    SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+  sdlwindow=SDL_CreateWindow("Gish", windowposx, windowposy,
     windowinfo.resolutionx,windowinfo.resolutiony,flags);
 
   if (windowinfo.fullscreen)
@@ -128,10 +138,6 @@ void createwindow(void)
   glDepthMask(GL_FALSE);
 }
 
-int numofsdlvideomodes;
-int numofsdldisplays;
-struct SDLVIDEOMODE sdlvideomode[4096];
-
 void getvideoinfo(void)
   {
   SDL_DisplayMode sdlvideoinfo;
@@ -140,7 +146,7 @@ void getvideoinfo(void)
 
   if (SDL_GetCurrentDisplayMode(0,&sdlvideoinfo)==0)
     {
-    SDL_PixelFormatEnumToMasks(&sdlvideoinfo,&config.bitsperpixel,&rmask,&gmask,&bmask,&amask);
+    SDL_PixelFormatEnumToMasks(sdlvideoinfo.format,&config.bitsperpixel,&rmask,&gmask,&bmask,&amask);
     config.refreshrate=sdlvideoinfo.refresh_rate;
     }
   }
@@ -153,6 +159,7 @@ void listvideomodes(void)
 
   for (int dispid=0;dispid<numofsdldisplays;dispid++)
     {
+    SDL_GetDisplayBounds(dispid,&sdldisplaybounds[dispid]);
     int nummodes=SDL_GetNumDisplayModes(dispid);
     for (int i=0;nummodes && i<64;i++)
       {

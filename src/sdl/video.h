@@ -28,8 +28,9 @@ void createwindow(void);
 void getvideoinfo(void);
 void listvideomodes(void);
 
-extern int numofsdlvideomodes;
 extern int numofsdldisplays;
+extern SDL_Rect sdldisplaybounds[64];
+extern int numofsdlvideomodes;
 struct SDLVIDEOMODE
   {
   int displayid;
