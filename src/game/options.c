@@ -705,8 +705,6 @@ void videooptionsmenu(void)
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
     {
-
-
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -763,19 +761,17 @@ void videooptionsmenu(void)
     if (pagenum>=numpages)
       setmenuitem(MO_HIGHLIGHT,0);
 
+    snprintf(restext,sizeof(restext),"%d//%d",pagenum+1,numpages+1);
+    const float pagerluma=(numpages>0)?0.4f:0.2f;
+    ypos+=2;
+    drawtext(restext,144|TEXT_CENTER,ypos,12,pagerluma,pagerluma,pagerluma,1.0f);
+
     ypos=32;
     createmenuitem(TXT_FULLSCREEN,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_TOGGLE,&fullscreen);
     setmenuitem(MO_HOTKEY,SCAN_F);
     ypos+=16*3;
-    /*
-    createmenuitem(TXT_16BIT,320,count,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_SET,&bitsperpixel,16);
-    count+=16;
-    createmenuitem(TXT_32BIT,320,count,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_SET,&bitsperpixel,32);
-    count+=16;
-    */
+
     for (int i=0;i<numofsdldisplays;i++)
       {
       createmenuitem(sdldisplay[i].name,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
