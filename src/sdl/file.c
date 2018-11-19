@@ -23,6 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdio.h>
 #include <string.h>
+#include <sdl/platform.h>
+#ifdef DETLEF
+  #include <fcntl.h>
+  #include <sys/stat.h>
+  #include <dirent.h>
+#endif
 
 int comparestrings(const void *arg1,const void *arg2)
   {
@@ -34,7 +40,7 @@ int checkfilespec(char *filespec,char *filename)
   int count,count2;
   int namesize;
 
-  namesize=strlen(filename);
+  namesize=(int)strlen(filename);
 
   count=0;
   count2=0;
