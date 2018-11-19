@@ -649,12 +649,13 @@ void optionsmenu(void)
 
 void videooptionsmenu(void)
   {
-  int count,count2;
+  int ypos;
   int prevvideomodenum;
   int videomodenum;
   char restext[64];
   int fullscreen;
   int bitsperpixel;
+  int displayid,lastid;
   char *glvendor;
   char *glrenderer;
   char *glversion;
@@ -664,16 +665,19 @@ void videooptionsmenu(void)
   glversion=(char *) glGetString(GL_VERSION);
 
   videomodenum=-1;
-  for (count=0;count<numofsdlvideomodes;count++)
-  if (sdlvideomode[count].bitsperpixel==32)
+  for (int i=0;i<numofsdlvideomodes;i++)
+  if (sdlvideomode[i].bitsperpixel==32)
     {
-    if (windowinfo.resolutionx==sdlvideomode[count].resolutionx)
-    if (windowinfo.resolutiony==sdlvideomode[count].resolutiony)
-      videomodenum=count;
+    if (windowinfo.resolutionx==sdlvideomode[i].resolutionx)
+    if (windowinfo.resolutiony==sdlvideomode[i].resolutiony)
+    if (windowinfo.bitsperpixel==sdlvideomode[i].bitsperpixel)
+    if (windowinfo.displayid==sdlvideomode[i].displayid)
+      videomodenum=i;
     }
   prevvideomodenum=videomodenum;
   fullscreen=windowinfo.fullscreen;
   bitsperpixel=windowinfo.bitsperpixel;
+  displayid=windowinfo.displayid;
 
   resetmenuitems();
 
@@ -688,31 +692,44 @@ void videooptionsmenu(void)
     createmenuitem(TXT_APPLY,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_A);
 
-    count2=64;
-    for (count=numofsdlvideomodes-1;count>=0;count--)
-    if (sdlvideomode[count].resolutionx>=640)
-    if (sdlvideomode[count].bitsperpixel==32)
+    ypos=64;
+    for (int i=0;i<numofsdlvideomodes;i++)
       {
-      sprintf(restext,"%dx%d",sdlvideomode[count].resolutionx,sdlvideomode[count].resolutiony);
-      createmenuitem(restext,0,count2,16,1.0f,1.0f,1.0f,1.0f);
-      setmenuitem(MO_SET,&videomodenum,count);
+      struct SDLVIDEOMODE *vidmode=&sdlvideomode[i];
+      if (sdlvideomode[i].resolutionx<640) continue;
+      if (sdlvideomode[i].displayid!=displayid) continue;
 
-      count2+=16;
+      snprintf(restext,sizeof(restext),"%dx%d %dbpp@%dhz",vidmode->resolutionx,vidmode->resolutiony,vidmode->bitsperpixel,vidmode->refreshrate);
+      createmenuitem(restext,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
+      setmenuitem(MO_SET,&videomodenum,i);
+
+      ypos+=16;
       }
 
-    count=48;
-    createmenuitem(TXT_FULLSCREEN,320,count,16,1.0f,1.0f,1.0f,1.0f);
+    ypos=48;
+    createmenuitem(TXT_FULLSCREEN,420,ypos,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_TOGGLE,&fullscreen);
     setmenuitem(MO_HOTKEY,SCAN_F);
-    count+=16;
-    count+=16;
-    count+=16;
+    ypos+=16*3;
+    /*
     createmenuitem(TXT_16BIT,320,count,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_SET,&bitsperpixel,16);
     count+=16;
     createmenuitem(TXT_32BIT,320,count,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_SET,&bitsperpixel,32);
     count+=16;
+    */
+    lastid=-1;
+    for (int i=0;i<numofsdlvideomodes;i++)
+      {
+      if (sdlvideomode[i].displayid==lastid) continue;
+
+      snprintf(restext,sizeof(restext),"#%d",sdlvideomode[i].displayid);
+      createmenuitem(restext,420,ypos,16,1.0f,1.0f,1.0f,1.0f);
+      setmenuitem(MO_SET,&displayid,sdlvideomode[i].displayid);
+      lastid=sdlvideomode[i].displayid;
+      ypos+=16;
+      }
 
     checksystemmessages();
     checkkeyboard();
@@ -723,27 +740,27 @@ void videooptionsmenu(void)
     setuptextdisplay();
 
     drawtext(TXT_RESOLUTION,0,48,16,1.0f,1.0f,1.0f,1.0f);
-    drawtext(TXT_COLOR,320,80,16,1.0f,1.0f,1.0f,1.0f);
+    drawtext(TXT_DISPLAY,420,80,16,1.0f,1.0f,1.0f,1.0f);
 
-    count=400;
-    drawtext(TXT_OPENGLINFO,0,count,16,1.0f,1.0f,1.0f,1.0f);
-    count+=16;
+    ypos=400;
+    drawtext(TXT_OPENGLINFO,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    ypos+=16;
     if (glext.multitexture)
-      drawtext("GL_ARB_multitexture",0,count,12,0.0f,1.0f,0.0f,1.0f);
+      drawtext("GL_ARB_multitexture",0,ypos,12,0.0f,1.0f,0.0f,1.0f);
     else
-      drawtext("GL_ARB_multitexture",0,count,12,0.25f,0.25f,0.25f,1.0f);
-    count+=12;
+      drawtext("GL_ARB_multitexture",0,ypos,12,0.25f,0.25f,0.25f,1.0f);
+    ypos+=12;
     if (glext.texture_env_dot3)
-      drawtext("GL_ARB_texture_env_dot3",0,count,12,0.0f,1.0f,0.0f,1.0f);
+      drawtext("GL_ARB_texture_env_dot3",0,ypos,12,0.0f,1.0f,0.0f,1.0f);
     else
-      drawtext("GL_ARB_texture_env_dot3",0,count,12,0.25f,0.25f,0.25f,1.0f);
-    count+=12;
-    drawtext("GL_VERSION: /s",0,count,12,1.0f,1.0f,1.0f,1.0f,glversion);
-    count+=12;
-    drawtext("GL_VENDOR: /s",0,count,12,1.0f,1.0f,1.0f,1.0f,glvendor);
-    count+=12;
-    drawtext("GL_RENDERER: /s",0,count,12,1.0f,1.0f,1.0f,1.0f,glrenderer);
-    count+=12;
+      drawtext("GL_ARB_texture_env_dot3",0,ypos,12,0.25f,0.25f,0.25f,1.0f);
+    ypos+=12;
+    drawtext("GL_VERSION: /s",0,ypos,12,1.0f,1.0f,1.0f,1.0f,glversion);
+    ypos+=12;
+    drawtext("GL_VENDOR: /s",0,ypos,12,1.0f,1.0f,1.0f,1.0f,glvendor);
+    ypos+=12;
+    drawtext("GL_RENDERER: /s",0,ypos,12,1.0f,1.0f,1.0f,1.0f,glrenderer);
+    ypos+=12;
 
     drawmenuitems();
 
@@ -762,31 +779,16 @@ void videooptionsmenu(void)
     if (videomodenum==-1)
       return;
 
+    windowinfo.displayid=sdlvideomode[videomodenum].displayid;
     windowinfo.resolutionx=sdlvideomode[videomodenum].resolutionx;
     windowinfo.resolutiony=sdlvideomode[videomodenum].resolutiony;
     windowinfo.fullscreen=fullscreen;
     windowinfo.bitsperpixel=bitsperpixel;
-  
-    if (windowinfo.bitsperpixel==16)
-      {
-      SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
-      SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,6);
-      SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,5);
-      SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,0);
-      }
-    if (windowinfo.bitsperpixel==32)
-      {
-      SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
-      SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
-      SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
-      SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,8);
-      }
-  
     createwindow();
 
-    for (count=0;count<2048;count++)
-      if (texture[count].sizex!=0)
-        setuptexture(count);
+    for (int i=0;i<2048;i++)
+      if (texture[i].sizex!=0)
+        setuptexture(i);
     }
 
   resetmenuitems();
@@ -808,17 +810,17 @@ void drawsliderbars(void)
     vec[1]=40.0f-1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-  
+
     vec[0]=160.0f+128.0f;
     vec[1]=40.0f-5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-  
+
     vec[0]=160.0f+128.0f;
     vec[1]=40.0f+5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-  
+
     vec[0]=160.0f;
     vec[1]=40.0f+1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
@@ -854,17 +856,17 @@ void drawsliderbars(void)
     vec[1]=56.0f-1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-  
+
     vec[0]=160.0f+128.0f;
     vec[1]=56.0f-5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-  
+
     vec[0]=160.0f+128.0f;
     vec[1]=56.0f+5.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-  
+
     vec[0]=160.0f;
     vec[1]=56.0f+1.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);

@@ -26,6 +26,7 @@ void checksystemmessages(void);
 
 struct WINDOWINFO
   {
+  int displayid;
   int resolutionx;
   int resolutiony;
   int redbits;

@@ -108,7 +108,6 @@ void createwindow(void)
 int numofsdlvideomodes;
 struct SDLVIDEOMODE sdlvideomode[4096];
 
-
 void getvideoinfo(void)
   {
   SDL_DisplayMode sdlvideoinfo;
@@ -156,9 +155,11 @@ void listvideomodes(void)
       if (SDL_PixelFormatEnumToMasks(sdlmode.format,&bpp,&rmask,&gmask,&bmask,&amask)==SDL_FALSE)
         continue;
 
+      sdlvideomode[numofsdlvideomodes].displayid=dispid;
       sdlvideomode[numofsdlvideomodes].resolutionx=sdlmode.w;
       sdlvideomode[numofsdlvideomodes].resolutiony=sdlmode.h;
       sdlvideomode[numofsdlvideomodes].bitsperpixel=bpp;
+      sdlvideomode[numofsdlvideomodes].refreshrate=sdlmode.refresh_rate;
       numofsdlvideomodes++;
       }
     }
@@ -166,17 +167,23 @@ void listvideomodes(void)
   return;
 
 fail:
+  sdlvideomode[numofsdlvideomodes].displayid=0;
   sdlvideomode[numofsdlvideomodes].resolutionx=640;
   sdlvideomode[numofsdlvideomodes].resolutiony=480;
   sdlvideomode[numofsdlvideomodes].bitsperpixel=32;
+  sdlvideomode[numofsdlvideomodes].refreshrate=60;
   numofsdlvideomodes++;
+  sdlvideomode[numofsdlvideomodes].displayid=0;
   sdlvideomode[numofsdlvideomodes].resolutionx=800;
   sdlvideomode[numofsdlvideomodes].resolutiony=600;
   sdlvideomode[numofsdlvideomodes].bitsperpixel=32;
+  sdlvideomode[numofsdlvideomodes].refreshrate=60;
   numofsdlvideomodes++;
+  sdlvideomode[numofsdlvideomodes].displayid=0;
   sdlvideomode[numofsdlvideomodes].resolutionx=1024;
   sdlvideomode[numofsdlvideomodes].resolutiony=768;
   sdlvideomode[numofsdlvideomodes].bitsperpixel=32;
+  sdlvideomode[numofsdlvideomodes].refreshrate=60;
   numofsdlvideomodes++;
   }
 

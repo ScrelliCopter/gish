@@ -371,6 +371,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TXT_FULLSCREEN									"Fullscreen"
 #define TXT_16BIT												"16 bit"
 #define TXT_32BIT												"32 bit"
+#define TXT_DISPLAY                     "Display"
 #define TXT_RESOLUTION									"Resolution"
 #define TXT_COLOR												"Color"
 #define TXT_OPENGLINFO									"OpenGL Info"
