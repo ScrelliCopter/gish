@@ -701,19 +701,25 @@ void videooptionsmenu(void)
     createmenuitem(TXT_APPLY,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_A);
 
-    ypos=64;
+    ypos=48;
     for (int i=0;i<numofsdlvideomodes;i++)
       {
       Uint32 rmask,gmask,bmask,amask;
+      int pad=0;
 
       struct SDLVIDEOMODE *vidmode=&sdlvideomode[i];
-      if (sdlvideomode[i].displaymode.w<640) continue;
-      if (sdlvideomode[i].displayid!=displayid) continue;
+      if (sdlvideomode[i].displaymode.w<640)
+        continue;
+      if (sdlvideomode[i].displayid!=displayid)
+        continue;
 
-      snprintf(restext,sizeof(restext),"%dx%d %dbpp@%dhz",
+      pad+=(vidmode->displaymode.w>=1000)?0:1;
+      pad+=(vidmode->displaymode.h>=1000)?0:1;
+      pad+=(vidmode->bitsperpixel<10)?0:1;
+      snprintf(restext,sizeof(restext),"%dx%d %*dbpp %dhz",
         vidmode->displaymode.w,
         vidmode->displaymode.h,
-        vidmode->bitsperpixel,
+        pad+1,vidmode->bitsperpixel,
         vidmode->displaymode.refresh_rate);
       createmenuitem(restext,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&videomodenum,i);
@@ -721,8 +727,8 @@ void videooptionsmenu(void)
       ypos+=16;
       }
 
-    ypos=48;
-    createmenuitem(TXT_FULLSCREEN,420,ypos,16,1.0f,1.0f,1.0f,1.0f);
+    ypos=32;
+    createmenuitem(TXT_FULLSCREEN,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_TOGGLE,&fullscreen);
     setmenuitem(MO_HOTKEY,SCAN_F);
     ypos+=16*3;
@@ -736,8 +742,7 @@ void videooptionsmenu(void)
     */
     for (int i=0;i<numofsdldisplays;i++)
       {
-      snprintf(restext,sizeof(restext),"#%d",i);
-      createmenuitem(restext,420,ypos,16,1.0f,1.0f,1.0f,1.0f);
+      createmenuitem(sdldisplay[i].name,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&displayid,i);
       ypos+=16;
       }
@@ -750,8 +755,8 @@ void videooptionsmenu(void)
 
     setuptextdisplay();
 
-    drawtext(TXT_RESOLUTION,0,48,16,1.0f,1.0f,1.0f,1.0f);
-    drawtext(TXT_DISPLAY,420,80,16,1.0f,1.0f,1.0f,1.0f);
+    drawtext(TXT_RESOLUTION,0,32,16,1.0f,1.0f,1.0f,1.0f);
+    drawtext(TXT_DISPLAY,340,64,16,1.0f,1.0f,1.0f,1.0f);
 
     ypos=400;
     drawtext(TXT_OPENGLINFO,0,ypos,16,1.0f,1.0f,1.0f,1.0f);

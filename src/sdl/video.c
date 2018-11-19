@@ -64,7 +64,8 @@ SDL_Window *sdlwindow=NULL;
 SDL_GLContext *sdlglcontext=NULL;
 
 int numofsdldisplays;
-SDL_Rect sdldisplaybounds[64];
+struct SDLDISPLAY sdldisplay[32];
+
 int numofsdlvideomodes;
 struct SDLVIDEOMODE sdlvideomode[4096];
 
@@ -98,8 +99,8 @@ void createwindow(void)
   Uint32 flags=SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL;
   if (windowinfo.fullscreen)
     {
-    windowposx=sdldisplaybounds[windowinfo.displayid].x;
-    windowposy=sdldisplaybounds[windowinfo.displayid].y;
+    windowposx=sdldisplay[windowinfo.displayid].bounds.x;
+    windowposy=sdldisplay[windowinfo.displayid].bounds.y;
     flags|=SDL_WINDOW_FULLSCREEN;
     }
 
@@ -159,7 +160,8 @@ void listvideomodes(void)
 
   for (int dispid=0;dispid<numofsdldisplays;dispid++)
     {
-    SDL_GetDisplayBounds(dispid,&sdldisplaybounds[dispid]);
+    snprintf(sdldisplay[dispid].name,32,"%d: %s",dispid, SDL_GetDisplayName(dispid));
+    SDL_GetDisplayBounds(dispid,&sdldisplay[dispid].bounds);
     int nummodes=SDL_GetNumDisplayModes(dispid);
     for (int i=0;nummodes && i<64;i++)
       {

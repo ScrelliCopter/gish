@@ -29,7 +29,13 @@ void getvideoinfo(void);
 void listvideomodes(void);
 
 extern int numofsdldisplays;
-extern SDL_Rect sdldisplaybounds[64];
+struct SDLDISPLAY
+  {
+  char name[32];
+  SDL_Rect bounds;
+  };
+extern struct SDLDISPLAY sdldisplay[32];
+
 extern int numofsdlvideomodes;
 struct SDLVIDEOMODE
   {
