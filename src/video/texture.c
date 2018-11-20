@@ -108,7 +108,8 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     {
     fprintf(stderr,"WARN: loadtexturetga(): attribute bits look wrong (%dbpp, %d), corrupted maybe?\n",tgabitsperpixel,tgaimagedescriptor&0x7);
     }
-  //printf("origin %s\n",(tgaimagedescriptor&(1<<5))?"top-left":"bottom-left");
+  /*
+  printf("origin %s\n",(tgaimagedescriptor&(1<<5))?"top-left":"bottom-left");
   static const char* storagetype[4]=
     {
     "non-interleaved",
@@ -117,6 +118,7 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     "reserved",
     };
   printf("%s\n",storagetype[(tgaimagedescriptor>>6)&0x3]);
+  */
 #endif
 
   //skip identification field nonsense
@@ -127,8 +129,8 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     }
 
   //create a surface to load to
-  Uint32 pixelformat=(tgabitsperpixel==32)?SDL_PIXELFORMAT_RGBA32:SDL_PIXELFORMAT_RGB24;
-  SDL_Surface *img=SDL_CreateRGBSurfaceWithFormat(0,tgaimagewidth,tgaimageheight,tgabitsperpixel,pixelformat);
+  Uint32 pixelformatenum=(tgabitsperpixel==32)?SDL_PIXELFORMAT_RGBA32:SDL_PIXELFORMAT_RGB24;
+  SDL_Surface *img=SDL_CreateRGBSurfaceWithFormat(0,tgaimagewidth,tgaimageheight,tgabitsperpixel,pixelformatenum);
   if (!img)
     {
 #ifdef DEBUG
@@ -150,13 +152,18 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
       Uint32 *ptr=(Uint32 *)((Uint8 *)img->pixels+y*img->pitch);
       for (int j=0;j<tgaimagewidth;j++)
         {
-        PHYSFS_readULE32(fp,(ptr));
-        ptr++;
+        SDL_Colour c;
+        PHYSFS_readBytes(fp,&c.b,1);
+        PHYSFS_readBytes(fp,&c.g,1);
+        PHYSFS_readBytes(fp,&c.r,1);
+        PHYSFS_readBytes(fp,&c.a,1);
+        (*ptr++)=SDL_MapRGBA(img->format,c.r,c.g,c.b,c.a);
         }
       }
     }
   else if (tgabitsperpixel==24)
     {
+    //TODO: needs testing
     texture[texturenum].isalpha=0;
     for (int i=0;i<tgaimageheight;i++)
       {
@@ -193,8 +200,9 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
   texture[texturenum].rgba[0]=(unsigned int *)malloc((size_t)texture[texturenum].sizex*texture[texturenum].sizey*bytesperpixel);
   for (int i=0;i<tgaimageheight;i++)
     {
-    Uint8 *ptr=(Uint8 *)img->pixels+i*img->pitch;
-    memcpy((Uint8 *)texture[texturenum].rgba[0]+i*texture[texturenum].sizex,ptr,(size_t)texture[texturenum].sizex*bytesperpixel);
+    Uint8 *src=(Uint8 *)img->pixels+i*img->pitch;
+    Uint8 *dst=(Uint8 *)texture[texturenum].rgba[0]+(i*texture[texturenum].sizex*bytesperpixel);
+    memcpy(dst,src,(size_t)texture[texturenum].sizex*bytesperpixel);
     }
 
   //create opengl texture
