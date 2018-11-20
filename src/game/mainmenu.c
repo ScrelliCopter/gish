@@ -57,7 +57,7 @@ void mainmenu(void)
   int count,temp;
   int prevjoymenunum;
   int registered;
-  char texfilename[32];
+  char texfilename[256];
   unsigned int x,y;
 
   srand(time(NULL));

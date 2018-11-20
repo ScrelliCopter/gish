@@ -261,7 +261,7 @@ void loadlevel(char *filename)
   int changeddir;
   int version;
   unsigned int x,y;
-  char texfilename[32];
+  char texfilename[256];
   FILE *fp;
 
   x=0x17AF2E03;
@@ -774,27 +774,21 @@ void setuplevellines(int xstart,int ystart,int xend,int yend)
 void loadleveltextures(void)
   {
   int count;
-  int changeddir;
-  char texfilename[32];
-
-  changeddir=changetilesetdir();
+  char texfilename[256];
 
   lasttextureloaded[0]=0;
-  loadbackground(660,"bg.tga");
+  loadbackground(660,"texture/bg.tga");
 
   for (count=1;count<251;count++)
     loadblock(count);
   for (count=0;count<251;count++)
     {
-    snprintf(texfilename,sizeof(texfilename),"/texture/text%03d.tga",count);
+    snprintf(texfilename,sizeof(texfilename),"tile%02d/texture/text%03d.tga",level.tileset+1,count);
     if (game.levelnum!=6)
       loadtexturetga(count,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
     else
       loadtexturetga(count,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_NEAREST,GL_NEAREST);
     }
-
-  if (changeddir==0)
-    chdir("..");
   }
 
 int lineintersectline3(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2)
@@ -951,32 +945,6 @@ int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *
     return(1);
 
   return(0);
-  }
-
-int changetilesetdir(void)
-  {
-  int changeddir;
-
-  changeddir=1;
-
-  if (level.tileset==0)
-    changeddir=chdir("tile01");
-  if (level.tileset==1)
-    changeddir=chdir("tile02");
-  if (level.tileset==2)
-    changeddir=chdir("tile03");
-  if (level.tileset==3)
-    changeddir=chdir("tile04");
-  if (level.tileset==4)
-    changeddir=chdir("tile05");
-  if (level.tileset==5)
-    changeddir=chdir("tile06");
-  if (level.tileset==6)
-    changeddir=chdir("tile07");
-  if (level.tileset==7)
-    changeddir=chdir("tile08");
-
-  return(changeddir);
   }
 
 void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize)

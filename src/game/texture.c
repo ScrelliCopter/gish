@@ -301,39 +301,16 @@ void copytexture(int texturenum,int oldtexturenum)
 void loadtilesettemp(void)
   {
   int count;
-  int changeddir;
-  char texfilename[32];
-
-  changeddir=1;
-
-  if (textureedit.tileset==0)
-    changeddir=chdir("tile01");
-  if (textureedit.tileset==1)
-    changeddir=chdir("tile02");
-  if (textureedit.tileset==2)
-    changeddir=chdir("tile03");
-  if (textureedit.tileset==3)
-    changeddir=chdir("tile04");
-  if (textureedit.tileset==4)
-    changeddir=chdir("tile05");
-  if (textureedit.tileset==5)
-    changeddir=chdir("tile06");
-  if (textureedit.tileset==6)
-    changeddir=chdir("tile07");
-  if (textureedit.tileset==7)
-    changeddir=chdir("tile08");
+  char texfilename[256];
 
   for (count=0;count<256;count++)
     {
-    snprintf(texfilename,sizeof(texfilename),"texture/text%03d.tga",count);
+    snprintf(texfilename,sizeof(texfilename),"tile%02d/texture/text%03d.tga",textureedit.tileset+1,count);
     if (game.levelnum!=6)
       loadtexturetga(count+1792,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
     else
       loadtexturetga(count+1792,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_NEAREST,GL_NEAREST);
     }
-
-  if (changeddir==0)
-    chdir("..");
   }
 
 void loadleveltiles(char *filename)

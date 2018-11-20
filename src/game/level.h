@@ -31,7 +31,6 @@ void setuplevellines(int xstart,int ystart,int xend,int yend);
 void loadleveltextures(void);
 int lineintersectline3(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2);
 int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *point);
-int changetilesetdir(void);
 void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize);
 void decryptdata(unsigned int code,int cryptdatasize);
 void byteswapdata(int cryptdatasize);
