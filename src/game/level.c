@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/gl.h>
 #include <SDL_endian.h>
 #include <sdl/file.h>
+#include <physfs.h>
 #include <sdl/platform.h>
 #include <video/texture.h>
 #include <math/vector.h>
@@ -261,106 +262,122 @@ void loadlevel(char *filename)
   int changeddir;
   int version;
   unsigned int x,y;
-  char texfilename[256];
-  FILE *fp;
+  char fullpath[256];
+  PHYSFS_file *fp;
 
   x=0x17AF2E03;
 
-  changeddir=chdir("level");
-
-  if ((fp=fopen(filename,"rb"))!=NULL)
+  snprintf(fullpath,sizeof(fullpath),"level/%s",filename);
+  if ((fp=PHYSFS_openRead(fullpath))!=NULL)
     {
-    fread2(&version,4,1,fp);
+    PHYSFS_readSLE32(fp,&version);
 
-    if (version==9)
+    if (version==9||version==10)
       {
       strcpy(editor.filename,filename);
 
-      fread2(level.background,1,32,fp);
-      fread2(&level.tileset,4,1,fp);
-      fread2(&level.gametype,4,1,fp);
-      fread2(&level.time,4,1,fp);
-      fread2(level.area,4,64*4,fp);
+      PHYSFS_readBytes(fp,level.background,32);
+      PHYSFS_readSLE32(fp,&level.tileset);
+      PHYSFS_readSLE32(fp,&level.gametype);
+      PHYSFS_readSLE32(fp,&level.time);
+      for (int i=0;i<64;i++)
+      for (int j=0;j<4;j++)
+        PHYSFS_readSLE32(fp,&level.area[i][j]);
 
-      fread2(level.backgrid,1,256*256,fp);
-      memcpy(cryptdata,level.backgrid,256*256);
-      decryptdata(x,256*256/4);
-      memcpy(level.backgrid,cryptdata,256*256);
+      if (version==9)
+        {
+        PHYSFS_readBytes(fp,level.backgrid,256*256);
+        memcpy(cryptdata,level.backgrid,256*256);
+        decryptdata(x,256*256/4);
+        memcpy(level.backgrid,cryptdata,256*256);
 
-      fread2(level.grid,1,256*256,fp);
-      memcpy(cryptdata,level.grid,256*256);
-      decryptdata(x,256*256/4);
-      memcpy(level.grid,cryptdata,256*256);
+        PHYSFS_readBytes(fp,level.grid,256*256);
+        memcpy(cryptdata,level.grid,256*256);
+        decryptdata(x,256*256/4);
+        memcpy(level.grid,cryptdata,256*256);
 
-      fread2(level.foregrid,1,256*256,fp);
-      memcpy(cryptdata,level.foregrid,256*256);
-      decryptdata(x,256*256/4);
-      memcpy(level.foregrid,cryptdata,256*256);
+        PHYSFS_readBytes(fp,level.foregrid,256*256);
+        memcpy(cryptdata,level.foregrid,256*256);
+        decryptdata(x,256*256/4);
+        memcpy(level.foregrid,cryptdata,256*256);
+        }
+      else
+        {
+        PHYSFS_readBytes(fp,level.backgrid,256*256);
+        PHYSFS_readBytes(fp,level.grid,256*256);
+        PHYSFS_readBytes(fp,level.foregrid,256*256);
+        }
 
-      fread2(level.startposition,4,3,fp);
-      fread2(level.ambient,4,12,fp);
-      fread2(&level.numofobjects,4,1,fp);
+      for (int i=0;i<3;i++)
+        PHYSFS_readSLE32(fp,(void*)&level.startposition[i]);
+      for (int i=0;i<4;i++)
+      for (int j=0;j<3;j++)
+        PHYSFS_readSLE32(fp,(void*)&level.ambient[i][j]);
 
+      PHYSFS_readSLE32(fp,&level.numofobjects);
       if (level.numofobjects<0 || level.numofobjects>=256)
         {
-        fclose(fp);
-        if (changeddir==0)
-          chdir("..");
+        PHYSFS_close(fp);
         return;
         }
       for (count=0;count<level.numofobjects;count++)
         {
-        fread2(&level.object[count].type,4,1,fp);
-        fread2(&level.object[count].texturenum,4,1,fp);
-        fread2(&level.object[count].link,4,1,fp);
-        fread2(level.object[count].position,4,3,fp);
-        fread2(&level.object[count].angle,4,1,fp);
-        fread2(level.object[count].size,4,2,fp);
-        fread2(&level.object[count].mass,4,1,fp);
-        fread2(&level.object[count].friction,4,1,fp);
-        fread2(&level.object[count].lighttype,4,1,fp);
-        fread2(level.object[count].lightcolor,4,3,fp);
-        fread2(&level.object[count].lightintensity,4,1,fp);
-        fread2(&level.object[count].ai,4,1,fp);
+        PHYSFS_readSLE32(fp,&level.object[count].type);
+        PHYSFS_readSLE32(fp,&level.object[count].texturenum);
+        PHYSFS_readSLE32(fp,&level.object[count].link);
+        for (int i=0;i<3;i++)
+          PHYSFS_readSLE32(fp,(void*)&level.object[count].position[i]);
+        PHYSFS_readSLE32(fp,(void*)&level.object[count].angle);
+        for (int i=0;i<2;i++)
+          PHYSFS_readSLE32(fp,(void*)&level.object[count].size[i]);
+        PHYSFS_readSLE32(fp,(void*)&level.object[count].mass);
+        PHYSFS_readSLE32(fp,(void*)&level.object[count].friction);
+        PHYSFS_readSLE32(fp,&level.object[count].lighttype);
+        for (int i=0;i<3;i++)
+          PHYSFS_readSLE32(fp,(void*)&level.object[count].lightcolor[i]);
+        PHYSFS_readSLE32(fp,(void*)&level.object[count].lightintensity);
+        PHYSFS_readSLE32(fp,&level.object[count].ai);
         }
-      fread2(&level.numofropes,4,1,fp);
+
+      PHYSFS_readSLE32(fp,&level.numofropes);
       if (level.numofropes<0 || level.numofropes>=1024)
         {
-        fclose(fp);
-        if (changeddir==0)
-          chdir("..");
+        PHYSFS_close(fp);
         return;
         }
       for (count=0;count<level.numofropes;count++)
         {
-        fread2(&level.rope[count].type,4,1,fp);
-        fread2(&level.rope[count].texturenum,4,1,fp);
-        fread2(&level.rope[count].obj1,4,1,fp);
-        fread2(&level.rope[count].obj1part,4,1,fp);
-        fread2(&level.rope[count].obj2,4,1,fp);
-        fread2(&level.rope[count].obj2part,4,1,fp);
+        PHYSFS_readSLE32(fp,&level.rope[count].type);
+        PHYSFS_readSLE32(fp,&level.rope[count].texturenum);
+        PHYSFS_readSLE32(fp,&level.rope[count].obj1);
+        PHYSFS_readSLE32(fp,&level.rope[count].obj1part);
+        PHYSFS_readSLE32(fp,&level.rope[count].obj2);
+        PHYSFS_readSLE32(fp,&level.rope[count].obj2part);
         }
+
       for (count=1;count<251;count++)
         {
-        fread2(&texture[count].sizex,4,1,fp);
+        PHYSFS_readSLE32(fp,&texture[count].sizex);
         if (texture[count].sizex<0 || texture[count].sizex>=1024)
           {
-          fclose(fp);
-          if (changeddir==0)
-            chdir("..");
+          PHYSFS_close(fp);
           return;
           }
         if (texture[count].sizex!=0)
           {
-          fread2(&texture[count].sizey,4,1,fp);
-          fread2(&texture[count].magfilter,4,1,fp);
-          fread2(&texture[count].minfilter,4,1,fp);
-          free(texture[count].rgba[0]);
-          texture[count].rgba[0]=(unsigned int *) malloc(texture[count].sizex*texture[count].sizey*4);
-          fread(texture[count].rgba[0],4,texture[count].sizex*texture[count].sizey,fp);
-          memcpy(cryptdata,texture[count].rgba[0],4*texture[count].sizex*texture[count].sizey);
-          decryptdata(x,4*texture[count].sizex*texture[count].sizey/4);
-          memcpy(texture[count].rgba[0],cryptdata,4*texture[count].sizex*texture[count].sizey);
+          PHYSFS_readSLE32(fp,&texture[count].sizey);
+          PHYSFS_readSLE32(fp,&texture[count].magfilter);
+          PHYSFS_readSLE32(fp,&texture[count].minfilter);
+          if (texture[count].rgba[0])
+            free(texture[count].rgba[0]);
+          texture[count].rgba[0]=(unsigned int *)malloc((size_t)texture[count].sizex*texture[count].sizey*4);
+          PHYSFS_readBytes(fp,texture[count].rgba[0],(size_t)texture[count].sizex*texture[count].sizey*4);
+          if (version==9)
+            {
+            memcpy(cryptdata,texture[count].rgba[0],(size_t)texture[count].sizex*texture[count].sizey*4);
+            decryptdata(x,4*texture[count].sizex*texture[count].sizey/4);
+            memcpy(texture[count].rgba[0],cryptdata,(size_t)texture[count].sizex*texture[count].sizey*4);
+            }
 
           texture[count].mipmaplevels=1;
           texture[count].format=GL_RGBA;
@@ -377,145 +394,28 @@ void loadlevel(char *filename)
             setuptexture(count);
           }
   
-        fread2(&block[count].numoflines,4,1,fp);
+        PHYSFS_readSLE32(fp,&block[count].numoflines);
         if (block[count].numoflines<0 || block[count].numoflines>=64)
           {
-          fclose(fp);
-          if (changeddir==0)
-            chdir("..");
+          PHYSFS_close(fp);
           return;
           }
-        for (count2=0;count2<block[count].numoflines;count2++)
-          fread2(block[count].line[count2],4,8,fp);
-        fread2(&block[count].friction,4,1,fp);
-        fread2(&block[count].breakpoint,4,1,fp);
-        fread2(&block[count].middamage,4,1,fp);
-        fread2(&block[count].foredamage,4,1,fp);
-        fread2(&block[count].density,4,1,fp);
-        fread2(&block[count].drag,4,1,fp);
-        fread2(&block[count].animation,4,1,fp);
-        fread2(&block[count].animationspeed,4,1,fp);
-        }
-      }
-    if (version==10)
-      {
-      strcpy(editor.filename,filename);
-
-      fread2(level.background,1,32,fp);
-      fread2(&level.tileset,4,1,fp);
-      fread2(&level.gametype,4,1,fp);
-      fread2(&level.time,4,1,fp);
-      fread2(level.area,4,64*4,fp);
-
-      fread2(level.backgrid,1,256*256,fp);
-
-      fread2(level.grid,1,256*256,fp);
-
-      fread2(level.foregrid,1,256*256,fp);
-
-      fread2(level.startposition,4,3,fp);
-      fread2(level.ambient,4,12,fp);
-      fread2(&level.numofobjects,4,1,fp);
-
-      if (level.numofobjects<0 || level.numofobjects>=256)
-        {
-        fclose(fp);
-        if (changeddir==0)
-          chdir("..");
-        return;
-        }
-      for (count=0;count<level.numofobjects;count++)
-        {
-        fread2(&level.object[count].type,4,1,fp);
-        fread2(&level.object[count].texturenum,4,1,fp);
-        fread2(&level.object[count].link,4,1,fp);
-        fread2(level.object[count].position,4,3,fp);
-        fread2(&level.object[count].angle,4,1,fp);
-        fread2(level.object[count].size,4,2,fp);
-        fread2(&level.object[count].mass,4,1,fp);
-        fread2(&level.object[count].friction,4,1,fp);
-        fread2(&level.object[count].lighttype,4,1,fp);
-        fread2(level.object[count].lightcolor,4,3,fp);
-        fread2(&level.object[count].lightintensity,4,1,fp);
-        fread2(&level.object[count].ai,4,1,fp);
-        }
-      fread2(&level.numofropes,4,1,fp);
-      if (level.numofropes<0 || level.numofropes>=1024)
-        {
-        fclose(fp);
-        if (changeddir==0)
-          chdir("..");
-        return;
-        }
-      for (count=0;count<level.numofropes;count++)
-        {
-        fread2(&level.rope[count].type,4,1,fp);
-        fread2(&level.rope[count].texturenum,4,1,fp);
-        fread2(&level.rope[count].obj1,4,1,fp);
-        fread2(&level.rope[count].obj1part,4,1,fp);
-        fread2(&level.rope[count].obj2,4,1,fp);
-        fread2(&level.rope[count].obj2part,4,1,fp);
-        }
-      for (count=1;count<251;count++)
-        {
-        fread2(&texture[count].sizex,4,1,fp);
-        if (texture[count].sizex<0 || texture[count].sizex>=1024)
-          {
-          fclose(fp);
-          if (changeddir==0)
-            chdir("..");
-          return;
-          }
-        if (texture[count].sizex!=0)
-          {
-          fread2(&texture[count].sizey,4,1,fp);
-          fread2(&texture[count].magfilter,4,1,fp);
-          fread2(&texture[count].minfilter,4,1,fp);
-          free(texture[count].rgba[0]);
-          texture[count].rgba[0]=(unsigned int *) malloc(texture[count].sizex*texture[count].sizey*4);
-          fread(texture[count].rgba[0],4,texture[count].sizex*texture[count].sizey,fp);
-
-          texture[count].mipmaplevels=1;
-          texture[count].format=GL_RGBA;
-          texture[count].alphamap=0;
-          texture[count].normalmap=0;
-          texture[count].glossmap=0;
-          texture[count].wraps=GL_CLAMP_TO_EDGE;
-          texture[count].wrapt=GL_CLAMP_TO_EDGE;
-          texture[count].magfilter=GL_LINEAR;
-          texture[count].minfilter=GL_LINEAR;
-
-          if ((texture[count].sizex&(texture[count].sizex-1))==0)
-          if ((texture[count].sizey&(texture[count].sizey-1))==0)
-            setuptexture(count);
-          }
-  
-        fread2(&block[count].numoflines,4,1,fp);
-        if (block[count].numoflines<0 || block[count].numoflines>=64)
-          {
-          fclose(fp);
-          if (changeddir==0)
-            chdir("..");
-          return;
-          }
-        for (count2=0;count2<block[count].numoflines;count2++)
-          fread2(block[count].line[count2],4,8,fp);
-        fread2(&block[count].friction,4,1,fp);
-        fread2(&block[count].breakpoint,4,1,fp);
-        fread2(&block[count].middamage,4,1,fp);
-        fread2(&block[count].foredamage,4,1,fp);
-        fread2(&block[count].density,4,1,fp);
-        fread2(&block[count].drag,4,1,fp);
-        fread2(&block[count].animation,4,1,fp);
-        fread2(&block[count].animationspeed,4,1,fp);
+        for (int i=0;i<block[count].numoflines;i++)
+        for (int j=0;j<8;j++)
+          PHYSFS_readSLE32(fp,(void*)&block[count].line[i][j]);
+        PHYSFS_readSLE32(fp,(void*)&block[count].friction);
+        PHYSFS_readSLE32(fp,(void*)&block[count].breakpoint);
+        PHYSFS_readSLE32(fp,&block[count].middamage);
+        PHYSFS_readSLE32(fp,&block[count].foredamage);
+        PHYSFS_readSLE32(fp,(void*)&block[count].density);
+        PHYSFS_readSLE32(fp,(void*)&block[count].drag);
+        PHYSFS_readSLE32(fp,&block[count].animation);
+        PHYSFS_readSLE32(fp,&block[count].animationspeed);
         }
       }
 
-    fclose(fp);
+    PHYSFS_close(fp);
     }
-
-  if (changeddir==0)
-    chdir("..");
 
   if (version<7)
     loadleveltextures();
@@ -523,8 +423,8 @@ void loadlevel(char *filename)
     {
     lasttextureloaded[0]=0;
     if (level.background[0]!=0)
-      snprintf(texfilename,sizeof(texfilename),"texture/%s",level.background);
-      loadbackground(660,texfilename);
+      snprintf(fullpath,sizeof(fullpath),"texture/%s",level.background);
+      loadbackground(660,fullpath);
     }
 
   loadtexturetga(251,"texture/oneup.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
