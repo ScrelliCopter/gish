@@ -104,6 +104,11 @@ void createwindow(void)
     flags|=(windowinfo.fullscreen==2)?
       SDL_WINDOW_FULLSCREEN_DESKTOP:
       SDL_WINDOW_FULLSCREEN;
+    if (windowinfo.fullscreen==2)
+      {
+      windowinfo.resolutionx=sdldisplay[windowinfo.displayid].bounds.w;
+      windowinfo.resolutiony=sdldisplay[windowinfo.displayid].bounds.h;
+      }
     }
 
   sdlwindow=SDL_CreateWindow("Gish", windowposx, windowposy,
@@ -132,6 +137,7 @@ void createwindow(void)
     if (videomodenum>=0)
       SDL_SetWindowDisplayMode(sdlwindow,&sdlvideomode[videomodenum].displaymode);
     }
+
   SDL_SetWindowIcon(sdlwindow,SDL_LoadBMP("gish.bmp"));
 
   sdlglcontext=SDL_GL_CreateContext(sdlwindow);
