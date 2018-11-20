@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "music.h"
 
 #include <string.h>
+#include <stdint.h>
+#include <physfs.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
 #include <audio/audio.h>
@@ -32,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct OGGMEMORYFILE
   {
   char *data;
-  int datasize;
+  int64_t datasize;
   int dataread;
   };
 struct OGGMEMORYFILE oggmemoryfile[16];
@@ -137,160 +139,34 @@ void checkmusic(void)
     }
   }
 
+void loadogg(int index,const char *filename)
+  {
+  PHYSFS_file *fp;
+
+  if ((fp=PHYSFS_openRead(filename))!=NULL)
+    {
+    oggmemoryfile[index].datasize=PHYSFS_fileLength(fp);;
+    oggmemoryfile[index].dataread=0;
+    oggmemoryfile[index].data=(char *)malloc((size_t)oggmemoryfile[index].datasize);
+    PHYSFS_readBytes(fp,oggmemoryfile[index].data,(PHYSFS_uint64)oggmemoryfile[index].datasize);
+
+    PHYSFS_close(fp);
+    }
+  }
+
 void loadoggs(void)
   {
-  int count;
-  int oggnum;
-  int changeddir;
-  FILE *fp;
-
-  changeddir=chdir("music");
-
-  oggnum=0;
-  if ((fp=fopen("sewer.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-
+  loadogg(0,"music/sewer.ogg");
 #ifndef DEMO
-  oggnum=1;
-  if ((fp=fopen("cave.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-  oggnum=2;
-  if ((fp=fopen("hell.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-  oggnum=3;
-  if ((fp=fopen("egypt.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-  oggnum=4;
-  if ((fp=fopen("church.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-  oggnum=5;
-  if ((fp=fopen("boss.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-
-  if (changeddir==0)
-    chdir("..");
-
-  changeddir=chdir("data");
-
-  oggnum=6;
-  if ((fp=fopen("async.dat","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-
-  if (changeddir==0)
-    chdir("..");
-
-  changeddir=chdir("music");
-
-  oggnum=7;
-  if ((fp=fopen("versus.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
+  loadogg(1,"music/cave.ogg");
+  loadogg(2,"music/hell.ogg");
+  loadogg(3,"music/egypt.ogg");
+  loadogg(4,"music/church.ogg");
+  loadogg(5,"music/boss.ogg");
+  loadogg(6,"data/async.dat");
+  loadogg(7,"music/versus.ogg");
 #endif
-
-  oggnum=8;
-  if ((fp=fopen("intro.ogg","rb"))!=NULL)
-    {
-    fseek(fp,0,SEEK_END);
-    oggmemoryfile[oggnum].datasize=ftell(fp);
-    oggmemoryfile[oggnum].dataread=0;
-    oggmemoryfile[oggnum].data=(char *) malloc(oggmemoryfile[oggnum].datasize);
-
-    fseek(fp,0,SEEK_SET);
-
-    fread2(oggmemoryfile[oggnum].data,1,oggmemoryfile[oggnum].datasize,fp);
-
-    fclose(fp);
-    }
-
-  if (changeddir==0)
-    chdir("..");
+  loadogg(8,"music/intro.ogg");
   }
 
 size_t vorbisread(void *ptr,size_t bytesize,size_t sizetoread,void *datasource)
