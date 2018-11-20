@@ -42,12 +42,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <menu/menu.h>
 #include <game/mainmenu.h>
 #include <game/high.h>
+#include <physfs.h>
 
 int main (int argc,char *argv[])
   {
   int count;
   Uint32 flags;
   const char *temp;
+
+  if (!PHYSFS_init(argv[0]))
+    {
+    fprintf(stderr,"FATAL: PHYSFS_init(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+    return(1);
+    }
 
   loadconfig();
   loadscores();
@@ -59,6 +66,8 @@ int main (int argc,char *argv[])
 
   if (SDL_Init(flags)!=0)
     {
+    fprintf(stderr,"FATAL: SDL_Init(): %s\n",SDL_GetError());
+    PHYSFS_deinit();
     return(1);
     }
 
@@ -143,6 +152,7 @@ int main (int argc,char *argv[])
   SDL_GL_DeleteContext(sdlglcontext);
   SDL_DestroyWindow(sdlwindow);
   SDL_Quit();
+  PHYSFS_deinit();
 
   return(0);
   }
