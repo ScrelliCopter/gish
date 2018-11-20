@@ -724,6 +724,13 @@ void videooptionsmenu(void)
         continue;
       if (sdlvideomode[i].displayid!=displayid)
         continue;
+      if (fullscreen==2)
+        {
+        if (sdlvideomode[i].displaymode.w!=sdldisplay[sdlvideomode[i].displayid].bounds.w)
+          continue;
+        if (sdlvideomode[i].displaymode.h!=sdldisplay[sdlvideomode[i].displayid].bounds.h)
+          continue;
+        }
 
       modecount++;
 
