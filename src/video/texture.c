@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <SDL.h>
+#include <physfs.h>
 #include <string.h>
 #include <GL/gl.h>
 #include <sdl/platform.h>
@@ -38,6 +40,124 @@ struct TGAHEADER
 
 char lasttextureloaded[32];
 struct TEXTURE texture[2048];
+
+void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
+  {
+  PHYSFS_file *fp;
+  size_t filepos;
+
+  PHYSFS_uint8  tgaidentityfieldlen;
+  PHYSFS_uint8  tgacolourmaptype;
+  PHYSFS_uint8  tgaimagetype;
+  PHYSFS_uint16 tgacolourmaporg;
+  PHYSFS_uint16 tgacolourmaplen;
+  PHYSFS_uint8  tgacolourmapentrysize;
+  PHYSFS_uint16 tgaoriginx;
+  PHYSFS_uint16 tgaoriginy;
+  PHYSFS_uint16 tgaimagewidth;
+  PHYSFS_uint16 tgaimageheight;
+  PHYSFS_uint8  tgabitsperpixel;
+  PHYSFS_uint8  tgaimagedescriptor;
+
+  //open file
+  fp=PHYSFS_openRead(filename);
+  if (!fp)
+    {
+#ifdef DEBUG
+    fprintf(stderr,"Texture Load Failed: %d \"%s\"\n",texturenum,filename);
+    fprintf(stderr,"PHYSFS_openRead(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+#endif
+    return;
+    }
+
+  //read tga header
+  PHYSFS_readBytes(fp,&tgaidentityfieldlen,1);
+  PHYSFS_readBytes(fp,&tgacolourmaptype,1);
+  PHYSFS_readBytes(fp,&tgaimagetype,1);
+  PHYSFS_readULE16(fp,&tgacolourmaporg);
+  PHYSFS_readULE16(fp,&tgacolourmaplen);
+  PHYSFS_readBytes(fp,&tgacolourmapentrysize,1);
+  PHYSFS_readULE16(fp,&tgaoriginx);
+  PHYSFS_readULE16(fp,&tgaoriginy);
+  PHYSFS_readULE16(fp,&tgaimagewidth);
+  PHYSFS_readULE16(fp,&tgaimageheight);
+  PHYSFS_readBytes(fp,&tgabitsperpixel,1);
+  PHYSFS_readBytes(fp,&tgaimagedescriptor,1);
+
+  //sanity checks :eyes:
+  if (tgabitsperpixel!=32&&tgabitsperpixel!=24)
+    {
+#ifdef DEBUG
+    fprintf(stderr,"Texture Load Failed: %d \"%s\"\n",texturenum,filename);
+    fprintf(stderr,"PHYSFS_openRead(): unsupported bitdepth %d\n",tgabitsperpixel);
+#endif
+    PHYSFS_close(fp);
+    return;
+    }
+
+  int bytesperpixel=tgabitsperpixel/8;
+
+  //skip identification field nonsense
+  filepos=(size_t)PHYSFS_tell(fp);
+  PHYSFS_seek(fp,filepos+tgaidentityfieldlen);
+
+  //create a surface to load to
+  Uint32 pixelformat=(tgabitsperpixel==32)?SDL_PIXELFORMAT_RGBA32:SDL_PIXELFORMAT_RGB24;
+  SDL_Surface *img=SDL_CreateRGBSurfaceWithFormat(0,tgaimagewidth,tgaimageheight,tgabitsperpixel,pixelformat);
+  if (!img)
+    {
+#ifdef DEBUG
+    fprintf(stderr,"Texture Load Failed: %d \"%s\"\n",texturenum,filename);
+    fprintf(stderr,"SDL_CreateRGBSurfaceWithFormat(): %s\n",SDL_GetError());
+#endif
+    PHYSFS_close(fp);
+    return;
+    }
+
+  //copy pixels
+  texture[texturenum].isalpha=(tgabitsperpixel==32);
+  for (int i=0;i<tgaimageheight;i++)
+    {
+    Uint8 *ptr=(Uint8 *)img->pixels+i*img->pitch;
+    for (int j=0;j<tgaimagewidth;j++)
+      {
+      //FIXME: probably make this bi-endian
+      PHYSFS_readBytes(fp,ptr,(size_t)bytesperpixel);
+      ptr+=bytesperpixel;
+      }
+    }
+
+  //free file handle
+  PHYSFS_close(fp);
+
+  //setup texture attributes
+  texture[texturenum].sizex=(int)tgaimagewidth;
+  texture[texturenum].sizey=(int)tgaimageheight;
+  texture[texturenum].mipmaplevels=1;
+  texture[texturenum].format=(tgabitsperpixel==32)?GL_RGBA:GL_RGB;
+  texture[texturenum].alphamap=0;
+  texture[texturenum].normalmap=0;
+  texture[texturenum].glossmap=0;
+  texture[texturenum].wraps=wraps;
+  texture[texturenum].wrapt=wrapt;
+  texture[texturenum].magfilter=magfilter;
+  texture[texturenum].minfilter=minfilter;
+
+  //copy texture data
+  if (texture[texturenum].rgba[0]!=NULL)
+    free(texture[texturenum].rgba[0]);
+  texture[texturenum].rgba[0]=(unsigned int *)malloc((size_t)texture[texturenum].sizex*texture[texturenum].sizey*bytesperpixel);
+  for (int i=0;i<tgaimageheight;i++)
+    {
+    Uint8 *ptr=(Uint8 *)img->pixels+i*img->pitch;
+    memcpy((Uint8 *)texture[texturenum].rgba[0]+i*texture[texturenum].sizex,ptr,(size_t)texture[texturenum].sizex*bytesperpixel);
+    }
+
+  //create opengl texture
+  if (mipmap)
+    generatemipmap(texturenum);
+  setuptexture(texturenum);
+  }
 
 void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
   {

@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "animation.h"
 
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <GL/gl.h>
@@ -31,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "audio.h"
 #include <physics/particle.h>
 #include <physics/object.h>
+#include <physfs.h>
 #include "game.h"
 #include "object.h"
 #include "sprite.h"
@@ -382,12 +384,81 @@ void objectanimation(void)
     }
   }
 
+void loadanimationframe(const char* name, int index)
+  {
+  char filename[256];
+  snprintf(filename,sizeof(filename),"animation/%s%02d.tga",name,index);
+  loadtexturetgafix(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
+  numofanimations++;
+  }
+
+void loadanimation(const char* name,int *anipair,int numanims)
+  {
+    anipair[0]=numofanimations;
+    anipair[1]=numanims;
+    for (int i=1;i<=numanims;i++)
+      {
+      loadanimationframe(name,i);
+      }
+  }
+
+int loadneeded(struct ANIMATION *anim)
+  {
+  if (anim->loaded==2)
+    {
+    anim->loaded=1;
+    return 1;
+    }
+    return 0;
+  }
+
 void loadanimations(void)
   {
-  int count,count2;
+  int animidx;
   int changeddir;
-  char filename[32]="bibatk01.tga";
 
+  /*
+  animidx=0;
+  if (loadneeded(&animation[animidx]))
+    {
+    loadanimation(animation[animidx].stand,"animation/bibatk",6);
+    loadanimation(animation[animidx].stand,"animation/bibatk",9);
+    }
+  */
+
+  //changeddir=chdir("animation");
+
+  /*
+  char **files=PHYSFS_enumerateFiles("animation");
+  for (int i=0;files[i]!=NULL;i++)
+    {
+    char fname[256];
+    snprintf(fname,sizeof(fname),"animation/%s",files[i]);
+    PHYSFS_file *fp=PHYSFS_openRead(fname);
+    if (fp)
+      {
+      printf("%s\n",files[i]);
+      PHYSFS_close(fp);
+      }
+    }
+  PHYSFS_freeList(files);
+  */
+
+  animidx=1;
+  if (loadneeded(&animation[animidx]))
+    {
+    loadanimation("nibsta",animation[animidx].stand,6);
+    loadanimation("nibwlk",animation[animidx].walk,9);
+    loadanimation("nibatk",animation[animidx].attack,9);
+    loadanimation("nibdie",animation[animidx].die,9);
+    }
+
+  //if (changeddir==0)
+  //  chdir("..");
+
+  /*
+  int count,count2;
+  char filename[32]="bibatk01.tga";
   changeddir=chdir("animation");
 
   count2=0;
@@ -1374,4 +1445,5 @@ void loadanimations(void)
 
   if (changeddir==0)
     chdir("..");
+    */
   }
