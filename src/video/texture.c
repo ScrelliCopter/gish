@@ -85,21 +85,46 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
   PHYSFS_readBytes(fp,&tgaimagedescriptor,1);
 
   //sanity checks :eyes:
-  if (tgabitsperpixel!=32&&tgabitsperpixel!=24)
+  if (tgacolourmaptype)
     {
 #ifdef DEBUG
     fprintf(stderr,"Texture Load Failed: %d \"%s\"\n",texturenum,filename);
-    fprintf(stderr,"PHYSFS_openRead(): unsupported bitdepth %d\n",tgabitsperpixel);
+    fprintf(stderr,"loadtexturetga(): indexed tgas are unsupported\n");
 #endif
     PHYSFS_close(fp);
     return;
     }
-
-  int bytesperpixel=tgabitsperpixel/8;
+  if (tgabitsperpixel!=32&&tgabitsperpixel!=24)
+    {
+#ifdef DEBUG
+    fprintf(stderr,"Texture Load Failed: %d \"%s\"\n",texturenum,filename);
+    fprintf(stderr,"loadtexturetga(): unsupported bitdepth %d\n",tgabitsperpixel);
+#endif
+    PHYSFS_close(fp);
+    return;
+    }
+#ifdef DEBUG
+  if ((tgabitsperpixel==32&&(tgaimagedescriptor&0x7)!=8)||(tgabitsperpixel==24&&(tgaimagedescriptor&0x7)!=0))
+    {
+    fprintf(stderr,"WARN: loadtexturetga(): attribute bits look wrong (%dbpp, %d), corrupted maybe?\n",tgabitsperpixel,tgaimagedescriptor&0x7);
+    }
+  //printf("origin %s\n",(tgaimagedescriptor&(1<<5))?"top-left":"bottom-left");
+  static const char* storagetype[4]=
+    {
+    "non-interleaved",
+    "two-way (even/odd) interleaving",
+    "four way interleaving",
+    "reserved",
+    };
+  printf("%s\n",storagetype[(tgaimagedescriptor>>6)&0x3]);
+#endif
 
   //skip identification field nonsense
-  filepos=(size_t)PHYSFS_tell(fp);
-  PHYSFS_seek(fp,filepos+tgaidentityfieldlen);
+  if (tgaidentityfieldlen>0)
+    {
+    filepos=(size_t)PHYSFS_tell(fp);
+    PHYSFS_seek(fp,filepos+tgaidentityfieldlen);
+    }
 
   //create a surface to load to
   Uint32 pixelformat=(tgabitsperpixel==32)?SDL_PIXELFORMAT_RGBA32:SDL_PIXELFORMAT_RGB24;
@@ -115,15 +140,34 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     }
 
   //copy pixels
-  texture[texturenum].isalpha=(tgabitsperpixel==32);
-  for (int i=0;i<tgaimageheight;i++)
+  const int bytesperpixel=tgabitsperpixel/8;
+  if (tgabitsperpixel==32)
     {
-    Uint8 *ptr=(Uint8 *)img->pixels+i*img->pitch;
-    for (int j=0;j<tgaimagewidth;j++)
+    texture[texturenum].isalpha=1;
+    for (int i=0;i<tgaimageheight;i++)
       {
-      //FIXME: probably make this bi-endian
-      PHYSFS_readBytes(fp,ptr,(size_t)bytesperpixel);
-      ptr+=bytesperpixel;
+      int y=(tgaimagedescriptor&(1<<5))?i:tgaimageheight-i-1;
+      Uint32 *ptr=(Uint32 *)((Uint8 *)img->pixels+y*img->pitch);
+      for (int j=0;j<tgaimagewidth;j++)
+        {
+        PHYSFS_readULE32(fp,(ptr));
+        ptr++;
+        }
+      }
+    }
+  else if (tgabitsperpixel==24)
+    {
+    texture[texturenum].isalpha=0;
+    for (int i=0;i<tgaimageheight;i++)
+      {
+      int y=(tgaimagedescriptor&(1<<5))?i:tgaimageheight-i-1;
+      Uint8 *ptr=(Uint8 *)img->pixels+y*img->pitch;
+      for (int j=0;j<tgaimagewidth;j++)
+        {
+        //FIXME: probably make this bi-endian
+        PHYSFS_readBytes(fp,ptr,3);
+        ptr+=3;
+        }
       }
     }
 
