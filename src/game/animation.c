@@ -637,7 +637,7 @@ void loadanimations(void)
   if (loadneeded(&animation[animidx]))
     {
     loadanimation("sepsta",animation[animidx].stand,6);
-    loadanimation("sepwlk",animation[animidx].walk,9);
+    loadanimation("sepspw",animation[animidx].walk,9);
     loadanimation("sepatk",animation[animidx].attack,8);
     loadanimation("sepdie",animation[animidx].die,9);
     }
