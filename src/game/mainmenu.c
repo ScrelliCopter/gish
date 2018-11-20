@@ -57,16 +57,14 @@ void mainmenu(void)
   int count,temp;
   int prevjoymenunum;
   int registered;
-  char loadfilename[32]="loading00.tga";
   char texfilename[32];
   unsigned int x,y;
 
   srand(time(NULL));
   count=(rand()%11)+1;
 
-  loadfilename[7]=48+count/10;
-  loadfilename[8]=48+count%10;
-  loadbackground(800,loadfilename);
+  snprintf(texfilename,sizeof(texfilename),"texture/loading%02d.tga",count);
+  loadbackground(800,texfilename);
 
   glClearColor(0.0f,0.0f,0.0f,0.0f);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -94,7 +92,7 @@ void mainmenu(void)
 
   setuplightingtextures();
 
-  loadbackground(470,"gishtitle.tga");
+  loadbackground(470,"texture/gishtitle.tga");
 
   loadtexturetga(462,"texture/complete.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(465,"texture/breatalk.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
@@ -129,20 +127,24 @@ void mainmenu(void)
   loadtexturetga(534,"texture/dragster.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(535,"texture/collect.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
 
-  loadbackground(540,"level.tga");
+  loadbackground(540,"texture/level.tga");
 
-  loadbackground(560,"congrats.tga");
-  loadbackground(580,"blank.tga");
+  loadbackground(560,"texture/congrats.tga");
+  loadbackground(580,"texture/blank.tga");
 
-  loadbackground(600,"vsmode.tga");
-  loadbackground(620,"storymode.tga");
+  loadbackground(600,"texture/vsmode.tga");
+  loadbackground(620,"texture/storymode.tga");
 
-  loadtexturetgapartial(640,"border.tga",0,0,256,256);
-  loadtexturetgapartial(641,"border.tga",256,0,256,256);
-  loadtexturetgapartial(642,"border.tga",512,0,256,256);
-  loadtexturetgapartial(643,"border.tga",0,256,256,256);
-  loadtexturetgapartial(644,"border.tga",256,256,256,256);
-  loadtexturetgapartial(645,"border.tga",512,256,256,256);
+  static const SDL_Rect borderrects[6]=
+    {
+    {0,0,256,256},
+    {256,0,256,256},
+    {512,0,256,256},
+    {0,256,256,256},
+    {256,256,256,256},
+    {512,256,256,256}
+    };
+  loadtexturetgaparts(640,"texture/border.tga",borderrects,6);
 
   loadtexturetga(820,"texture/gishwin.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(821,"texture/graywin.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
@@ -368,18 +370,22 @@ void mainmenu(void)
 
 void loadbackground(int texturenum,char *filename)
   {
-  loadtexturetgapartial(texturenum,filename,0,0,256,256);
-  loadtexturetgapartial(texturenum+1,filename,256,0,256,256);
-  loadtexturetgapartial(texturenum+2,filename,512,0,256,256);
-  loadtexturetgapartial(texturenum+3,filename,768,0,256,256);
-  loadtexturetgapartial(texturenum+4,filename,0,256,256,256);
-  loadtexturetgapartial(texturenum+5,filename,256,256,256,256);
-  loadtexturetgapartial(texturenum+6,filename,512,256,256,256);
-  loadtexturetgapartial(texturenum+7,filename,768,256,256,256);
-  loadtexturetgapartial(texturenum+8,filename,0,512,256,256);
-  loadtexturetgapartial(texturenum+9,filename,256,512,256,256);
-  loadtexturetgapartial(texturenum+10,filename,512,512,256,256);
-  loadtexturetgapartial(texturenum+11,filename,768,512,256,256);
+  static const SDL_Rect bgrect[12]=
+    {
+    {0,0,256,256},
+    {256,0,256,256},
+    {512,0,256,256},
+    {768,0,256,256},
+    {0,256,256,256},
+    {256,256,256,256},
+    {512,256,256,256},
+    {768,256,256,256},
+    {0,512,256,256},
+    {256,512,256,256},
+    {512,512,256,256},
+    {768,512,256,256}
+    };
+  loadtexturetgaparts(texturenum,filename,bgrect,12);
   }
 
 void displaybackground(int texturenum)
@@ -486,7 +492,7 @@ void storyscreen(void)
   loaddelay=0;
   screennum=0;
 
-  loadbackground(824,"story1.tga");
+  loadbackground(824,"texture/story1.tga");
 
   simtimer=SDL_GetTicks();
 
@@ -539,19 +545,19 @@ void storyscreen(void)
         {
         screennum++;
         if (screennum==1)
-          loadbackground(824,"story2.tga");
+          loadbackground(824,"texture/story2.tga");
         if (screennum==2)
-          loadbackground(824,"story3.tga");
+          loadbackground(824,"texture/story3.tga");
         if (screennum==3)
-          loadbackground(824,"story4.tga");
+          loadbackground(824,"texture/story4.tga");
         if (screennum==4)
-          loadbackground(824,"story5.tga");
+          loadbackground(824,"texture/story5.tga");
         if (screennum==5)
-          loadbackground(824,"story6.tga");
+          loadbackground(824,"texture/story6.tga");
         if (screennum==6)
-          loadbackground(824,"story7.tga");
+          loadbackground(824,"texture/story7.tga");
         if (screennum==7)
-          loadbackground(824,"story8.tga");
+          loadbackground(824,"texture/story8.tga");
         loaddelay=0;
         }
       }
@@ -559,19 +565,19 @@ void storyscreen(void)
       {
       screennum++;
       if (screennum==1)
-        loadbackground(824,"story2.tga");
+        loadbackground(824,"texture/story2.tga");
       if (screennum==2)
-        loadbackground(824,"story3.tga");
+        loadbackground(824,"texture/story3.tga");
       if (screennum==3)
-        loadbackground(824,"story4.tga");
+        loadbackground(824,"texture/story4.tga");
       if (screennum==4)
-        loadbackground(824,"story5.tga");
+        loadbackground(824,"texture/story5.tga");
       if (screennum==5)
-        loadbackground(824,"story6.tga");
+        loadbackground(824,"texture/story6.tga");
       if (screennum==6)
-        loadbackground(824,"story7.tga");
+        loadbackground(824,"texture/story7.tga");
       if (screennum==7)
-        loadbackground(824,"story8.tga");
+        loadbackground(824,"texture/story8.tga");
       loaddelay=0;
       menuitem[1].active=0;
       }

@@ -22,8 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_VIDEO_TEXTURE_H__
 #define __GISH_VIDEO_TEXTURE_H__
 
+#include <SDL_rect.h>
+
 void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
-void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,int sizex,int sizey);
+void loadtexturetgaparts(int texturenum,char *filename,const SDL_Rect *rect,int numrect);
 void generatemipmap(int texturenum);
 void setuptexture(int texturenum);
 

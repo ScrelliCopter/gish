@@ -261,6 +261,7 @@ void loadlevel(char *filename)
   int changeddir;
   int version;
   unsigned int x,y;
+  char texfilename[32];
   FILE *fp;
 
   x=0x17AF2E03;
@@ -522,7 +523,8 @@ void loadlevel(char *filename)
     {
     lasttextureloaded[0]=0;
     if (level.background[0]!=0)
-      loadbackground(660,level.background);
+      snprintf(texfilename,sizeof(texfilename),"texture/%s",level.background);
+      loadbackground(660,texfilename);
     }
 
   loadtexturetga(251,"texture/oneup.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
