@@ -56,6 +56,14 @@ int main (int argc,char *argv[])
     return(1);
     }
 
+  //setup fs mounts
+  if (!PHYSFS_mount("gishfull.zip","",1))
+    {
+    fprintf(stderr,"FATAL: PHYSFS_mount(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+    PHYSFS_deinit();
+    return(1);
+    }
+
   loadconfig();
   loadscores();
   loadplayers();

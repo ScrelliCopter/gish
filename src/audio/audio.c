@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "audio.h"
 
 #include <SDL.h>
+#include <physfs.h>
+#include <sdl/physfsrwops.h>
 #include <sdl/platform.h>
 #include <game/game.h>
 #include <game/audio.h>
@@ -71,43 +73,33 @@ void setupaudio(void)
   for (count=0;count<30;count++)
     alGenBuffers(1,&soundbuffer[count]);
 
-  changeddir=chdir("sound");
-
-  loadwav(0,"blockbreak.wav");
-  loadwav(1,"rockhit.wav");
-  loadwav(2,"fleshhit.wav");
-  loadwav(3,"ropebreak.wav");
-  loadwav(4,"chainbreak.wav");
-  loadwav(5,"gishhit.wav");
-  loadwav(6,"rockfriction.wav");
-  loadwav(7,"squish.wav");
-  loadwav(8,"secrets1.wav");
-  loadwav(9,"secrets2.wav");
-  loadwav(10,"amber.wav");
-  loadwav(11,"nibattack.wav");
-  loadwav(12,"visattack.wav");
-  loadwav(13,"bobattack.wav");
-  loadwav(14,"switch.wav");
-  loadwav(15,"points.wav");
-  loadwav(16,"gishhurt.wav");
-  loadwav(17,"splash.wav");
-  loadwav(18,"lava.wav");
-  loadwav(19,"necksnap.wav");
-  loadwav(20,"tarball.wav");
-
-  if (changeddir==0)
-    chdir("..");
+  loadwav(0,"sound/blockbreak.wav");
+  loadwav(1,"sound/rockhit.wav");
+  loadwav(2,"sound/fleshhit.wav");
+  loadwav(3,"sound/ropebreak.wav");
+  loadwav(4,"sound/chainbreak.wav");
+  loadwav(5,"sound/gishhit.wav");
+  loadwav(6,"sound/rockfriction.wav");
+  loadwav(7,"sound/squish.wav");
+  loadwav(8,"sound/secrets1.wav");
+  loadwav(9,"sound/secrets2.wav");
+  loadwav(10,"sound/amber.wav");
+  loadwav(11,"sound/nibattack.wav");
+  loadwav(12,"sound/visattack.wav");
+  loadwav(13,"sound/bobattack.wav");
+  loadwav(14,"sound/switch.wav");
+  loadwav(15,"sound/points.wav");
+  loadwav(16,"sound/gishhurt.wav");
+  loadwav(17,"sound/splash.wav");
+  loadwav(18,"sound/lava.wav");
+  loadwav(19,"sound/necksnap.wav");
+  loadwav(20,"sound/tarball.wav");
 
 #ifndef DEMO
-  changeddir=chdir("data");
-
-  loadwav(21,"cubemap.dat");
-  loadwav(22,"specular.dat");
-  loadwav(23,"stencil.dat");
-  loadwav(24,"pixel.dat");
-
-  if (changeddir==0)
-    chdir("..");
+  loadwav(21,"data/cubemap.dat");
+  loadwav(22,"data/specular.dat");
+  loadwav(23,"data/stencil.dat");
+  loadwav(24,"data/pixel.dat");
 #endif
 
   alGenSources(1,&oggsource);
@@ -216,7 +208,8 @@ void loadwav(int buffernum,char *filename)
   unsigned char temp;
   ALenum format;
 
-  if (SDL_LoadWAV(filename,&wavspec,&wavbuffer,&wavlength))
+  PHYSFS_openRead(filename);
+  if (SDL_LoadWAV_RW(PHYSFSRWOPS_openRead(filename),1,&wavspec,&wavbuffer,&wavlength))
     {
     if (wavspec.channels==1)
       {
