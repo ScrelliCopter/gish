@@ -203,7 +203,6 @@ void seticon(void)
   SDL_FreeSurface(iconrgb);
 
   //apply transparency mask
-  int k=0;
   for (int i=0;i<icon->w;i++)
     {
     Uint32 *dst=(Uint32 *)((Uint8 *)icon->pixels+icon->pitch*i);
