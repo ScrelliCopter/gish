@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void createwindow(void);
 void getvideoinfo(void);
 void listvideomodes(void);
+void seticon(void);
 
 extern int numofsdldisplays;
 struct SDLDISPLAY
