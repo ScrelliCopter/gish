@@ -415,35 +415,18 @@ int loadneeded(struct ANIMATION *anim)
 void loadanimations(void)
   {
   int animidx;
-  int changeddir;
 
-  /*
+  //bone nibbler
   animidx=0;
   if (loadneeded(&animation[animidx]))
     {
-    loadanimation(animation[animidx].stand,"animation/bibatk",6);
-    loadanimation(animation[animidx].stand,"animation/bibatk",9);
+    loadanimation("bibsta",animation[animidx].stand,6);
+    loadanimation("bibwlk",animation[animidx].walk,9);
+    loadanimation("bibatk",animation[animidx].attack,9);
+    loadanimation("bibdie",animation[animidx].die,9);
     }
-  */
 
-  //changeddir=chdir("animation");
-
-  /*
-  char **files=PHYSFS_enumerateFiles("animation");
-  for (int i=0;files[i]!=NULL;i++)
-    {
-    char fname[256];
-    snprintf(fname,sizeof(fname),"animation/%s",files[i]);
-    PHYSFS_file *fp=PHYSFS_openRead(fname);
-    if (fp)
-      {
-      printf("%s\n",files[i]);
-      PHYSFS_close(fp);
-      }
-    }
-  PHYSFS_freeList(files);
-  */
-
+  //cave nibbler
   animidx=1;
   if (loadneeded(&animation[animidx]))
     {
@@ -453,997 +436,249 @@ void loadanimations(void)
     loadanimation("nibdie",animation[animidx].die,9);
     }
 
-  //if (changeddir==0)
-  //  chdir("..");
-
-  /*
-  int count,count2;
-  char filename[32]="bibatk01.tga";
-  changeddir=chdir("animation");
-
-  count2=0;
-  if (animation[count2].loaded==2)
+  //hell nibbler
+  animidx=2;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"bibsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"bibwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"bibatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"nibdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    loadanimation("ribsta",animation[animidx].stand,6);
+    loadanimation("ribwlk",animation[animidx].walk,9);
+    loadanimation("ribatk",animation[animidx].attack,9);
+    loadanimation("ribdie",animation[animidx].die,9);
     }
 
-  count2=1;
-  if (animation[count2].loaded==2)
+  //mummy
+  animidx=3;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
+    loadanimation("mumsta",animation[animidx].stand,6);
+    loadanimation("mumwlk",animation[animidx].walk,9);
+    loadanimation("mumatk",animation[animidx].attack,9);
+    loadanimation("mumdie",animation[animidx].die,9);
+  
+    animidx+=32;
+    animation[animidx].stand[0]=numofanimations;
+    loadanimationframe("mumhed",1);
 
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"nibsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"nibwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"nibatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"nibdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    animation[animidx].walk[0]=numofanimations;
+    loadanimationframe("mumhed",2);
+
+    animation[animidx].attack[0]=numofanimations;
+    loadanimationframe("mumhed",3);
+
+    animation[animidx].stand[1]=numofanimations;
+    loadanimationframe("mumhed",5);
+
+    animation[animidx].die[0]=numofanimations;
+    loadanimationframe("mumhed",6);
     }
 
-  count2=2;
-  if (animation[count2].loaded==2)
+  //skeleton
+  animidx=4;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
+    loadanimation("sklsta",animation[animidx].stand,6);
+    loadanimation("sklwlk",animation[animidx].walk,9);
+    loadanimation("sklatk",animation[animidx].attack,9);
+    loadanimation("skldie",animation[animidx].die,9);
 
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"ribsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"ribwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"ribatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"ribdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    animidx+=32;
+    animation[animidx].stand[0]=numofanimations;
+    loadanimationframe("sklhed",1);
+
+    animation[animidx].walk[0]=numofanimations;
+    loadanimationframe("sklhed",2);
+
+    animation[animidx].attack[0]=numofanimations;
+    loadanimationframe("sklhed",3);
+
+    animation[animidx].stand[1]=numofanimations;
+    loadanimationframe("sklhed",5);
+
+    animation[animidx].die[0]=numofanimations;
+    loadanimationframe("sklhed",6);
     }
 
-  count2=3;
-  if (animation[count2].loaded==2)
+  //zombie
+  animidx=5;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
+    loadanimation("zomsta",animation[animidx].stand,6);
+    loadanimation("zomwlk",animation[animidx].walk,9);
+    loadanimation("zomatk",animation[animidx].attack,9);
+    loadanimation("zomdie",animation[animidx].die,9);
 
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"mumsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"mumwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"mumatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"mumdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    count2+=32;
-  
-    animation[count2].stand[0]=numofanimations;
-    loadtexturetga(numofanimations,"mumhed01.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].walk[0]=numofanimations;
-    loadtexturetga(numofanimations,"mumhed02.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].attack[0]=numofanimations;
-    loadtexturetga(numofanimations,"mumhed03.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].stand[1]=numofanimations;
-    loadtexturetga(numofanimations,"mumhed05.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].die[0]=numofanimations;
-    loadtexturetga(numofanimations,"mumhed06.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
+    animidx+=32;
+    animation[animidx].stand[0]=numofanimations;
+    loadanimationframe("zomhed",1);
+
+    animation[animidx].walk[0]=numofanimations;
+    loadanimationframe("zomhed",2);
+
+    animation[animidx].attack[0]=numofanimations;
+    loadanimationframe("zomhed",3);
+
+    animation[animidx].stand[1]=numofanimations;
+    loadanimationframe("zomhed",5);
+
+    animation[animidx].die[0]=numofanimations;
+    loadanimationframe("zomhed",6);
     }
 
-  count2=4;
-  if (animation[count2].loaded==2)
+  //gimp
+  animidx=6;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
+    loadanimation("gimsta",animation[animidx].stand,6);
+    loadanimation("gimwlk",animation[animidx].walk,9);
+    loadanimation("gimatk",animation[animidx].attack,9);
+    loadanimation("gimdie",animation[animidx].die,9);
 
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"sklsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"sklwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"sklatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"skldie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    count2+=32;
-  
-    animation[count2].stand[0]=numofanimations;
-    loadtexturetga(numofanimations,"sklhed01.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].walk[0]=numofanimations;
-    loadtexturetga(numofanimations,"sklhed02.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].attack[0]=numofanimations;
-    loadtexturetga(numofanimations,"sklhed03.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].stand[1]=numofanimations;
-    loadtexturetga(numofanimations,"sklhed05.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].die[0]=numofanimations;
-    loadtexturetga(numofanimations,"sklhed06.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
+    animidx+=32;
+    animation[animidx].stand[0]=numofanimations;
+    loadanimationframe("gimhed",1);
+
+    animation[animidx].walk[0]=numofanimations;
+    loadanimationframe("gimhed",2);
+
+    animation[animidx].attack[0]=numofanimations;
+    loadanimationframe("gimhed",3);
+
+    animation[animidx].stand[1]=numofanimations;
+    loadanimationframe("gimhed",5);
+
+    animation[animidx].die[0]=numofanimations;
+    loadanimationframe("gimhed",6);
     }
 
-  count2=5;
-  if (animation[count2].loaded==2)
+  //vis sister
+  animidx=7;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"zomsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"zomwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"zomatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"zomdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    count2+=32;
-  
-    animation[count2].stand[0]=numofanimations;
-    loadtexturetga(numofanimations,"zomhed01.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].walk[0]=numofanimations;
-    loadtexturetga(numofanimations,"zomhed02.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].attack[0]=numofanimations;
-    loadtexturetga(numofanimations,"zomhed03.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].stand[1]=numofanimations;
-    loadtexturetga(numofanimations,"zomhed05.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].die[0]=numofanimations;
-    loadtexturetga(numofanimations,"zomhed06.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
+    loadanimation("vissta",animation[animidx].stand,6);
+    loadanimation("viswlk",animation[animidx].walk,9);
+    loadanimation("visatk",animation[animidx].attack,9);
+    loadanimation("visdie",animation[animidx].die,9);
     }
 
-  count2=6;
-  if (animation[count2].loaded==2)
+  //angel nibbler
+  animidx=8;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"gimsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"gimwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"gimatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"gimdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    count2+=32;
-  
-    animation[count2].stand[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed01.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].walk[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed02.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].attack[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed03.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].stand[1]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed05.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].die[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed06.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
+    loadanimation("aibsta",animation[animidx].stand,6);
+    loadanimation("aibwlk",animation[animidx].walk,9);
+    loadanimation("aibatk",animation[animidx].attack,9);
+    loadanimation("aibdie",animation[animidx].die,9);
     }
 
-  count2=7;
-  if (animation[count2].loaded==2)
+  //alterboy (altar boy?)
+  animidx=9;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
+    loadanimation("altsta",animation[animidx].stand,6);
+    loadanimation("altwlk",animation[animidx].walk,9);
+    loadanimation("altatk",animation[animidx].attack,9);
+    loadanimation("altdie",animation[animidx].die,9);
 
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"vissta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"viswlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"visatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"visdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    animidx+=32;
+    animation[animidx].stand[0]=numofanimations;
+    loadanimationframe("gimhed",1);
+
+    animation[animidx].walk[0]=numofanimations;
+    loadanimationframe("gimhed",2);
+
+    animation[animidx].attack[0]=numofanimations;
+    loadanimationframe("gimhed",3);
+
+    animation[animidx].stand[1]=numofanimations;
+    loadanimationframe("gimhed",5);
+
+    animation[animidx].die[0]=numofanimations;
+    loadanimationframe("gimhed",6);
     }
 
-  count2=8;
-  if (animation[count2].loaded==2)
+  //stitch
+  animidx=10;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
+    loadanimation("frksta",animation[animidx].stand,6);
+    loadanimation("frkwlk",animation[animidx].walk,9);
+    loadanimation("frkatk",animation[animidx].attack,9);
+    loadanimation("frkdie",animation[animidx].die,9);
 
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"aibsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"aibwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"aibatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"aibdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    animidx+=32;
+    animation[animidx].stand[0]=numofanimations;
+    loadanimationframe("frkhed",1);
+
+    animation[animidx].walk[0]=numofanimations;
+    loadanimationframe("frkhed",2);
+
+    animation[animidx].attack[0]=numofanimations;
+    loadanimationframe("frkhed",3);
+
+    animation[animidx].stand[1]=numofanimations;
+    loadanimationframe("frkhed",5);
+
+    animation[animidx].die[0]=numofanimations;
+    loadanimationframe("frkhed",6);
     }
 
-  count2=9;
-  if (animation[count2].loaded==2)
+  //poobler
+  animidx=11;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"altsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"altwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"altatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"altdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    count2+=32;
-
-    animation[count2].stand[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed01.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].walk[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed02.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].attack[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed03.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].stand[1]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed05.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].die[0]=numofanimations;
-    loadtexturetga(numofanimations,"gimhed06.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
+    loadanimation("pibsta",animation[animidx].stand,6);
+    loadanimation("pibwlk",animation[animidx].walk,9);
+    loadanimation("pibatk",animation[animidx].attack,9);
+    loadanimation("pibdie",animation[animidx].die,9);
     }
 
-  count2=10;
-  if (animation[count2].loaded==2)
+  //honey bucket
+  animidx=12;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"frksta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"frkwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"frkatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"frkdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    count2+=32;
-  
-    animation[count2].stand[0]=numofanimations;
-    loadtexturetga(numofanimations,"frkhed01.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].walk[0]=numofanimations;
-    loadtexturetga(numofanimations,"frkhed02.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].attack[0]=numofanimations;
-    loadtexturetga(numofanimations,"frkhed03.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].stand[1]=numofanimations;
-    loadtexturetga(numofanimations,"frkhed05.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
-  
-    animation[count2].die[0]=numofanimations;
-    loadtexturetga(numofanimations,"frkhed06.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    numofanimations++;
+    loadanimation("sepsta",animation[animidx].stand,6);
+    loadanimation("sepwlk",animation[animidx].walk,9);
+    loadanimation("sepatk",animation[animidx].attack,8);
+    loadanimation("sepdie",animation[animidx].die,9);
     }
 
-  count2=11;
-  if (animation[count2].loaded==2)
+  //sister vis
+  animidx=13;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"pibsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"pibwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"pibatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"pibdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    loadanimation("sissta",animation[animidx].stand,6);
+    loadanimation("siswlk",animation[animidx].walk,9);
+    loadanimation("sisatk",animation[animidx].attack,9);
+    loadanimation("sisdie",animation[animidx].die,9);
     }
 
-  count2=12;
-  if (animation[count2].loaded==2)
+  //paunchy chops
+  animidx=14;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"sepsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"sepspw");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=8;
-    strcpy(filename,"sepatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"sepdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    loadanimation("ghosta",animation[animidx].stand,5);
+    loadanimation("ghowlk",animation[animidx].walk,5);
+    loadanimation("ghoatk",animation[animidx].attack,8);
+    loadanimation("ghodie",animation[animidx].die,9);
     }
 
-  count2=13;
-  if (animation[count2].loaded==2)
+  //basinjin
+  animidx=15;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"sissta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"siswlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"sisatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"sisdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    loadanimation("bassta",animation[animidx].stand,6);
+    loadanimation("baswlk",animation[animidx].walk,9);
+    loadanimation("basatk",animation[animidx].attack,9);
+    loadanimation("basdie",animation[animidx].die,9);
     }
 
-  count2=14;
-  if (animation[count2].loaded==2)
+  //satan
+  animidx=16;
+  if (loadneeded(&animation[animidx]))
     {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=5;
-    strcpy(filename,"ghosta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=5;
-    strcpy(filename,"ghowlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=8;
-    strcpy(filename,"ghoatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"ghodie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
+    loadanimation("satsta",animation[animidx].stand,6);
+    loadanimation("satwlk",animation[animidx].walk,9);
+    loadanimation("satatk",animation[animidx].attack,9);
+    loadanimation("ribdie",animation[animidx].die,9);
     }
-
-  count2=15;
-  if (animation[count2].loaded==2)
-    {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"bassta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"baswlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"basatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"basdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-    }
-
-  count2=16;
-  if (animation[count2].loaded==2)
-    {
-    animation[count2].loaded=1;
-
-    animation[count2].stand[0]=numofanimations;
-    animation[count2].stand[1]=6;
-    strcpy(filename,"satsta");
-    for (count=1;count<=animation[count2].stand[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].walk[0]=numofanimations;
-    animation[count2].walk[1]=9;
-    strcpy(filename,"satwlk");
-    for (count=1;count<=animation[count2].walk[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].attack[0]=numofanimations;
-    animation[count2].attack[1]=9;
-    strcpy(filename,"satatk");
-    for (count=1;count<=animation[count2].attack[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-  
-    animation[count2].die[0]=numofanimations;
-    animation[count2].die[1]=9;
-    strcpy(filename,"ribdie");
-    for (count=1;count<=animation[count2].die[1];count++)
-      {
-      filename[6]=48+(count/10)%10;
-      filename[7]=48+count%10;
-      loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-      numofanimations++;
-      }
-    }
-
-  if (changeddir==0)
-    chdir("..");
-    */
   }
