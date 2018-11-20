@@ -130,11 +130,11 @@ int main (int argc,char *argv[])
   font.sizex=640;
   font.sizey=480;
 
-  loadtexturetga(1000,"font00.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
-  loadtexturetga(1001,"font01.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
+  loadtexturetga(1000,"texture/font00.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
+  loadtexturetga(1001,"texture/font01.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
 
-  loadtexturetga(768,"mouse00.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
-  loadtexturetga(769,"mouse00.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
+  loadtexturetga(768,"texture/mouse00.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
+  loadtexturetga(769,"texture/mouse00.tga",0,GL_CLAMP,GL_CLAMP,GL_LINEAR,GL_LINEAR);
 
   setupmenuitems();
 

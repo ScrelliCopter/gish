@@ -388,7 +388,7 @@ void loadanimationframe(const char* name, int index)
   {
   char filename[256];
   snprintf(filename,sizeof(filename),"animation/%s%02d.tga",name,index);
-  loadtexturetgafix(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
+  loadtexturetga(numofanimations,filename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   numofanimations++;
   }
 

@@ -41,7 +41,7 @@ struct TGAHEADER
 char lasttextureloaded[32];
 struct TEXTURE texture[2048];
 
-void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
+void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
   {
   PHYSFS_file *fp;
   size_t filepos;
@@ -103,12 +103,12 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     PHYSFS_close(fp);
     return;
     }
+  /*
 #ifdef DEBUG
   if ((tgabitsperpixel==32&&(tgaimagedescriptor&0x7)!=8)||(tgabitsperpixel==24&&(tgaimagedescriptor&0x7)!=0))
     {
     fprintf(stderr,"WARN: loadtexturetga(): attribute bits look wrong (%dbpp, %d), corrupted maybe?\n",tgabitsperpixel,tgaimagedescriptor&0x7);
     }
-  /*
   printf("origin %s\n",(tgaimagedescriptor&(1<<5))?"top-left":"bottom-left");
   static const char* storagetype[4]=
     {
@@ -118,8 +118,8 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     "reserved",
     };
   printf("%s\n",storagetype[(tgaimagedescriptor>>6)&0x3]);
-  */
 #endif
+  */
 
   //skip identification field nonsense
   if (tgaidentityfieldlen>0)
@@ -206,255 +206,6 @@ void loadtexturetgafix(int texturenum,char *filename,int mipmap,int wraps,int wr
     }
 
   //create opengl texture
-  if (mipmap)
-    generatemipmap(texturenum);
-  setuptexture(texturenum);
-  }
-
-void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
-  {
-  int count,count2;
-  unsigned int red,green,blue,alpha;
-  int changeddir;
-  unsigned char origin;
-  struct TGAHEADER tgaheader;
-  unsigned int* imagedata;
-  FILE *fp;
-
-  changeddir=chdir("texture");
-
-  if ((fp=fopen(filename,"rb"))==NULL)
-    {
-#ifdef DEBUG
-    printf("Texture Load Failed: %d\n",texturenum);
-#endif
-
-    if (changeddir==0)
-      chdir("..");
-    return;
-    }
-
-  fseek(fp,2,SEEK_CUR);
-  fread2(&tgaheader.imagetypecode,1,1,fp);
-  if (tgaheader.imagetypecode!=2 && tgaheader.imagetypecode!=3)
-    {
-#ifdef DEBUG
-    printf("Texture Bad Format: %d\n",texturenum);
-#endif
-
-    fclose(fp);
-
-    if (changeddir==0)
-      chdir("..");
-    return;
-    }
-
-  fseek(fp,9,SEEK_CUR);
-  fread2(&tgaheader.imagewidth,2,1,fp);
-  fread2(&tgaheader.imageheight,2,1,fp);
-  fread2(&tgaheader.pixeldepth,1,1,fp);
-  fread2(&origin,1,1,fp);
-  origin=(origin>>4)&3;
-
-  texture[texturenum].isalpha=0;
-
-  imagedata=malloc(tgaheader.imagewidth*tgaheader.imageheight*sizeof(uint32_t));
-
-  for (count=0;count<tgaheader.imageheight;count++)
-  for (count2=0;count2<tgaheader.imagewidth;count2++)
-    {
-    blue=(unsigned int)fgetc(fp);
-    green=(unsigned int)fgetc(fp);
-    red=(unsigned int)fgetc(fp);
-    if (tgaheader.pixeldepth==32)
-      alpha=(unsigned int)fgetc(fp);
-    else
-      alpha=255;
-
-    if (alpha!=255)
-      texture[texturenum].isalpha=1;
-
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-    if (origin==0)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-    if (origin==1)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-    if (origin==2)
-      imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-    if (origin==3)
-      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-#else
-    if (origin==0)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-    if (origin==1)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-    if (origin==2)
-      imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-    if (origin==3)
-      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-#endif
-    }
-
-  fclose(fp);
-
-  if (changeddir==0)
-    chdir("..");
-
-  if ((tgaheader.imagewidth&(tgaheader.imagewidth-1))!=0)
-    return;
-  if ((tgaheader.imageheight&(tgaheader.imageheight-1))!=0)
-    return;
-
-  texture[texturenum].sizex=tgaheader.imagewidth;
-  texture[texturenum].sizey=tgaheader.imageheight;
-  texture[texturenum].mipmaplevels=1;
-  texture[texturenum].format=GL_RGBA;
-  texture[texturenum].alphamap=0;
-  texture[texturenum].normalmap=0;
-  texture[texturenum].glossmap=0;
-  texture[texturenum].wraps=wraps;
-  texture[texturenum].wrapt=wrapt;
-  texture[texturenum].magfilter=magfilter;
-  texture[texturenum].minfilter=minfilter;
-
-  free(texture[texturenum].rgba[0]);
-  texture[texturenum].rgba[0]=(unsigned int *) malloc(texture[texturenum].sizex*texture[texturenum].sizey*4);
-
-  for (count=0;count<texture[texturenum].sizey;count++)
-  for (count2=0;count2<texture[texturenum].sizex;count2++)
-    {
-    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[count*tgaheader.imagewidth+count2];
-
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
-      texture[texturenum].alphamap=1;
-#else
-    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
-      texture[texturenum].alphamap=1;
-#endif
-    }
-
-  free(imagedata);
-
-  if (mipmap)
-    generatemipmap(texturenum);
-  setuptexture(texturenum);
-  }
-
-void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter)
-  {
-  int count,count2;
-  unsigned int red,green,blue,alpha;
-  unsigned char origin;
-  struct TGAHEADER tgaheader;
-  unsigned int* imagedata;
-  FILE *fp;
-
-  if ((fp=fopen(filename,"rb"))==NULL)
-    {
-#ifdef DEBUG
-    printf("Texture Load Failed: %d\n",texturenum);
-#endif
-
-    return;
-    }
-
-  fseek(fp,2,SEEK_CUR);
-  fread2(&tgaheader.imagetypecode,1,1,fp);
-  if (tgaheader.imagetypecode!=2 && tgaheader.imagetypecode!=3)
-    {
-#ifdef DEBUG
-    printf("Texture Bad Format: %d\n",texturenum);
-#endif
-
-    fclose(fp);
-
-    return;
-    }
-
-  fseek(fp,9,SEEK_CUR);
-  fread2(&tgaheader.imagewidth,2,1,fp);
-  fread2(&tgaheader.imageheight,2,1,fp);
-  fread2(&tgaheader.pixeldepth,1,1,fp);
-  fread2(&origin,1,1,fp);
-  origin=(origin>>4)&3;
-
-  texture[texturenum].isalpha=0;
-
-  imagedata=malloc(tgaheader.imagewidth*tgaheader.imageheight*sizeof(uint32_t));
-
-  for (count=0;count<tgaheader.imageheight;count++)
-  for (count2=0;count2<tgaheader.imagewidth;count2++)
-    {
-    blue=(unsigned int)fgetc(fp);
-    green=(unsigned int)fgetc(fp);
-    red=(unsigned int)fgetc(fp);
-    if (tgaheader.pixeldepth==32)
-      alpha=(unsigned int)fgetc(fp);
-    else
-      alpha=255;
-
-    if (alpha!=255)
-      texture[texturenum].isalpha=1;
-
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-    if (origin==0)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-    if (origin==1)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-    if (origin==2)
-      imagedata[count*tgaheader.imagewidth+count2]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-    if (origin==3)
-      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(alpha<<24)+(blue<<16)+(green<<8)+red;
-#else
-    if (origin==0)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-    if (origin==1)
-      imagedata[(tgaheader.imageheight-1-count)*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-    if (origin==2)
-      imagedata[count*tgaheader.imagewidth+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-    if (origin==3)
-      imagedata[count*tgaheader.imagewidth+(tgaheader.imagewidth-1-count2)]=(red<<24)+(green<<16)+(blue<<8)+alpha;
-#endif
-    }
-
-  fclose(fp);
-
-  if ((tgaheader.imagewidth&(tgaheader.imagewidth-1))!=0)
-    return;
-  if ((tgaheader.imageheight&(tgaheader.imageheight-1))!=0)
-    return;
-
-  texture[texturenum].sizex=tgaheader.imagewidth;
-  texture[texturenum].sizey=tgaheader.imageheight;
-  texture[texturenum].mipmaplevels=1;
-  texture[texturenum].format=GL_RGBA;
-  texture[texturenum].alphamap=0;
-  texture[texturenum].normalmap=0;
-  texture[texturenum].glossmap=0;
-  texture[texturenum].wraps=wraps;
-  texture[texturenum].wrapt=wrapt;
-  texture[texturenum].magfilter=magfilter;
-  texture[texturenum].minfilter=minfilter;
-
-  free(texture[texturenum].rgba[0]);
-  texture[texturenum].rgba[0]=(unsigned int *) malloc(texture[texturenum].sizex*texture[texturenum].sizey*4);
-
-  for (count=0;count<texture[texturenum].sizey;count++)
-  for (count2=0;count2<texture[texturenum].sizex;count2++)
-    {
-    texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]=imagedata[count*tgaheader.imagewidth+count2];
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]>>24)!=255)
-      texture[texturenum].alphamap=1;
-#else
-    if ((texture[texturenum].rgba[0][count*texture[texturenum].sizex+count2]&255)!=255)
-      texture[texturenum].alphamap=1;
-#endif
-    }
-
-  free(imagedata);
-
   if (mipmap)
     generatemipmap(texturenum);
   setuptexture(texturenum);
