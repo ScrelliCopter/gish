@@ -68,6 +68,7 @@ int main (int argc,char *argv[])
   temp=PHYSFS_getPrefDir("a_dinosaur","gish");
   if (temp)
     {
+    PHYSFS_mount(temp,"",1);
     PHYSFS_setWriteDir(temp);
     }
   else
@@ -77,6 +78,7 @@ int main (int argc,char *argv[])
     temp=PHYSFS_getBaseDir();
     if (temp)
       {
+      PHYSFS_mount(temp,"",1);
       PHYSFS_setWriteDir(temp);
       }
     }

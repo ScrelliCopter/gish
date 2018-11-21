@@ -21,7 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "config.h"
 
+#include <config.h>
 #include <stdio.h>
+#include <errno.h>
 #include <SDL.h>
 #include <GL/gl.h>
 #include <physfs.h>
@@ -33,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "options.h"
 #include "socket.h"
 #include <menu/menu.h>
-#include <errno.h>
 
 struct CONFIG config;
+static const char *filename="config.txt";
 
 void loadconfigdefaults(void)
   {
@@ -217,8 +219,20 @@ void loadconfig(void)
   PHYSFS_file *fp;
 
   loadconfigdefaults();
-  if ((fp=PHYSFS_openRead("config.txt"))==NULL)
+  if (!PHYSFS_exists(filename))
+    {
+#ifdef DEBUG
+    fprintf(stdout,"loadconfig(): file \"%s\" not found, but should be generated soon\n",filename);
+#endif
     goto copywininfo;
+    }
+
+  if ((fp=PHYSFS_openRead(filename))==NULL)
+    {
+    fprintf(stderr,"PHYSFS_openRead(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+    fprintf(stderr,"loadconfig(): failed to load \"%s\"\n",filename);
+    goto copywininfo;
+    }
 
   int i=0;
   while (!PHYSFS_eof(fp))
@@ -276,8 +290,12 @@ void saveconfig(void)
   config.stencilbits=windowinfo.stencilbits;
   config.fullscreen=windowinfo.fullscreen;
 
-  if ((fp=PHYSFS_openWrite("config.txt"))==NULL)
+  if ((fp=PHYSFS_openWrite(filename))==NULL)
+    {
+    fprintf(stderr,"PHYSFS_openWrite(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+    fprintf(stderr,"saveconfig(): failed to save \"%s\"\n",filename);
     return;
+    }
 
   optionwriteint(fp,&config.displayid,"display=");
   optionwriteint(fp,&config.resolutionx,"screenwidth=");
