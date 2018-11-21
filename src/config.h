@@ -7,4 +7,6 @@
   #define DEBUG
 #endif
 
+//#define DEMO
+
 #endif//__GISH_CONFIG_H__
