@@ -101,11 +101,12 @@ typedef struct
  * This callback sits between the enumerator and the enduser callback,
  *  filtering out files that don't match the wildcard pattern.
  */
-static void wildcardCallback(void *_d, const char *origdir, const char *fname)
+static PHYSFS_EnumerateCallbackResult wildcardCallback(void *_d, const char *origdir, const char *fname)
 {
     const WildcardCallbackData *data = (const WildcardCallbackData *) _d;
     if (matchesPattern(fname, data->wildcard, data->caseSensitive))
         data->callback(data->origData, origdir, fname);
+    return PHYSFS_ENUM_OK;
 } /* wildcardCallback */
 
 
@@ -121,7 +122,7 @@ void PHYSFSEXT_enumerateFilesCallbackWildcard(const char *dir,
     data.caseSensitive = caseSensitive;
     data.callback = c;
     data.origData = d;
-    PHYSFS_enumerateFilesCallback(dir, wildcardCallback, &data);
+    PHYSFS_enumerate(dir, wildcardCallback, &data);
 } /* PHYSFSEXT_enumerateFilesCallbackWildcard */
 
 
