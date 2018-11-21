@@ -64,6 +64,29 @@ int main (int argc,char *argv[])
     return(1);
     }
 
+  //get the user folder
+  temp=PHYSFS_getPrefDir("a_dinosaur","gish");
+  if (temp)
+    {
+    PHYSFS_setWriteDir(temp);
+    }
+  else
+    {
+    fprintf(stderr,"PHYSFS_getPrefDir(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+    fprintf(stderr,"main(): failed to open system user preferences, falling back on executable directory\n");
+    temp=PHYSFS_getBaseDir();
+    if (temp)
+      {
+      PHYSFS_setWriteDir(temp);
+      }
+    }
+
+  //create writable folders if they don't exist
+  if (!PHYSFS_exists("player"))
+    PHYSFS_mkdir("player");
+  if (!PHYSFS_exists("replay"))
+    PHYSFS_mkdir("replay");
+
   loadconfig();
   loadscores();
   loadplayers();

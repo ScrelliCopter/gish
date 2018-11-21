@@ -117,9 +117,6 @@ set(SOURCES
 	src/menu/menu.c
 	src/menu/menu.h
 
-	src/parser/parser.c
-	src/parser/parser.h
-
 	src/physics/bond.c
 	src/physics/bond.h
 	src/physics/object.c

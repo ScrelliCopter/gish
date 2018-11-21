@@ -24,22 +24,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <SDL.h>
 #include <GL/gl.h>
+#include <physfs.h>
 #include <sdl/event.h>
 #include <sdl/video.h>
 #include <video/text.h>
-#include <parser/parser.h>
 #include <input/keyboard.h>
 #include <input/mouse.h>
 #include "options.h"
 #include "socket.h"
 #include <menu/menu.h>
+#include <errno.h>
 
 struct CONFIG config;
 
-void loadconfig(void)
+void loadconfigdefaults(void)
   {
-  int count,count2;
-  char tempstr[32];
+  int count;
 
   config.displayid=0;
   config.resolutionx=800;
@@ -98,54 +98,149 @@ void loadconfig(void)
     control[3].button[count]=-1;
   for (count=0;count<4;count++)
     control[3].button[count+4]=count;
+  }
 
-  loadtextfile("config.txt");
-  optionreadint(&config.displayid,"display=");
-  optionreadint(&config.resolutionx,"screenwidth=");
-  optionreadint(&config.resolutiony,"screenheight=");
-  optionreadint(&config.bitsperpixel,"bitsperpixel=");
-  optionreadint(&config.refreshrate,"refreshrate=");
-  optionreadint(&config.depthbits,"depthbits=");
-  optionreadint(&config.stencilbits,"stencilbits=");
-  optionreadint(&config.fullscreen,"fullscreen=");
-  optionreadint(&config.sound,"sound=");
-  optionreadint(&config.music,"music=");
-  optionreadint(&config.joystick,"joystick=");
+int strstartswith(const char *a,const char *b)
+  {
+  return !memcmp(a,b,strlen(b));
+  }
 
-  optionreadint(&option.sound,"soundon=");
-  optionreadint(&option.music,"musicon=");
-  count=-1;
-  optionreadint(&count,"soundvolume=");
-  if (count!=-1)
-    option.soundvolume=(float)count/100.0f;
-  count=-1;
-  optionreadint(&count,"musicvolume=");
-  if (count!=-1)
-    option.musicvolume=(float)count/100.0f;
+int parseint(const char *str,int *out)
+  {
+  char* cptr;
+  long res;
 
-  for (count=0;count<4;count++)
+  res=strtol(str,&cptr,0);
+  if (cptr==NULL || cptr==str)
+    return 0;
+  if (errno==ERANGE)
+    return 0;
+
+  (*out)=(int)res;
+  return 1;
+  }
+
+void parseline(const char *line)
+  {
+  char key[32];
+  char* cptr;
+  int tmp;
+
+  if (strstartswith(line,"#"))
+    return;
+
+  cptr=strchr(line,'=');
+  if (cptr==NULL || cptr==line)
+    return;
+  cptr++;
+
+  if (strstartswith(line,"display="))
+    parseint(cptr,&config.displayid);
+  else if (strstartswith(line,"screenwidth="))
+    parseint(cptr,&config.resolutionx);
+  else if (strstartswith(line,"screenheight="))
+    parseint(cptr,&config.resolutiony);
+  else if (strstartswith(line,"bitsperpixel="))
+    parseint(cptr,&config.bitsperpixel);
+  else if (strstartswith(line,"refreshrate="))
+    parseint(cptr,&config.refreshrate);
+  else if (strstartswith(line,"depthbits="))
+    parseint(cptr,&config.depthbits);
+  else if (strstartswith(line,"stencilbits="))
+    parseint(cptr,&config.stencilbits);
+  else if (strstartswith(line,"fullscreen="))
+    parseint(cptr,&config.fullscreen);
+  else if (strstartswith(line,"sound="))
+    parseint(cptr,&config.sound);
+  else if (strstartswith(line,"music="))
+    parseint(cptr,&config.music);
+  else if (strstartswith(line,"joystick="))
+    parseint(cptr,&config.joystick);
+
+  else if (strstartswith(line,"soundon="))
+    parseint(cptr,&option.sound);
+  else if (strstartswith(line,"musicon="))
+    parseint(cptr,&option.music);
+  else if (strstartswith(line,"soundvolume="))
     {
-    for (count2=0;count2<16;count2++)
+    if (parseint(cptr,&tmp))
+      option.soundvolume=(float)tmp/100.f;
+    }
+  else if (strstartswith(line,"musicvolume="))
+    {
+    if (parseint(cptr,&tmp))
+      option.musicvolume=(float)tmp/100.f;
+    }
+  else for (int i=0;i<4;i++)
+    {
+    for (int j=0;j<16;j++)
       {
-      sprintf(tempstr,"player%dkey%d=",count+1,count2+1);
-      optionreadint(&control[count].key[count2],tempstr);
+      snprintf(key,sizeof(key),"player%dkey%d=",i+1,j+1);
+      if (strstartswith(line,key))
+        {
+        parseint(cptr,&control[i].key[j]);
+        return;
+        }
       }
 
-    sprintf(tempstr,"player%djoysticknum=",count+1);
-    optionreadint(&control[count].joysticknum,tempstr);
-
-    for (count2=0;count2<4;count2++)
+    snprintf(key,sizeof(key),"player%djoysticknum=",i+1);
+    if (strstartswith(line,key))
       {
-      sprintf(tempstr,"player%daxis%d=",count+1,count2+1);
-      optionreadint(&control[count].axis[count2],tempstr);
+      parseint(cptr,&control[i].joysticknum);
+      return;
       }
-    for (count2=0;count2<16;count2++)
+
+    for (int j=0;j<4;j++)
       {
-      sprintf(tempstr,"player%dbutton%d=",count+1,count2+1);
-      optionreadint(&control[count].button[count2],tempstr);
+      snprintf(key,sizeof(key),"player%daxis%d=",i+1,j+1);
+      if (strstartswith(line,key))
+        {
+        parseint(cptr,&control[i].axis[j]);
+        return;
+        }
+      }
+    for (int j=0;j<16;j++)
+      {
+      snprintf(key,sizeof(key),"player%dbutton%d=",i+1,j+1);
+      if (strstartswith(line,key))
+        {
+        parseint(cptr,&control[i].button[j]);
+        return;
+        }
+      }
+    }
+  }
+
+void loadconfig(void)
+  {
+  char tempstr[256];
+  PHYSFS_file *fp;
+
+  loadconfigdefaults();
+  if ((fp=PHYSFS_openRead("config.txt"))==NULL)
+    goto copywininfo;
+
+  int i=0;
+  while (!PHYSFS_eof(fp))
+    {
+    char c;
+    PHYSFS_readBytes(fp,&c,1);
+    if (c=='\n' || i>=sizeof(tempstr))
+      {
+      tempstr[i]='\0';
+      parseline(tempstr);
+      i=0;
+      }
+    else if (c!='\0')
+      {
+      tempstr[i++]=c;
       }
     }
 
+
+  PHYSFS_close(fp);
+
+copywininfo:
   windowinfo.displayid=config.displayid;
   windowinfo.resolutionx=config.resolutionx;
   windowinfo.resolutiony=config.resolutiony;
@@ -156,12 +251,21 @@ void loadconfig(void)
   windowinfo.fullscreen=config.fullscreen;
   }
 
-FILE *fp;
+void optionwriteint(PHYSFS_file *fp,int *ptr,char *str)
+  {
+  char tmpline[256];
+  int res=snprintf(tmpline,sizeof(tmpline),"%s%d\r\n",str,*ptr);
+  if (res>0)
+    {
+    PHYSFS_writeBytes(fp,tmpline,(size_t)res);
+    }
+  }
 
 void saveconfig(void)
   {
-  int count,count2;
-  char tempstr[32];
+  int tmp;
+  char tempstr[256];
+  PHYSFS_file *fp;
 
   config.displayid=windowinfo.displayid;
   config.resolutionx=windowinfo.resolutionx;
@@ -172,52 +276,52 @@ void saveconfig(void)
   config.stencilbits=windowinfo.stencilbits;
   config.fullscreen=windowinfo.fullscreen;
 
-  if ((fp=fopen("config.txt","wb"))==NULL)
+  if ((fp=PHYSFS_openWrite("config.txt"))==NULL)
     return;
 
-  optionwriteint(&config.displayid,"display=");
-  optionwriteint(&config.resolutionx,"screenwidth=");
-  optionwriteint(&config.resolutiony,"screenheight=");
-  optionwriteint(&config.bitsperpixel,"bitsperpixel=");
-  optionwriteint(&config.refreshrate,"refreshrate=");
-  optionwriteint(&config.depthbits,"depthbits=");
-  optionwriteint(&config.stencilbits,"stencilbits=");
-  optionwriteint(&config.fullscreen,"fullscreen=");
-  optionwriteint(&config.sound,"sound=");
-  optionwriteint(&config.music,"music=");
-  optionwriteint(&config.joystick,"joystick=");
+  optionwriteint(fp,&config.displayid,"display=");
+  optionwriteint(fp,&config.resolutionx,"screenwidth=");
+  optionwriteint(fp,&config.resolutiony,"screenheight=");
+  optionwriteint(fp,&config.bitsperpixel,"bitsperpixel=");
+  optionwriteint(fp,&config.refreshrate,"refreshrate=");
+  optionwriteint(fp,&config.depthbits,"depthbits=");
+  optionwriteint(fp,&config.stencilbits,"stencilbits=");
+  optionwriteint(fp,&config.fullscreen,"fullscreen=");
+  optionwriteint(fp,&config.sound,"sound=");
+  optionwriteint(fp,&config.music,"music=");
+  optionwriteint(fp,&config.joystick,"joystick=");
 
-  optionwriteint(&option.sound,"soundon=");
-  optionwriteint(&option.music,"musicon=");
-  count=option.soundvolume*100.0f;
-  optionwriteint(&count,"soundvolume=");
-  count=option.musicvolume*100.0f;
-  optionwriteint(&count,"musicvolume=");
+  optionwriteint(fp,&option.sound,"soundon=");
+  optionwriteint(fp,&option.music,"musicon=");
+  tmp=(int)(option.soundvolume*100.0f);
+  optionwriteint(fp,&tmp,"soundvolume=");
+  tmp=(int)(option.musicvolume*100.0f);
+  optionwriteint(fp,&tmp,"musicvolume=");
 
-  for (count=0;count<4;count++)
+  for (int i=0;i<4;i++)
     {
-    for (count2=0;count2<16;count2++)
+    for (int j=0;j<16;j++)
       {
-      sprintf(tempstr,"player%dkey%d=",count+1,count2+1);
-      optionwriteint(&control[count].key[count2],tempstr);
+      snprintf(tempstr,sizeof(tempstr),"player%dkey%d=",i+1,j+1);
+      optionwriteint(fp,&control[i].key[j],tempstr);
       }
 
-    sprintf(tempstr,"player%djoysticknum=",count+1);
-    optionwriteint(&control[count].joysticknum,tempstr);
+    snprintf(tempstr,sizeof(tempstr),"player%djoysticknum=",i+1);
+    optionwriteint(fp,&control[i].joysticknum,tempstr);
 
-    for (count2=0;count2<4;count2++)
+    for (int j=0;j<4;j++)
       {
-      sprintf(tempstr,"player%daxis%d=",count+1,count2+1);
-      optionwriteint(&control[count].axis[count2],tempstr);
+      snprintf(tempstr,sizeof(tempstr),"player%daxis%d=",i+1,j+1);
+      optionwriteint(fp,&control[i].axis[j],tempstr);
       }
-    for (count2=0;count2<16;count2++)
+    for (int j=0;j<16;j++)
       {
-      sprintf(tempstr,"player%dbutton%d=",count+1,count2+1);
-      optionwriteint(&control[count].button[count2],tempstr);
+      snprintf(tempstr,sizeof(tempstr),"player%dbutton%d=",i+1,j+1);
+      optionwriteint(fp,&control[i].button[j],tempstr);
       }
     }
 
-  fclose(fp);
+  PHYSFS_close(fp);
   }
 
 void notsupportedmenu(void)
@@ -268,7 +372,6 @@ void notsupportedmenu(void)
     drawtext("latest video card drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
     drawtext("for your computer",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
-    count+=16;
 
     count=432;
     drawtext("GL_VERSION: /s",8,count,12,1.0f,1.0f,1.0f,1.0f,glversion);
@@ -276,7 +379,6 @@ void notsupportedmenu(void)
     drawtext("GL_VENDOR: /s",8,count,12,1.0f,1.0f,1.0f,1.0f,glvendor);
     count+=12;
     drawtext("GL_RENDERER: /s",8,count,12,1.0f,1.0f,1.0f,1.0f,glrenderer);
-    count+=12;
 
     drawmenuitems();
 
@@ -311,30 +413,3 @@ void notsupportedmenu(void)
   fprintf(fp,"%s\r\n",glrenderer);
   fprintf(fp,"%s\r\n",ext);
   }
-
-void optionreadint(int *ptr,char *str)
-  {
-  if (findstring(str))
-    *ptr=getint();
-
-  parser.textloc=0;
-  }
-
-void optionwriteint(int *ptr,char *str)
-  {
-  fprintf(fp,"%s%d\r\n",str,*ptr);
-  }
-
-void optionreadstring(char *ptr,char *str,int size)
-  {
-  if (findstring(str))
-    getstring(ptr,size);
-
-  parser.textloc=0;
-  }
-
-void optionwritestring(char *ptr,char *str,int size)
-  {
-  fprintf(fp,"%s%s\r\n",str,ptr);
-  }
-
