@@ -98,9 +98,9 @@ int main (int argc,char *argv[])
       joy[count]=SDL_JoystickOpen(count);
       temp=SDL_JoystickName(joy[count]);
       if (temp)
-        strcpy(joystick[count].name,temp);
+        strncpy(joystick[count].name,temp,64);
       else
-        strcpy(joystick[count].name,"Unknown");
+        strncpy(joystick[count].name,"Unknown",64);
       joystick[count].numofbuttons=SDL_JoystickNumButtons(joy[count]);
       joystick[count].numofhats=SDL_JoystickNumHats(joy[count]);
       }
