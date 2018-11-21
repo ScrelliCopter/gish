@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sdl/event.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
+#include <sdl/globbing.h>
 #include <input/keyboard.h>
 #include <input/mouse.h>
 #include <input/joystick.h>
@@ -41,7 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <menu/menu.h>
 #include "mainmenu.h"
 
-char levellist[1024][32];
 struct MAPPACK mappack;
 struct PLAYERMAPPACK playermappack[16];
 
@@ -138,22 +138,19 @@ void custommenu(void)
   resetmenuitems();
   }
 
+//TODO: could probably merge most of this and playcampaignmenu()
+// (and replays too maybe?)
 void loadlevelmenu(void)
   {
   int count,count2;
-  int changeddir;
   int numoffiles;
   int pagenum;
-
-  changeddir=chdir("level");
-
-  listfiles("*.lvl",levellist,0);
-
-  if (changeddir==0)
-    chdir("..");
+  char **levellist;
+  char fullpath[256];
 
   numoffiles=0;
-  while (levellist[numoffiles][0]!=0)
+  levellist=PHYSFSEXT_enumerateFilesWildcard("level","*.lvl",0);
+  while (levellist[numoffiles]!=0)
     numoffiles++;
 
   pagenum=0;
@@ -226,34 +223,33 @@ void loadlevelmenu(void)
     if (pagenum+count-1<numoffiles)
     if (menuitem[count].active)
       {
+      snprintf(fullpath,sizeof(fullpath),"level/%s",levellist[pagenum+count-1]);
+
       game.editing=0;
       game.levelnum=0;
-      loadlevel(levellist[pagenum+count-1]);
+      loadlevel(fullpath);
       gameloop();
 
       joymenunum=count;
       }
     }
 
+  if (levellist)
+    PHYSFSEXT_freeEnumeration(levellist);
   resetmenuitems();
   }
 
 void playcampaignmenu(void)
   {
   int count,count2;
-  int changeddir;
   int numoffiles;
   int pagenum;
-
-  changeddir=chdir("level");
-
-  listfiles("*.gmp",levellist,0);
-
-  if (changeddir==0)
-    chdir("..");
+  char **levellist;
+  char fullpath[256];
 
   numoffiles=0;
-  while (levellist[numoffiles][0]!=0)
+  levellist=PHYSFSEXT_enumerateFilesWildcard("level","*.gmp",0);
+  while (levellist[numoffiles]!=0)
     numoffiles++;
 
   pagenum=0;
@@ -327,11 +323,14 @@ void playcampaignmenu(void)
     if (menuitem[count].active)
       {
       strcpy(mappack.filename,levellist[pagenum+count-1]);
-      loadmappack();
+      snprintf(fullpath,sizeof(fullpath),"level/%s",levellist[pagenum+count-1]);
+      loadmappack(fullpath);
       campaignmenu();
       }
     }
 
+  if (levellist)
+    PHYSFSEXT_freeEnumeration(levellist);
   resetmenuitems();
   }
 
@@ -502,38 +501,32 @@ void saveplayermappack(void)
     chdir("..");
   }
 
-void loadmappack(void)
+void loadmappack(const char *path)
   {
   int count;
   int version;
-  int changeddir;
-  FILE *fp;
+  PHYSFS_file *fp;
 
-  changeddir=chdir("level");
-
-  if ((fp=fopen(mappack.filename,"rb"))!=NULL)
+  if ((fp=PHYSFS_openRead(path))!=NULL)
     {
-    fread2(&version,4,1,fp);
+    PHYSFS_readSLE32(fp,&version);
 
     if (version==1)
       {
-      fread2(&mappack.numoflevels,4,1,fp);
-      fread2(mappack.name,1,32,fp);
+      PHYSFS_readSLE32(fp,&mappack.numoflevels);
+      PHYSFS_readBytes(fp,mappack.name,32);
       for (count=0;count<64;count++)
         {
-        fread2(mappack.level[count],1,32,fp);
-        fread2(mappack.levelname[count],1,32,fp);
-        fread2(mappack.levelmusic[count],1,32,fp);
+        PHYSFS_readBytes(fp,mappack.level[count],32);
+        PHYSFS_readBytes(fp,mappack.levelname[count],32);
+        PHYSFS_readBytes(fp,mappack.levelmusic[count],32);
         }
       for (count=0;count<16;count++)
-        fread2(mappack.ending[count],1,64,fp);
+        PHYSFS_readBytes(fp,mappack.ending[count],64);
       }
 
-    fclose(fp);
+    PHYSFS_close(fp);
     }
-
-  if (changeddir==0)
-    chdir("..");
   }
 
 void savemappack(void)

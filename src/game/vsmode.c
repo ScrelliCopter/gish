@@ -42,7 +42,7 @@ void versusmodemenu(int versusnum)
   {
   int count;
   int unlocked;
-  char filename[32];
+  char filename[256];
 
   unlocked=0;
   for (count=0;count<6;count++)
@@ -130,19 +130,19 @@ void versusmodemenu(int versusnum)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (versusnum==0)
-      strcpy(filename,"bathhouse");
+      strcpy(filename,"level/bathhouse");
     if (versusnum==1)
-      strcpy(filename,"field");
+      strcpy(filename,"level/field");
     if (versusnum==2)
-      strcpy(filename,"amber");
+      strcpy(filename,"level/amber");
     if (versusnum==3)
-      strcpy(filename,"fight");
+      strcpy(filename,"level/fight");
     if (versusnum==4)
-      strcpy(filename,"dragster");
+      strcpy(filename,"level/dragster");
     if (versusnum==5)
-      strcpy(filename,"colvs");
+      strcpy(filename,"level/colvs");
     if (versusnum==6)
-      strcpy(filename,"racing");
+      strcpy(filename,"level/racing");
 
     if (menuitem[1].active)
       {

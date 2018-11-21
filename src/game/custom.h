@@ -28,11 +28,9 @@ void playcampaignmenu(void);
 void campaignmenu(void);
 void loadplayermappack(void);
 void saveplayermappack(void);
-void loadmappack(void);
+void loadmappack(const char *path);
 void savemappack(void);
 void newmappackmenu(void);
-
-extern char levellist[1024][32];
 
 struct MAPPACK
   {

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "level.h"
 #include <physics/particle.h>
 #include <physics/bond.h>
+#include <stdio.h>
 #include "physics.h"
 #include "object.h"
 #include "sprite.h"
@@ -417,101 +418,65 @@ void setupgame(void)
 
 void loadstorylevel(int levelnum)
   {
+  switch (levelnum)
+    {
 #ifndef DEMO
-  if (levelnum==1)
-    loadlevel("sewer1.lvl");
-  if (levelnum==2)
-    loadlevel("sewer2.lvl");
-  if (levelnum==3)
-    loadlevel("sewer3.lvl");
-  if (levelnum==4)
-    loadlevel("sewer4.lvl");
-  if (levelnum==5)
-    loadlevel("sewer5.lvl");
-  if (levelnum==6)
-    loadlevel("sewer6.lvl");
-  if (levelnum==7)
-    loadlevel("sewer7.lvl");
+    case (1): loadlevel("level/sewer1.lvl");break;
+    case (2): loadlevel("level/sewer2.lvl");break;
+    case (3): loadlevel("level/sewer3.lvl");break;
+    case (4): loadlevel("level/sewer4.lvl");break;
+    case (5): loadlevel("level/sewer5.lvl");break;
+    case (6): loadlevel("level/sewer6.lvl");break;
+    case (7): loadlevel("level/sewer7.lvl");break;
 
-  if (levelnum==8)
-    loadlevel("cave1.lvl");
-  if (levelnum==9)
-    loadlevel("cave2.lvl");
-  if (levelnum==10)
-    loadlevel("cave3.lvl");
-  if (levelnum==11)
-    loadlevel("cave4.lvl");
-  if (levelnum==12)
-    loadlevel("cave5.lvl");
-  if (levelnum==13)
-    loadlevel("cave6.lvl");
-  if (levelnum==14)
-    loadlevel("cave7.lvl");
+    case (8): loadlevel("level/cave1.lvl");break;
+    case (9): loadlevel("level/cave2.lvl");break;
+    case (10): loadlevel("level/cave3.lvl");break;
+    case (11): loadlevel("level/cave4.lvl");break;
+    case (12): loadlevel("level/cave5.lvl");break;
+    case (13): loadlevel("level/cave6.lvl");break;
+    case (14): loadlevel("level/cave7.lvl");break;
 
-  if (levelnum==15)
-    loadlevel("hell1.lvl");
-  if (levelnum==16)
-    loadlevel("hell2.lvl");
-  if (levelnum==17)
-    loadlevel("hell3.lvl");
-  if (levelnum==18)
-    loadlevel("hell4.lvl");
-  if (levelnum==19)
-    loadlevel("hell5.lvl");
-  if (levelnum==20)
-    loadlevel("hell6.lvl");
-  if (levelnum==21)
-    loadlevel("hell7.lvl");
+    case (15): loadlevel("level/hell1.lvl");break;
+    case (16): loadlevel("level/hell2.lvl");break;
+    case (17): loadlevel("level/hell3.lvl");break;
+    case (18): loadlevel("level/hell4.lvl");break;
+    case (19): loadlevel("level/hell5.lvl");break;
+    case (20): loadlevel("level/hell6.lvl");break;
+    case (21): loadlevel("level/hell7.lvl");break;
 
-  if (levelnum==22)
-    loadlevel("egypt1.lvl");
-  if (levelnum==23)
-    loadlevel("egypt2.lvl");
-  if (levelnum==24)
-    loadlevel("egypt3.lvl");
-  if (levelnum==25)
-    loadlevel("egypt4.lvl");
-  if (levelnum==26)
-    loadlevel("egypt5.lvl");
-  if (levelnum==27)
-    loadlevel("egypt6.lvl");
-  if (levelnum==28)
-    loadlevel("egypt7.lvl");
+    case (22): loadlevel("level/egypt1.lvl");break;
+    case (23): loadlevel("level/egypt2.lvl");break;
+    case (24): loadlevel("level/egypt3.lvl");break;
+    case (25): loadlevel("level/egypt4.lvl");break;
+    case (26): loadlevel("level/egypt5.lvl");break;
+    case (27): loadlevel("level/egypt6.lvl");break;
+    case (28): loadlevel("level/egypt7.lvl");break;
 
-  if (levelnum==29)
-    loadlevel("church1.lvl");
-  if (levelnum==30)
-    loadlevel("church2.lvl");
-  if (levelnum==31)
-    loadlevel("church3.lvl");
-  if (levelnum==32)
-    loadlevel("church4.lvl");
-  if (levelnum==33)
-    loadlevel("church5.lvl");
-  if (levelnum==34)
-    loadlevel("church6.lvl");
-  if (levelnum==64)
-    loadlevel("sewer8.lvl");
-  if (levelnum==65)
-    loadlevel("cave8.lvl");
-  if (levelnum==66)
-    loadlevel("egypt8.lvl");
-  if (levelnum==67)
-    loadlevel("death.lvl");
-  if (levelnum==68)
-    loadlevel("death2.lvl");
+    case (29): loadlevel("level/church1.lvl");break;
+    case (30): loadlevel("level/church2.lvl");break;
+    case (31): loadlevel("level/church3.lvl");break;
+    case (32): loadlevel("level/church4.lvl");break;
+    case (33): loadlevel("level/church5.lvl");break;
+    case (34): loadlevel("level/church6.lvl");break;
+    case (64): loadlevel("level/sewer8.lvl");break;
+    case (65): loadlevel("level/cave8.lvl");break;
+    case (66): loadlevel("level/egypt8.lvl");break;
+    case (67): loadlevel("level/death.lvl");break;
+    case (68): loadlevel("level/death2.lvl");break;
 #else
-  if (levelnum==1)
-    loadlevel("demo1.lvl");
-  if (levelnum==2)
-    loadlevel("demo2.lvl");
-  if (levelnum==3)
-    loadlevel("demo3.lvl");
-  if (levelnum==4)
-    loadlevel("demo4.lvl");
-  if (levelnum==5)
-    loadlevel("demo5.lvl");
+    case (1): loadlevel("level/demo1.lvl");break;
+    case (2): loadlevel("level/demo2.lvl");break;
+    case (3): loadlevel("level/demo3.lvl");break;
+    case (4): loadlevel("level/demo4.lvl");break;
+    case (5): loadlevel("level/demo5.lvl");break;
 #endif
+    default:
+#ifdef DEBUG
+      fprintf(stderr,"loadstorylevel(): attempted to load errant level id %d",levelnum);
+#endif
+      break;
+    }
   }
 
 void loadcollectionlevel(int levelnum)

@@ -609,7 +609,7 @@ void playerstartmenu(void)
 
       game.editing=0;
       game.levelnum=0;
-      loadlevel("playroom.lvl");
+      loadlevel("level/playroom.lvl");
       gameloop();
       }
     if (menuitem[5].active)

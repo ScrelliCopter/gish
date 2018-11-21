@@ -155,6 +155,7 @@ void mappackpregamemenu(void)
   int simtimer;
   int simcount;
   int startdelay;
+  char fullpath[256];
 
   game.exit=0;
 
@@ -207,9 +208,11 @@ void mappackpregamemenu(void)
       if (playermappack[playernum].levelnum>mappack.numoflevels)
         playermappack[playernum].levelnum=mappack.numoflevels;
 
+      snprintf(fullpath,sizeof(fullpath),"level/%s",mappack.level[playermappack[playernum].levelnum-1]);
+
       game.editing=0;
       game.levelnum=0;
-      loadlevel(mappack.level[playermappack[playernum].levelnum-1]);
+      loadlevel(fullpath);
 
       mappack.active=1;
 

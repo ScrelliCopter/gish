@@ -260,15 +260,14 @@ void loadlevel(char *filename)
   {
   int count,count2;
   int changeddir;
-  int version;
+  int version=0;
   unsigned int x,y;
   char fullpath[256];
   PHYSFS_file *fp;
 
   x=0x17AF2E03;
 
-  snprintf(fullpath,sizeof(fullpath),"level/%s",filename);
-  if ((fp=PHYSFS_openRead(fullpath))!=NULL)
+  if ((fp=PHYSFS_openRead(filename))!=NULL)
     {
     PHYSFS_readSLE32(fp,&version);
 
@@ -416,6 +415,13 @@ void loadlevel(char *filename)
 
     PHYSFS_close(fp);
     }
+#ifdef DEBUG
+  else
+    {
+    fprintf(stderr,"PHYSFS_openRead(): %s\n",PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+    fprintf(stderr,"loadlevel(): failed to load \"%s\"\n",filename);
+    }
+#endif
 
   if (version<7)
     loadleveltextures();

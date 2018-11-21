@@ -131,6 +131,8 @@ set(SOURCES
 	src/sdl/event.h
 	src/sdl/file.c
 	src/sdl/file.h
+	src/sdl/globbing.c
+	src/sdl/globbing.h
 	src/sdl/physfsrwops.c
 	src/sdl/physfsrwops.h
 	src/sdl/platform.h

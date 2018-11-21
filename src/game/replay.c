@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "object.h"
 #include "player.h"
 #include <menu/menu.h>
+#include <physfs.h>
+#include <sdl/globbing.h>
 #include "mainmenu.h"
 #include "english.h"
 
@@ -202,19 +204,13 @@ void replaymenu(void)
   {
 #ifndef DEMO
   int count,count2;
-  int changeddir;
   int numoffiles;
   int pagenum;
-
-  changeddir=chdir("replay");
-
-  listfiles("*.gre",levellist,0);
-
-  if (changeddir==0)
-    chdir("..");
+  char **levellist;
 
   numoffiles=0;
-  while (levellist[numoffiles][0]!=0)
+  levellist=PHYSFSEXT_enumerateFilesWildcard("replay","*.gre",0);
+  while (levellist[numoffiles]!=0)
     numoffiles++;
 
   pagenum=0;
@@ -308,6 +304,8 @@ void replaymenu(void)
       }
     }
 
+  if (levellist)
+    PHYSFSEXT_freeEnumeration(levellist);
   resetmenuitems();
 #else
   int count;
