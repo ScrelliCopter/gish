@@ -691,7 +691,7 @@ void videooptionsmenu(void)
       continue;
 
     videomodenum=i;
-    pagenum=modecount/PAGENUMVIDMODES;
+    pagenum=(modecount-1)/PAGENUMVIDMODES;
     break;
     }
   prevvideomodenum=videomodenum;
