@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <string.h>
-#include <GL/gl.h>
+#include <SDL_opengl.h>
 #include <SDL_endian.h>
 #include <sdl/file.h>
 #include <physfs.h>
@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mainmenu.h"
 #include "editor.h"
 #include "socket.h"
+#include <unistd.h>
 
 unsigned int cryptdata[1048576];
 int textureused[512];

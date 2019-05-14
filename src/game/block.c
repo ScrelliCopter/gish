@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sdl/file.h>
 #include <sdl/platform.h>
 #include <video/texture.h>
+#include <unistd.h>
 
 int numofpolygontemps;
 struct BLOCK block[1024];

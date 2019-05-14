@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "replay.h"
 
 #include <stdio.h>
-#include <GL/gl.h>
+#include <SDL_opengl.h>
 #include <sdl/event.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sdl/globbing.h>
 #include "mainmenu.h"
 #include "english.h"
+#include <unistd.h>
 
 int numofreplayframes;
 struct

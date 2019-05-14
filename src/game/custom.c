@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "custom.h"
 
-#include <GL/gl.h>
+#include <SDL_opengl.h>
 #include <sdl/event.h>
 #include <sdl/file.h>
 #include <sdl/platform.h>
@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "player.h"
 #include <menu/menu.h>
 #include "mainmenu.h"
+#include <unistd.h>
 
 struct MAPPACK mappack;
 struct PLAYERMAPPACK playermappack[16];

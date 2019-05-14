@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 
 #include <SDL.h>
-#include <GL/gl.h>
+#include <SDL_opengl.h>
 #include <game/glext.h>
 #include <sdl/event.h>
 #include <sdl/video.h>
@@ -140,9 +140,9 @@ int main (int argc,char *argv[])
       joy[count]=SDL_JoystickOpen(count);
       temp=SDL_JoystickName(joy[count]);
       if (temp)
-        strcpy(joystick[count].name,temp);
+        strncpy(joystick[count].name,temp,64);
       else
-        strcpy(joystick[count].name,"Unknown");
+        strncpy(joystick[count].name,"Unknown",64);
       joystick[count].numofbuttons=SDL_JoystickNumButtons(joy[count]);
       joystick[count].numofhats=SDL_JoystickNumHats(joy[count]);
       }

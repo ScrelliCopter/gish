@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "options.h"
 
 #include <SDL.h>
-#include <GL/gl.h>
+#include <SDL_opengl.h>
 #include "glext.h"
 #include <sdl/event.h>
 #include <sdl/video.h>
@@ -691,7 +691,7 @@ void videooptionsmenu(void)
       continue;
 
     videomodenum=i;
-    pagenum=modecount/PAGENUMVIDMODES;
+    pagenum=(modecount-1)/PAGENUMVIDMODES;
     break;
     }
   prevvideomodenum=videomodenum;
@@ -770,10 +770,9 @@ void videooptionsmenu(void)
     if (pagenum>=numpages)
       setmenuitem(MO_HIGHLIGHT,0);
 
-    snprintf(restext,sizeof(restext),"%d//%d",pagenum+1,numpages+1);
-    const float pagerluma=(numpages>0)?0.4f:0.2f;
     ypos+=2;
-    drawtext(restext,144|TEXT_CENTER,ypos,12,pagerluma,pagerluma,pagerluma,1.0f);
+    const float pagerluma=(numpages>0)?0.4f:0.2f;
+    drawtext("/i///i",144|TEXT_CENTER,ypos,12,pagerluma,pagerluma,pagerluma,1.0f,pagenum+1,numpages+1);
 
     ypos=32;
     createmenuitem(TXT_WINDOWED,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
@@ -827,7 +826,6 @@ void videooptionsmenu(void)
     drawtext("GL_VENDOR: /s",0,ypos,12,1.0f,1.0f,1.0f,1.0f,glvendor);
     ypos+=12;
     drawtext("GL_RENDERER: /s",0,ypos,12,1.0f,1.0f,1.0f,1.0f,glrenderer);
-    ypos+=12;
 
     drawmenuitems();
 
