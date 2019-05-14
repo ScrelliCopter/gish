@@ -33,6 +33,7 @@ extern char lasttextureloaded[32];
 
 struct TEXTURE
   {
+  int bpp;
   int sizex;
   int sizey;
   int mipmaplevels;

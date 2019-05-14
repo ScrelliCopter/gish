@@ -285,6 +285,7 @@ void loadtexturetgaparts(int texturenum,char *filename,const SDL_Rect *rect,int 
   for (int j=0;j<numrect;j++)
     {
     //setup texture attributes
+    texture[texturenum].bpp=tga.bitsperpixel;
     texture[texturenum].sizex=rect[j].w;
     texture[texturenum].sizey=rect[j].h;
     texture[texturenum].mipmaplevels=1;
@@ -411,6 +412,7 @@ void setuptexture(int texturenum)
 
   texture[texturenum].isalpha=0;
 
+  if (texture->bpp==32)
   for (count=0;count<texture[texturenum].sizey;count++)
   for (count2=0;count2<texture[texturenum].sizex;count2++)
     {

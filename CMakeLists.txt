@@ -131,9 +131,9 @@ set(SOURCES
 	src/main.c)
 
 find_package(SDL2 REQUIRED)
-find_package(PhysFS REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)
+pkg_check_modules(PHYSFS REQUIRED physfs)
 pkg_check_modules(VORBISFILE REQUIRED vorbisfile)
 
 add_executable(gish ${SOURCES})
