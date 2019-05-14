@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_GAME_AUDIO_H__
 #define __GISH_GAME_AUDIO_H__
 
+#include "sdl/platform.h"
 #ifndef THINKSTUPID
   #include <AL/al.h>
 #else

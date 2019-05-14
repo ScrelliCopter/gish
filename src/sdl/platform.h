@@ -7,7 +7,6 @@
   #define WINDOZE 1
 #elif defined __APPLE__
   #define THINKSTUPID 1
-  #define __MACOSX__
 #else
   #define DETLEF 1
 #endif

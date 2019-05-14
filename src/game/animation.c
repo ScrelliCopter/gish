@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <string.h>
 #include <math.h>
-#include <GL/gl.h>
+#include <SDL_opengl.h>
 #include <sdl/platform.h>
 #include <math/vector.h>
 #include "random.h"
@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "game.h"
 #include "object.h"
 #include "sprite.h"
+#include <unistd.h>
 
 int numofanimations;
 struct ANIMATION animation[128];
