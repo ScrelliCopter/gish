@@ -133,7 +133,10 @@ set(SOURCES
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)
-pkg_check_modules(PHYSFS REQUIRED physfs)
+pkg_check_modules(PHYSFS physfs)
+if (NOT PHYSFS_FOUND)
+	find_package(PhysFS REQUIRED)
+endif()
 pkg_check_modules(VORBISFILE REQUIRED vorbisfile)
 
 add_executable(gish ${SOURCES})
