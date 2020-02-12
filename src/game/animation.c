@@ -424,7 +424,7 @@ void loadanimations(void)
     loadanimation("bibsta",animation[animidx].stand,6);
     loadanimation("bibwlk",animation[animidx].walk,9);
     loadanimation("bibatk",animation[animidx].attack,9);
-    loadanimation("bibdie",animation[animidx].die,9);
+    loadanimation("nibdie",animation[animidx].die,9);
     }
 
   //cave nibbler
