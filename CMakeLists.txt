@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(gish C)
-find_package(PkgConfig REQUIRED)
 
 set(SOURCES
 	src/audio/audio.c
@@ -129,25 +128,15 @@ set(SOURCES
 	src/config.h
 	src/main.c)
 
-find_package(SDL2 REQUIRED)
+
+find_package(PkgConfig REQUIRED)
+#TODO: proper find module for SDL2
+pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2)
+set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)
-pkg_check_modules(VORBISFILE REQUIRED vorbisfile)
+pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
 
 add_executable(gish ${SOURCES})
-target_include_directories(gish PRIVATE
-	${CMAKE_SOURCE_DIR}/src
-	${SDL2_INCLUDE_DIRS}
-	${OPENGL_INCLUDE_DIRS}
-	${OPENAL_INCLUDE_DIRS}
-	${VORBISFILE_INCLUDE_DIRS})
-target_link_directories(gish PRIVATE
-	${SDL2_LIBRARY_DIRS}
-	${OPENAL_LIBRARY_DIRS}
-	${VORBISFILE_LIBRARY_DIRS})
-target_link_libraries(gish
-	${SDL2_LIBRARIES}
-	${OPENAL_LIBRARY}
-	${OPENGL_LIBRARIES}
-	${VORBISFILE_LIBRARIES}
-	m)
+target_include_directories(gish PRIVATE ${CMAKE_SOURCE_DIR}/src ${OPENAL_INCLUDE_DIRS})
+target_link_libraries(gish ${OPENAL_LIBRARY} PkgConfig::SDL2 OpenGL::GL PkgConfig::VorbisFile m)
