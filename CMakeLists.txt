@@ -114,6 +114,8 @@ set(SOURCES
 	src/sdl/file.c
 	src/sdl/file.h
 	src/sdl/platform.h
+    src/sdl/string.c
+    src/sdl/string.h
 	src/sdl/video.c
 	src/sdl/video.h
 

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "game/glext.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
+#include "sdl/string.h"
 #include "video/texture.h"
 #include "video/text.h"
 #include "audio/audio.h"
@@ -98,9 +99,9 @@ int main (int argc,char *argv[])
       joy[count]=SDL_JoystickOpen(count);
       temp=SDL_JoystickName(joy[count]);
       if (temp)
-        strncpy(joystick[count].name,temp,64);
+        gstrlcpy(joystick[count].name,temp,64);
       else
-        strncpy(joystick[count].name,"Unknown",64);
+        gstrlcpy(joystick[count].name,"Unknown",64);
       joystick[count].numofbuttons=SDL_JoystickNumButtons(joy[count]);
       joystick[count].numofhats=SDL_JoystickNumHats(joy[count]);
       }
