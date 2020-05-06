@@ -22,15 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "custom.h"
 
 #include <SDL_opengl.h>
-#include <sdl/event.h>
-#include <sdl/file.h>
-#include <sdl/platform.h>
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
-#include <sdl/video.h>
-#include <video/text.h>
-#include <audio/audio.h>
+#include "sdl/event.h"
+#include "sdl/file.h"
+#include "sdl/platform.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
+#include "sdl/video.h"
+#include "video/text.h"
+#include "audio/audio.h"
 #include "audio.h"
 #include "music.h"
 #include "english.h"
@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "level.h"
 #include "mappack.h"
 #include "player.h"
-#include <menu/menu.h>
+#include "menu/menu.h"
 #include "mainmenu.h"
 #include <unistd.h>
 

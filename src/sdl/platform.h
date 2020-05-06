@@ -1,7 +1,7 @@
 #ifndef __GISH_SDL_PLATFORM_H__
 #define __GISH_SDL_PLATFORM_H__
 
-#include <config.h>
+#include "config.h"
 
 #ifdef _WIN32
   #define WINDOZE 1

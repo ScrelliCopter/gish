@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include "event.h"
-#include <game/config.h>
+#include "game/config.h"
 
 SDL_Window *sdlwindow=NULL;
 SDL_GLContext *sdlglcontext=NULL;

@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event.h"
 
 #include <SDL.h>
-#include <video/texture.h>
-#include <game/game.h>
+#include "video/texture.h"
+#include "game/game.h"
 
 struct WINDOWINFO windowinfo;
 

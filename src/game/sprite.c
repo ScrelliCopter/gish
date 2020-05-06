@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sprite.h"
 
 #include <stdio.h>
-#include <math/math.h>
-#include <math/vector.h>
+#include "math/math.h"
+#include "math/vector.h"
 
 struct SPRITE sprite[256];
 

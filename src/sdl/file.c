@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdio.h>
 #include <string.h>
-#include <sdl/platform.h>
+#include "sdl/platform.h"
 #ifdef DETLEF
   #include <fcntl.h>
   #include <sys/stat.h>
