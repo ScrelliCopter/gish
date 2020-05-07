@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_opengl.h>
 #include "sdl/platform.h"
 #include "sdl/file.h"
+#include "sdl/string.h"
 #include <unistd.h>
 
 struct TGAHEADER
@@ -373,7 +374,7 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
     if (changeddir==0)
       chdir("..");
 
-    strcpy(lasttextureloaded,filename);
+    gstrlcpy(lasttextureloaded,filename,LASTTEXTURELOADED_LEN);
     }
 
   texture[texturenum].sizex=sizex;

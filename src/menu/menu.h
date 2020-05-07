@@ -53,9 +53,10 @@ void addmenuinputchar(int charinput);
 int deleteselectedtext(void);
 
 extern int numofmenuitems;
+#define MENUITEM_LABEL_LEN 64
 struct MENUITEM
   {
-  char label[64];
+  char label[MENUITEM_LABEL_LEN];
 	int x;
 	int y;
 	int textsize;

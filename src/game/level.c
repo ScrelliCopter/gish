@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_endian.h>
 #include "sdl/file.h"
 #include "sdl/platform.h"
+#include "sdl/string.h"
 #include "video/texture.h"
 #include "math/vector.h"
 #include "game.h"
@@ -274,7 +275,7 @@ void loadlevel(char *filename)
 
     if (version==9)
       {
-      strcpy(editor.filename,filename);
+      gstrlcpy(editor.filename,filename,EDITOR_FILENAME_LEN);
 
       fread2(level.background,1,32,fp);
       fread2(&level.tileset,4,1,fp);
@@ -399,7 +400,7 @@ void loadlevel(char *filename)
       }
     if (version==10)
       {
-      strcpy(editor.filename,filename);
+      gstrlcpy(editor.filename,filename,EDITOR_FILENAME_LEN);
 
       fread2(level.background,1,32,fp);
       fread2(&level.tileset,4,1,fp);

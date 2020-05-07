@@ -328,7 +328,7 @@ void playcampaignmenu(void)
     if (pagenum+count-1<numoffiles)
     if (menuitem[count].active)
       {
-      strcpy(mappack.filename,levellist[pagenum+count-1]);
+      gstrlcpy(mappack.filename,levellist[pagenum+count-1],MAPPACK_FILENAME_LEN);
       loadmappack();
       campaignmenu();
       }
@@ -635,8 +635,8 @@ void newmappackmenu(void)
       if (mappack.level[mappack.numoflevels][0]!=0)
       if (mappack.numoflevels<63)
         {
-        strcpy(mappack.level[mappack.numoflevels+1],mappack.level[mappack.numoflevels]);
-        strcpy(mappack.levelname[mappack.numoflevels+1],mappack.levelname[mappack.numoflevels]);
+        gstrlcpy(mappack.level[mappack.numoflevels+1],mappack.level[mappack.numoflevels],MAPPACK_LEVEL_LEN);
+        gstrlcpy(mappack.levelname[mappack.numoflevels+1],mappack.levelname[mappack.numoflevels],MAPPACK_LEVELNAME_LEN);
         mappack.numoflevels++;
         }
       menuitem[2].active=0;

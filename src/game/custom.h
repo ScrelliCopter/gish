@@ -36,14 +36,17 @@ void newmappackmenu(void);
 
 extern filelist_t levellist;
 
+#define MAPPACK_FILENAME_LEN 32
+#define MAPPACK_LEVEL_LEN 32
+#define MAPPACK_LEVELNAME_LEN 32
 struct MAPPACK
   {
   int active;
   int numoflevels;
-  char filename[32];
+  char filename[MAPPACK_FILENAME_LEN];
   char name[32];
-  char level[64][32];
-  char levelname[64][32];
+  char level[64][MAPPACK_LEVEL_LEN];
+  char levelname[64][MAPPACK_LEVELNAME_LEN];
   char levelmusic[64][32];
   char ending[16][64];
   };

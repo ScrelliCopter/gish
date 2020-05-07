@@ -28,7 +28,8 @@ void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,i
 void generatemipmap(int texturenum);
 void setuptexture(int texturenum);
 
-extern char lasttextureloaded[32];
+#define LASTTEXTURELOADED_LEN 32
+extern char lasttextureloaded[LASTTEXTURELOADED_LEN];
 
 struct TEXTURE
   {

@@ -29,6 +29,7 @@ void rendereditblocks(void);
 void editblock(void);
 void renderlevellines(void);
 
+#define EDITOR_FILENAME_LEN 32
 struct EDITOR
   {
   int active;
@@ -38,7 +39,7 @@ struct EDITOR
   int blocknum;
   int objecttype;
   int objectnum;
-  char filename[32];
+  char filename[EDITOR_FILENAME_LEN];
   int editstart[2];
   int editarea[2][2];
   int copysize[2];

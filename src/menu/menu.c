@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu.h"
 
 #include <SDL_opengl.h>
+#include "sdl/string.h"
 #include "input/keyboard.h"
 #include "input/mouse.h"
 #include "input/joystick.h"
@@ -306,7 +307,7 @@ void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b
   x&=0xFFFF;
   y&=0xFFFF;
 
-  strcpy(menuitem[numofmenuitems].label,label);
+  size_t len = gstrlcpy(menuitem[numofmenuitems].label,label,MENUITEM_LABEL_LEN);
 	menuitem[numofmenuitems].x=x;
 	menuitem[numofmenuitems].y=y;
 	menuitem[numofmenuitems].textsize=textsize;
@@ -314,7 +315,7 @@ void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b
 	menuitem[numofmenuitems].g=g;
 	menuitem[numofmenuitems].b=b;
   menuitem[numofmenuitems].type=0;
-  menuitem[numofmenuitems].sizex=strlen(label);
+  menuitem[numofmenuitems].sizex=(int)len;
   menuitem[numofmenuitems].sizey=1;
   menuitem[numofmenuitems].hotkey=0;
   menuitem[numofmenuitems].repeat=0;
