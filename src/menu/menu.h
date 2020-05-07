@@ -86,8 +86,10 @@ extern int menuinputkeyboard;
 extern int menuinputselectpos;
 extern int menuinputcursorpos;
 extern int menuinputinsert;
-extern char menuinput[256];
-extern char menuinputtemp[256];
+
+#define MENUINPUT_LEN 256
+extern char menuinput[MENUINPUT_LEN];
+extern char menuinputtemp[MENUINPUT_LEN];
 
 extern int joymenunum;
 extern int joystickmenu;

@@ -37,8 +37,8 @@ int menuinputkeyboard=0;
 int menuinputselectpos;
 int menuinputcursorpos;
 int menuinputinsert;
-char menuinput[256];
-char menuinputtemp[256];
+char menuinput[MENUINPUT_LEN];
+char menuinputtemp[MENUINPUT_LEN];
 int joymenunum;
 int joystickmenu=1;
 int currentmenuitem;
@@ -226,13 +226,13 @@ void drawmenuitems(void)
         if (!menuitem[count].active)
           {
           if (menuitem[count].inputtype==0)
-            sprintf(menuinputtemp,"%d",*(int*)menuitem[count].inputpointer);
+            snprintf(menuinputtemp,MENUINPUT_LEN,"%d",*(int*)menuitem[count].inputpointer);
           else if (menuitem[count].inputtype==1)
-            sprintf(menuinputtemp,"%u",*(unsigned int*)menuitem[count].inputpointer);
+            snprintf(menuinputtemp,MENUINPUT_LEN,"%u",*(unsigned int*)menuitem[count].inputpointer);
           else if (menuitem[count].inputtype==2)
-            sprintf(menuinputtemp,"%g",*(float*)menuitem[count].inputpointer);
+            snprintf(menuinputtemp,MENUINPUT_LEN,"%g",*(float*)menuitem[count].inputpointer);
           else
-            strcpy(menuinputtemp,menuitem[count].inputpointer);
+            gstrlcpy(menuinputtemp,menuitem[count].inputpointer,MENUINPUT_LEN);
   
           drawtext(menuinputtemp,menuitem[count].x+xoffset,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].g*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].b*(menuitem[count].highlight+1))*0.25f,1.0f);
           }
@@ -532,15 +532,15 @@ void menutextbox(void)
 
   if (!menuitem[currentmenuitem].prevactive)
     {
-		memset(menuinput,0,256);
+		memset(menuinput,0,MENUINPUT_LEN);
     if (menuitem[currentmenuitem].inputtype==0)
-      sprintf(menuinput,"%d",*(int*)menuitem[currentmenuitem].inputpointer);
+      snprintf(menuinput,MENUINPUT_LEN,"%d",*(int*)menuitem[currentmenuitem].inputpointer);
     else if (menuitem[currentmenuitem].inputtype==1)
-      sprintf(menuinput,"%u",*(unsigned int*)menuitem[currentmenuitem].inputpointer);
+      snprintf(menuinput,MENUINPUT_LEN,"%u",*(unsigned int*)menuitem[currentmenuitem].inputpointer);
     else if(menuitem[currentmenuitem].inputtype==2)
-      sprintf(menuinput,"%g",*(float*)menuitem[currentmenuitem].inputpointer);
+      snprintf(menuinput,MENUINPUT_LEN,"%g",*(float*)menuitem[currentmenuitem].inputpointer);
 		else
-      strcpy(menuinput,menuitem[currentmenuitem].inputpointer);
+      gstrlcpy(menuinput,menuitem[currentmenuitem].inputpointer,MENUINPUT_LEN);
 
     if (mouse.lmb)
       {
