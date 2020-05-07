@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sdl/event.h"
 #include "sdl/file.h"
 #include "sdl/platform.h"
+#include "sdl/string.h"
 #include "input/keyboard.h"
 #include "input/mouse.h"
 #include "input/joystick.h"
@@ -42,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mainmenu.h"
 #include <unistd.h>
 
-char levellist[1024][32];
+filelist_t levellist;
 struct MAPPACK mappack;
 struct PLAYERMAPPACK playermappack[16];
 

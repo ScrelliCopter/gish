@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_GAME_CUSTOM_H__
 #define __GISH_GAME_CUSTOM_H__
 
+#include "sdl/file.h"
+
 void custommenu(void);
 void loadlevelmenu(void);
 void playcampaignmenu(void);
@@ -32,7 +34,7 @@ void loadmappack(void);
 void savemappack(void);
 void newmappackmenu(void);
 
-extern char levellist[1024][32];
+extern filelist_t levellist;
 
 struct MAPPACK
   {

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <string.h>
 #include "sdl/platform.h"
+#include "sdl/string.h"
 #ifdef DETLEF
   #include <fcntl.h>
   #include <sys/stat.h>
@@ -58,7 +59,7 @@ int checkfilespec(char *filespec,char *filename)
   return(1);
   }
 
-void listfiles(char *filespec,char filelist[1024][32],int directories)
+void listfiles(char *filespec,filelist_t filelist,int directories)
   {
 #ifdef WINDOZE
   int count,count2;
@@ -69,13 +70,13 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
 
   count=0;
   count2=handle;
-  while (count2!=-1 && count<1024)
+  while (count2!=-1 && count<FILELIST_COUNT)
     {
     if (!directories)
       {
       if ((fileinfo.attrib&_A_SUBDIR)==0)
         {
-        strcpy(filelist[count],fileinfo.name);
+        gstrlcpy(filelist[count],fileinfo.name,FILELIST_NAMELEN);
         count++;
         }
       }
@@ -84,7 +85,7 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
       if ((fileinfo.attrib&_A_SUBDIR)!=0)
       if (fileinfo.name[0]!='.')
         {
-        strcpy(filelist[count],fileinfo.name);
+        gstrlcpy(filelist[count],fileinfo.name,FILELIST_NAMELEN);
         count++;
         }
       }
@@ -95,7 +96,7 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
 
   _findclose(handle);
 
-  qsort(filelist,count,32,comparestrings);
+  qsort(filelist,count,FILELIST_NAMELEN,comparestrings);
 #endif
 
 #ifdef DETLEF
@@ -109,7 +110,7 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
   count=0;
   if (dfd!=NULL)
     {
-    while ((dp=readdir(dfd))!=NULL)
+    while ((dp=readdir(dfd))!=NULL && count<FILELIST_COUNT)
       {
       stat(dp->d_name,&stbuf);
       if (!directories)
@@ -118,7 +119,7 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
         if (dp->d_name[0]!='<')
         if (checkfilespec(filespec,dp->d_name))
           {
-          strcpy(filelist[count],dp->d_name);
+          gstrlcpy(filelist[count],dp->d_name,FILELIST_NAMELEN);
           count++;
           }
         }
@@ -129,7 +130,7 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
         if (dp->d_name[0]!='<')
         if (checkfilespec(filespec,dp->d_name))
           { 
-          strcpy(filelist[count],dp->d_name);
+          gstrlcpy(filelist[count],dp->d_name,FILELIST_NAMELEN);
           count++;
           }
         }
@@ -140,7 +141,7 @@ void listfiles(char *filespec,char filelist[1024][32],int directories)
 
   closedir(dfd);
 
-  qsort(filelist,count,32,comparestrings);
+  qsort(filelist,count,FILELIST_NAMELEN,comparestrings);
 #endif
   }
 /*
