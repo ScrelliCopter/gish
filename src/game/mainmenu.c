@@ -263,7 +263,7 @@ void mainmenu(void)
   resetmenuitems();
 
   joymenunum=1;
-  game.turbomode=1;
+  game.turbomode=config.turbomode;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
     {
@@ -297,7 +297,7 @@ void mainmenu(void)
     checkmenuitems();
 
     if (keyboard[SCAN_T] && !prevkeyboard[SCAN_T])
-      game.turbomode^=1;
+      config.turbomode=game.turbomode^=1;
 
     updateogg();
     checkmusic();

@@ -52,6 +52,7 @@ void loadconfig(void)
   config.sound=1;
   config.music=1;
   config.joystick=1;
+  config.turbomode=0;
 
   option.sound=1;
   option.music=1;
@@ -111,6 +112,7 @@ void loadconfig(void)
   optionreadint(&config.sound,"sound=");
   optionreadint(&config.music,"music=");
   optionreadint(&config.joystick,"joystick=");
+  optionreadint(&config.turbomode,"turbomode=");
 
   optionreadint(&option.sound,"soundon=");
   optionreadint(&option.music,"musicon=");
@@ -186,6 +188,7 @@ void saveconfig(void)
   optionwriteint(&config.sound,"sound=");
   optionwriteint(&config.music,"music=");
   optionwriteint(&config.joystick,"joystick=");
+  optionwriteint(&config.turbomode,"turbomode=");
 
   optionwriteint(&option.sound,"soundon=");
   optionwriteint(&option.music,"musicon=");

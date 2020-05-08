@@ -43,6 +43,7 @@ struct CONFIG
   int sound;
   int music;
   int joystick;
+  int turbomode;
   };
 extern struct CONFIG config;
 
