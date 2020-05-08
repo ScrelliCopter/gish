@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(gish C)
+project(gish
+	VERSION "1.53"
+	HOMEPAGE_URL "https://github.com/ScrelliCopter/gish"
+	LANGUAGES C)
+
+option(DEBUG_MODE "Enable special debug features, even in release builds" OFF)
+option(DEMO "Build demo version executable" OFF)
+
 
 set(SOURCES
 	src/audio/audio.c
@@ -128,8 +135,10 @@ set(SOURCES
 	src/video/texture.c
 	src/video/texture.h
 
-	src/config.h
+	${CMAKE_CURRENT_BINARY_DIR}/src/config.h
 	src/main.c)
+
+configure_file(src/config.h.in src/config.h)
 
 
 find_package(PkgConfig REQUIRED)
@@ -141,5 +150,9 @@ find_package(OpenAL REQUIRED)
 pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
 
 add_executable(gish ${SOURCES})
-target_include_directories(gish PRIVATE ${CMAKE_SOURCE_DIR}/src ${OPENAL_INCLUDE_DIRS})
+target_compile_definitions(gish PRIVATE $<$<OR:$<BOOL:${DEBUG_MODE}>,$<CONFIG:Debug>>:DEBUG>)
+target_include_directories(gish PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_BINARY_DIR}/src
+	${OPENAL_INCLUDE_DIRS})
 target_link_libraries(gish ${OPENAL_LIBRARY} PkgConfig::SDL2 OpenGL::GL PkgConfig::VorbisFile m)
