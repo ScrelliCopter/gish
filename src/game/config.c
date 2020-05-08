@@ -247,7 +247,7 @@ void notsupportedmenu(void)
     count=352;
     createmenuitem("NVIDIA Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
-    createmenuitem("ATI Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
+    createmenuitem("AMD Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
     createmenuitem("Intel Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
@@ -286,17 +286,17 @@ void notsupportedmenu(void)
 
     if (menuitem[1].active)
       {
-      launchwebpage("www.nvidia.com/content/drivers/drivers.asp");
+      launchwebpage("https://www.nvidia.com/Download/index.aspx");
       menuitem[1].active=0;
       }
     if (menuitem[2].active)
       {
-      launchwebpage("ati.amd.com/support/driver.html");
+      launchwebpage("https://www.amd.com/en/support");
       menuitem[2].active=0;
       }
     if (menuitem[3].active)
       {
-      launchwebpage("downloadcenter.intel.com");
+      launchwebpage("https://downloadcenter.intel.com");
       menuitem[3].active=0;
       }
     }

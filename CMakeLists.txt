@@ -113,6 +113,7 @@ set(SOURCES
 	src/sdl/event.h
 	src/sdl/file.c
 	src/sdl/file.h
+	src/sdl/platform.c
 	src/sdl/platform.h
     src/sdl/string.c
     src/sdl/string.h

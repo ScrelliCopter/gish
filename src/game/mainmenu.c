@@ -323,7 +323,7 @@ void mainmenu(void)
 
     if (menuitem[5].active)
       {
-      launchwebpage("www.crypticsea.com");
+      launchwebpage("http://www.crypticsea.com");
       menuitem[5].active=0;
       }
     if (menuitem[4].active)

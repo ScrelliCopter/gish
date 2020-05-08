@@ -19,6 +19,7 @@
 
 #ifdef DETLEF
   #include <unistd.h>
+  int gexec(const char *pathname,const char *arg);
 #endif
 
 #endif//__GISH_SDL_PLATFORM_H__

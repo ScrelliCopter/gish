@@ -186,27 +186,28 @@ void creditsmenu(void)
 
     if (menuitem[1].active)
       {
-      launchwebpage("www.libsdl.org");
+      launchwebpage("https://www.libsdl.org");
       menuitem[1].active=0;
       }
     if (menuitem[2].active)
       {
-      launchwebpage("www.opengl.org");
+      launchwebpage("https://www.opengl.org");
       menuitem[2].active=0;
       }
     if (menuitem[3].active)
       {
-      launchwebpage("www.openal.org");
+      launchwebpage("https://www.openal.org");
       menuitem[3].active=0;
       }
     if (menuitem[4].active)
       {
-      launchwebpage("www.xiph.org");
+      launchwebpage("https://www.xiph.org");
       menuitem[4].active=0;
       }
     if (menuitem[5].active)
       {
-      launchwebpage("www.mendomate.com");
+      //FIXME: dead link (goes to spam, redirect to https://mendomatte.com/ ?)
+      launchwebpage("https://www.mendomate.com");
       menuitem[5].active=0;
       }
     }
