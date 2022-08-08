@@ -7,6 +7,7 @@ project(gish
 option(DEBUG_MODE "Enable special debug features, even in release builds" OFF)
 option(DEMO "Build demo version executable" OFF)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcommon")
 
 set(SOURCES
 	src/audio/audio.c
@@ -145,7 +146,17 @@ find_package(PkgConfig REQUIRED)
 #TODO: proper find module for SDL2
 pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2)
 set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(OpenGL REQUIRED)
+
+find_package(OpenGL QUIET)
+if(OpenGL_FOUND)
+	message(STATUS "Using OpenGL GLX for OpenGL")
+else(OpenGL_FOUND)
+	# If we couldn't find old GLX package, try to use modern libglvnd libOpenGL.so instead.
+	message(STATUS "Using GLVND for OpenGL")
+	FIND_LIBRARY(OpenGL_LIBRARY OpenGL)
+	SET(EXTRA_LIBS ${OpenGL_LIBRARY})
+endif(OpenGL_FOUND)
+
 find_package(OpenAL REQUIRED)
 pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
 
@@ -155,4 +166,4 @@ target_include_directories(gish PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${CMAKE_CURRENT_BINARY_DIR}/src
 	${OPENAL_INCLUDE_DIRS})
-target_link_libraries(gish ${OPENAL_LIBRARY} PkgConfig::SDL2 OpenGL::GL PkgConfig::VorbisFile m)
+target_link_libraries(gish ${OPENAL_LIBRARY} ${OpenGL_LIBRARY} PkgConfig::SDL2 PkgConfig::VorbisFile m)
