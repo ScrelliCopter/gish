@@ -154,7 +154,6 @@ else(OpenGL_FOUND)
 	# If we couldn't find old GLX package, try to use modern libglvnd libOpenGL.so instead.
 	message(STATUS "Using GLVND for OpenGL")
 	FIND_LIBRARY(OpenGL_LIBRARY OpenGL)
-	SET(EXTRA_LIBS ${OpenGL_LIBRARY})
 endif(OpenGL_FOUND)
 
 find_package(OpenAL REQUIRED)
