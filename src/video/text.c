@@ -244,11 +244,22 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
 
 void setuptextdisplay(void)
   {
+  float ratio;
+  int viewportwidth, viewportheight, viewportx, viewporty;
+
+  ratio=(float)font.sizey/(float)font.sizex;
+
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-  glViewport(0,0,windowinfo.resolutionx,windowinfo.resolutiony);
+  viewportwidth=windowinfo.resolutionx*ratio;
+  viewportheight=windowinfo.resolutiony;
+
+  viewportx = (windowinfo.resolutionx - viewportwidth) / 2;
+  viewporty = 0;
+
+  glViewport(viewportx,viewporty,viewportwidth,viewportheight);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
