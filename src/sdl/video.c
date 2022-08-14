@@ -109,6 +109,8 @@ void createwindow(void)
   sdlglcontext=SDL_GL_CreateContext(sdlwindow);
   SDL_GL_MakeCurrent(sdlwindow,sdlglcontext);
 
+  SDL_GL_SetSwapInterval(1); // VSYNC ON
+
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
 }
