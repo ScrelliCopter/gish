@@ -27,7 +27,7 @@ void spritetimetolive(void);
 void deletesprite(int spritenum);
 void spritesimulation(void);
 
-int numofsprites;
+extern int numofsprites;
 struct SPRITE
   {
   int type;
