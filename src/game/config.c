@@ -21,20 +21,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "config.h"
 
-#include <config.h>
 #include <stdio.h>
 #include <errno.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <physfs.h>
-#include <sdl/event.h>
-#include <sdl/video.h>
-#include <video/text.h>
-#include <input/keyboard.h>
-#include <input/mouse.h>
+#include "sdl/event.h"
+#include "sdl/video.h"
+#include "video/text.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
 #include "options.h"
 #include "socket.h"
-#include <menu/menu.h>
+#include "menu/menu.h"
 
 struct CONFIG config;
 static const char *filename="config.txt";
@@ -54,6 +53,7 @@ void loadconfigdefaults(void)
   config.sound=1;
   config.music=1;
   config.joystick=1;
+  config.turbomode=0;
 
   option.sound=1;
   option.music=1;
@@ -158,6 +158,8 @@ void parseline(const char *line)
     parseint(cptr,&config.music);
   else if (strstartswith(line,"joystick="))
     parseint(cptr,&config.joystick);
+  else if (strstartswith(line,"turbomode="))
+    parseint(cptr,&config.turbomode);
 
   else if (strstartswith(line,"soundon="))
     parseint(cptr,&option.sound);
@@ -308,6 +310,7 @@ void saveconfig(void)
   optionwriteint(fp,&config.sound,"sound=");
   optionwriteint(fp,&config.music,"music=");
   optionwriteint(fp,&config.joystick,"joystick=");
+  optionwriteint(fp,&config.turbomode,"turbomode=");
 
   optionwriteint(fp,&option.sound,"soundon=");
   optionwriteint(fp,&option.music,"musicon=");
@@ -369,7 +372,7 @@ void notsupportedmenu(void)
     count=352;
     createmenuitem("NVIDIA Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
-    createmenuitem("ATI Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
+    createmenuitem("AMD Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
     createmenuitem("Intel Drivers",(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
     count+=16;
@@ -406,17 +409,17 @@ void notsupportedmenu(void)
 
     if (menuitem[1].active)
       {
-      launchwebpage("www.nvidia.com/content/drivers/drivers.asp");
+      launchwebpage("https://www.nvidia.com/Download/index.aspx");
       menuitem[1].active=0;
       }
     if (menuitem[2].active)
       {
-      launchwebpage("ati.amd.com/support/driver.html");
+      launchwebpage("https://www.amd.com/en/support");
       menuitem[2].active=0;
       }
     if (menuitem[3].active)
       {
-      launchwebpage("downloadcenter.intel.com");
+      launchwebpage("https://downloadcenter.intel.com");
       menuitem[3].active=0;
       }
     }

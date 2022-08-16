@@ -1,8 +1,13 @@
-cmake_minimum_required(VERSION 3.12)
-project(gish C)
+cmake_minimum_required(VERSION 3.10)
+project(gish
+	VERSION "1.53"
+	HOMEPAGE_URL "https://github.com/ScrelliCopter/gish"
+	LANGUAGES C)
+
+option(DEBUG_MODE "Enable special debug features, even in release builds" OFF)
+option(DEMO "Build demo version executable" OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-find_package(PkgConfig REQUIRED)
 
 set(SOURCES
 	src/audio/audio.c
@@ -113,11 +118,14 @@ set(SOURCES
 	src/sdl/event.h
 	src/sdl/file.c
 	src/sdl/file.h
+	src/sdl/platform.c
+	src/sdl/platform.h
 	src/sdl/globbing.c
 	src/sdl/globbing.h
 	src/sdl/physfsrwops.c
 	src/sdl/physfsrwops.h
-	src/sdl/platform.h
+    src/sdl/string.c
+    src/sdl/string.h
 	src/sdl/video.c
 	src/sdl/video.h
 
@@ -129,9 +137,14 @@ set(SOURCES
 	src/video/texture.c
 	src/video/texture.h
 
-	src/config.h
+	${CMAKE_CURRENT_BINARY_DIR}/src/config.h
 	src/main.c)
 
+configure_file(src/config.h.in src/config.h)
+
+
+find_package(PkgConfig REQUIRED)
+#TODO: proper find module for SDL2
 # Quick & dirty implementation of a find module because no mac-friendly one exists
 # and relying on package managers for absolutely everything is some lunix bullshit
 if (APPLE)
@@ -179,6 +192,7 @@ endif()
 if (NOT SDL2_FOUND)
 	find_package(SDL2 REQUIRED)
 endif()
+set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)
 pkg_check_modules(PHYSFS physfs)
@@ -188,8 +202,10 @@ endif()
 find_package(Vorbis)
 
 add_executable(gish ${SOURCES})
+target_compile_definitions(gish PRIVATE $<$<OR:$<BOOL:${DEBUG_MODE}>,$<CONFIG:Debug>>:DEBUG>)
 target_include_directories(gish PRIVATE
-	${CMAKE_SOURCE_DIR}/src
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_BINARY_DIR}/src
 	${PHYSFS_INCLUDE_DIR} ${PhysFS_INCLUDE_DIRS}
 	${OPENAL_INCLUDE_DIR})
 target_link_libraries(gish

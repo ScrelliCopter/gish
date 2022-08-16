@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "boss.h"
 
 #include <string.h>
-#include <math/vector.h>
+#include "math/vector.h"
 #include "render.h"
 #include "object.h"
 #include "animation.h"

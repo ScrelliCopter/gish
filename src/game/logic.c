@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <string.h>
 #include <SDL_opengl.h>
-#include <input/keyboard.h>
-#include <video/text.h>
+#include "input/keyboard.h"
+#include "video/text.h"
 #include "audio.h"
 #include "game.h"
 #include "setup.h"
@@ -33,9 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "custom.h"
 #include "object.h"
 #include "player.h"
-#include <physics/particle.h>
+#include "physics/particle.h"
 #include "boss.h"
-#include <menu/menu.h>
+#include "menu/menu.h"
 #include "options.h"
 #include "english.h"
 

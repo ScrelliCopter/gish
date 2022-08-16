@@ -23,9 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdio.h>
 #include <SDL_endian.h>
-#include <sdl/file.h>
-#include <sdl/platform.h>
-#include <video/texture.h>
+#include "sdl/file.h"
+#include "sdl/platform.h"
+#include "video/texture.h"
 #include <unistd.h>
 
 int numofpolygontemps;

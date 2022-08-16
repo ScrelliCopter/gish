@@ -23,14 +23,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <math.h>
-#include <math/math.h>
+#include "math/math.h"
 #include <string.h>
 #include <SDL_opengl.h>
-#include <math/vector.h>
+#include "math/vector.h"
 #include "audio.h"
 #include "game.h"
-#include <physics/particle.h>
-#include <physics/bond.h>
+#include "physics/particle.h"
+#include "physics/bond.h"
 #include "level.h"
 #include "animation.h"
 

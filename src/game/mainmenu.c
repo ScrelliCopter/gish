@@ -25,27 +25,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <sdl/event.h>
-#include <sdl/video.h>
-#include <video/text.h>
-#include <video/texture.h>
+#include "sdl/event.h"
+#include "sdl/video.h"
+#include "video/text.h"
+#include "video/texture.h"
 #include "lighting.h"
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
-#include <audio/audio.h>
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
+#include "audio/audio.h"
 #include "audio.h"
 #include "music.h"
 #include "config.h"
-#include <math/vector.h>
+#include "math/vector.h"
 #include "game.h"
 #include "player.h"
 #include "object.h"
 #include "physics.h"
 #include "animation.h"
 #include "vsmode.h"
-#include <menu/menu.h>
-#include <config.h>
+#include "menu/menu.h"
+#include "config.h"
 #include "editor.h"
 #include "options.h"
 #include "credits.h"
@@ -263,7 +263,7 @@ void mainmenu(void)
   resetmenuitems();
 
   joymenunum=1;
-  game.turbomode=1;
+  game.turbomode=config.turbomode;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
     {
@@ -297,7 +297,7 @@ void mainmenu(void)
     checkmenuitems();
 
     if (keyboard[SCAN_T] && !prevkeyboard[SCAN_T])
-      game.turbomode^=1;
+      config.turbomode=game.turbomode^=1;
 
     updateogg();
     checkmusic();
@@ -323,7 +323,7 @@ void mainmenu(void)
 
     if (menuitem[5].active)
       {
-      launchwebpage("www.crypticsea.com");
+      launchwebpage("http://www.crypticsea.com");
       menuitem[5].active=0;
       }
     if (menuitem[4].active)

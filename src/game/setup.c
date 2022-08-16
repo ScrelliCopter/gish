@@ -24,12 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <time.h>
 #include "random.h"
-#include <math/vector.h>
+#include "math/vector.h"
 #include "audio.h"
 #include "game.h"
 #include "level.h"
-#include <physics/particle.h>
-#include <physics/bond.h>
+#include "physics/particle.h"
+#include "physics/bond.h"
 #include <stdio.h>
 #include "physics.h"
 #include "object.h"

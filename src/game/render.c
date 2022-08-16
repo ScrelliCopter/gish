@@ -22,22 +22,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "render.h"
 
 #include <math.h>
-#include <math/math.h>
-#include <math/vector.h>
+#include "math/math.h"
+#include "math/vector.h"
 #include <SDL_opengl.h>
-#include <sdl/event.h>
-#include <video/texture.h>
-#include <video/text.h>
+#include "sdl/event.h"
+#include "video/texture.h"
+#include "video/text.h"
 #include "prerender.h"
 #include "lighting.h"
 #include "sprite.h"
-#include <audio/audio.h>
+#include "audio/audio.h"
 #include "game.h"
 #include "level.h"
 #include "block.h"
 #include "object.h"
-#include <physics/bond.h>
-#include <physics/particle.h>
+#include "physics/bond.h"
+#include "physics/particle.h"
 #include "physics.h"
 #include "editor.h"
 

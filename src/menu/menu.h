@@ -53,9 +53,10 @@ void addmenuinputchar(int charinput);
 int deleteselectedtext(void);
 
 extern int numofmenuitems;
+#define MENUITEM_LABEL_LEN 64
 struct MENUITEM
   {
-  char label[64];
+  char label[MENUITEM_LABEL_LEN];
 	int x;
 	int y;
 	int textsize;
@@ -85,8 +86,10 @@ extern int menuinputkeyboard;
 extern int menuinputselectpos;
 extern int menuinputcursorpos;
 extern int menuinputinsert;
-extern char menuinput[256];
-extern char menuinputtemp[256];
+
+#define MENUINPUT_LEN 256
+extern char menuinput[MENUINPUT_LEN];
+extern char menuinputtemp[MENUINPUT_LEN];
 
 extern int joymenunum;
 extern int joystickmenu;

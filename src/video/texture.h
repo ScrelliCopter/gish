@@ -29,7 +29,8 @@ void loadtexturetgaparts(int texturenum,char *filename,const SDL_Rect *rect,int 
 void generatemipmap(int texturenum);
 void setuptexture(int texturenum);
 
-extern char lasttextureloaded[32];
+#define LASTTEXTURELOADED_LEN 32
+extern char lasttextureloaded[LASTTEXTURELOADED_LEN];
 
 struct TEXTURE
   {

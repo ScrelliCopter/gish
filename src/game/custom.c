@@ -22,16 +22,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "custom.h"
 
 #include <SDL_opengl.h>
-#include <sdl/event.h>
-#include <sdl/file.h>
-#include <sdl/platform.h>
-#include <sdl/globbing.h>
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
-#include <sdl/video.h>
-#include <video/text.h>
-#include <audio/audio.h>
+#include "sdl/event.h"
+#include "sdl/file.h"
+#include "sdl/platform.h"
+#include "sdl/string.h"
+#include "sdl/globbing.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
+#include "sdl/video.h"
+#include "video/text.h"
+#include "audio/audio.h"
 #include "audio.h"
 #include "music.h"
 #include "english.h"
@@ -39,10 +40,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "level.h"
 #include "mappack.h"
 #include "player.h"
-#include <menu/menu.h>
+#include "menu/menu.h"
 #include "mainmenu.h"
 #include <unistd.h>
 
+filelist_t levellist;
 struct MAPPACK mappack;
 struct PLAYERMAPPACK playermappack[16];
 
@@ -323,7 +325,7 @@ void playcampaignmenu(void)
     if (pagenum+count-1<numoffiles)
     if (menuitem[count].active)
       {
-      strcpy(mappack.filename,levellist[pagenum+count-1]);
+      gstrlcpy(mappack.filename,levellist[pagenum+count-1],MAPPACK_FILENAME_LEN);
       snprintf(fullpath,sizeof(fullpath),"level/%s",levellist[pagenum+count-1]);
       loadmappack(fullpath);
       campaignmenu();
@@ -627,8 +629,8 @@ void newmappackmenu(void)
       if (mappack.level[mappack.numoflevels][0]!=0)
       if (mappack.numoflevels<63)
         {
-        strcpy(mappack.level[mappack.numoflevels+1],mappack.level[mappack.numoflevels]);
-        strcpy(mappack.levelname[mappack.numoflevels+1],mappack.levelname[mappack.numoflevels]);
+        gstrlcpy(mappack.level[mappack.numoflevels+1],mappack.level[mappack.numoflevels],MAPPACK_LEVEL_LEN);
+        gstrlcpy(mappack.levelname[mappack.numoflevels+1],mappack.levelname[mappack.numoflevels],MAPPACK_LEVELNAME_LEN);
         mappack.numoflevels++;
         }
       menuitem[2].active=0;

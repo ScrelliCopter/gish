@@ -19,29 +19,28 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#define CRYPTICSEA 1
-
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <game/glext.h>
-#include <sdl/event.h>
-#include <sdl/video.h>
-#include <video/texture.h>
-#include <video/text.h>
-#include <audio/audio.h>
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
-#include <game/config.h>
-#include <game/options.h>
-#include <game/player.h>
-#include <menu/menu.h>
-#include <game/mainmenu.h>
-#include <game/high.h>
+#include "game/glext.h"
+#include "sdl/event.h"
+#include "sdl/video.h"
+#include "sdl/string.h"
+#include "video/texture.h"
+#include "video/text.h"
+#include "audio/audio.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
+#include "game/config.h"
+#include "game/options.h"
+#include "game/player.h"
+#include "menu/menu.h"
+#include "game/mainmenu.h"
+#include "game/high.h"
 #include <physfs.h>
 
 int main (int argc,char *argv[])
@@ -140,9 +139,9 @@ int main (int argc,char *argv[])
       joy[count]=SDL_JoystickOpen(count);
       temp=SDL_JoystickName(joy[count]);
       if (temp)
-        strncpy(joystick[count].name,temp,64);
+        gstrlcpy(joystick[count].name,temp,64);
       else
-        strncpy(joystick[count].name,"Unknown",64);
+        gstrlcpy(joystick[count].name,"Unknown",64);
       joystick[count].numofbuttons=SDL_JoystickNumButtons(joy[count]);
       joystick[count].numofhats=SDL_JoystickNumHats(joy[count]);
       }

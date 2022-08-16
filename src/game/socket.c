@@ -21,11 +21,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "socket.h"
 
-#include <sdl/platform.h>
+#include "sdl/platform.h"
+//#include <SDL_video.h>
+#include "sdl/video.h"
 #ifdef WINDOZE
   #include <io.h>
   #include <windows.h>
   #include <winsock.h>
+#elif defined(DETLEF)
+  #include <stdlib.h>
+  #include <stdio.h>
 #endif
 
 unsigned int rotint(unsigned int x,int rotnum)
@@ -46,16 +51,15 @@ unsigned int rotint(unsigned int x,int rotnum)
 void launchwebpage(char *webpagename)
   {
 #ifdef WINDOZE
-  SDL_WM_IconifyWindow();
+  SDL_MinimizeWindow(sdlwindow);
   ShellExecute(NULL,"open",webpagename,"","c:\\",SW_SHOWNORMAL);
-#endif
-#ifdef THINKSTUPID
+#elif defined(THINKSTUPID)
   /*
   OSStatus err;
   ICInstance inst;
   long length,start,end;
 
-  SDL_WM_IconifyWindow();
+  SDL_MinimizeWindow(sdlwindow);
 
   err=ICStart(&inst,'Gish');
   if (err==noErr)
@@ -67,5 +71,38 @@ void launchwebpage(char *webpagename)
     }
   ICStop(inst);
   */
+#elif defined(DETLEF)
+  static const char *handlers[]=
+    {
+    "xdg-open",
+    "kde-open5",
+    "exo-open",
+    "x-www-browser",
+    "firefox",
+    "chromium",
+    "firefox-esr",
+    NULL
+    };
+
+  SDL_MinimizeWindow(sdlwindow);
+
+  char pathbuf[32];
+  const char **hnd=handlers;
+  while (*hnd)
+    {
+    snprintf(pathbuf,32,"/usr/bin/%s",*hnd);
+    if (!gexec(pathbuf,webpagename))
+      return;
+    snprintf(pathbuf,32,"/usr/local/bin/%s",*hnd);
+    if (!gexec(pathbuf,webpagename))
+      return;
+    snprintf(pathbuf,32,"/bin/%s",*hnd);
+    if (!gexec(pathbuf,webpagename))
+      return;
+    ++hnd;
+    }
+//#ifdef DEBUG
+  fprintf(stderr,"No usable launcher or browser found");
+//#endif
 #endif
   }

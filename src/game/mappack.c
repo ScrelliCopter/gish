@@ -23,19 +23,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <sdl/event.h>
-#include <sdl/video.h>
-#include <video/text.h>
+#include "sdl/event.h"
+#include "sdl/video.h"
+#include "video/text.h"
 #include "audio.h"
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
 #include "game.h"
 #include "level.h"
 #include "custom.h"
 #include "object.h"
 #include "player.h"
-#include <menu/menu.h>
+#include "menu/menu.h"
 #include "mainmenu.h"
 #include "gamemenu.h"
 #include "english.h"

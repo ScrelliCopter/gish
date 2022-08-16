@@ -25,15 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <SDL_opengl.h>
 #include <SDL_endian.h>
-#include <sdl/file.h>
 #include <physfs.h>
-#include <sdl/platform.h>
-#include <video/texture.h>
-#include <math/vector.h>
+#include "sdl/file.h"
+#include "sdl/platform.h"
+#include "sdl/string.h"
+#include "video/texture.h"
+#include "math/vector.h"
 #include "game.h"
 #include "object.h"
 #include "block.h"
-#include <physics/particle.h>
+#include "physics/particle.h"
 #include "physics.h"
 #include "mainmenu.h"
 #include "editor.h"
@@ -274,7 +275,7 @@ void loadlevel(char *filename)
 
     if (version==9||version==10)
       {
-      strcpy(editor.filename,filename);
+      gstrlcpy(editor.filename,filename,EDITOR_FILENAME_LEN);
 
       PHYSFS_readBytes(fp,level.background,32);
       PHYSFS_readSLE32(fp,&level.tileset);

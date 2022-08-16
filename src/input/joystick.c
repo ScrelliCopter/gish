@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "joystick.h"
 
 #include <string.h>
-#include <game/config.h>
+#include "game/config.h"
 
 int numofjoysticks;
 SDL_Joystick *joy[16];

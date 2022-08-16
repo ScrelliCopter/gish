@@ -22,13 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu.h"
 
 #include <SDL_opengl.h>
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
-#include <video/text.h>
-#include <video/texture.h>
-#include <game/options.h>
-#include <game/english.h>
+#include "sdl/string.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
+#include "video/text.h"
+#include "video/texture.h"
+#include "game/options.h"
+#include "game/english.h"
 
 int numofmenuitems;
 struct MENUITEM menuitem[MAXMENUITEMS];
@@ -36,8 +37,8 @@ int menuinputkeyboard=0;
 int menuinputselectpos;
 int menuinputcursorpos;
 int menuinputinsert;
-char menuinput[256];
-char menuinputtemp[256];
+char menuinput[MENUINPUT_LEN];
+char menuinputtemp[MENUINPUT_LEN];
 int joymenunum;
 int joystickmenu=1;
 int currentmenuitem;
@@ -225,13 +226,13 @@ void drawmenuitems(void)
         if (!menuitem[count].active)
           {
           if (menuitem[count].inputtype==0)
-            sprintf(menuinputtemp,"%d",*(int*)menuitem[count].inputpointer);
+            snprintf(menuinputtemp,MENUINPUT_LEN,"%d",*(int*)menuitem[count].inputpointer);
           else if (menuitem[count].inputtype==1)
-            sprintf(menuinputtemp,"%u",*(unsigned int*)menuitem[count].inputpointer);
+            snprintf(menuinputtemp,MENUINPUT_LEN,"%u",*(unsigned int*)menuitem[count].inputpointer);
           else if (menuitem[count].inputtype==2)
-            sprintf(menuinputtemp,"%g",*(float*)menuitem[count].inputpointer);
+            snprintf(menuinputtemp,MENUINPUT_LEN,"%g",*(float*)menuitem[count].inputpointer);
           else
-            strcpy(menuinputtemp,menuitem[count].inputpointer);
+            gstrlcpy(menuinputtemp,menuitem[count].inputpointer,MENUINPUT_LEN);
   
           drawtext(menuinputtemp,menuitem[count].x+xoffset,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].g*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].b*(menuitem[count].highlight+1))*0.25f,1.0f);
           }
@@ -306,7 +307,7 @@ void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b
   x&=0xFFFF;
   y&=0xFFFF;
 
-  strcpy(menuitem[numofmenuitems].label,label);
+  size_t len = gstrlcpy(menuitem[numofmenuitems].label,label,MENUITEM_LABEL_LEN);
 	menuitem[numofmenuitems].x=x;
 	menuitem[numofmenuitems].y=y;
 	menuitem[numofmenuitems].textsize=textsize;
@@ -314,7 +315,7 @@ void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b
 	menuitem[numofmenuitems].g=g;
 	menuitem[numofmenuitems].b=b;
   menuitem[numofmenuitems].type=0;
-  menuitem[numofmenuitems].sizex=strlen(label);
+  menuitem[numofmenuitems].sizex=(int)len;
   menuitem[numofmenuitems].sizey=1;
   menuitem[numofmenuitems].hotkey=0;
   menuitem[numofmenuitems].repeat=0;
@@ -531,15 +532,15 @@ void menutextbox(void)
 
   if (!menuitem[currentmenuitem].prevactive)
     {
-		memset(menuinput,0,256);
+		memset(menuinput,0,MENUINPUT_LEN);
     if (menuitem[currentmenuitem].inputtype==0)
-      sprintf(menuinput,"%d",*(int*)menuitem[currentmenuitem].inputpointer);
+      snprintf(menuinput,MENUINPUT_LEN,"%d",*(int*)menuitem[currentmenuitem].inputpointer);
     else if (menuitem[currentmenuitem].inputtype==1)
-      sprintf(menuinput,"%u",*(unsigned int*)menuitem[currentmenuitem].inputpointer);
+      snprintf(menuinput,MENUINPUT_LEN,"%u",*(unsigned int*)menuitem[currentmenuitem].inputpointer);
     else if(menuitem[currentmenuitem].inputtype==2)
-      sprintf(menuinput,"%g",*(float*)menuitem[currentmenuitem].inputpointer);
+      snprintf(menuinput,MENUINPUT_LEN,"%g",*(float*)menuitem[currentmenuitem].inputpointer);
 		else
-      strcpy(menuinput,menuitem[currentmenuitem].inputpointer);
+      gstrlcpy(menuinput,menuitem[currentmenuitem].inputpointer,MENUINPUT_LEN);
 
     if (mouse.lmb)
       {

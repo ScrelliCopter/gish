@@ -24,9 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdint.h>
 #include <physfs.h>
-#include <sdl/file.h>
-#include <sdl/platform.h>
-#include <audio/audio.h>
+#include "sdl/file.h"
+#include "sdl/platform.h"
+#include "audio/audio.h"
 #include "game.h"
 #include "config.h"
 #include "options.h"

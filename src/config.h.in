@@ -1,0 +1,9 @@
+#ifndef __GISH_CONFIG_H__
+#define __GISH_CONFIG_H__
+
+#define VERSIONTEXT "Version ${PROJECT_VERSION}"
+#cmakedefine DEMO
+
+#define CRYPTICSEA 1
+
+#endif//__GISH_CONFIG_H__

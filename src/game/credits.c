@@ -23,18 +23,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <sdl/event.h>
-#include <sdl/video.h>
-#include <video/text.h>
-#include <audio/audio.h>
+#include "sdl/event.h"
+#include "sdl/video.h"
+#include "video/text.h"
+#include "audio/audio.h"
 #include "audio.h"
 #include "music.h"
-#include <input/keyboard.h>
-#include <input/mouse.h>
-#include <input/joystick.h>
+#include "input/keyboard.h"
+#include "input/mouse.h"
+#include "input/joystick.h"
 #include "game.h"
 #include "socket.h"
-#include <menu/menu.h>
+#include "menu/menu.h"
 #include "mainmenu.h"
 #include "english.h"
 
@@ -186,27 +186,28 @@ void creditsmenu(void)
 
     if (menuitem[1].active)
       {
-      launchwebpage("www.libsdl.org");
+      launchwebpage("https://www.libsdl.org");
       menuitem[1].active=0;
       }
     if (menuitem[2].active)
       {
-      launchwebpage("www.opengl.org");
+      launchwebpage("https://www.opengl.org");
       menuitem[2].active=0;
       }
     if (menuitem[3].active)
       {
-      launchwebpage("www.openal.org");
+      launchwebpage("https://www.openal.org");
       menuitem[3].active=0;
       }
     if (menuitem[4].active)
       {
-      launchwebpage("www.xiph.org");
+      launchwebpage("https://www.xiph.org");
       menuitem[4].active=0;
       }
     if (menuitem[5].active)
       {
-      launchwebpage("www.mendomate.com");
+      //FIXME: dead link (goes to spam, redirect to https://mendomatte.com/ ?)
+      launchwebpage("https://www.mendomate.com");
       menuitem[5].active=0;
       }
     }
