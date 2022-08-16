@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "math/math.h"
 #include "math/vector.h"
 
+int numofsprites;
 struct SPRITE sprite[256];
 
 void createsprite(int points,float position[3])

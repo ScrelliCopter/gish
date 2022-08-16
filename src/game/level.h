@@ -46,8 +46,8 @@ struct COLLISION
   };
 extern struct COLLISION collision;
 
-int levelblocknum;
-float levelfriction;
+extern int levelblocknum;
+extern float levelfriction;
 
 struct LEVEL
   {
