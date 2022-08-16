@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(gish C)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 find_package(PkgConfig REQUIRED)
 
 set(SOURCES
@@ -130,32 +132,70 @@ set(SOURCES
 	src/config.h
 	src/main.c)
 
-find_package(SDL2 REQUIRED)
+# Quick & dirty implementation of a find module because no mac-friendly one exists
+# and relying on package managers for absolutely everything is some lunix bullshit
+if (APPLE)
+	include(FindPackageHandleStandardArgs)
+
+	find_path(SDL2_INCLUDE_DIR
+		NAMES SDL.h
+		HINTS
+			ENV SDL2DIR
+		PATHS
+			~/Library/Frameworks
+			/Library/Frameworks
+		PATH_SUFFIXES SDL2)
+	find_library(SDL2_LIBRARY
+		NAMES SDL2 libSDL2
+		HINTS
+			ENV SDL2DIR
+		PATHS
+			~/Library/Frameworks
+			/Library/Frameworks
+		PATH_SUFFIXES lib)
+
+	find_package_handle_standard_args(SDL2
+		FOUND_VAR SDL2_FOUND
+		REQUIRED_VARS
+			SDL2_LIBRARY
+			SDL2_INCLUDE_DIR
+		VERSION_VAR SDL2_VERSION)
+	if (SDL2_FOUND AND NOT TARGET SDL2::SDL2)
+		if ("${SDL2_LIBRARY}" MATCHES "\\.framework$")
+			add_library(SDL2::SDL2 INTERFACE IMPORTED)
+			set_target_properties(SDL2::SDL2 PROPERTIES
+				INTERFACE_LINK_LIBRARIES      "${SDL2_LIBRARY}"
+				INTERFACE_COMPILE_OPTIONS     "${SDL2_DEFINITIONS}"
+				INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}")
+		else()
+			add_library(SDL2::SDL2 UNKNOWN IMPORTED)
+			set_target_properties(SDL2::SDL2 PROPERTIES
+				IMPORTED_LOCATION             "${SDL2_LIBRARY}"
+				INTERFACE_COMPILE_OPTIONS     "${SDL2_DEFINITIONS}"
+				INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}")
+		endif()
+	endif()
+endif()
+if (NOT SDL2_FOUND)
+	find_package(SDL2 REQUIRED)
+endif()
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)
 pkg_check_modules(PHYSFS physfs)
 if (NOT PHYSFS_FOUND)
 	find_package(PhysFS REQUIRED)
 endif()
-pkg_check_modules(VORBISFILE REQUIRED vorbisfile)
+find_package(Vorbis)
 
 add_executable(gish ${SOURCES})
 target_include_directories(gish PRIVATE
 	${CMAKE_SOURCE_DIR}/src
-	${SDL2_INCLUDE_DIRS}
-	${PHYSFS_INCLUDE_DIRS}
-	${OPENGL_INCLUDE_DIRS}
-	${OPENAL_INCLUDE_DIRS}
-	${VORBISFILE_INCLUDE_DIRS})
-target_link_directories(gish PRIVATE
-	${SDL2_LIBRARY_DIRS}
-	${PHYSFS_LIBRARY_DIRS}
-	${OPENAL_LIBRARY_DIRS}
-	${VORBISFILE_LIBRARY_DIRS})
+	${PHYSFS_INCLUDE_DIR} ${PhysFS_INCLUDE_DIRS}
+	${OPENAL_INCLUDE_DIR})
 target_link_libraries(gish
-	${SDL2_LIBRARIES}
+	SDL2::SDL2
 	${PHYSFS_LIBRARY}
 	${OPENAL_LIBRARY}
-	${OPENGL_LIBRARIES}
-	${VORBISFILE_LIBRARIES}
+	OpenGL::GL
+	Vorbis::vorbisfile
 	m)
