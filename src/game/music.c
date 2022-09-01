@@ -26,9 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sdl/platform.h"
 #include "audio/audio.h"
 #include "game.h"
-#include "config.h"
+#include "gconfig.h"
 #include "options.h"
-#include <unistd.h>
+#ifndef WINDOZE
+  #include <unistd.h>
+#endif
 
 struct OGGMEMORYFILE
   {

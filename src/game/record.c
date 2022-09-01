@@ -23,11 +23,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <SDL_opengl.h>
+#include <stdint.h>
+#include "video/gl.h"
 #include "sdl/event.h"
 #include "sdl/platform.h"
 #include "video/glfunc.h"
-#include <unistd.h>
+#ifndef WINDOZE
+  #include <unistd.h>
+#endif
 
 struct MOVIE movie;
 

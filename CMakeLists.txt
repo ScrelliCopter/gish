@@ -22,8 +22,8 @@ set(SOURCES
 	src/game/block.h
 	src/game/boss.c
 	src/game/boss.h
-	src/game/config.c
-	src/game/config.h
+	src/game/gconfig.c
+	src/game/gconfig.h
 	src/game/credits.c
 	src/game/credits.h
 	src/game/custom.c
@@ -37,8 +37,6 @@ set(SOURCES
 	src/game/game.h
 	src/game/gamemenu.c
 	src/game/gamemenu.h
-	src/game/glext.c
-	src/game/glext.h
 	src/game/high.c
 	src/game/high.h
 	src/game/level.c
@@ -127,9 +125,14 @@ set(SOURCES
 	src/sdl/video.c
 	src/sdl/video.h
 
+	src/video/gl.h
+	src/video/glad.c
+	src/video/glad.h
+	src/video/glext.c
 	src/video/glext.h
 	src/video/glfunc.c
 	src/video/glfunc.h
+	src/video/khrplatform.h
 	src/video/text.c
 	src/video/text.h
 	src/video/texture.c
@@ -141,13 +144,27 @@ set(SOURCES
 configure_file(src/config.h.in src/config.h)
 
 
-find_package(PkgConfig REQUIRED)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
 #TODO: proper find module for SDL2
-pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2)
+find_package(SDL2)
+if (NOT SDL2_FOUND)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/ext/sdl)
+endif()
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
-find_package(OpenAL REQUIRED)
-pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
+find_package(OpenAL)
+if (NOT OPENAL_FOUND)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/ext/alsoft)
+endif()
+find_package(Ogg)
+if (NOT OGG_FOUND)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/ext/ogg)
+endif()
+find_package(Vorbis)
+if (NOT Vorbis_Enc_FOUND)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/ext/vorbis)
+endif()
 
 add_executable(gish ${SOURCES})
 target_compile_definitions(gish PRIVATE $<$<OR:$<BOOL:${DEBUG_MODE}>,$<CONFIG:Debug>>:DEBUG>)
@@ -155,4 +172,10 @@ target_include_directories(gish PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${CMAKE_CURRENT_BINARY_DIR}/src
 	${OPENAL_INCLUDE_DIRS})
-target_link_libraries(gish ${OPENAL_LIBRARY} PkgConfig::SDL2 OpenGL::GL PkgConfig::VorbisFile m)
+target_link_libraries(gish
+	OpenAL::OpenAL OpenGL::GL vorbisfile
+	$<$<C_COMPILER_ID:MSVC>:legacy_stdio_definitions.lib>)
+if (WIN32)
+	target_link_libraries(gish SDL2::SDL2main)
+endif()
+target_link_libraries(gish SDL2::SDL2)

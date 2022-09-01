@@ -24,8 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 
 #include <SDL.h>
-#include <SDL_opengl.h>
-#include "game/glext.h"
+#include "video/glext.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
 #include "sdl/string.h"
@@ -35,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "input/keyboard.h"
 #include "input/mouse.h"
 #include "input/joystick.h"
-#include "game/config.h"
+#include "game/gconfig.h"
 #include "game/options.h"
 #include "game/player.h"
 #include "menu/menu.h"

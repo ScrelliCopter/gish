@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_VIDEO_TEXTURE_H__
 #define __GISH_VIDEO_TEXTURE_H__
 
-void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
-void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
-void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,int sizex,int sizey);
-void generatemipmap(int texturenum);
-void setuptexture(int texturenum);
+extern void loadtexturetga(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
+extern void loadtexturetganodir(int texturenum,char *filename,int mipmap,int wraps,int wrapt,int magfilter,int minfilter);
+extern void loadtexturetgapartial(int texturenum,char *filename,int startx,int starty,int sizex,int sizey);
+extern void generatemipmap(int texturenum);
+extern void setuptexture(int texturenum);
 
 #define LASTTEXTURELOADED_LEN 32
 extern char lasttextureloaded[LASTTEXTURELOADED_LEN];

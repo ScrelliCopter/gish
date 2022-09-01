@@ -22,9 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "video.h"
 
 #include <SDL.h>
-#include <SDL_opengl.h>
+#include "video/gl.h"
 #include "event.h"
-#include "game/config.h"
+#include "game/gconfig.h"
 
 SDL_Window *sdlwindow=NULL;
 SDL_GLContext *sdlglcontext=NULL;
@@ -108,6 +108,10 @@ void createwindow(void)
 
   sdlglcontext=SDL_GL_CreateContext(sdlwindow);
   SDL_GL_MakeCurrent(sdlwindow,sdlglcontext);
+
+#ifdef WINDOZE
+  gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+#endif
 
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);

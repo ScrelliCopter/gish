@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <time.h>
 #include <SDL.h>
-#include <SDL_opengl.h>
+#include "video/gl.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
 #include "video/text.h"
@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "animation.h"
 #include "vsmode.h"
 #include "menu/menu.h"
-#include "config.h"
+#include "gconfig.h"
 #include "editor.h"
 #include "options.h"
 #include "credits.h"

@@ -19,28 +19,29 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef __GISH_GAME_GLEXT_H__
-#define __GISH_GAME_GLEXT_H__
+#include "glext.h"
 
-void loadglextentions(void);
+#include <string.h>
+#include <SDL_video.h>
+#include "sdl/platform.h"
 
-#ifdef WINDOZE
-PFNGLACTIVETEXTUREARBPROC glActiveTextureARB=NULL;
-PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTextureARB=NULL;
-PFNGLMULTITEXCOORD2FARBPROC glMultiTexCoord2fARB=NULL;
-PFNGLMULTITEXCOORD2FVARBPROC glMultiTexCoord2fvARB=NULL;
-PFNGLMULTITEXCOORD3FARBPROC glMultiTexCoord3fARB=NULL;
-PFNGLMULTITEXCOORD4FARBPROC glMultiTexCoord4fARB=NULL;
-#endif
+struct GLEXT glext;
 
-struct GLEXT
+void loadglextentions(void)
   {
-  int compiled_vertex_array;
-  int multitexture;
-  int texture_env_dot3;
-  int stencil_two_side;
-  int fragment_program;
-  };
-extern struct GLEXT glext;
+  char *ext;
+  char *glversion;
 
+  glversion=(char *) glGetString(GL_VERSION);
+  ext=(char *) glGetString(GL_EXTENSIONS);
+#ifdef WINDOZE
+  if (strstr(ext,"GL_ARB_multitexture")!=NULL || SDL_GL_GetProcAddress("glActiveTextureARB")!=NULL)
+    glext.multitexture=1;
+  else if (((void *) SDL_GL_GetProcAddress("glActiveTexture"))!=NULL)
+    glext.multitexture=1;
+#else
+  glext.multitexture=1;
 #endif
+  if (strstr(ext,"GL_ARB_texture_env_dot3")!=NULL || (glversion[0]>='2' || glversion[2]>='3'))
+    glext.texture_env_dot3=1;
+  }

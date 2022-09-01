@@ -5,6 +5,7 @@
 
 #ifdef _WIN32
   #define WINDOZE 1
+  #include <direct.h> // chdir
 #elif defined __APPLE__
   #define THINKSTUPID 1
 #else

@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "menu.h"
 
-#include <SDL_opengl.h>
+#include "video/gl.h"
 #include "sdl/string.h"
 #include "input/keyboard.h"
 #include "input/mouse.h"

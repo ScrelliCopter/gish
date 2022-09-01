@@ -21,8 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "vsmode.h"
 
-#include "config.h"
-#include <SDL_opengl.h>
+#include "video/gl.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
 #include "video/text.h"

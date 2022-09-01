@@ -19,11 +19,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "config.h"
+#include "gconfig.h"
 
 #include <stdio.h>
 #include <SDL.h>
-#include <SDL_opengl.h>
+#include "video/gl.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
 #include "video/text.h"

@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <dirent.h>
+#elif defined WINDOZE
+  #include <io.h>
 #endif
 
 int comparestrings(const void *arg1,const void *arg2)

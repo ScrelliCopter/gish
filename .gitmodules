@@ -1,0 +1,12 @@
+[submodule "ext/sdl"]
+	path = ext/sdl
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "ext/ogg"]
+	path = ext/ogg
+	url = https://gitlab.xiph.org/xiph/ogg.git
+[submodule "ext/vorbis"]
+	path = ext/vorbis
+	url = https://gitlab.xiph.org/xiph/vorbis.git
+[submodule "ext/alsoft"]
+	path = ext/alsoft
+	url = https://github.com/kcat/openal-soft.git
