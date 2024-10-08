@@ -144,54 +144,7 @@ configure_file(src/config.h.in src/config.h)
 
 
 find_package(PkgConfig REQUIRED)
-#TODO: proper find module for SDL2
-# Quick & dirty implementation of a find module because no mac-friendly one exists
-# and relying on package managers for absolutely everything is some lunix bullshit
-if (APPLE)
-	include(FindPackageHandleStandardArgs)
-
-	find_path(SDL2_INCLUDE_DIR
-		NAMES SDL.h
-		HINTS
-			ENV SDL2DIR
-		PATHS
-			~/Library/Frameworks
-			/Library/Frameworks
-		PATH_SUFFIXES SDL2)
-	find_library(SDL2_LIBRARY
-		NAMES SDL2 libSDL2
-		HINTS
-			ENV SDL2DIR
-		PATHS
-			~/Library/Frameworks
-			/Library/Frameworks
-		PATH_SUFFIXES lib)
-
-	find_package_handle_standard_args(SDL2
-		FOUND_VAR SDL2_FOUND
-		REQUIRED_VARS
-			SDL2_LIBRARY
-			SDL2_INCLUDE_DIR
-		VERSION_VAR SDL2_VERSION)
-	if (SDL2_FOUND AND NOT TARGET SDL2::SDL2)
-		if ("${SDL2_LIBRARY}" MATCHES "\\.framework$")
-			add_library(SDL2::SDL2 INTERFACE IMPORTED)
-			set_target_properties(SDL2::SDL2 PROPERTIES
-				INTERFACE_LINK_LIBRARIES      "${SDL2_LIBRARY}"
-				INTERFACE_COMPILE_OPTIONS     "${SDL2_DEFINITIONS}"
-				INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}")
-		else()
-			add_library(SDL2::SDL2 UNKNOWN IMPORTED)
-			set_target_properties(SDL2::SDL2 PROPERTIES
-				IMPORTED_LOCATION             "${SDL2_LIBRARY}"
-				INTERFACE_COMPILE_OPTIONS     "${SDL2_DEFINITIONS}"
-				INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}")
-		endif()
-	endif()
-endif()
-if (NOT SDL2_FOUND)
-	find_package(SDL2 REQUIRED)
-endif()
+find_package(SDL2 CONFIG REQUIRED)
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)

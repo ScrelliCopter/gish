@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_SDL_VIDEO_H__
 #define __GISH_SDL_VIDEO_H__
 
-#include <SDL_video.h>
+#include <SDl2/SDL_video.h>
 
 void createwindow(void);
 void getvideoinfo(void);

@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "socket.h"
 
 #include "sdl/platform.h"
-//#include <SDL_video.h>
+//#include <SDL2/SDL_video.h>
 #include "sdl/video.h"
 #ifdef WINDOZE
   #include <io.h>
