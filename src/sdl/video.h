@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_SDL_VIDEO_H__
 #define __GISH_SDL_VIDEO_H__
 
-#include <SDL_video.h>
+#include <SDL3/SDL_video.h>
 
 void createwindow(void);
 void getvideoinfo(void);
@@ -32,6 +32,7 @@ void seticon(void);
 extern int numofsdldisplays;
 struct SDLDISPLAY
   {
+  SDL_DisplayID id;
   char name[32];
   SDL_Rect bounds;
   };
@@ -40,13 +41,13 @@ extern struct SDLDISPLAY sdldisplay[32];
 extern int numofsdlvideomodes;
 struct SDLVIDEOMODE
   {
-  int displayid;
+  SDL_DisplayID displayid;
   SDL_DisplayMode displaymode;
   int bitsperpixel;
   };
 extern struct SDLVIDEOMODE sdlvideomode[4096];
 
 extern SDL_Window *sdlwindow;
-extern SDL_GLContext *sdlglcontext;
+extern SDL_GLContext sdlglcontext;
 
 #endif

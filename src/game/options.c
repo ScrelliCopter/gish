@@ -21,8 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "options.h"
 
-#include <SDL.h>
-#include <SDL_opengl.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
 #include "glext.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
@@ -699,6 +699,13 @@ void videooptionsmenu(void)
   bitsperpixel=windowinfo.bitsperpixel;
   refreshrate=windowinfo.refreshrate;
   prevdisplayid=displayid=windowinfo.displayid;
+  int displayidx=0;
+  for (int i=0;i<numofsdldisplays;++i)
+    if (displayid==sdldisplay[i].id)
+      {
+      displayidx=i;
+      break;
+      }
 
   resetmenuitems();
   numpages=0;
@@ -724,13 +731,6 @@ void videooptionsmenu(void)
         continue;
       if (sdlvideomode[i].displayid!=displayid)
         continue;
-      if (fullscreen==2)
-        {
-        if (sdlvideomode[i].displaymode.w!=sdldisplay[sdlvideomode[i].displayid].bounds.w)
-          continue;
-        if (sdlvideomode[i].displaymode.h!=sdldisplay[sdlvideomode[i].displayid].bounds.h)
-          continue;
-        }
 
       modecount++;
 
@@ -745,11 +745,14 @@ void videooptionsmenu(void)
       pad+=(vidmode->displaymode.w>=1000)?0:1;
       pad+=(vidmode->displaymode.h>=1000)?0:1;
       pad+=(vidmode->bitsperpixel<10)?0:1;
+      int rate = vidmode->displaymode.refresh_rate_numerator;
+      if (rate > 1)
+        rate /= vidmode->displaymode.refresh_rate_denominator;
       snprintf(restext,sizeof(restext),"%dx%d %*dbpp %dhz",
         vidmode->displaymode.w,
         vidmode->displaymode.h,
         pad+1,vidmode->bitsperpixel,
-        vidmode->displaymode.refresh_rate);
+        rate);
       createmenuitem(restext,0,ypos,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&videomodenum,i);
 
@@ -781,9 +784,6 @@ void videooptionsmenu(void)
     createmenuitem(TXT_FULLSCREEN,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_SET,&fullscreen,1);
     ypos+=16;
-    createmenuitem(TXT_BORDERLESS,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
-    setmenuitem(MO_SET,&fullscreen,2);
-    ypos+=16*2;
 
     drawtext(TXT_DISPLAY,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
     ypos+=16;
@@ -791,7 +791,7 @@ void videooptionsmenu(void)
     for (int i=0;i<numofsdldisplays;i++)
       {
       createmenuitem(sdldisplay[i].name,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
-      setmenuitem(MO_SET,&displayid,i);
+      setmenuitem(MO_SET,&displayid,sdldisplay[i].id);
       ypos+=16;
       }
     if (prevdisplayid!=displayid)

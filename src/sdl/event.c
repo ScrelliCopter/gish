@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "event.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include "video/texture.h"
 #include "game/game.h"
 
@@ -37,20 +37,17 @@ void checksystemmessages(void)
 
   while (SDL_PollEvent(&event))
     {
-    if (event.type==SDL_WINDOWEVENT)
+    if (event.type==SDL_EVENT_WINDOW_FOCUS_GAINED)
       {
-      if (event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED)
-        {
-          windowinfo.minimized=0;
-        }
-      if (event.window.event==SDL_WINDOWEVENT_FOCUS_LOST)
-        {
-        if(game.exit==0)
-          game.pause=1;
-        windowinfo.minimized=1;
-        }
+      windowinfo.minimized=0;
       }
-    if (event.type==SDL_QUIT)
+    else if (event.type==SDL_EVENT_WINDOW_FOCUS_LOST)
+      {
+      if(game.exit==0)
+        game.pause=1;
+      windowinfo.minimized=1;
+      }
+    else if (event.type==SDL_EVENT_QUIT)
       windowinfo.shutdown=1;
     }
   }

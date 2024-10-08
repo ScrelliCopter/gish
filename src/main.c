@@ -23,8 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <string.h>
 
-#include <SDL.h>
-#include <SDL_opengl.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
+#include <SDL3/SDL_joystick.h>
 #include "game/glext.h"
 #include "sdl/event.h"
 #include "sdl/video.h"
@@ -44,26 +45,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int main (int argc,char *argv[])
   {
-  int count;
-  Uint32 flags;
-  const char *temp;
-
   loadconfig();
   loadscores();
   loadplayers();
 
-  flags=SDL_INIT_VIDEO|SDL_INIT_TIMER;
+  Uint32 flags=SDL_INIT_VIDEO;
   if (config.joystick)
     flags|=SDL_INIT_JOYSTICK;
 
-  if (SDL_Init(flags)!=0)
+  if (!SDL_Init(flags))
     {
     return(1);
     }
 
   getvideoinfo();
 
-  for (count=1;count<argc;count++)
+  for (int count=1;count<argc;count++)
     {
     if (strcmp("-nosound",argv[count])==0)
       {
@@ -79,32 +76,40 @@ int main (int argc,char *argv[])
 
   saveconfig();
 
-  SDL_ShowCursor(SDL_DISABLE);
+  SDL_HideCursor();
 
   listvideomodes();
 
   createwindow();
   loadglextentions();
 
-  for (count=0;count<2048;count++)
+  for (int count=0;count<2048;count++)
     glGenTextures(1,&texture[count].glname);
 
   if (config.joystick)
     {
-    numofjoysticks=SDL_NumJoysticks();
-    for (count=0;count<numofjoysticks;count++)
+    SDL_JoystickID *joyids=SDL_GetJoysticks(&numofjoysticks);
+    if (numofjoysticks > 16)
+      numofjoysticks = 16;
+    for (int count=0;count<numofjoysticks;count++)
       {
-      joy[count]=SDL_JoystickOpen(count);
-      temp=SDL_JoystickName(joy[count]);
+      joy[count]=SDL_OpenJoystick(joyids[count]);
+      const char *temp=SDL_GetJoystickName(joy[count]);
       if (temp)
+        {
         gstrlcpy(joystick[count].name,temp,64);
+        }
       else
+        {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,"SDL_GetJoystickName: %s",SDL_GetError());
         gstrlcpy(joystick[count].name,"Unknown",64);
-      joystick[count].numofbuttons=SDL_JoystickNumButtons(joy[count]);
-      joystick[count].numofhats=SDL_JoystickNumHats(joy[count]);
+        }
+      joystick[count].numofbuttons=SDL_GetNumJoystickButtons(joy[count]);
+      joystick[count].numofhats=SDL_GetNumJoystickHats(joy[count]);
       }
 
-    SDL_JoystickEventState(SDL_IGNORE);
+    SDL_SetJoystickEventsEnabled(false);
+    SDL_free(joyids);
     }
 
   font.texturenum=0;
@@ -139,7 +144,7 @@ int main (int argc,char *argv[])
   if (config.sound)
     shutdownaudio();
 
-  SDL_GL_DeleteContext(sdlglcontext);
+  SDL_GL_DestroyContext(sdlglcontext);
   SDL_DestroyWindow(sdlwindow);
   SDL_Quit();
 

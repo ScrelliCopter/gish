@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <math.h>
 #include "math/math.h"
 #include "math/vector.h"
-#include <SDL_opengl.h>
+#include <SDL3/SDL_opengl.h>
 #include "sdl/event.h"
 #include "video/texture.h"
 #include "video/text.h"

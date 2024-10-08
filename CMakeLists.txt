@@ -135,24 +135,25 @@ set(SOURCES
 	src/video/texture.c
 	src/video/texture.h
 
-	${CMAKE_CURRENT_BINARY_DIR}/src/config.h
 	src/main.c)
-
-configure_file(src/config.h.in src/config.h)
-
+source_group(TREE "src/" FILES ${SOURCES})
 
 find_package(PkgConfig REQUIRED)
-#TODO: proper find module for SDL2
-pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2)
+find_package(SDL3 CONFIG REQUIRED)
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 find_package(OpenAL REQUIRED)
 pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
 
 add_executable(gish ${SOURCES})
-target_compile_definitions(gish PRIVATE $<$<OR:$<BOOL:${DEBUG_MODE}>,$<CONFIG:Debug>>:DEBUG>)
+configure_file(src/config.h.in src/config.h)
+target_sources(gish PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/src/config.h)
+target_compile_definitions(gish PRIVATE
+	$<$<PLATFORM_ID:Darwin>:OPENAL_DEPRECATED=>
+	$<$<OR:$<BOOL:${DEBUG_MODE}>,$<CONFIG:Debug>>:DEBUG>)
 target_include_directories(gish PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${CMAKE_CURRENT_BINARY_DIR}/src
 	${OPENAL_INCLUDE_DIRS})
-target_link_libraries(gish ${OPENAL_LIBRARY} PkgConfig::SDL2 OpenGL::GL PkgConfig::VorbisFile m)
+target_link_libraries(gish ${OPENAL_LIBRARY} SDL3::SDL3 OpenGL::GL PkgConfig::VorbisFile m)
+

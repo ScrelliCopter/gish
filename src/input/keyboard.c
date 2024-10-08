@@ -21,16 +21,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "keyboard.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <string.h>
 
-unsigned char keyboard[SDL_NUM_SCANCODES];
-unsigned char prevkeyboard[SDL_NUM_SCANCODES];
+bool keyboard[SDL_SCANCODE_COUNT];
+bool prevkeyboard[SDL_SCANCODE_COUNT];
 
 void checkkeyboard(void)
   {
-  memcpy(prevkeyboard,keyboard,SDL_NUM_SCANCODES);
-  memcpy(keyboard,SDL_GetKeyboardState(NULL),SDL_NUM_SCANCODES);
+  memcpy(prevkeyboard,keyboard,SDL_SCANCODE_COUNT);
+  memcpy(keyboard,SDL_GetKeyboardState(NULL),SDL_SCANCODE_COUNT);
 
 	if (keyboard[SDL_SCANCODE_KP_ENTER])
 		keyboard[SDL_SCANCODE_RETURN]=1;

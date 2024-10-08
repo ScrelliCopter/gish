@@ -38,14 +38,14 @@ void checkjoystick(void)
   for (count=0;count<numofjoysticks;count++)
     memcpy(&prevjoystick[count],&joystick[count],sizeof(joystick[0]));
 
-  SDL_JoystickUpdate();
+  SDL_UpdateJoysticks();
   for (count=0;count<numofjoysticks;count++)
     if (joy[count])
       {
-      joystick[count].x=SDL_JoystickGetAxis(joy[count],0);
-      joystick[count].y=SDL_JoystickGetAxis(joy[count],1);
+      joystick[count].x=SDL_GetJoystickAxis(joy[count],0);
+      joystick[count].y=SDL_GetJoystickAxis(joy[count],1);
       for (count2=0;count2<joystick[count].numofbuttons;count2++)
-        joystick[count].button[count2]=SDL_JoystickGetButton(joy[count],count2);
+        joystick[count].button[count2]=SDL_GetJoystickButton(joy[count],count2);
 
       joystick[count].axis[0]=0.0f;
       joystick[count].axis[1]=0.0f;
@@ -60,7 +60,7 @@ void checkjoystick(void)
 
       if (joystick[count].numofhats>0)
         {
-        joystick[count].hat[0]=SDL_JoystickGetHat(joy[count],0);
+        joystick[count].hat[0]=SDL_GetJoystickHat(joy[count],0);
         if (joystick[count].hat[0]==SDL_HAT_UP || joystick[count].hat[0]==SDL_HAT_RIGHTUP || joystick[count].hat[0]==SDL_HAT_LEFTUP)
           joystick[count].axis[1]=1.0f;
         if (joystick[count].hat[0]==SDL_HAT_DOWN || joystick[count].hat[0]==SDL_HAT_RIGHTDOWN || joystick[count].hat[0]==SDL_HAT_LEFTDOWN)

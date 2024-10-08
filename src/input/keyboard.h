@@ -22,12 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GISH_INPUT_KEYBOARD_H__
 #define __GISH_INPUT_KEYBOARD_H__
 
-#include <SDL_scancode.h>
+#include <SDL3/SDL_scancode.h>
 
 void checkkeyboard(void);
 
-extern unsigned char keyboard[SDL_NUM_SCANCODES];
-extern unsigned char prevkeyboard[SDL_NUM_SCANCODES];
+extern bool keyboard[SDL_SCANCODE_COUNT];
+extern bool prevkeyboard[SDL_SCANCODE_COUNT];
 
 #define SCAN_ESC          SDL_SCANCODE_ESCAPE
 #define SCAN_0            SDL_SCANCODE_0

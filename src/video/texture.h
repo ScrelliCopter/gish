@@ -45,7 +45,7 @@ struct TEXTURE
   int alphamap;
   int normalmap;
   int glossmap;
-  int glname;
+  unsigned int glname;
   unsigned int *rgba[16];
   int glnamenormal;
   unsigned int *normal[16];

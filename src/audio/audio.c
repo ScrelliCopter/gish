@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "audio.h"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include "sdl/platform.h"
 #include "game/game.h"
 #include "game/audio.h"
@@ -221,7 +221,7 @@ void loadwav(int buffernum,char *filename)
     {
     if (wavspec.channels==1)
       {
-      if (wavspec.format==AUDIO_U8 || wavspec.format==AUDIO_S8)
+      if (wavspec.format==SDL_AUDIO_U8 || wavspec.format==SDL_AUDIO_S8)
         format=AL_FORMAT_MONO8;
       else
         format=AL_FORMAT_MONO16;
@@ -241,7 +241,7 @@ void loadwav(int buffernum,char *filename)
       alBufferData(soundbuffer[buffernum],format,wavbuffer,wavlength,wavspec.freq);
       bufferloaded[buffernum]=1;
       }
-    SDL_FreeWAV(wavbuffer);
+    SDL_free(wavbuffer);
     }
   }
 
