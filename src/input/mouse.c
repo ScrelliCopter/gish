@@ -39,7 +39,7 @@ void checkmouse(void)
   mouse.y=(int)fmousey*480/windowinfo.resolutiony;
   mouse.xdif=(int)fmrelx;
   mouse.ydif=(int)fmrely;
-	
+
   if (buttons&SDL_BUTTON_LMASK)
     mouse.lmb=1;
   else

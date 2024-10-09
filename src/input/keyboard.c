@@ -32,12 +32,12 @@ void checkkeyboard(void)
   memcpy(prevkeyboard,keyboard,SDL_SCANCODE_COUNT);
   memcpy(keyboard,SDL_GetKeyboardState(NULL),SDL_SCANCODE_COUNT);
 
-	if (keyboard[SDL_SCANCODE_KP_ENTER])
-		keyboard[SDL_SCANCODE_RETURN]=1;
-	if (keyboard[SDL_SCANCODE_RCTRL])
-		keyboard[SDL_SCANCODE_LCTRL]=1;
-	if (keyboard[SDL_SCANCODE_RSHIFT])
-		keyboard[SDL_SCANCODE_LSHIFT]=1;
+  if (keyboard[SDL_SCANCODE_KP_ENTER])
+    keyboard[SDL_SCANCODE_RETURN]=1;
+  if (keyboard[SDL_SCANCODE_RCTRL])
+    keyboard[SDL_SCANCODE_LCTRL]=1;
+  if (keyboard[SDL_SCANCODE_RSHIFT])
+    keyboard[SDL_SCANCODE_LSHIFT]=1;
 
   if (keyboard[SCAN_NUMLEFT])
     keyboard[SCAN_LEFT]=1;

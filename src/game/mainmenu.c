@@ -271,19 +271,19 @@ void mainmenu(void)
     glClear(GL_COLOR_BUFFER_BIT);
 
     numofmenuitems=0;
-		temp=(sizeof(TXT_EXIT)+sizeof(TXT_CREDITS)+sizeof(TXT_OPTIONS)+sizeof(TXT_VERSUS)+sizeof(TXT_START)-1)*8;
+    temp=(sizeof(TXT_EXIT)+sizeof(TXT_CREDITS)+sizeof(TXT_OPTIONS)+sizeof(TXT_VERSUS)+sizeof(TXT_START)-1)*8;
 
     createmenuitem(TXT_EXIT,(320+temp)|TEXT_END,380,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_ESC);
     createmenuitem(TXT_START,320-temp,380,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_S);
-		temp-=(sizeof(TXT_START))*16;
+    temp-=(sizeof(TXT_START))*16;
     createmenuitem(TXT_VERSUS,320-temp,380,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_V);
-		temp-=(sizeof(TXT_VERSUS))*16;
+    temp-=(sizeof(TXT_VERSUS))*16;
     createmenuitem(TXT_OPTIONS,320-temp,380,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_O);
-		temp-=(sizeof(TXT_OPTIONS))*16;
+    temp-=(sizeof(TXT_OPTIONS))*16;
     createmenuitem(TXT_CREDITS,320-temp,380,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_C);
     createmenuitem("Cryptic Sea",0,0,1,1.0f,1.0f,1.0f,1.0f);

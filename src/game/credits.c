@@ -57,7 +57,7 @@ void creditsmenu(void)
     createmenuitem(TXT_BACK,0,0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_ESC);
 
-		count=sizeof(TXT_GISHUSES+1)*12+64;
+    count=sizeof(TXT_GISHUSES+1)*12+64;
     createmenuitem("SDL",count,400,12,1.0f,1.0f,1.0f,1.0f);
     createmenuitem("OpenGL",count+5*12,400,12,1.0f,1.0f,1.0f,1.0f);
     createmenuitem("OpenAL",count+5*12+8*12,400,12,1.0f,1.0f,1.0f,1.0f);

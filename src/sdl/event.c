@@ -30,7 +30,7 @@ struct WINDOWINFO windowinfo;
 void checksystemmessages(void)
 {
   int count;
-	SDL_Event event;
+  SDL_Event event;
 
   if (windowinfo.minimized)
     SDL_Delay(20);

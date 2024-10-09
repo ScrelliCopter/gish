@@ -149,12 +149,12 @@ void checkmenuitems(void)
     }
   }
 
-	for (currentmenuitem=0;currentmenuitem<numofmenuitems;currentmenuitem++)
+  for (currentmenuitem=0;currentmenuitem<numofmenuitems;currentmenuitem++)
   {
     if (menuitem[currentmenuitem].active && menuitem[currentmenuitem].function!=NULL)
       (*menuitem[currentmenuitem].function)();
     if (menuitem[currentmenuitem].type!=1 && menuitem[currentmenuitem].function!=NULL)
-			menuitem[currentmenuitem].active=0;
+      menuitem[currentmenuitem].active=0;
 
     menuitem[currentmenuitem].prevactive=menuitem[currentmenuitem].active;
   }
@@ -258,7 +258,7 @@ void drawmenuitems(void)
         glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum+menuitem[count].highlight-1].glname);
       else
       */
-      	glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum].glname);
+      glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum].glname);
 
       glBegin(GL_QUADS);
 
@@ -446,11 +446,9 @@ void createmenuitemempty(void)
 
 void resetmenuitems(void)
 {
-	int count;
-
   joymenunum=0;
 
-  for (count=0;count<MAXMENUITEMS;count++)
+  for (int count=0;count<MAXMENUITEMS;count++)
   {
     menuitem[count].active=0;
     menuitem[count].prevactive=0;
@@ -643,7 +641,7 @@ void menutextbox(void)
     sscanf(menuinput,"%u",(unsigned *)menuitem[currentmenuitem].inputpointer);
   else if (menuitem[currentmenuitem].inputtype==2)
     sscanf(menuinput,"%g",(float *)menuitem[currentmenuitem].inputpointer);
-	else
+  else
     strcpy(menuitem[currentmenuitem].inputpointer,menuinput);
 }
 
