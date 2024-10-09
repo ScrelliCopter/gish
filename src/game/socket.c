@@ -34,22 +34,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 unsigned int rotint(unsigned int x,int rotnum)
-  {
+{
   int count;
   unsigned int y;
 
   y=0;
   for (count=0;count<32;count++)
-    {
+  {
     y<<=1;
     y|=((x>>((count+rotnum)&31))&1);
-    }
-
-  return(y);
   }
 
+  return(y);
+}
+
 void launchwebpage(char *webpagename)
-  {
+{
 #ifdef WINDOZE
   SDL_MinimizeWindow(sdlwindow);
   ShellExecute(NULL,"open",webpagename,"","c:\\",SW_SHOWNORMAL);
@@ -63,17 +63,17 @@ void launchwebpage(char *webpagename)
 
   err=ICStart(&inst,'Gish');
   if (err==noErr)
-    {
+  {
     length=strlen(webpagename);
     start=0;
     end=length;
     ICLaunchURL(inst,NULL,webpagename,length,&start,&end);
-    }
+  }
   ICStop(inst);
   */
 #elif defined(DETLEF)
   static const char *handlers[]=
-    {
+  {
     "xdg-open",
     "kde-open5",
     "exo-open",
@@ -82,14 +82,14 @@ void launchwebpage(char *webpagename)
     "chromium",
     "firefox-esr",
     NULL
-    };
+  };
 
   SDL_MinimizeWindow(sdlwindow);
 
   char pathbuf[32];
   const char **hnd=handlers;
   while (*hnd)
-    {
+  {
     snprintf(pathbuf,32,"/usr/bin/%s",*hnd);
     if (!gexec(pathbuf,webpagename))
       return;
@@ -100,9 +100,9 @@ void launchwebpage(char *webpagename)
     if (!gexec(pathbuf,webpagename))
       return;
     ++hnd;
-    }
+  }
 //#ifdef DEBUG
   fprintf(stderr,"No usable launcher or browser found");
 //#endif
 #endif
-  }
+}

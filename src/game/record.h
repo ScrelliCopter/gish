@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void recordframe(void);
 
 struct MOVIE
-  {
+{
   int record;
   int framenum;
-  };
+};
 extern struct MOVIE movie;
 
 #endif

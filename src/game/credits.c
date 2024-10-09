@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 void creditsmenu(void)
-  {
+{
   int count,count2;
   int secretsequence;
   float vec[3];
@@ -49,7 +49,7 @@ void creditsmenu(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -94,25 +94,25 @@ void creditsmenu(void)
       count2=SCAN_E;
 
     if (secretsequence==11)
-      {
+    {
       if (game.supersize==0)
-        {
+      {
         vec[0]=0.0f;
         vec[1]=0.0f;
         vec[2]=0.0f;
         playsound(12,vec,NULL,0.4f,0,1.0f,-1,0);
-        }
-      game.supersize=1;
       }
+      game.supersize=1;
+    }
 
     for (count=0;count<256;count++)
     if (keyboard[count] && !prevkeyboard[count])
-      {
+    {
       if (count==count2)
         secretsequence++;
       else
         secretsequence=0;
-      }
+    }
   
     updateogg();
     checkmusic();
@@ -185,32 +185,32 @@ void creditsmenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
-      {
+    {
       launchwebpage("https://www.libsdl.org");
       menuitem[1].active=0;
-      }
+    }
     if (menuitem[2].active)
-      {
+    {
       launchwebpage("https://www.opengl.org");
       menuitem[2].active=0;
-      }
+    }
     if (menuitem[3].active)
-      {
+    {
       launchwebpage("https://www.openal.org");
       menuitem[3].active=0;
-      }
+    }
     if (menuitem[4].active)
-      {
+    {
       launchwebpage("https://www.xiph.org");
       menuitem[4].active=0;
-      }
+    }
     if (menuitem[5].active)
-      {
+    {
       //FIXME: dead link (goes to spam, redirect to https://mendomatte.com/ ?)
       launchwebpage("https://www.mendomate.com");
       menuitem[5].active=0;
-      }
     }
+  }
 
   resetmenuitems();
-  }
+}

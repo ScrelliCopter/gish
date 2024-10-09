@@ -45,7 +45,7 @@ int currentmenuitem;
 char keyboardlabel[323][16];
 
 void checkmenuitems(void)
-  {
+{
   int count,count2;
 
   for (count=0;count<numofmenuitems;count++)
@@ -54,22 +54,22 @@ void checkmenuitems(void)
 
   font.cursornum=0;
 
-	for (count=0;count<numofmenuitems;count++)
+  for (count=0;count<numofmenuitems;count++)
+  {
+    if (menuitem[count].highlight!=0)
     {
-		if (menuitem[count].highlight!=0)
-      {
       menuitem[count].highlight=1;
 
       if (mouse.x>=menuitem[count].x)
       if (mouse.x<menuitem[count].x+menuitem[count].sizex*menuitem[count].textsize)
       if (mouse.y>=menuitem[count].y)
       if (mouse.y<menuitem[count].y+menuitem[count].sizey*menuitem[count].textsize)
-        {
+      {
         menuitem[count].highlight=2;
         if (mouse.lmb && !prevmouse.lmb)
           menuitem[count].active=1;
         font.cursornum=menuitem[count].cursornum;
-        }
+      }
 
       if (!menuinputkeyboard)
         if (keyboard[menuitem[count].hotkey] && (!prevkeyboard[menuitem[count].hotkey] || menuitem[count].repeat))
@@ -81,22 +81,22 @@ void checkmenuitems(void)
       if (menuitem[count].type==3 && *(int *)menuitem[count].inputpointer==menuitem[count].value)
         menuitem[count].highlight=3;
 
-			if (menuitem[count].active)
-				menuitem[count].highlight=3;
-			menuitem[count].prevhighlight=menuitem[count].highlight;
-      }
+      if (menuitem[count].active)
+        menuitem[count].highlight=3;
+      menuitem[count].prevhighlight=menuitem[count].highlight;
     }
+  }
 
   if (joystickmenu)
   if (numofmenuitems>0)
-    {
+  {
     if (joymenunum<0)
       joymenunum=numofmenuitems-1;
     if (joymenunum>=numofmenuitems)
       joymenunum=0;
 
     if (menuitem[joymenunum].highlight!=0)
-      {
+    {
       if (keyboard[SCAN_ENTER] && !prevkeyboard[SCAN_ENTER])
         menuitem[joymenunum].active=1;
 
@@ -104,13 +104,13 @@ void checkmenuitems(void)
       if (control[0].button[8]!=-1)
       if (joystick[control[0].joysticknum].button[control[0].button[8]] && !prevjoystick[control[0].joysticknum].button[control[0].button[8]])
         menuitem[joymenunum].active=1;
-      }
+    }
     if (menuitem[joymenunum].highlight==1)
       menuitem[joymenunum].highlight=2;
 
     count2=0;
     if (control[0].joysticknum!=-1)
-      {
+    {
       if (joystick[control[0].joysticknum].axis[1]>=0.5f && prevjoystick[control[0].joysticknum].axis[1]<0.5f)
         count2=-1;
       if (joystick[control[0].joysticknum].axis[1]<=-0.5f && prevjoystick[control[0].joysticknum].axis[1]>-0.5f)
@@ -122,7 +122,7 @@ void checkmenuitems(void)
       if (control[0].button[3]!=-1)
       if (joystick[control[0].joysticknum].button[control[0].button[3]] && !prevjoystick[control[0].joysticknum].button[control[0].button[3]])
         count2=-1;
-      }
+    }
 
     if (keyboard[control[0].key[3]] && !prevkeyboard[control[0].key[3]])
       count2=-1;
@@ -137,7 +137,7 @@ void checkmenuitems(void)
       joymenunum=0;
 
     if (menuitem[joymenunum].highlight==0)
-      {
+    {
       if (count2==0)
         count2=1;
       joymenunum+=count2;
@@ -146,37 +146,37 @@ void checkmenuitems(void)
         joymenunum=numofmenuitems-1;
       if (joymenunum>=numofmenuitems)
         joymenunum=0;
-      }
     }
+  }
 
 	for (currentmenuitem=0;currentmenuitem<numofmenuitems;currentmenuitem++)
-    {
+  {
     if (menuitem[currentmenuitem].active && menuitem[currentmenuitem].function!=NULL)
       (*menuitem[currentmenuitem].function)();
     if (menuitem[currentmenuitem].type!=1 && menuitem[currentmenuitem].function!=NULL)
 			menuitem[currentmenuitem].active=0;
 
     menuitem[currentmenuitem].prevactive=menuitem[currentmenuitem].active;
-    }
+  }
 
   menuinputkeyboard=0;
   for (count=0;count<numofmenuitems;count++)
     if (menuitem[count].active)
       if (menuitem[count].type==1)
         menuinputkeyboard=1;
-  }
+}
 
 void drawmenuitems(void)
-  {
-	int count,count2;
+{
+  int count,count2;
   int xoffset,yoffset;
   char labelascii;
   float vec[3];
 
-	for (count=0;count<numofmenuitems;count++)
-    {
+  for (count=0;count<numofmenuitems;count++)
+  {
     if (menuitem[count].texturenum==-1)
-      {
+    {
       if (menuitem[count].highlight<2)
         font.texturenum=0;
       else
@@ -189,9 +189,9 @@ void drawmenuitems(void)
       count2=0;
       labelascii=0;
       if (menuitem[count].highlight!=0)
-        {
+      {
         while (count2<menuitem[count].sizex && menuitem[count].label[count2]!=0 && keyboardlabel[menuitem[count].hotkey][0]!=labelascii)
-          {
+        {
           labelascii=toupper(menuitem[count].label[count2]);
           if (keyboardlabel[menuitem[count].hotkey][0]==labelascii && keyboardlabel[menuitem[count].hotkey][1]==0)
             drawtext("/c",menuitem[count].x+count2*menuitem[count].textsize,menuitem[count].y,menuitem[count].textsize,menuitem[count].r,menuitem[count].g,menuitem[count].b,1.0f,menuitem[count].label[count2]);
@@ -199,32 +199,32 @@ void drawmenuitems(void)
             drawtext("/c",menuitem[count].x+count2*menuitem[count].textsize,menuitem[count].y,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))/4,(float)(menuitem[count].g*(menuitem[count].highlight+1))/4,(float)(menuitem[count].b*(menuitem[count].highlight+1))/4,1.0f,menuitem[count].label[count2]);
          
           count2++;
-          }
         }
+      }
      
       while (count2<menuitem[count].sizex && menuitem[count].label[count2]!=0)
-        {
+      {
         drawtext("/c",menuitem[count].x+count2*menuitem[count].textsize,menuitem[count].y,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))/4,(float)(menuitem[count].g*(menuitem[count].highlight+1))/4,(float)(menuitem[count].b*(menuitem[count].highlight+1))/4,1.0f,menuitem[count].label[count2]);
         count2++;
-        }
+      }
   
       if (menuitem[count].type==1)
-        {
+      {
         if (menuitem[count].sizey==1)
-          {
+        {
           yoffset=0;
           xoffset=(strlen(menuitem[count].label))*menuitem[count].textsize;
-          }
+        }
         else
-          {
+        {
           yoffset=menuitem[count].textsize;
           xoffset=0;
-          }
+        }
         for (count2=0;count2<menuitem[count].sizex;count2++)
           drawtext("",menuitem[count].x+xoffset+count2*menuitem[count].textsize,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))/32,(float)(menuitem[count].g*(menuitem[count].highlight+1))/32,(float)(menuitem[count].b*(menuitem[count].highlight+1))/32,1.0f);
   
         if (!menuitem[count].active)
-          {
+        {
           if (menuitem[count].inputtype==0)
             snprintf(menuinputtemp,MENUINPUT_LEN,"%d",*(int*)menuitem[count].inputpointer);
           else if (menuitem[count].inputtype==1)
@@ -235,9 +235,9 @@ void drawmenuitems(void)
             gstrlcpy(menuinputtemp,menuitem[count].inputpointer,MENUINPUT_LEN);
   
           drawtext(menuinputtemp,menuitem[count].x+xoffset,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].g*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].b*(menuitem[count].highlight+1))*0.25f,1.0f);
-          }
+        }
         else
-          {
+        {
           drawtext(menuinput,menuitem[count].x+xoffset,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].g*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].b*(menuitem[count].highlight+1))*0.25f,1.0f);
           for (count2=0;count2<menuitem[count].sizex;count2++)
             if ((count2>=menuinputselectpos && count2<menuinputcursorpos) ||
@@ -248,15 +248,15 @@ void drawmenuitems(void)
             drawtext("_",menuitem[count].x+xoffset+menuinputcursorpos*menuitem[count].textsize,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].g*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].b*(menuitem[count].highlight+1))*0.25f,1.0f);
           else
             drawtext("",menuitem[count].x+xoffset+menuinputcursorpos*menuitem[count].textsize,menuitem[count].y+yoffset,menuitem[count].textsize,(float)(menuitem[count].r*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].g*(menuitem[count].highlight+1))*0.25f,(float)(menuitem[count].b*(menuitem[count].highlight+1))*0.25f,0.5f);
-          }
         }
       }
-		else
-      {
+    }
+    else
+    {
       /*
       if (menuitem[count].highlight!=0)
-	      glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum+menuitem[count].highlight-1].glname);
-			else
+        glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum+menuitem[count].highlight-1].glname);
+      else
       */
       	glBindTexture(GL_TEXTURE_2D,texture[menuitem[count].texturenum].glname);
 
@@ -266,7 +266,7 @@ void drawmenuitems(void)
       vec[1]=menuitem[count].y;
       convertscreenvertex(vec,font.sizex,font.sizey);
       //glColor4f((float)(menuitem[count].r*(menuitem[count].highlight+1))/4,(float)(menuitem[count].g*(menuitem[count].highlight+1))/4,(float)(menuitem[count].b*(menuitem[count].highlight+1))/4,1.0f);
-			glColor4f(1.0f,1.0f,1.0f,1.0f);
+      glColor4f(1.0f,1.0f,1.0f,1.0f);
       glTexCoord2f(0.0f,0.0f);
       glVertex3f(vec[0],vec[1],-1.0f);
   
@@ -289,13 +289,13 @@ void drawmenuitems(void)
       glVertex3f(vec[0],vec[1],-1.0f);
 
       glEnd();
-      }
     }
+  }
   font.texturenum=0;
-  }   
+}   
 
 void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b,float a)
-  {
+{
   if ((x&TEXT_CENTER)==TEXT_CENTER)
     x=x-(strlen(label)*textsize)/2;
   if ((y&TEXT_CENTER)==TEXT_CENTER)
@@ -308,12 +308,12 @@ void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b
   y&=0xFFFF;
 
   size_t len = gstrlcpy(menuitem[numofmenuitems].label,label,MENUITEM_LABEL_LEN);
-	menuitem[numofmenuitems].x=x;
-	menuitem[numofmenuitems].y=y;
-	menuitem[numofmenuitems].textsize=textsize;
-	menuitem[numofmenuitems].r=r;
-	menuitem[numofmenuitems].g=g;
-	menuitem[numofmenuitems].b=b;
+  menuitem[numofmenuitems].x=x;
+  menuitem[numofmenuitems].y=y;
+  menuitem[numofmenuitems].textsize=textsize;
+  menuitem[numofmenuitems].r=r;
+  menuitem[numofmenuitems].g=g;
+  menuitem[numofmenuitems].b=b;
   menuitem[numofmenuitems].type=0;
   menuitem[numofmenuitems].sizex=(int)len;
   menuitem[numofmenuitems].sizey=1;
@@ -324,14 +324,14 @@ void createmenuitem(char *label,int x,int y,int textsize,float r,float g,float b
   menuitem[numofmenuitems].inputtype=0;
   menuitem[numofmenuitems].inputpointer=NULL;
   menuitem[numofmenuitems].function=NULL;
-	menuitem[numofmenuitems].texturenum=-1;
+  menuitem[numofmenuitems].texturenum=-1;
   menuitem[numofmenuitems].cursornum=0;
   menuitem[numofmenuitems].background=0;
-	numofmenuitems++;
-  }
+  numofmenuitems++;
+}
 
 void setmenuitem(int option,...)
-  {
+{
   va_list ap;
 
   if (numofmenuitems==0)
@@ -344,58 +344,58 @@ void setmenuitem(int option,...)
   if (option==MO_HIGHLIGHT)
     menuitem[numofmenuitems-1].highlight=va_arg(ap,int);
   if (option==MO_INTINPUT)
-    {
+  {
     menuitem[numofmenuitems-1].type=1;
     menuitem[numofmenuitems-1].inputtype=0;
     menuitem[numofmenuitems-1].inputpointer=va_arg(ap,void *);
     menuitem[numofmenuitems-1].function=menutextbox;
     menuitem[numofmenuitems-1].sizey=2;
-    }
+  }
   if (option==MO_UINTINPUT)
-    {
+  {
     menuitem[numofmenuitems-1].type=1;
     menuitem[numofmenuitems-1].inputtype=1;
     menuitem[numofmenuitems-1].inputpointer=va_arg(ap,void *);
     menuitem[numofmenuitems-1].function=menutextbox;
     menuitem[numofmenuitems-1].sizey=2;
-    }
+  }
   if (option==MO_FLOATINPUT)
-    {
+  {
     menuitem[numofmenuitems-1].type=1;
     menuitem[numofmenuitems-1].inputtype=2;
     menuitem[numofmenuitems-1].inputpointer=va_arg(ap,void *);
     menuitem[numofmenuitems-1].function=menutextbox;
     menuitem[numofmenuitems-1].sizey=2;
-    }
+  }
   if (option==MO_STRINGINPUT)
-    {
+  {
     menuitem[numofmenuitems-1].type=1;
     menuitem[numofmenuitems-1].inputtype=3;
     menuitem[numofmenuitems-1].inputpointer=va_arg(ap,void *);
     menuitem[numofmenuitems-1].function=menutextbox;
     menuitem[numofmenuitems-1].sizey=2;
-    }
+  }
   if (option==MO_FUNCTION)
     menuitem[numofmenuitems-1].function=va_arg(ap,void *);
   if (option==MO_TOGGLE)
-    {
+  {
     menuitem[numofmenuitems-1].type=2;
     menuitem[numofmenuitems-1].inputpointer=va_arg(ap,void *);
     menuitem[numofmenuitems-1].function=menutoggle;
-    }
+  }
   if (option==MO_SET)
-    {
+  {
     menuitem[numofmenuitems-1].type=3;
     menuitem[numofmenuitems-1].inputpointer=va_arg(ap,void *);
     menuitem[numofmenuitems-1].value=va_arg(ap,int);
     menuitem[numofmenuitems-1].function=menuset;
-    }
+  }
   if (option==MO_REPEAT)
     menuitem[numofmenuitems-1].repeat=1;
   if (option==MO_IMAGE)
     menuitem[numofmenuitems-1].texturenum=va_arg(ap,int);
   if (option==MO_RESIZE)
-    {
+  {
     menuitem[numofmenuitems-1].x=va_arg(ap,int);
     menuitem[numofmenuitems-1].y=va_arg(ap,int);
     menuitem[numofmenuitems-1].sizex=va_arg(ap,int);
@@ -409,19 +409,19 @@ void setmenuitem(int option,...)
       menuitem[numofmenuitems-1].x=menuitem[numofmenuitems-1].x-menuitem[numofmenuitems-1].sizex;
     if ((menuitem[numofmenuitems-1].y&TEXT_END)==TEXT_END)
       menuitem[numofmenuitems-1].y=menuitem[numofmenuitems-1].y-menuitem[numofmenuitems-1].sizey;
-		menuitem[numofmenuitems-1].x&=0xFFFF;
-		menuitem[numofmenuitems-1].y&=0xFFFF;
-    }
+    menuitem[numofmenuitems-1].x&=0xFFFF;
+    menuitem[numofmenuitems-1].y&=0xFFFF;
+  }
   if (option==MO_CURSOR)
     menuitem[numofmenuitems-1].cursornum=va_arg(ap,int);
   if (option==MO_BACKGROUND)
     menuitem[numofmenuitems-1].background=va_arg(ap,int);
 
   va_end(ap);
-  }
+}
 
 void createmenuitemempty(void)
-  {
+{
   memset(menuitem[numofmenuitems].label,0,64);
   menuitem[numofmenuitems].x=0;
   menuitem[numofmenuitems].y=0;
@@ -438,27 +438,27 @@ void createmenuitemempty(void)
   menuitem[numofmenuitems].inputtype=0;
   menuitem[numofmenuitems].inputpointer=NULL;
   menuitem[numofmenuitems].function=NULL;
-	menuitem[numofmenuitems].texturenum=-1;
+  menuitem[numofmenuitems].texturenum=-1;
   menuitem[numofmenuitems].cursornum=0;
   menuitem[numofmenuitems].background=0;
-	numofmenuitems++;
-  }
+  numofmenuitems++;
+}
 
 void resetmenuitems(void)
-  {
+{
 	int count;
 
   joymenunum=0;
 
-	for (count=0;count<MAXMENUITEMS;count++)
-    {
-		menuitem[count].active=0;
+  for (count=0;count<MAXMENUITEMS;count++)
+  {
+    menuitem[count].active=0;
     menuitem[count].prevactive=0;
-    }
   }
+}
 
 void setupmenuitems(void)
-  {
+{
   strcpy(keyboardlabel[SCAN_A],"A");
   strcpy(keyboardlabel[SCAN_B],"B");
   strcpy(keyboardlabel[SCAN_C],"C");
@@ -524,34 +524,34 @@ void setupmenuitems(void)
   strcpy(keyboardlabel[SCAN_NUMDEL],"Del");
 
   strcpy(keyboardlabel[0],TXT_NONE);
-  }
+}
 
 void menutextbox(void)
-  {
+{
   int count,count2,count3; 
 
   if (!menuitem[currentmenuitem].prevactive)
-    {
-		memset(menuinput,0,MENUINPUT_LEN);
+  {
+    memset(menuinput,0,MENUINPUT_LEN);
     if (menuitem[currentmenuitem].inputtype==0)
       snprintf(menuinput,MENUINPUT_LEN,"%d",*(int*)menuitem[currentmenuitem].inputpointer);
     else if (menuitem[currentmenuitem].inputtype==1)
       snprintf(menuinput,MENUINPUT_LEN,"%u",*(unsigned int*)menuitem[currentmenuitem].inputpointer);
     else if(menuitem[currentmenuitem].inputtype==2)
       snprintf(menuinput,MENUINPUT_LEN,"%g",*(float*)menuitem[currentmenuitem].inputpointer);
-		else
+    else
       gstrlcpy(menuinput,menuitem[currentmenuitem].inputpointer,MENUINPUT_LEN);
 
     if (mouse.lmb)
-      {
+    {
       menuinputselectpos=(mouse.x-menuitem[currentmenuitem].x)/menuitem[currentmenuitem].textsize;
       menuinputcursorpos=menuinputselectpos;
-      }
+    }
     else
-      {
+    {
       menuinputselectpos=0;
       menuinputcursorpos=strlen(menuinput);
-      }
+    }
 
     if (menuinputselectpos<0)
       menuinputselectpos=0;
@@ -563,11 +563,11 @@ void menutextbox(void)
       menuinputcursorpos=strlen(menuinput);
 
     count2=0xFFFFFFFF;
-    }
-	else
-    {
+  }
+  else
+  {
     if (mouse.lmb)
-      {
+    {
       if (!prevmouse.lmb)
         menuinputselectpos=(mouse.x-menuitem[currentmenuitem].x)/menuitem[currentmenuitem].textsize;
       menuinputcursorpos=(mouse.x-menuitem[currentmenuitem].x)/menuitem[currentmenuitem].textsize;
@@ -580,62 +580,62 @@ void menutextbox(void)
         menuinputcursorpos=0;
       if (menuinputcursorpos>strlen(menuinput))
         menuinputcursorpos=strlen(menuinput);
-      }
-    count2=getinputletter(0,0xFF);
     }
-	
-	if (count2!=0xFFFFFFFF)
+    count2=getinputletter(0,0xFF);
+  }
+
+  if (count2!=0xFFFFFFFF)
+  {
+    if (count2>=32)
     {
-		if (count2>=32)
-      {
-			deleteselectedtext();
+      deleteselectedtext();
       if (strlen(menuinput)<menuitem[currentmenuitem].sizex-1)
-				addmenuinputchar(count2);
-      }
-		
-		if (count2==9)
-			if (!deleteselectedtext())
-        {
-				count3=menuinputcursorpos;
-				while (menuinput[count3]!=0)
-          {
-					menuinput[count3]=menuinput[count3+1];
-					count3++;
-          }
-        }
-        
-		if (count2==10)
-			if (!deleteselectedtext())
-				if (menuinputcursorpos>0)
-          {
-					count3=menuinputcursorpos-1;
-					while (menuinput[count3]!=0)
-            {
-						menuinput[count3]=menuinput[count3+1];
-						count3++;
-            }
-					menuinputcursorpos--;
-					menuinputselectpos=menuinputcursorpos;
-          }
-		if (count2==12)
+        addmenuinputchar(count2);
+    }
+
+    if (count2==9)
+      if (!deleteselectedtext())
       {
+        count3=menuinputcursorpos;
+        while (menuinput[count3]!=0)
+        {
+          menuinput[count3]=menuinput[count3+1];
+          count3++;
+        }
+      }
+        
+    if (count2==10)
+      if (!deleteselectedtext())
+        if (menuinputcursorpos>0)
+        {
+          count3=menuinputcursorpos-1;
+          while (menuinput[count3]!=0)
+          {
+            menuinput[count3]=menuinput[count3+1];
+            count3++;
+          }
+          menuinputcursorpos--;
+          menuinputselectpos=menuinputcursorpos;
+        }
+    if (count2==12)
+    {
       count3=currentmenuitem+1;
       while (count3!=currentmenuitem)
-        {
+      {
         if (count3>=numofmenuitems)
-					count3=0;
+          count3=0;
         if (menuitem[count3].type==1)
-          {
-					menuitem[currentmenuitem].active=0;
-					menuitem[count3].active=1;
-					count3=currentmenuitem-1;
-          }
-				count3++;
+        {
+          menuitem[currentmenuitem].active=0;
+          menuitem[count3].active=1;
+          count3=currentmenuitem-1;
         }
+        count3++;
       }
-		if ((keyboard[SCAN_ENTER] && !prevkeyboard[SCAN_ENTER]) || (keyboard[SCAN_ESC] && !prevkeyboard[SCAN_ESC]))
-			menuitem[currentmenuitem].active=0;
     }
+    if ((keyboard[SCAN_ENTER] && !prevkeyboard[SCAN_ENTER]) || (keyboard[SCAN_ESC] && !prevkeyboard[SCAN_ESC]))
+      menuitem[currentmenuitem].active=0;
+  }
 
   if (menuitem[currentmenuitem].inputtype==0)
     sscanf(menuinput,"%d",(int *)menuitem[currentmenuitem].inputpointer);
@@ -645,221 +645,221 @@ void menutextbox(void)
     sscanf(menuinput,"%g",(float *)menuitem[currentmenuitem].inputpointer);
 	else
     strcpy(menuitem[currentmenuitem].inputpointer,menuinput);
-  }
+}
 
 void menutoggle(void)
-  {
+{
   *(int *)menuitem[currentmenuitem].inputpointer^=1;
-  }
+}
 
 void menuset(void)
-  {
+{
   *(int *)menuitem[currentmenuitem].inputpointer=menuitem[currentmenuitem].value;
-  }
+}
 
 int getinputletter(int repeat,int inputflags)
+{
+  int count,count2;
+
+  count=0xFFFFFFFF;
+
+  if ((inputflags&1)==1)
   {
-	int count,count2;
-	
-	count=0xFFFFFFFF;
-	
-	if ((inputflags&1)==1)
-    {
-		if (keyboard[SCAN_A] && (repeat || !prevkeyboard[SCAN_A]))
-			count='a';
-		if (keyboard[SCAN_B] && (repeat || !prevkeyboard[SCAN_B]))
-			count='b';
-		if (keyboard[SCAN_C] && (repeat || !prevkeyboard[SCAN_C]))
-			count='c';
-		if (keyboard[SCAN_D] && (repeat || !prevkeyboard[SCAN_D]))
-			count='d';
-		if (keyboard[SCAN_E] && (repeat || !prevkeyboard[SCAN_E]))
-			count='e';
-		if (keyboard[SCAN_F] && (repeat || !prevkeyboard[SCAN_F]))
-			count='f';
-		if (keyboard[SCAN_G] && (repeat || !prevkeyboard[SCAN_G]))
-			count='g';
-		if (keyboard[SCAN_H] && (repeat || !prevkeyboard[SCAN_H]))
-			count='h';
-		if (keyboard[SCAN_I] && (repeat || !prevkeyboard[SCAN_I]))
-			count='i';
-		if (keyboard[SCAN_J] && (repeat || !prevkeyboard[SCAN_J]))
-			count='j';
-		if (keyboard[SCAN_K] && (repeat || !prevkeyboard[SCAN_K]))
-			count='k';            
-		if (keyboard[SCAN_L] && (repeat || !prevkeyboard[SCAN_L]))
-			count='l';
-		if (keyboard[SCAN_M] && (repeat || !prevkeyboard[SCAN_M]))
-			count='m';
-		if (keyboard[SCAN_N] && (repeat || !prevkeyboard[SCAN_N]))
-			count='n';
-		if (keyboard[SCAN_O] && (repeat || !prevkeyboard[SCAN_O]))
-			count='o';
-		if (keyboard[SCAN_P] && (repeat || !prevkeyboard[SCAN_P]))
-			count='p';
-		if (keyboard[SCAN_Q] && (repeat || !prevkeyboard[SCAN_Q]))
-			count='q';
-		if (keyboard[SCAN_R] && (repeat || !prevkeyboard[SCAN_R]))
-			count='r';
-		if (keyboard[SCAN_S] && (repeat || !prevkeyboard[SCAN_S]))
-			count='s';
-		if (keyboard[SCAN_T] && (repeat || !prevkeyboard[SCAN_T]))
-			count='t';
-		if (keyboard[SCAN_U] && (repeat || !prevkeyboard[SCAN_U]))
-			count='u';
-		if (keyboard[SCAN_V] && (repeat || !prevkeyboard[SCAN_V]))
-			count='v';
-		if (keyboard[SCAN_W] && (repeat || !prevkeyboard[SCAN_W]))
-			count='w';
-		if (keyboard[SCAN_X] && (repeat || !prevkeyboard[SCAN_X]))
-			count='x';            
-		if (keyboard[SCAN_Y] && (repeat || !prevkeyboard[SCAN_Y]))
-			count='y';
-		if (keyboard[SCAN_Z] && (repeat || !prevkeyboard[SCAN_Z]))
-			count='z';
+    if (keyboard[SCAN_A] && (repeat || !prevkeyboard[SCAN_A]))
+      count='a';
+    if (keyboard[SCAN_B] && (repeat || !prevkeyboard[SCAN_B]))
+      count='b';
+    if (keyboard[SCAN_C] && (repeat || !prevkeyboard[SCAN_C]))
+      count='c';
+    if (keyboard[SCAN_D] && (repeat || !prevkeyboard[SCAN_D]))
+      count='d';
+    if (keyboard[SCAN_E] && (repeat || !prevkeyboard[SCAN_E]))
+      count='e';
+    if (keyboard[SCAN_F] && (repeat || !prevkeyboard[SCAN_F]))
+      count='f';
+    if (keyboard[SCAN_G] && (repeat || !prevkeyboard[SCAN_G]))
+      count='g';
+    if (keyboard[SCAN_H] && (repeat || !prevkeyboard[SCAN_H]))
+      count='h';
+    if (keyboard[SCAN_I] && (repeat || !prevkeyboard[SCAN_I]))
+      count='i';
+    if (keyboard[SCAN_J] && (repeat || !prevkeyboard[SCAN_J]))
+      count='j';
+    if (keyboard[SCAN_K] && (repeat || !prevkeyboard[SCAN_K]))
+      count='k';
+    if (keyboard[SCAN_L] && (repeat || !prevkeyboard[SCAN_L]))
+      count='l';
+    if (keyboard[SCAN_M] && (repeat || !prevkeyboard[SCAN_M]))
+      count='m';
+    if (keyboard[SCAN_N] && (repeat || !prevkeyboard[SCAN_N]))
+      count='n';
+    if (keyboard[SCAN_O] && (repeat || !prevkeyboard[SCAN_O]))
+      count='o';
+    if (keyboard[SCAN_P] && (repeat || !prevkeyboard[SCAN_P]))
+      count='p';
+    if (keyboard[SCAN_Q] && (repeat || !prevkeyboard[SCAN_Q]))
+      count='q';
+    if (keyboard[SCAN_R] && (repeat || !prevkeyboard[SCAN_R]))
+      count='r';
+    if (keyboard[SCAN_S] && (repeat || !prevkeyboard[SCAN_S]))
+      count='s';
+    if (keyboard[SCAN_T] && (repeat || !prevkeyboard[SCAN_T]))
+      count='t';
+    if (keyboard[SCAN_U] && (repeat || !prevkeyboard[SCAN_U]))
+      count='u';
+    if (keyboard[SCAN_V] && (repeat || !prevkeyboard[SCAN_V]))
+      count='v';
+    if (keyboard[SCAN_W] && (repeat || !prevkeyboard[SCAN_W]))
+      count='w';
+    if (keyboard[SCAN_X] && (repeat || !prevkeyboard[SCAN_X]))
+      count='x';
+    if (keyboard[SCAN_Y] && (repeat || !prevkeyboard[SCAN_Y]))
+      count='y';
+    if (keyboard[SCAN_Z] && (repeat || !prevkeyboard[SCAN_Z]))
+      count='z';
     if (count!=0xFFFFFFFF)
       if (keyboard[SCAN_SHIFT])
         count=toupper(count);
-    }
-	if ((inputflags&8)==8)
+  }
+  if ((inputflags&8)==8)
+  {
+    if (keyboard[SCAN_SPACE] && (repeat || !prevkeyboard[SCAN_SPACE]))
+      count=' ';
+  }
+  if (!keyboard[SCAN_SHIFT])
+  {
+    if ((inputflags&2)==2)
     {
-		if (keyboard[SCAN_SPACE] && (repeat || !prevkeyboard[SCAN_SPACE]))
-			count=' ';
+      if (keyboard[SCAN_0] && (repeat || !prevkeyboard[SCAN_0]))
+        count='0';
+      if (keyboard[SCAN_1] && (repeat || !prevkeyboard[SCAN_1]))
+        count='1';
+      if (keyboard[SCAN_2] && (repeat || !prevkeyboard[SCAN_2]))
+        count='2';
+      if (keyboard[SCAN_3] && (repeat || !prevkeyboard[SCAN_3]))
+        count='3';
+      if (keyboard[SCAN_4] && (repeat || !prevkeyboard[SCAN_4]))
+        count='4';
+      if (keyboard[SCAN_5] && (repeat || !prevkeyboard[SCAN_5]))
+        count='5';
+      if (keyboard[SCAN_6] && (repeat || !prevkeyboard[SCAN_6]))
+        count='6';
+      if (keyboard[SCAN_7] && (repeat || !prevkeyboard[SCAN_7]))
+        count='7';
+      if (keyboard[SCAN_8] && (repeat || !prevkeyboard[SCAN_8]))
+        count='8';
+      if (keyboard[SCAN_9] && (repeat || !prevkeyboard[SCAN_9]))
+        count='9';
     }
-	if (!keyboard[SCAN_SHIFT])
+    if ((inputflags&4)==4)
     {
-		if ((inputflags&2)==2)
-      {
-			if (keyboard[SCAN_0] && (repeat || !prevkeyboard[SCAN_0]))
-				count='0';
-			if (keyboard[SCAN_1] && (repeat || !prevkeyboard[SCAN_1]))
-				count='1';
-			if (keyboard[SCAN_2] && (repeat || !prevkeyboard[SCAN_2]))
-				count='2';
-			if (keyboard[SCAN_3] && (repeat || !prevkeyboard[SCAN_3]))
-				count='3';
-			if (keyboard[SCAN_4] && (repeat || !prevkeyboard[SCAN_4]))
-				count='4';
-			if (keyboard[SCAN_5] && (repeat || !prevkeyboard[SCAN_5]))
-				count='5';
-			if (keyboard[SCAN_6] && (repeat || !prevkeyboard[SCAN_6]))
-				count='6';
-			if (keyboard[SCAN_7] && (repeat || !prevkeyboard[SCAN_7]))
-				count='7';
-			if (keyboard[SCAN_8] && (repeat || !prevkeyboard[SCAN_8]))
-				count='8';
-			if (keyboard[SCAN_9] && (repeat || !prevkeyboard[SCAN_9]))
-				count='9';
-      }
-		if ((inputflags&4)==4)
-      {
-			if (keyboard[SCAN_PERIOD] && (repeat || !prevkeyboard[SCAN_PERIOD]))
-				count='.';
-      }
-		if ((inputflags&16)==16)
-      {
-			if (keyboard[SCAN_MINUS] && (repeat || !prevkeyboard[SCAN_MINUS]))
-				count='-';
-      }
-		if ((inputflags&32)==32)
-      {
-			if (keyboard[SCAN_FOWARD_SLASH] && (repeat || !prevkeyboard[SCAN_FOWARD_SLASH]))
-				count='/';
-			if (keyboard[SCAN_SEMI] && (repeat || !prevkeyboard[SCAN_SEMI]))
-				count=';';
-			if (keyboard[SCAN_MINUS] && (repeat || !prevkeyboard[SCAN_MINUS]))
-				count='-';
-			if (keyboard[SCAN_EQUALS] && (repeat || !prevkeyboard[SCAN_EQUALS]))
-				count='=';
-			if (keyboard[SCAN_COMMA] && (repeat || !prevkeyboard[SCAN_COMMA]))
-				count=',';
-			if (keyboard[SCAN_BACK_SLASH] && (repeat || !prevkeyboard[SCAN_BACK_SLASH]))
-				count=92;
-			if (keyboard[SCAN_APOS] && (repeat || !prevkeyboard[SCAN_APOS]))
-				count=39;
-      }
+      if (keyboard[SCAN_PERIOD] && (repeat || !prevkeyboard[SCAN_PERIOD]))
+        count='.';
     }
-	else
+    if ((inputflags&16)==16)
     {
-		if ((inputflags&32)==32)
-      {
-			if (keyboard[SCAN_0] && (repeat || !prevkeyboard[SCAN_0]))
-				count=')';
-			if (keyboard[SCAN_1] && (repeat || !prevkeyboard[SCAN_1]))
-				count='!';
-			if (keyboard[SCAN_2] && (repeat || !prevkeyboard[SCAN_2]))
-				count='@';
-			if (keyboard[SCAN_3] && (repeat || !prevkeyboard[SCAN_3]))
-				count='#';
-			if (keyboard[SCAN_4] && (repeat || !prevkeyboard[SCAN_4]))
-				count='$';
-			if (keyboard[SCAN_5] && (repeat || !prevkeyboard[SCAN_5]))
-				count='%';
-			if (keyboard[SCAN_6] && (repeat || !prevkeyboard[SCAN_6]))
-				count='^';
-			if (keyboard[SCAN_7] && (repeat || !prevkeyboard[SCAN_7]))
-				count='&';
-			if (keyboard[SCAN_8] && (repeat || !prevkeyboard[SCAN_8]))
-				count='*';
-			if (keyboard[SCAN_9] && (repeat || !prevkeyboard[SCAN_9]))
-				count='(';
-			if (keyboard[SCAN_FOWARD_SLASH] && (repeat || !prevkeyboard[SCAN_FOWARD_SLASH]))
-				count='?';
-			if (keyboard[SCAN_SEMI] && (repeat || !prevkeyboard[SCAN_SEMI]))
-				count=':';
-			if (keyboard[SCAN_MINUS] && (repeat || !prevkeyboard[SCAN_MINUS]))
-				count='_';
-			if (keyboard[SCAN_EQUALS] && (repeat || !prevkeyboard[SCAN_EQUALS]))
-				count='+';
-			if (keyboard[SCAN_PERIOD] && (repeat || !prevkeyboard[SCAN_PERIOD]))
-				count='>';
-			if (keyboard[SCAN_COMMA] && (repeat || !prevkeyboard[SCAN_COMMA]))
-				count='<';
-			if (keyboard[SCAN_BACK_SLASH] && (repeat || !prevkeyboard[SCAN_BACK_SLASH]))
-				count='|';
-			if (keyboard[SCAN_APOS] && (repeat || !prevkeyboard[SCAN_APOS]))
-				count=34;
-      }
+      if (keyboard[SCAN_MINUS] && (repeat || !prevkeyboard[SCAN_MINUS]))
+        count='-';
     }
-	if (keyboard[SCAN_NUMDEL] && (repeat || !prevkeyboard[SCAN_NUMDEL]))
-		count=9;
-	if (keyboard[SCAN_DELETE] && (repeat || !prevkeyboard[SCAN_DELETE]))
-		count=9;
-	if (keyboard[SCAN_BKSP] && (repeat || !prevkeyboard[SCAN_BKSP]))
-		count=10;
-	if ((keyboard[SCAN_ENTER] && !prevkeyboard[SCAN_ENTER]) || (keyboard[SCAN_ESC] && !prevkeyboard[SCAN_ESC]))
-		count=11;
-	if (keyboard[SCAN_TAB] && !prevkeyboard[SCAN_TAB]) 
-		count=12;
-	
-	if (keyboard[SCAN_INSERT] && (repeat || !prevkeyboard[SCAN_INSERT]))
-		menuinputinsert^=1;
-	if (keyboard[SCAN_HOME] && (repeat || !prevkeyboard[SCAN_HOME]))
+    if ((inputflags&32)==32)
     {
-		menuinputcursorpos=0;
-		if (!keyboard[SCAN_SHIFT])
-			menuinputselectpos=menuinputcursorpos;
+      if (keyboard[SCAN_FOWARD_SLASH] && (repeat || !prevkeyboard[SCAN_FOWARD_SLASH]))
+        count='/';
+      if (keyboard[SCAN_SEMI] && (repeat || !prevkeyboard[SCAN_SEMI]))
+        count=';';
+      if (keyboard[SCAN_MINUS] && (repeat || !prevkeyboard[SCAN_MINUS]))
+        count='-';
+      if (keyboard[SCAN_EQUALS] && (repeat || !prevkeyboard[SCAN_EQUALS]))
+        count='=';
+      if (keyboard[SCAN_COMMA] && (repeat || !prevkeyboard[SCAN_COMMA]))
+        count=',';
+      if (keyboard[SCAN_BACK_SLASH] && (repeat || !prevkeyboard[SCAN_BACK_SLASH]))
+        count=92;
+      if (keyboard[SCAN_APOS] && (repeat || !prevkeyboard[SCAN_APOS]))
+        count=39;
     }
-	if (keyboard[SCAN_END] && (repeat || !prevkeyboard[SCAN_END]))
+  }
+  else
+  {
+    if ((inputflags&32)==32)
     {
-		menuinputcursorpos=strlen(menuinput);
-		if (!keyboard[SCAN_SHIFT])
-			menuinputselectpos=menuinputcursorpos;
+      if (keyboard[SCAN_0] && (repeat || !prevkeyboard[SCAN_0]))
+        count=')';
+      if (keyboard[SCAN_1] && (repeat || !prevkeyboard[SCAN_1]))
+        count='!';
+      if (keyboard[SCAN_2] && (repeat || !prevkeyboard[SCAN_2]))
+        count='@';
+      if (keyboard[SCAN_3] && (repeat || !prevkeyboard[SCAN_3]))
+        count='#';
+      if (keyboard[SCAN_4] && (repeat || !prevkeyboard[SCAN_4]))
+        count='$';
+      if (keyboard[SCAN_5] && (repeat || !prevkeyboard[SCAN_5]))
+        count='%';
+      if (keyboard[SCAN_6] && (repeat || !prevkeyboard[SCAN_6]))
+        count='^';
+      if (keyboard[SCAN_7] && (repeat || !prevkeyboard[SCAN_7]))
+        count='&';
+      if (keyboard[SCAN_8] && (repeat || !prevkeyboard[SCAN_8]))
+        count='*';
+      if (keyboard[SCAN_9] && (repeat || !prevkeyboard[SCAN_9]))
+        count='(';
+      if (keyboard[SCAN_FOWARD_SLASH] && (repeat || !prevkeyboard[SCAN_FOWARD_SLASH]))
+        count='?';
+      if (keyboard[SCAN_SEMI] && (repeat || !prevkeyboard[SCAN_SEMI]))
+        count=':';
+      if (keyboard[SCAN_MINUS] && (repeat || !prevkeyboard[SCAN_MINUS]))
+        count='_';
+      if (keyboard[SCAN_EQUALS] && (repeat || !prevkeyboard[SCAN_EQUALS]))
+        count='+';
+      if (keyboard[SCAN_PERIOD] && (repeat || !prevkeyboard[SCAN_PERIOD]))
+        count='>';
+      if (keyboard[SCAN_COMMA] && (repeat || !prevkeyboard[SCAN_COMMA]))
+        count='<';
+      if (keyboard[SCAN_BACK_SLASH] && (repeat || !prevkeyboard[SCAN_BACK_SLASH]))
+        count='|';
+      if (keyboard[SCAN_APOS] && (repeat || !prevkeyboard[SCAN_APOS]))
+        count=34;
     }
+  }
+  if (keyboard[SCAN_NUMDEL] && (repeat || !prevkeyboard[SCAN_NUMDEL]))
+    count=9;
+  if (keyboard[SCAN_DELETE] && (repeat || !prevkeyboard[SCAN_DELETE]))
+    count=9;
+  if (keyboard[SCAN_BKSP] && (repeat || !prevkeyboard[SCAN_BKSP]))
+    count=10;
+  if ((keyboard[SCAN_ENTER] && !prevkeyboard[SCAN_ENTER]) || (keyboard[SCAN_ESC] && !prevkeyboard[SCAN_ESC]))
+    count=11;
+  if (keyboard[SCAN_TAB] && !prevkeyboard[SCAN_TAB])
+    count=12;
+
+  if (keyboard[SCAN_INSERT] && (repeat || !prevkeyboard[SCAN_INSERT]))
+    menuinputinsert^=1;
+  if (keyboard[SCAN_HOME] && (repeat || !prevkeyboard[SCAN_HOME]))
+  {
+    menuinputcursorpos=0;
+    if (!keyboard[SCAN_SHIFT])
+      menuinputselectpos=menuinputcursorpos;
+  }
+  if (keyboard[SCAN_END] && (repeat || !prevkeyboard[SCAN_END]))
+  {
+    menuinputcursorpos=strlen(menuinput);
+    if (!keyboard[SCAN_SHIFT])
+      menuinputselectpos=menuinputcursorpos;
+  }
   if (keyboard[SCAN_LEFT] && (repeat || !prevkeyboard[SCAN_LEFT]))
-    {
+  {
     if (menuinputcursorpos>0)
       menuinputcursorpos--;
-		if (!keyboard[SCAN_SHIFT])
-			menuinputselectpos=menuinputcursorpos;
-    }
+    if (!keyboard[SCAN_SHIFT])
+      menuinputselectpos=menuinputcursorpos;
+  }
   if (keyboard[SCAN_RIGHT] && (repeat || !prevkeyboard[SCAN_RIGHT]))
-    {
+  {
     if (menuinputcursorpos<strlen(menuinput))
       menuinputcursorpos++;
-		if (!keyboard[SCAN_SHIFT])
-			menuinputselectpos=menuinputcursorpos;
-    }
+    if (!keyboard[SCAN_SHIFT])
+      menuinputselectpos=menuinputcursorpos;
+  }
 
   if (menuinputselectpos<0)
     menuinputselectpos=0;
@@ -870,63 +870,63 @@ int getinputletter(int repeat,int inputflags)
   if (menuinputcursorpos>strlen(menuinput))
     menuinputcursorpos=strlen(menuinput);
 
-	return(count);
-  }
+  return(count);
+}
 
 void addmenuinputchar(int charinput)
+{
+  int count;
+
+  if (menuinputcursorpos>=192)
+    return;
+
+  if (!menuinputinsert)
   {
-	int count;
-	
-	if (menuinputcursorpos>=192)
-		return;
-	
-	if (!menuinputinsert)
+    count=192;
+    while (count>menuinputcursorpos)
     {
-		count=192;
-		while (count>menuinputcursorpos)
-      {
-			menuinput[count]=menuinput[count-1];
-			count--;
-      }
+      menuinput[count]=menuinput[count-1];
+      count--;
     }
-	menuinput[menuinputcursorpos]=charinput;
-	menuinputcursorpos++;
-	menuinputselectpos=menuinputcursorpos;
   }
+  menuinput[menuinputcursorpos]=charinput;
+  menuinputcursorpos++;
+  menuinputselectpos=menuinputcursorpos;
+}
 
 int deleteselectedtext(void)
-  {
-	int count,count2;
-	int textdeleted;
+{
+  int count,count2;
+  int textdeleted;
   int cursortemp;
-	
-	count2=0;
-	textdeleted=0;
+
+  count2=0;
+  textdeleted=0;
   cursortemp=menuinputcursorpos;
-	for (count=0;count<192;count++)
-    {
+  for (count=0;count<192;count++)
+  {
     if ((count>=menuinputselectpos && count<menuinputcursorpos) ||
         (count>=menuinputcursorpos && count<menuinputselectpos))
-      {
+    {
       if (cursortemp>count)
         cursortemp=count;
-			textdeleted=1;
-      }
-		else
-      {
-      menuinputtemp[count2]=menuinput[count];
-			count2++;
-      }
+      textdeleted=1;
     }
-	menuinputtemp[count2]=0;
+    else
+    {
+      menuinputtemp[count2]=menuinput[count];
+      count2++;
+    }
+  }
+  menuinputtemp[count2]=0;
   strcpy(menuinput,menuinputtemp);
 
   menuinputcursorpos=cursortemp;
 
   if (menuinputcursorpos>strlen(menuinput))
     menuinputcursorpos=strlen(menuinput);
-	menuinputselectpos=menuinputcursorpos;
-	
-	return(textdeleted);
-  }
+  menuinputselectpos=menuinputcursorpos;
+
+  return(textdeleted);
+}
 

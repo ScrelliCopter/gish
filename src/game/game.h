@@ -28,17 +28,17 @@ void simulation(void);
 void getinputs(void);
 
 struct VIEW
-  {
+{
   float position[3];
   float orientation[3][3];
   float zoom;
   int zoomx;
   int zoomy;
-  };
+};
 extern struct VIEW view;
 
 struct GAME
-  {
+{
   int pause;
   int type;
   int framenum;
@@ -72,7 +72,7 @@ struct GAME
   int editing;
   int godmode;
   int godparticle;
-  };
+};
 extern struct GAME game;
 
 #endif

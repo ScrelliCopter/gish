@@ -34,7 +34,7 @@ int numofsounds;
 struct SOUND sound[64];
 
 void soundsimulation(float position[3],float orientation[3][3])
-  {
+{
   int count;
   int state;
   float vec[3];
@@ -56,34 +56,34 @@ void soundsimulation(float position[3],float orientation[3][3])
   alListenerfv(AL_ORIENTATION,alorientation);
 
   if (game.currentsongnum!=-1)
-    {
+  {
     if (game.exit!=0)
       scale=0.3f-(float)(100-game.exitdelay)*0.003f;
     else
       scale=0.3f;
 
     alSourcef(oggsource,AL_GAIN,scale*option.musicvolume);
-    }
+  }
   else
     alSourceStop(oggsource);
 
   count=0;
   while (count<numofsounds)
-    {
+  {
     updateogg();
 
     alGetSourcei(sound[count].alname,AL_SOURCE_STATE,&state);
     while (count<numofsounds && sound[count].delay==0 && state!=AL_PLAYING && !sound[count].looping)
-      {
+    {
       deletesound(count);
       alGetSourcei(sound[count].alname,AL_SOURCE_STATE,&state);
-      }
-    count++;
     }
+    count++;
   }
+}
 
 void playsound(int buffernum,float position[3],float velocity[3],float volume,int looping,float pitch,int objectnum,int objectsoundnum)
-  {
+{
   int count,count2;
   float vec[3];
   float intersectpoint[3];
@@ -100,14 +100,14 @@ void playsound(int buffernum,float position[3],float velocity[3],float volume,in
     return;
 
   if (game.oldschool==2)
-    {
+  {
     if (buffernum==5)
       buffernum=21;
     if (buffernum==10)
       buffernum=23;
     if (buffernum<21)
       return;
-    }
+  }
 
   if (objectnum!=-1)
   if (object[objectnum].soundnum[objectsoundnum]!=-1)
@@ -118,10 +118,10 @@ void playsound(int buffernum,float position[3],float velocity[3],float volume,in
 
   count2=0;
   for (count=0;count<numofsounds;count++)
-    {
+  {
     if (sound[count].buffernum==buffernum)
       count2++;
-    }
+  }
 
   //if (buffernum==0)
   if (buffernum!=10 && buffernum!=15)
@@ -168,10 +168,10 @@ void playsound(int buffernum,float position[3],float velocity[3],float volume,in
   object[objectnum].soundnum[objectsoundnum]=numofsounds;
 
   numofsounds++;
-  }
+}
 
 void deletesound(int soundnum)
-  {
+{
   int count,count2;
   ALuint alnametemp;
 
@@ -203,4 +203,4 @@ void deletesound(int soundnum)
   for (count=0;count<4;count++)
   if (object[sound[numofsounds].objectnum].soundnum[count]==numofsounds)
     object[sound[numofsounds].objectnum].soundnum[count]=soundnum;
-  }
+}

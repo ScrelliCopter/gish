@@ -38,7 +38,7 @@ struct OPTION option;
 struct CONTROL control[8];
 
 void optionsmenu(void)
-  {
+{
   int count,count2,count3;
 
   count=0;
@@ -48,7 +48,7 @@ void optionsmenu(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -136,77 +136,77 @@ void optionsmenu(void)
 
     count=112;
     if (control[0].joysticknum==-1)
-      {
+    {
       createmenuitem(TXT_NONE,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[0].joysticknum,0);
-      }
+    }
     if (control[0].joysticknum==0)
-      {
+    {
       createmenuitem(TXT_JOY1,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[0].joysticknum,1);
-      }
+    }
     if (control[0].joysticknum==1)
-      {
+    {
       createmenuitem(TXT_JOY2,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[0].joysticknum,2);
-      }
+    }
     if (control[0].joysticknum==2)
-      {
+    {
       createmenuitem(TXT_JOY3,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[0].joysticknum,3);
-      }
+    }
     if (control[0].joysticknum==3)
-      {
+    {
       createmenuitem(TXT_JOY4,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[0].joysticknum,-1);
-      }
+    }
     count=304;
     if (control[1].joysticknum==-1)
-      {
+    {
       createmenuitem(TXT_NONE,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[1].joysticknum,0);
-      }
+    }
     if (control[1].joysticknum==0)
-      {
+    {
       createmenuitem(TXT_JOY1,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[1].joysticknum,1);
-      }
+    }
     if (control[1].joysticknum==1)
-      {
+    {
       createmenuitem(TXT_JOY2,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[1].joysticknum,2);
-      }
+    }
     if (control[1].joysticknum==2)
-      {
+    {
       createmenuitem(TXT_JOY3,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[1].joysticknum,3);
-      }
+    }
     if (control[1].joysticknum==3)
-      {
+    {
       createmenuitem(TXT_JOY4,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[1].joysticknum,-1);
-      }
+    }
 
     if (option.sound)
-      {
+    {
       createmenuitem(TXT_SOUND_ON,0,32,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&option.sound,0);
-      }
+    }
     else
-      {
+    {
       createmenuitem(TXT_SOUND_OFF,0,32,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&option.sound,1);
-      }
+    }
     if (option.music)
-      {
+    {
       createmenuitem(TXT_MUSIC_ON,0,48,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&option.music,0);
-      }
+    }
     else
-      {
+    {
       createmenuitem(TXT_MUSIC_OFF,0,48,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&option.music,1);
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -235,12 +235,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -251,12 +251,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -267,12 +267,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -283,12 +283,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -299,12 +299,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -315,12 +315,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -331,12 +331,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -347,24 +347,24 @@ void optionsmenu(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
 
     drawtext(TXT_START_PAUSE,0,144+count*16,16,0.75f,0.75f,0.75f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -379,12 +379,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -395,12 +395,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -411,12 +411,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -427,12 +427,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -443,12 +443,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -459,12 +459,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -475,12 +475,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -491,12 +491,12 @@ void optionsmenu(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -516,11 +516,11 @@ void optionsmenu(void)
 
     for (count=0;count<8;count++)
     if (menuitem[count+1].active)
-      {
+    {
       for (count2=1;count2<323;count2++)
       if (keyboardlabel[count2][0]!=0)
       if (keyboard[count2] && !prevkeyboard[count2])
-        {
+      {
         control[0].key[count]=count2;
 
         for (count3=0;count3<8;count3++)
@@ -534,20 +534,20 @@ void optionsmenu(void)
           control[1].key[count3]=0;
 
         menuitem[count+1].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[0].key[count]=0;
         menuitem[count+1].active=0;
-        }
       }
+    }
     for (count=0;count<8;count++)
     if (menuitem[count+9].active)
-      {
+    {
       for (count2=1;count2<323;count2++)
       if (keyboardlabel[count2][0]!=0)
       if (keyboard[count2] && !prevkeyboard[count2])
-        {
+      {
         control[1].key[count]=count2;
 
         for (count3=0;count3<8;count3++)
@@ -561,20 +561,20 @@ void optionsmenu(void)
           control[1].key[count3]=0;
 
         menuitem[count+9].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[1].key[count]=0;
         menuitem[count+9].active=0;
-        }
       }
+    }
     if (control[0].joysticknum!=-1)
     for (count=0;count<9;count++)
     if (menuitem[count+17].active)
-      {
+    {
       for (count2=0;count2<joystick[control[0].joysticknum].numofbuttons;count2++)
       if (joystick[control[0].joysticknum].button[count2] && !prevjoystick[control[0].joysticknum].button[count2])
-        {
+      {
         control[0].button[count]=count2;
 
         if (control[0].joysticknum!=-1)
@@ -590,20 +590,20 @@ void optionsmenu(void)
           control[1].button[count3]=-1;
         */
         menuitem[count+17].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[0].button[count]=-1;
         menuitem[count+17].active=0;
-        }
       }
+    }
     if (control[1].joysticknum!=-1)
     for (count=0;count<8;count++)
     if (menuitem[count+26].active)
-      {
+    {
       for (count2=0;count2<joystick[control[1].joysticknum].numofbuttons;count2++)
       if (joystick[control[1].joysticknum].button[count2] && !prevjoystick[control[1].joysticknum].button[count2])
-        {
+      {
         control[1].button[count]=count2;
         /*
         if (control[0].joysticknum!=-1)
@@ -619,13 +619,13 @@ void optionsmenu(void)
           control[1].button[count3]=-1;
 
         menuitem[count+26].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[1].button[count]=-1;
         menuitem[count+26].active=0;
-        }
       }
+    }
     if (menuitem[34].active)
       videooptionsmenu();
     if (menuitem[35].active)
@@ -633,24 +633,24 @@ void optionsmenu(void)
 
     if (mouse.lmb)
     if (mouse.x>=160 && mouse.x<288)
-      {
+    {
       if (mouse.y>=32 && mouse.y<48)
         option.soundvolume=(float)(mouse.x-160)/128.0f;
       if (mouse.y>=48 && mouse.y<64)
         option.musicvolume=(float)(mouse.x-160)/128.0f;
-      }
     }
+  }
 
   resetmenuitems();
 
   joystickmenu=1;
-  }
+}
 
 
 #define PAGENUMVIDMODES 20
 
 void videooptionsmenu(void)
-  {
+{
   int ypos;
   int pagenum,numpages;
   int modecount;
@@ -673,7 +673,7 @@ void videooptionsmenu(void)
   modecount=0;
   videomodenum=-1;
   for (int i=0;i<numofsdlvideomodes;i++)
-    {
+  {
     if (windowinfo.displayid!=sdlvideomode[i].displayid)
       continue;
     if (sdlvideomode[i].displaymode.w<640)
@@ -693,7 +693,7 @@ void videooptionsmenu(void)
     videomodenum=i;
     pagenum=(modecount-1)/PAGENUMVIDMODES;
     break;
-    }
+  }
   prevvideomodenum=videomodenum;
   fullscreen=windowinfo.fullscreen;
   bitsperpixel=windowinfo.bitsperpixel;
@@ -702,16 +702,16 @@ void videooptionsmenu(void)
   int displayidx=0;
   for (int i=0;i<numofsdldisplays;++i)
     if (displayid==sdldisplay[i].id)
-      {
+    {
       displayidx=i;
       break;
-      }
+    }
 
   resetmenuitems();
   numpages=0;
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -726,7 +726,7 @@ void videooptionsmenu(void)
     ypos+=16;
     modecount=0;
     for (int i=0;i<numofsdlvideomodes;i++)
-      {
+    {
       if (sdlvideomode[i].displaymode.w<640)
         continue;
       if (sdlvideomode[i].displayid!=displayid)
@@ -757,7 +757,7 @@ void videooptionsmenu(void)
       setmenuitem(MO_SET,&videomodenum,i);
 
       ypos+=16;
-      }
+    }
     numpages=(modecount-1)/PAGENUMVIDMODES;
 
     ypos=48+PAGENUMVIDMODES*16+4;
@@ -789,16 +789,16 @@ void videooptionsmenu(void)
     ypos+=16;
 
     for (int i=0;i<numofsdldisplays;i++)
-      {
+    {
       createmenuitem(sdldisplay[i].name,340,ypos,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&displayid,sdldisplay[i].id);
       ypos+=16;
-      }
+    }
     if (prevdisplayid!=displayid)
-      {
+    {
       pagenum=0;
       prevdisplayid=displayid;
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -832,10 +832,10 @@ void videooptionsmenu(void)
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
     SDL_GL_SwapWindow(sdlwindow);
-    }
+  }
 
   if (menuitem[1].active)
-    {
+  {
     if (prevvideomodenum==videomodenum)
     if (windowinfo.fullscreen==fullscreen)
     if (windowinfo.bitsperpixel==bitsperpixel)
@@ -856,13 +856,13 @@ void videooptionsmenu(void)
     for (int i=0;i<2048;i++)
       if (texture[i].sizex!=0)
         setuptexture(i);
-    }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void drawsliderbars(void)
-  {
+{
   float vec[3];
 
   glDisable(GL_TEXTURE_2D);
@@ -870,7 +870,7 @@ void drawsliderbars(void)
   glBegin(GL_QUADS);
 
   if (option.sound)
-    {
+  {
     glColor4f(0.25f,0.25f,0.25f,1.0f);
 
     vec[0]=160.0f;
@@ -914,9 +914,9 @@ void drawsliderbars(void)
     vec[1]=40.0f+7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-    }
+  }
   if (option.music)
-    {
+  {
     glColor4f(0.25f,0.25f,0.25f,1.0f);
 
     vec[0]=160.0f;
@@ -960,15 +960,15 @@ void drawsliderbars(void)
     vec[1]=56.0f+7.0f;
     convertscreenvertex(vec,font.sizex,font.sizey);
     glVertex3fv(vec);
-    }
+  }
 
   glEnd();
 
   glEnable(GL_TEXTURE_2D);
-  }
+}
 
 void optionsmenu2(void)
-  {
+{
   int count,count2,count3;
 
   count=0;
@@ -976,7 +976,7 @@ void optionsmenu2(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -1059,56 +1059,56 @@ void optionsmenu2(void)
 
     count=112;
     if (control[2].joysticknum==-1)
-      {
+    {
       createmenuitem(TXT_NONE,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[2].joysticknum,0);
-      }
+    }
     if (control[2].joysticknum==0)
-      {
+    {
       createmenuitem(TXT_JOY1,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[2].joysticknum,1);
-      }
+    }
     if (control[2].joysticknum==1)
-      {
+    {
       createmenuitem(TXT_JOY2,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[2].joysticknum,2);
-      }
+    }
     if (control[2].joysticknum==2)
-      {
+    {
       createmenuitem(TXT_JOY3,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[2].joysticknum,3);
-      }
+    }
     if (control[2].joysticknum==3)
-      {
+    {
       createmenuitem(TXT_JOY4,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[2].joysticknum,-1);
-      }
+    }
     count=304;
     if (control[3].joysticknum==-1)
-      {
+    {
       createmenuitem(TXT_NONE,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[3].joysticknum,0);
-      }
+    }
     if (control[3].joysticknum==0)
-      {
+    {
       createmenuitem(TXT_JOY1,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[3].joysticknum,1);
-      }
+    }
     if (control[3].joysticknum==1)
-      {
+    {
       createmenuitem(TXT_JOY2,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[3].joysticknum,2);
-      }
+    }
     if (control[3].joysticknum==2)
-      {
+    {
       createmenuitem(TXT_JOY3,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[3].joysticknum,3);
-      }
+    }
     if (control[3].joysticknum==3)
-      {
+    {
       createmenuitem(TXT_JOY4,480,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&control[3].joysticknum,-1);
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -1137,12 +1137,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1153,12 +1153,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1169,12 +1169,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1185,12 +1185,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1201,12 +1201,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1217,12 +1217,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1233,12 +1233,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1249,24 +1249,24 @@ void optionsmenu2(void)
     else
       drawtext("?",320,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
     /*
     drawtext("Start//Pause",0,144+count*16,16,0.75f,0.75f,0.75f,1.0f);
     if (!menuitem[count+17].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,144+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1282,12 +1282,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1298,12 +1298,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1314,12 +1314,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1330,12 +1330,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_AXIS,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1346,12 +1346,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1362,12 +1362,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1378,12 +1378,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1394,12 +1394,12 @@ void optionsmenu2(void)
     else
       drawtext("?",320,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     if (!menuitem[count+26].active)
-      {
+    {
       if (control[count2].button[count]!=-1)
         drawtext(TXT_BUTTON" /i",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f,control[count2].button[count]+1);
       else
         drawtext(TXT_NONE,480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     else
       drawtext("?",480,336+count*16,16,1.0f,1.0f,1.0f,1.0f);
     count++;
@@ -1417,11 +1417,11 @@ void optionsmenu2(void)
 
     for (count=0;count<8;count++)
     if (menuitem[count+1].active)
-      {
+    {
       for (count2=1;count2<323;count2++)
       if (keyboardlabel[count2][0]!=0)
       if (keyboard[count2] && !prevkeyboard[count2])
-        {
+      {
         control[2].key[count]=count2;
 
         for (count3=0;count3<8;count3++)
@@ -1435,20 +1435,20 @@ void optionsmenu2(void)
           control[3].key[count3]=0;
 
         menuitem[count+1].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[2].key[count]=0;
         menuitem[count+1].active=0;
-        }
       }
+    }
     for (count=0;count<8;count++)
     if (menuitem[count+9].active)
-      {
+    {
       for (count2=1;count2<323;count2++)
       if (keyboardlabel[count2][0]!=0)
       if (keyboard[count2] && !prevkeyboard[count2])
-        {
+      {
         control[3].key[count]=count2;
 
         for (count3=0;count3<8;count3++)
@@ -1462,20 +1462,20 @@ void optionsmenu2(void)
           control[3].key[count3]=0;
 
         menuitem[count+9].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[3].key[count]=0;
         menuitem[count+9].active=0;
-        }
       }
+    }
     if (control[2].joysticknum!=-1)
     for (count=0;count<9;count++)
     if (menuitem[count+17].active)
-      {
+    {
       for (count2=0;count2<joystick[control[2].joysticknum].numofbuttons;count2++)
       if (joystick[control[2].joysticknum].button[count2] && !prevjoystick[control[2].joysticknum].button[count2])
-        {
+      {
         control[2].button[count]=count2;
 
         if (control[2].joysticknum!=-1)
@@ -1485,20 +1485,20 @@ void optionsmenu2(void)
           control[2].button[count3]=-1;
 
         menuitem[count+17].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[2].button[count]=-1;
         menuitem[count+17].active=0;
-        }
       }
+    }
     if (control[3].joysticknum!=-1)
     for (count=0;count<8;count++)
     if (menuitem[count+26].active)
-      {
+    {
       for (count2=0;count2<joystick[control[3].joysticknum].numofbuttons;count2++)
       if (joystick[control[3].joysticknum].button[count2] && !prevjoystick[control[3].joysticknum].button[count2])
-        {
+      {
         control[3].button[count]=count2;
 
         if (control[3].joysticknum!=-1)
@@ -1508,15 +1508,15 @@ void optionsmenu2(void)
           control[3].button[count3]=-1;
 
         menuitem[count+26].active=0;
-        }
+      }
       if (keyboard[SCAN_DELETE] && !prevkeyboard[SCAN_DELETE])
-        {
+      {
         control[3].button[count]=-1;
         menuitem[count+26].active=0;
-        }
       }
     }
+  }
 
   resetmenuitems();
-  }
+}
 

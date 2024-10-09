@@ -29,7 +29,7 @@ void deleteboss(int bossnum);
 
 extern int numofbosses;
 struct BOSS
-  {
+{
   int type;
   float position[3];
   float velocity[3];
@@ -41,7 +41,7 @@ struct BOSS
   int frame;
   float size[2];
   float framedelay;
-  };
+};
 extern struct BOSS boss[16];
 
 #endif

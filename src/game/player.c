@@ -48,7 +48,7 @@ int playernum;
 struct PLAYER player[16];
 
 void playermenu(void)
-  {
+{
   int count,count2,count3;
   int deleteplayer;
 
@@ -59,7 +59,7 @@ void playermenu(void)
   deleteplayer=0;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -68,7 +68,7 @@ void playermenu(void)
     setmenuitem(MO_HOTKEY,SCAN_ESC);
 
     if (playernum==-1)
-      {
+    {
       count=128;
       createmenuitem("",64,count,32,0.25f,0.25f,0.25f,1.0f);
       setmenuitem(MO_SET,&playernum,0);
@@ -98,18 +98,18 @@ void playermenu(void)
       count+=16;
       createmenuitem(TXT_DELETE_PLAYER,64,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_TOGGLE,&deleteplayer);
-      }
+    }
     else if (!deleteplayer)
-      {
+    {
       count=128+playernum*40-16;
       createmenuitem("                    ",96,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_STRINGINPUT,player[playernum].name);
       if (player[playernum].name[0]!=0)
-        {
+      {
         createmenuitem(TXT_CREATE,432,count+16,16,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_HOTKEY,SCAN_C);
-        }
       }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -123,15 +123,15 @@ void playermenu(void)
     soundsimulation(view.position,view.orientation);
 
     if (playernum!=-1)
-      {
+    {
       if (numofmenuitems>3)
-        {
+      {
         if (player[playernum].name[0]!=0)
           menuitem[2].active=1;
         else
           menuitem[1].active=1;
-        }
       }
+    }
 
     setuptextdisplay();
 
@@ -141,48 +141,48 @@ void playermenu(void)
     drawmenuitems();
 
     for (count=0;count<6;count++)
-      {
+    {
       if (count!=playernum || deleteplayer)
-        {
+      {
         if (player[count].name[0]!=0)
-          {
+        {
           count2=(player[count].levelnum-1)/7+1;
           count3=(player[count].levelnum-1)%7+1;
           if (count3==0)
             count3=1;
   
           if (!player[count].gamepassed)
-            {
+          {
             drawtext("/i-/s",64,128+count*40,16,1.0f,1.0f,1.0f,1.0f,count+1,player[count].name);
             drawtext(TXT_PLAYER_INFO,64,128+count*40+16,12,1.0f,1.0f,1.0f,1.0f,count2,count3,player[count].numoflives,player[count].totalscore,player[count].highscore);
-            }
+          }
           else
-            {
+          {
             drawtext("/i-/s",64,128+count*40,16,1.0f,1.0f,0.0f,1.0f,count+1,player[count].name);
             drawtext(TXT_PLAYER_INFO,64,128+count*40+16,12,1.0f,1.0f,0.0f,1.0f,count2,count3,player[count].numoflives,player[count].totalscore,player[count].highscore);
-            }
+          }
           if (count==playernum && deleteplayer)
-            {
+          {
             drawtext("/i-/s",64,128+count*40,16,1.0f,0.0f,0.0f,1.0f,count+1,player[count].name);
             drawtext(TXT_PLAYER_INFO,64,128+count*40+16,12,1.0f,0.0f,0.0f,1.0f,count2,count3,player[count].numoflives,player[count].totalscore,player[count].highscore);
-            }
           }
+        }
         else
           drawtext(TXT_NEW_PLAYER,64,128+count*40,16,1.0f,1.0f,1.0f,1.0f,count+1);
-        }
+      }
       else
         drawtext("/i-",64,128+count*40,16,1.0f,1.0f,1.0f,1.0f,count+1);
-      }
+    }
 
     if (playernum==-1)
       drawtext(TXT_CHOOSE_PLAYER,(320|TEXT_CENTER),64,16,1.0f,1.0f,1.0f,1.0f);
     else
-      {
+    {
       if (!deleteplayer || player[playernum].name[0]==0)
         drawtext(TXT_ENTER_NAME,(320|TEXT_CENTER),64,16,1.0f,1.0f,1.0f,1.0f);
       else
         drawtext(TXT_DELETE_Y_N,(320|TEXT_CENTER),64,16,1.0f,1.0f,1.0f,1.0f,player[playernum].name);
-      }
+    }
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
@@ -190,70 +190,70 @@ void playermenu(void)
 
     if (deleteplayer)
     if (playernum!=-1)
-      {
+    {
       if (player[playernum].name[0]==0)
         deleteplayer=0;
       else
-        {
+      {
 #ifdef GERMAN
         if (keyboard[SCAN_J])
 #else
         if (keyboard[SCAN_Y])
 #endif
-          {
+        {
           memset(&player[playernum],0,sizeof(player[playernum]));
           playernum=-1;
           deleteplayer=0;
           resetmenuitems();
-          }
+        }
         if (keyboard[SCAN_N] || keyboard[SCAN_ESC])
-          {
+        {
           playernum=-1;
           deleteplayer=0;
           resetmenuitems();
-          }
         }
       }
+    }
     if (playernum!=-1)
     if (player[playernum].name[0]!=0)
     if (menuitem[2].active)
-      {
+    {
       if (!deleteplayer)
-        {
+      {
         playerstartmenu();
   
         joymenunum=0;//playernum+1;
   
         playernum=-1;
-        }
+      }
       /*
       else
-        {
+      {
         //menuitem[2].active=0;
         //playernum=-1;
-        }
-      */
       }
+      */
     }
+  }
 
   if (playernum!=-1)
     player[playernum].name[0]=0;
 
   resetmenuitems();
-  }
+}
 
 void saveplayers(void)
-  {
+{
   int count;
   int version;
   FILE *fp;
 
   if ((fp=fopen("gish.pla","wb"))!=NULL)
-    {
+  {
     version=3;
     fwrite2(&version,4,1,fp);
     for (count=0;count<8;count++)
-      {
+    {
       fwrite2(player[count].name,1,32,fp);
       fwrite2(&player[count].levelnum,4,1,fp);
       fwrite2(&player[count].numoflives,4,1,fp);
@@ -262,24 +262,24 @@ void saveplayers(void)
       fwrite2(&player[count].gamepassed,4,1,fp);
       fwrite2(&player[count].highscore,4,1,fp);
       fwrite2(player[count].unlock,4,16,fp);
-      }
-    fclose(fp);
     }
+    fclose(fp);
   }
+}
 
 void loadplayers(void)
-  {
+{
   int count;
   int version;
   FILE *fp;
 
   if ((fp=fopen("gish.pla","rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
     if (version==2)
-      {
+    {
       for (count=0;count<8;count++)
-        {
+      {
         fread2(player[count].name,1,32,fp);
         fread2(&player[count].levelnum,4,1,fp);
         fread2(&player[count].numoflives,4,1,fp);
@@ -288,12 +288,12 @@ void loadplayers(void)
         fread2(&player[count].gamepassed,4,1,fp);
         fread2(&player[count].highscore,4,1,fp);
         fread2(player[count].unlock,4,16,fp);
-        }
       }
+    }
     if (version==3)
-      {
+    {
       for (count=0;count<8;count++)
-        {
+      {
         fread2(player[count].name,1,32,fp);
         fread2(&player[count].levelnum,4,1,fp);
         fread2(&player[count].numoflives,4,1,fp);
@@ -302,14 +302,14 @@ void loadplayers(void)
         fread2(&player[count].gamepassed,4,1,fp);
         fread2(&player[count].highscore,4,1,fp);
         fread2(player[count].unlock,4,16,fp);
-        }
       }
-    fclose(fp);
     }
+    fclose(fp);
   }
+}
 
 void playerstartmenu(void)
-  {
+{
   int count,count2,count3;
 
   if (playernum==-1)
@@ -320,7 +320,7 @@ void playerstartmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -330,7 +330,7 @@ void playerstartmenu(void)
 
     count=352;
     if (player[playernum].levelnum>0)
-      {
+    {
       createmenuitem(TXT_CONTINUE,48,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_C);
       count+=16;
@@ -349,11 +349,11 @@ void playerstartmenu(void)
 #ifndef DEMO
       /*
       if (player[playernum].unlock[0])
-        {
+      {
         createmenuitem(TXT_SINGLE_LEVEL,48,count,16,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_HOTKEY,SCAN_S);
         count+=16;
-        }
+      }
       else
       */
         createmenuitemempty();
@@ -363,9 +363,9 @@ void playerstartmenu(void)
       setmenuitem(MO_HOTKEY,SCAN_U);
       count+=16;
 #endif
-      }
+    }
     else
-      {
+    {
       createmenuitem(TXT_NEW_GAME,48,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_N);
       count+=16;
@@ -381,11 +381,11 @@ void playerstartmenu(void)
       count+=16;
       /*
       if (player[playernum].unlock[0])
-        {
+      {
         createmenuitem(TXT_SINGLE_LEVEL,48,count,16,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_HOTKEY,SCAN_S);
         count+=16;
-        }
+      }
       else
       */
         createmenuitemempty();
@@ -394,7 +394,7 @@ void playerstartmenu(void)
       setmenuitem(MO_HOTKEY,SCAN_U);
       count+=16;
 #endif
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -418,10 +418,10 @@ void playerstartmenu(void)
       count3=1;
 
     if (!player[playernum].gamepassed)
-      {
+    {
       drawtext(player[playernum].name,(320|TEXT_CENTER),304,16,1.0f,1.0f,1.0f,1.0f);
       if (player[playernum].levelnum>0)
-        {
+      {
         drawtext(TXT_PLAYER_INFO,(320|TEXT_CENTER),320,12,1.0f,1.0f,1.0f,1.0f,count2,count3,player[playernum].numoflives,player[playernum].totalscore,player[playernum].highscore);
         if (player[playernum].difficulty==0)
           drawtext(TXT_EASY,(320|TEXT_CENTER),332,12,1.0f,1.0f,1.0f,1.0f);
@@ -433,13 +433,13 @@ void playerstartmenu(void)
           drawtext(TXT_LUDICROUS,(320|TEXT_CENTER),332,12,1.0f,1.0f,1.0f,1.0f);
         if (player[playernum].difficulty==4)
           drawtext(TXT_MINI_GISH,(320|TEXT_CENTER),332,12,1.0f,1.0f,1.0f,1.0f);
-        }
       }
+    }
     else
-      {
+    {
       drawtext(player[playernum].name,(320|TEXT_CENTER),304,16,1.0f,1.0f,0.0f,1.0f);
       if (player[playernum].levelnum>0)
-        {
+      {
         drawtext(TXT_PLAYER_INFO,(320|TEXT_CENTER),320,12,1.0f,1.0f,0.0f,1.0f,count2,count3,player[playernum].numoflives,player[playernum].totalscore,player[playernum].highscore);
         if (player[playernum].difficulty==0)
           drawtext(TXT_EASY,(320|TEXT_CENTER),332,12,1.0f,1.0f,0.0f,1.0f);
@@ -451,8 +451,8 @@ void playerstartmenu(void)
           drawtext(TXT_LUDICROUS,(320|TEXT_CENTER),332,12,1.0f,1.0f,0.0f,1.0f);
         if (player[playernum].difficulty==4)
           drawtext(TXT_MINI_GISH,(320|TEXT_CENTER),332,12,1.0f,1.0f,0.0f,1.0f);
-        }
       }
+    }
     drawmenuitems();
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
@@ -460,22 +460,22 @@ void playerstartmenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
-      {
+    {
       if (player[playernum].levelnum>0)
-        {
+      {
         game.levelnum=player[playernum].levelnum;
         game.totalscore=player[playernum].totalscore;
         game.difficulty=player[playernum].difficulty;
         game.numoflives=player[playernum].numoflives;
-        }
+      }
       else
-        {
+      {
         playerdifficultymenu();
         if (game.difficulty==-1)
-          {
+        {
           game.difficulty=0;
           goto newgamebypass;
-          }
+        }
 
         player[playernum].difficulty=game.difficulty;
 
@@ -483,13 +483,13 @@ void playerstartmenu(void)
         game.totalscore=0;
         game.numoflives=5;
         if (player[playernum].difficulty==3)
-          {
+        {
           game.numoflives=0;
           game.turbomode=1;
-          }
+        }
 
         storyscreen();
-        }
+      }
 
       game.songnum=-1;
       checkmusic();
@@ -504,15 +504,15 @@ void playerstartmenu(void)
 
 #ifdef DEMO
       if (player[playernum].levelnum==6)
-        {
+      {
         player[playernum].levelnum=0;
         player[playernum].totalscore=0;
         player[playernum].numoflives=5;
         player[playernum].gamepassed=1;
-        }
+      }
 #endif
       if (player[playernum].levelnum==35)
-        {
+      {
         if (player[playernum].difficulty==1 || player[playernum].difficulty==2)
           player[playernum].unlock[0]=1;
         if (player[playernum].difficulty==2)
@@ -525,28 +525,28 @@ void playerstartmenu(void)
         player[playernum].totalscore=0;
         player[playernum].numoflives=5;
         player[playernum].gamepassed=1;
-        }
+      }
 
       //game.difficulty=0;
 
       //menuitem[0].active=1;
 
       newgamebypass:;
-      }
+    }
     if (menuitem[2].active)
-      {
+    {
       collectionmenu();
 
       //menuitem[0].active=1;
-      }
+    }
     if (menuitem[3].active)
-      {
+    {
       playerdifficultymenu();
       if (game.difficulty==-1)
-        {
+      {
         game.difficulty=0;
         goto newgamebypass2;
-        }
+      }
 
       player[playernum].difficulty=game.difficulty;
 
@@ -554,10 +554,10 @@ void playerstartmenu(void)
       game.totalscore=0;
       game.numoflives=5;
       if (player[playernum].difficulty==3)
-        {
+      {
         game.numoflives=0;
         game.turbomode=1;
-        }
+      }
 
       storyscreen();
 
@@ -574,15 +574,15 @@ void playerstartmenu(void)
 
 #ifdef DEMO
       if (player[playernum].levelnum==6)
-        {
+      {
         player[playernum].levelnum=0;
         player[playernum].totalscore=0;
         player[playernum].numoflives=5;
         player[playernum].gamepassed=1;
-        }
+      }
 #endif
       if (player[playernum].levelnum==35)
-        {
+      {
         if (player[playernum].difficulty==1 || player[playernum].difficulty==2)
           player[playernum].unlock[0]=1;
         if (player[playernum].difficulty==2)
@@ -595,16 +595,16 @@ void playerstartmenu(void)
         player[playernum].totalscore=0;
         player[playernum].numoflives=5;
         player[playernum].gamepassed=1;
-        }
+      }
 
       //game.difficulty=0;
 
       //menuitem[0].active=1;
 
       newgamebypass2:;
-      }
+    }
     if (menuitem[4].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -612,29 +612,29 @@ void playerstartmenu(void)
       game.levelnum=0;
       loadlevel("playroom.lvl");
       gameloop();
-      }
+    }
     if (menuitem[5].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
       replaymenu();
-      }
-    if (menuitem[6].active)
-      {
-      singlelevelmenu();
-      }
-    if (menuitem[7].active)
-      {
-      custommenu();
-      }
     }
-
-  resetmenuitems();
+    if (menuitem[6].active)
+    {
+      singlelevelmenu();
+    }
+    if (menuitem[7].active)
+    {
+      custommenu();
+    }
   }
 
+  resetmenuitems();
+}
+
 void playerdifficultymenu(void)
-  {
+{
   int count;
 
   resetmenuitems();
@@ -642,7 +642,7 @@ void playerdifficultymenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !menuitem[1].active && !menuitem[2].active && !menuitem[3].active && !menuitem[4].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -660,17 +660,17 @@ void playerdifficultymenu(void)
     setmenuitem(MO_HOTKEY,SCAN_H);
     count+=16;
     if (player[playernum].unlock[1])
-      {
+    {
       createmenuitem(TXT_LUDICROUS,48,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_L);
       count+=16;
       if (player[playernum].unlock[2])
-        {
+      {
         createmenuitem(TXT_MINI_GISH,48,count,16,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_HOTKEY,SCAN_M);
         count+=16;
-        }
       }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -713,13 +713,13 @@ void playerdifficultymenu(void)
       game.difficulty=3;
     if (menuitem[5].active)
       game.difficulty=4;
-    }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void collectionmenu(void)
-  {
+{
   int count;
 
   resetmenuitems();
@@ -727,7 +727,7 @@ void collectionmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -879,7 +879,7 @@ void collectionmenu(void)
 
     for (count=1;count<24;count++)
     if (menuitem[count].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -895,19 +895,19 @@ void collectionmenu(void)
         highscoremenu(count);
 
       joymenunum=count;
-      }
+    }
     if (menuitem[24].active)
-      {
+    {
       game.exit=3;
       highscoremenu(1);
-      }
     }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void singlelevelmenu(void)
-  {
+{
   int count;
 
   resetmenuitems();
@@ -915,7 +915,7 @@ void singlelevelmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -1025,7 +1025,7 @@ void singlelevelmenu(void)
 
     for (count=1;count<=34;count++)
     if (menuitem[count].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -1039,9 +1039,9 @@ void singlelevelmenu(void)
       savereplay(count+100);
 
       joymenunum=count;
-      }
     }
+  }
 
   resetmenuitems();
-  }
+}
 

@@ -31,12 +31,12 @@ float getfloat(void);
 void getstring(char *str,int size);
 
 struct PARSER
-  {
+{
   int textloc;
   int textsize;
   char text[1048576];
   char numtemp[256];
-  };
+};
 extern struct PARSER parser;
 
 #endif

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "text.h"
 
 void setupperspectiveviewport(int viewportx,int viewporty,int viewportwidth,int viewportheight,float nearplane,float farplane)
-  {
+{
   float heightwidthratio;
 
   heightwidthratio=(float)viewportheight/(float)viewportwidth;
@@ -49,10 +49,10 @@ void setupperspectiveviewport(int viewportx,int viewporty,int viewportwidth,int 
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  }
+}
 
 void setuporthoviewport(int viewportx,int viewporty,int viewportwidth,int viewportheight,float width,float height,float length)
-  {
+{
   viewporty=font.sizey-(viewporty+viewportheight);
   viewportx=viewportx*windowinfo.resolutionx/font.sizex;
   viewportwidth=viewportwidth*windowinfo.resolutionx/font.sizex;
@@ -69,16 +69,16 @@ void setuporthoviewport(int viewportx,int viewporty,int viewportwidth,int viewpo
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  }
+}
 
 void setupviewpoint(float *position,float orientation[3][3])
-  {
+{
   float m[4][4];
 
   glMatrixMode(GL_MODELVIEW);
 
   if (orientation!=NULL)
-    {
+  {
     m[0][0]=orientation[0][0];
     m[1][0]=orientation[0][1];
     m[2][0]=orientation[0][2];
@@ -96,13 +96,13 @@ void setupviewpoint(float *position,float orientation[3][3])
     m[2][3]=0;
     m[3][3]=1;
     glMultMatrixf((float *)m);
-    }
+  }
   if (position!=NULL)
     glTranslatef(-position[0],-position[1],-position[2]);
-  }
+}
 
 void setupobjectrender(float *position,float orientation[3][3])
-  {
+{
   float m[4][4];
 
   glMatrixMode(GL_MODELVIEW);
@@ -110,7 +110,7 @@ void setupobjectrender(float *position,float orientation[3][3])
   if (position!=NULL)
     glTranslatef(position[0],position[1],position[2]);
   if (orientation!=NULL)
-    {
+  {
     m[0][0]=orientation[0][0];
     m[0][1]=orientation[0][1];
     m[0][2]=orientation[0][2];
@@ -129,11 +129,11 @@ void setupobjectrender(float *position,float orientation[3][3])
     m[3][3]=1;
 
     glMultMatrixf((float *)m);
-    }
   }
+}
 
 void screenshot(void)
-  {
+{
   int count,count2;
   char filename[16]="scsht000.tga";
   int red,green,blue;
@@ -150,16 +150,16 @@ void screenshot(void)
   count=0;
 
   while ((fp=fopen(filename,"rb"))!=NULL && count<1000) 
-    {
+  {
     count++;
     filename[5]=48+count/100;
     filename[6]=48+(count/10)%10;
     filename[7]=48+count%10;
     fclose(fp);
-    }
+  }
 
   if((fp=fopen(filename,"wb"))!=NULL)
-    {
+  {
     bytetemp=0;
     fwrite(&bytetemp,1,1,fp);
     bytetemp=0;
@@ -188,19 +188,19 @@ void screenshot(void)
     fwrite(&bytetemp,1,1,fp);
 
     for (count=0;count<windowinfo.resolutiony;count++)
-      {
+    {
       for (count2=0;count2<windowinfo.resolutionx;count2++)
-        {
+      {
         red=screenshotbuffer[count*windowinfo.resolutionx+count2]&0xFF;
         green=(screenshotbuffer[count*windowinfo.resolutionx+count2]>>8)&0xFF;
         blue=(screenshotbuffer[count*windowinfo.resolutionx+count2]>>16)&0xFF;
         fputc(blue,fp); 
         fputc(green,fp); 
         fputc(red,fp); 
-        }
       }
-    fclose(fp);
     }
+    fclose(fp);
+  }
 
   free(screenshotbuffer);
-  }
+}

@@ -29,7 +29,7 @@ int numofsprites;
 struct SPRITE sprite[256];
 
 void createsprite(int points,float position[3])
-  {
+{
   sprite[numofsprites].type=1;
   sprite[numofsprites].timetolive=75;
 
@@ -41,30 +41,30 @@ void createsprite(int points,float position[3])
   sprite[numofsprites].alpha=1.0f;
   sprite[numofsprites].size=12;
   numofsprites++;
-  }
+}
 
 void spritetimetolive(void)
-  {
+{
   int count;
 
   count=0;
   while (count<numofsprites)
-    {
+  {
     if (sprite[count].timetolive<10000)
       sprite[count].timetolive--;
     while (count<numofsprites && sprite[count].timetolive<0)
-      {
+    {
       deletesprite(count);
 
       if (sprite[count].timetolive<10000)
         sprite[count].timetolive--;
-      }
-    count++;
     }
+    count++;
   }
+}
 
 void deletesprite(int spritenum)
-  {
+{
   if (spritenum<0)
     return;
   if (spritenum>=numofsprites)
@@ -76,15 +76,15 @@ void deletesprite(int spritenum)
     return;
 
   memcpy(&sprite[spritenum],&sprite[numofsprites],sizeof(sprite[0]));
-  }
+}
 
 void spritesimulation(void)
-  {
+{
   int count;
   float angle;
 
   for (count=0;count<numofsprites;count++)
-    {
+  {
     angle=(float)(sprite[count].timetolive&31)*2.0f*pi/31.0f;
     angle=sin(angle)*0.25f;
 
@@ -95,5 +95,5 @@ void spritesimulation(void)
     sprite[count].red=0.75f+angle;
     sprite[count].green=0.75f+angle;
     sprite[count].blue=0.75f+angle;
-    }
   }
+}

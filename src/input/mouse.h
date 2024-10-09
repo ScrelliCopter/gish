@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void checkmouse(void);
 
 struct MOUSE
-  {
+{
   int x;
   int y;
   int xdif;
@@ -34,7 +34,7 @@ struct MOUSE
   int rmb;
   int lmbr;
   int rmbr;
-  };
+};
 extern struct MOUSE mouse, prevmouse;
 
 #endif

@@ -38,7 +38,7 @@ extern INLINE void scalevector2(float *result,const float *vec,float scale);
 extern INLINE void scaleaddvectors2(float *result,const float *vec,const float *vec2,float scale);
 
 void resetorientation(float orientation[3][3])
-  {
+{
   orientation[0][0]=1.0f;
   orientation[0][1]=0.0f;
   orientation[0][2]=0.0f;
@@ -48,10 +48,10 @@ void resetorientation(float orientation[3][3])
   orientation[2][0]=0.0f;
   orientation[2][1]=0.0f;
   orientation[2][2]=1.0f;
-  }
+}
 
 void rotateorientation(float orientation[3][3],float *rotationvector,float rotationangle)
-  {
+{
   int count;
   float pointtemp[3],cosnormal[3],sinnormal[3];
   float axisnormal[3];
@@ -63,7 +63,7 @@ void rotateorientation(float orientation[3][3],float *rotationvector,float rotat
     return;
 
   for (count=0;count<3;count++)
-    {
+  {
     copyvector(pointtemp,orientation[count]);
 
     crossproduct(sinnormal,axisnormal,pointtemp);
@@ -85,5 +85,5 @@ void rotateorientation(float orientation[3][3],float *rotationvector,float rotat
     orientation[count][2]=axisnormal[2]*dotproductvalue+cosnormal[2]*cos(rotationangle)*vectorlengthvalue+sinnormal[2]*sin(rotationangle)*vectorlengthvalue;
 
     normalizevector(orientation[count],orientation[count]);
-    }
   }
+}

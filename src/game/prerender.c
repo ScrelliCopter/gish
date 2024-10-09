@@ -35,7 +35,7 @@ int numofobjectrenders;
 struct OBJECTRENDER objectrender[512];
 
 void setuprenderobjects(void)
-  {
+{
   int count,count2;
   float vec[3],vec2[3];
   float intersectpoint[3];
@@ -48,13 +48,13 @@ void setuprenderobjects(void)
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==8)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=8;
         objectrender[numofobjectrenders].depth=-1.0f;
         if (object[count].texturenum==58)
@@ -69,7 +69,7 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofverts=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           if (count2==0 || count2==3)
             vec[0]=object[count].position[0]-scale;
           else
@@ -89,7 +89,7 @@ void setuprenderobjects(void)
             objectrender[numofobjectrenders].texcoord[count2][1]=0.0f;
           else
             objectrender[numofobjectrenders].texcoord[count2][1]=1.0f;
-          }
+        }
         objectrender[numofobjectrenders].numoftris=2;
         objectrender[numofobjectrenders].tri[0][0]=0;
         objectrender[numofobjectrenders].tri[0][1]=1;
@@ -109,7 +109,7 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofverts=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           if (count2==0 || count2==3)
             vec[0]=object[count].position[0]-scale;
           else
@@ -129,7 +129,7 @@ void setuprenderobjects(void)
             objectrender[numofobjectrenders].texcoord[count2][1]=0.0f;
           else
             objectrender[numofobjectrenders].texcoord[count2][1]=1.0f;
-          }
+        }
         objectrender[numofobjectrenders].numoftris=2;
         objectrender[numofobjectrenders].tri[0][0]=0;
         objectrender[numofobjectrenders].tri[0][1]=1;
@@ -139,19 +139,19 @@ void setuprenderobjects(void)
         objectrender[numofobjectrenders].tri[1][2]=3;
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==10)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=2;
         objectrender[numofobjectrenders].depth=2.0f;
         objectrender[numofobjectrenders].texturenum=object[count].texturenum+256;
@@ -161,11 +161,11 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofverts=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           copyvector(objectrender[numofobjectrenders].vertex[count2],particle[object[count].particle[count2]].position);
           objectrender[numofobjectrenders].texcoord[count2][0]=object[count].texcoord[count2][0];
           objectrender[numofobjectrenders].texcoord[count2][1]=object[count].texcoord[count2][1];
-          }
+        }
         objectrender[numofobjectrenders].numoftris=2;
         objectrender[numofobjectrenders].tri[0][0]=0;
         objectrender[numofobjectrenders].tri[0][1]=1;
@@ -176,7 +176,7 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofedges=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           normal[0]=-(particle[object[count].particle[((count2+1)&3)]].position[1]-particle[object[count].particle[count2]].position[1]);
           normal[1]=(particle[object[count].particle[((count2+1)&3)]].position[0]-particle[object[count].particle[count2]].position[0]);
           normal[2]=0.0f;
@@ -197,25 +197,25 @@ void setuprenderobjects(void)
           copyvector(objectrender[numofobjectrenders].edgevertex[count2][3],vec);
 
           if (count2==0)
-            {
+          {
             normal[0]=0.0f;
             normal[1]=0.125f;
-            }
+          }
           if (count2==1)
-            {
+          {
             normal[0]=-0.125f;
             normal[1]=0.0f;
-            }
+          }
           if (count2==2)
-            {
+          {
             normal[0]=0.0f;
             normal[1]=-0.125f;
-            }
+          }
           if (count2==3)
-            {
+          {
             normal[0]=0.125f;
             normal[1]=0.0f;
-            }
+          }
 
           objectrender[numofobjectrenders].edgetexcoord[count2][0][0]=object[count].texcoord[count2][0];
           objectrender[numofobjectrenders].edgetexcoord[count2][0][1]=object[count].texcoord[count2][1];
@@ -225,22 +225,22 @@ void setuprenderobjects(void)
           objectrender[numofobjectrenders].edgetexcoord[count2][2][1]=object[count].texcoord[((count2+1)&3)][1]+normal[1];
           objectrender[numofobjectrenders].edgetexcoord[count2][3][0]=object[count].texcoord[count2][0]+normal[0];
           objectrender[numofobjectrenders].edgetexcoord[count2][3][1]=object[count].texcoord[count2][1]+normal[1];
-          }
+        }
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==1)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=1;
         objectrender[numofobjectrenders].depth=0.0f;
         objectrender[numofobjectrenders].angle=object[count].angle;
@@ -259,14 +259,14 @@ void setuprenderobjects(void)
         objectrender[numofobjectrenders].numofverts=33;
 
         for (count2=0;count2<16;count2++)
-          {
+        {
           if (!object[count].particlestick[count2])
             copyvector(objectrender[numofobjectrenders].vertex[count2*2+0],particle[object[count].particle[count2]].position);
           else
             copyvector(objectrender[numofobjectrenders].vertex[count2*2+0],object[count].particlestickposition[count2]);
-          }
+        }
         for (count2=0;count2<16;count2++)
-          {
+        {
           addvectors(vec,objectrender[numofobjectrenders].vertex[count2*2+0],objectrender[numofobjectrenders].vertex[((count2+1)&15)*2+0]);
           addvectors(vec2,objectrender[numofobjectrenders].vertex[((count2-1)&15)*2+0],objectrender[numofobjectrenders].vertex[((count2+2)&15)*2+0]);
 
@@ -277,11 +277,11 @@ void setuprenderobjects(void)
           subtractvectors(vec,vec,vec2);
 
           copyvector(objectrender[numofobjectrenders].vertex[count2*2+1],vec);
-          }
+        }
 
         /*
         for (count2=0;count2<16;count2++)
-          {
+        {
           if (!object[count].particlestick[count2])
             copyvector(objectrender[numofobjectrenders].vertex[count2*2+0],particle[object[count].particle[count2]].position);
           else
@@ -314,11 +314,11 @@ void setuprenderobjects(void)
           subtractvectors(vec,vec,vec2);
 
           copyvector(objectrender[numofobjectrenders].vertex[count2*2+1],vec);
-          }
+        }
         */
 
         for (count2=0;count2<32;count2++)
-          {
+        {
           vec[0]=objectrender[numofobjectrenders].vertex[((count2-1)&31)][1]-objectrender[numofobjectrenders].vertex[((count2+0)&31)][1];
           vec[1]=objectrender[numofobjectrenders].vertex[((count2+0)&31)][0]-objectrender[numofobjectrenders].vertex[((count2-1)&31)][0];
           vec[2]=0.0f;
@@ -331,26 +331,26 @@ void setuprenderobjects(void)
 
           objectrender[numofobjectrenders].texcoord[count2][0]=0.5f+vec[0]*0.5f;
           objectrender[numofobjectrenders].texcoord[count2][1]=0.5f+vec[1]*0.5f;
-          }
+        }
         count2=32;
         copyvector(objectrender[numofobjectrenders].vertex[count2],object[count].position);
         objectrender[numofobjectrenders].texcoord[count2][0]=0.5f;
         objectrender[numofobjectrenders].texcoord[count2][1]=0.5f;
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==2 || object[count].type==20)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=2;
         objectrender[numofobjectrenders].depth=2.0f;
         objectrender[numofobjectrenders].texturenum=object[count].texturenum+256;
@@ -362,11 +362,11 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofverts=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           copyvector(objectrender[numofobjectrenders].vertex[count2],particle[object[count].particle[count2]].position);
           objectrender[numofobjectrenders].texcoord[count2][0]=object[count].texcoord[count2][0];
           objectrender[numofobjectrenders].texcoord[count2][1]=object[count].texcoord[count2][1];
-          }
+        }
         objectrender[numofobjectrenders].numoftris=2;
         objectrender[numofobjectrenders].tri[0][0]=0;
         objectrender[numofobjectrenders].tri[0][1]=1;
@@ -377,7 +377,7 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofedges=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           normal[0]=-(particle[object[count].particle[((count2+1)&3)]].position[1]-particle[object[count].particle[count2]].position[1]);
           normal[1]=(particle[object[count].particle[((count2+1)&3)]].position[0]-particle[object[count].particle[count2]].position[0]);
           normal[2]=0.0f;
@@ -396,25 +396,25 @@ void setuprenderobjects(void)
           copyvector(objectrender[numofobjectrenders].edgevertex[count2][3],vec);
 
           if (count2==0)
-            {
+          {
             normal[0]=0.0f;
             normal[1]=0.125f;
-            }
+          }
           if (count2==1)
-            {
+          {
             normal[0]=-0.125f;
             normal[1]=0.0f;
-            }
+          }
           if (count2==2)
-            {
+          {
             normal[0]=0.0f;
             normal[1]=-0.125f;
-            }
+          }
           if (count2==3)
-            {
+          {
             normal[0]=0.125f;
             normal[1]=0.0f;
-            }
+          }
 
           objectrender[numofobjectrenders].edgetexcoord[count2][0][0]=object[count].texcoord[count2][0];
           objectrender[numofobjectrenders].edgetexcoord[count2][0][1]=object[count].texcoord[count2][1];
@@ -424,22 +424,22 @@ void setuprenderobjects(void)
           objectrender[numofobjectrenders].edgetexcoord[count2][2][1]=object[count].texcoord[((count2+1)&3)][1]+normal[1];
           objectrender[numofobjectrenders].edgetexcoord[count2][3][0]=object[count].texcoord[count2][0]+normal[0];
           objectrender[numofobjectrenders].edgetexcoord[count2][3][1]=object[count].texcoord[count2][1]+normal[1];
-          }
+        }
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==3)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=3;
         objectrender[numofobjectrenders].depth=1.0f;
         objectrender[numofobjectrenders].texturenum=object[count].texturenum+256;
@@ -451,12 +451,12 @@ void setuprenderobjects(void)
   
         objectrender[numofobjectrenders].numofverts=17;
         for (count2=0;count2<16;count2++)
-          {
+        {
           copyvector(objectrender[numofobjectrenders].vertex[count2],particle[object[count].particle[count2]].position);
           angle=(float)count2*pi/8.0f;
           objectrender[numofobjectrenders].texcoord[count2][0]=0.5f+cos(angle)*0.5f;
           objectrender[numofobjectrenders].texcoord[count2][1]=0.5f+sin(angle)*0.5f;
-          }
+        }
         count2=16;
         copyvector(objectrender[numofobjectrenders].vertex[count2],object[count].position);
         objectrender[numofobjectrenders].texcoord[count2][0]=0.5f;
@@ -464,26 +464,26 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numoftris=16;
         for (count2=0;count2<16;count2++)
-          {
+        {
           objectrender[numofobjectrenders].tri[count2][0]=count2;
           objectrender[numofobjectrenders].tri[count2][1]=((count2+1)&15);
           objectrender[numofobjectrenders].tri[count2][2]=16;
-          }
+        }
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==4)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=4;
         objectrender[numofobjectrenders].depth=1.0f;
         objectrender[numofobjectrenders].texturenum=object[count].texturenum;
@@ -493,23 +493,23 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofverts=4;
         for (count2=0;count2<4;count2++)
-          {
+        {
           subtractvectors(vec,particle[object[count].particle[count2]].position,object[count].position);
           if (object[count].beasttype==12)
-            {
+          {
             if (count2==0)
-              {
+            {
               subtractvectors(vec,particle[object[count].particle[0]].position,particle[object[count].particle[3]].position);
               addvectors(vec,particle[object[count].particle[0]].position,vec);
               subtractvectors(vec,vec,object[count].position);
-              }
+            }
             if (count2==1)
-              {
+            {
               subtractvectors(vec,particle[object[count].particle[1]].position,particle[object[count].particle[2]].position);
               addvectors(vec,particle[object[count].particle[1]].position,vec);
               subtractvectors(vec,vec,object[count].position);
-              }
             }
+          }
           scaleaddvectors(objectrender[numofobjectrenders].vertex[count2],object[count].position,vec,2.0f);
           if ((object[count].direction==0 && (count2==0 || count2==3)) || (object[count].direction==1 && (count2==1 || count2==2)))
             objectrender[numofobjectrenders].texcoord[count2][0]=0.0f;
@@ -519,7 +519,7 @@ void setuprenderobjects(void)
             objectrender[numofobjectrenders].texcoord[count2][1]=0.0f;
           else
             objectrender[numofobjectrenders].texcoord[count2][1]=1.0f;
-          }
+        }
         objectrender[numofobjectrenders].numoftris=2;
         objectrender[numofobjectrenders].tri[0][0]=0;
         objectrender[numofobjectrenders].tri[0][1]=1;
@@ -529,18 +529,18 @@ void setuprenderobjects(void)
         objectrender[numofobjectrenders].tri[1][2]=3;
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
 
   for (count=0;count<numofbosses;count++)
   if (boss[count].texturenum!=0)
-    {
+  {
     subtractvectors(vec,view.position,boss[count].position);
     if (fabs(vec[0])-4.0f<view.zoom)
     if (fabs(vec[1])-4.0f<view.zoom)
-      {
+    {
       objectrender[numofobjectrenders].type=4;
       objectrender[numofobjectrenders].depth=1.0f;
       objectrender[numofobjectrenders].texturenum=boss[count].texturenum;
@@ -550,7 +550,7 @@ void setuprenderobjects(void)
 
       objectrender[numofobjectrenders].numofverts=4;
       for (count2=0;count2<4;count2++)
-        {
+      {
         copyvector(vec,boss[count].position);
 
         //subtractvectors(vec2,object[0].position,boss[count].position);
@@ -582,7 +582,7 @@ void setuprenderobjects(void)
           objectrender[numofobjectrenders].texcoord[count2][1]=0.0f;
         else
           objectrender[numofobjectrenders].texcoord[count2][1]=1.0f;
-        }
+      }
       objectrender[numofobjectrenders].numoftris=2;
       objectrender[numofobjectrenders].tri[0][0]=0;
       objectrender[numofobjectrenders].tri[0][1]=1;
@@ -592,18 +592,18 @@ void setuprenderobjects(void)
       objectrender[numofobjectrenders].tri[1][2]=3;
 
       numofobjectrenders++;
-      }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==5 || object[count].type==6)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=5;
         objectrender[numofobjectrenders].depth=1.1f;
         objectrender[numofobjectrenders].texturenum=object[count].texturenum;
@@ -615,7 +615,7 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numofverts=9;
         for (count2=0;count2<8;count2++)
-          {
+        {
           if ((count2&1)==0)
             scale=1.0f;
           else
@@ -630,7 +630,7 @@ void setuprenderobjects(void)
           else
             objectrender[numofobjectrenders].texcoord[count2][0]=0.5f-cos(angle)*0.5f*scale;
           objectrender[numofobjectrenders].texcoord[count2][1]=0.5f+sin(angle)*0.5f*scale;
-          }
+        }
         count2=8;
         copyvector(objectrender[numofobjectrenders].vertex[count2],object[count].position);
         objectrender[numofobjectrenders].texcoord[count2][0]=0.5f;
@@ -638,26 +638,26 @@ void setuprenderobjects(void)
 
         objectrender[numofobjectrenders].numoftris=8;
         for (count2=0;count2<8;count2++)
-          {
+        {
           objectrender[numofobjectrenders].tri[count2][0]=count2;
           objectrender[numofobjectrenders].tri[count2][1]=((count2+1)&7);
           objectrender[numofobjectrenders].tri[count2][2]=8;
-          }
+        }
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].texturenum!=0)
-    {
+  {
     if (object[count].type==9)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       if (fabs(vec[0])-object[count].radius<view.zoom)
       if (fabs(vec[1])-object[count].radius<view.zoom)
-        {
+      {
         objectrender[numofobjectrenders].type=9;
         objectrender[numofobjectrenders].depth=2.0f;
         objectrender[numofobjectrenders].texturenum=object[count].texturenum+256;
@@ -697,13 +697,13 @@ void setuprenderobjects(void)
         objectrender[numofobjectrenders].tri[3][2]=5;
 
         numofobjectrenders++;
-        }
       }
     }
+  }
 
   for (count=0;count<numofropes;count++)
   if (rope[count].texturenum!=0)
-    {
+  {
     scale=1.0f;
     if (rope[count].type>=5 && rope[count].type<10)
       scale=bond[rope[count].bondnum].length+1.0f;
@@ -711,7 +711,7 @@ void setuprenderobjects(void)
     subtractvectors(vec,view.position,particle[rope[count].part1].position);
     if (fabs(vec[0])-scale<view.zoom)
     if (fabs(vec[1])-scale<view.zoom)
-      {
+    {
       objectrender[numofobjectrenders].type=32;
       objectrender[numofobjectrenders].depth=3.0f+(float)count/1000.0f;
       objectrender[numofobjectrenders].objectnum=count;
@@ -757,12 +757,12 @@ void setuprenderobjects(void)
       objectrender[numofobjectrenders].tri[1][2]=3;
 
       numofobjectrenders++;
-      }
     }
   }
+}
 
 int setuprenderobjectlight(int objectnum)
-  {
+{
   int lightcount;
   int lightflags;
   float vec[3];
@@ -770,18 +770,18 @@ int setuprenderobjectlight(int objectnum)
   lightflags=0;
 
   for (lightcount=0;lightcount<frame.numoflights;lightcount++)
-    {
+  {
     subtractvectors(vec,frame.light[lightcount].position,object[objectnum].position);
     if (fabs(vec[0])-object[objectnum].radius<frame.light[lightcount].intensity*0.5f)
     if (fabs(vec[1])-object[objectnum].radius<frame.light[lightcount].intensity*0.5f)
       lightflags|=(1<<lightcount);
-    }
-
-  return(lightflags);
   }
 
+  return(lightflags);
+}
+
 int setuprenderropelight(int ropenum,float radius)
-  {
+{
   int lightcount;
   int lightflags;
   float vec[3];
@@ -789,13 +789,13 @@ int setuprenderropelight(int ropenum,float radius)
   lightflags=0;
 
   for (lightcount=0;lightcount<frame.numoflights;lightcount++)
-    {
+  {
     subtractvectors(vec,frame.light[lightcount].position,particle[rope[ropenum].part1].position);
     if (fabs(vec[0])-radius<frame.light[lightcount].intensity*0.5f)
     if (fabs(vec[1])-radius<frame.light[lightcount].intensity*0.5f)
       lightflags|=(1<<lightcount);
-    }
+  }
 
   return(lightflags);
-  }
+}
 

@@ -35,12 +35,12 @@ extern unsigned char textstring2[1024];
 extern unsigned char textstring3[1024];
 
 struct FONT
-  {
+{
   int sizex;
   int sizey;
   int texturenum;
   int cursornum;
-  };
+};
 extern struct FONT font;
 
 #endif

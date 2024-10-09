@@ -31,7 +31,7 @@ void optionreadstring(char *ptr,char *str,int size);
 void optionwritestring(char *ptr,char *str,int size);
 
 struct CONFIG
-  {
+{
   int displayid;
   int resolutionx;
   int resolutiony;
@@ -44,7 +44,7 @@ struct CONFIG
   int music;
   int joystick;
   int turbomode;
-  };
+};
 extern struct CONFIG config;
 
 #endif

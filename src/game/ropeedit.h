@@ -26,18 +26,18 @@ void editlevelrope(void);
 void renderropeedit(void);
 
 struct ROPEEDIT
-  {
+{
   int numofpoints;
   struct
-    {
+  {
     float position[3];
     int objectnum;
     int particlenum;
-    } point[8192];
+  } point[8192];
   int pointnum;
   int pointhighlight;
   int texturenum;
-  };
+};
 extern struct ROPEEDIT ropeedit;
 
 #endif

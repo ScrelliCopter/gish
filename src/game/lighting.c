@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "physics/particle.h"
 
 void setuplightingtextures(void)
-  {
+{
   int count,count2;
   int texturenum;
   int red,green,blue,alpha;
@@ -61,7 +61,7 @@ void setuplightingtextures(void)
 
   for (count=0;count<128;count++)
   for (count2=0;count2<128;count2++)
-    {
+  {
     vec[0]=((float)count2-63.5f)/64.0f;
     vec[1]=((float)count-63.5f)/64.0f;
     vec[2]=sqrt(1.0f-(vec[0]*vec[0]+vec[1]*vec[1]));
@@ -79,7 +79,7 @@ void setuplightingtextures(void)
 #ifdef THINKSTUPID
     texture[texturenum].rgba[0][count*128+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
 #endif
-    }
+  }
 
   setuptexture(texturenum);
 
@@ -119,7 +119,7 @@ void setuplightingtextures(void)
 
   for (count=0;count<128;count++)
   for (count2=0;count2<128;count2++)
-    {
+  {
     vec[0]=((float)count2-63.5f)/64.0f;
     vec[1]=((float)count-63.5f)/64.0f;
     vec[2]=1.0f-sqrt(vec[0]*vec[0]+vec[1]*vec[1]);
@@ -140,7 +140,7 @@ void setuplightingtextures(void)
 #ifdef THINKSTUPID
     texture[texturenum].rgba[0][count*128+count2]=(red<<24)+(green<<16)+(blue<<8)+alpha;
 #endif
-    }
+  }
 
   setuptexture(texturenum);
 
@@ -197,10 +197,10 @@ void setuplightingtextures(void)
   texture[texturenum].rgba[0]=(unsigned int *) malloc(texture[texturenum].sizex*texture[texturenum].sizey*4);
 
   setuptexture(texturenum);
-  }
+}
 
 void setupframelighting(void)
-  {
+{
   int count,count2;
   float vec[3];
 
@@ -208,34 +208,34 @@ void setupframelighting(void)
   for (count=0;count<numofobjects;count++)
   if (frame.numoflights<8)
   if (object[count].lighton)
-    {
+  {
     if (object[count].lighttype>=1 && object[count].lighttype<=3)
-      {
+    {
       subtractvectors(vec,view.position,object[count].position);
       vec[2]=0.0f;
       if (vectorlength(vec)<view.zoom+2.0f+object[count].lightintensity*0.5f)
-        {
+      {
         copyvector(frame.light[frame.numoflights].position,object[count].position);
         /*
         if (object[count].lighttype==3)
-          {
+        {
           frame.light[frame.numoflights].position[0]+=((float)(rand()&255)/512.0f-0.25f);
           frame.light[frame.numoflights].position[1]+=((float)(rand()&255)/512.0f-0.25f);
-          }
+        }
         */
         copyvector(frame.light[frame.numoflights].color,object[count].lightcolor);
         frame.light[frame.numoflights].intensity=object[count].lightintensity;
         frame.numoflights++;
-        }
       }
     }
+  }
 
   //if (keyboard[SCAN_L])
   //  frame.numoflights=0;
-  }
+}
 
 void rendershadows(void)
-  {
+{
   int count,count2,count3;
   int lightcount;
   int lightrange;
@@ -249,7 +249,7 @@ void rendershadows(void)
   glEnable(GL_STENCIL_TEST);
 
   for (lightcount=0;lightcount<frame.numoflights;lightcount++)
-    {
+  {
     lightrange=frame.light[lightcount].intensity*0.5f;
 
     glStencilMask((1<<lightcount));
@@ -260,16 +260,16 @@ void rendershadows(void)
     if (count>=0 && count<256)
     for (count2=view.position[0]-(view.zoomx+lightrange);count2<=view.position[0]+(view.zoomx+lightrange);count2++)
     if (count2>=0 && count2<256)
-      {
+    {
       blocknum=level.grid[count][count2];
       if (level.gridmod[count][count2]!=0)
         blocknum=0;
   
       if (blocknum!=0)
-        {
+      {
         for (count3=0;count3<block[blocknum].numoflines;count3++)
         if (((level.gridflags[count][count2]>>count3)&1)==0)
-          {
+        {
           normal[0]=-(block[blocknum].line[count3][3]-block[blocknum].line[count3][1]);
           normal[1]=(block[blocknum].line[count3][2]-block[blocknum].line[count3][0]);
           normal[2]=0.0f;
@@ -280,7 +280,7 @@ void rendershadows(void)
           vec[2]=0.0f;
           subtractvectors(vec2,frame.light[lightcount].position,vec);
           if (dotproduct(vec2,normal)<0.0f)
-            {
+          {
             vec[0]=(float)count2+block[blocknum].line[count3][2];
             vec[1]=(float)count+block[blocknum].line[count3][3];
             vec[2]=0.0f;
@@ -314,18 +314,18 @@ void rendershadows(void)
             glVertex3fv(vec);
     
             glEnd();
-            }
           }
         }
       }
+    }
 
     for (count=0;count<numofobjects;count++)
     if (object[count].timetolive>=50)
-      {
+    {
       if (object[count].type==2)
-        {
+      {
         for (count2=0;count2<4;count2++)
-          {
+        {
           normal[0]=-(particle[object[count].particle[((count2+1)&3)]].position[1]-particle[object[count].particle[count2]].position[1]);
           normal[1]=(particle[object[count].particle[((count2+1)&3)]].position[0]-particle[object[count].particle[count2]].position[0]);
           normal[2]=0.0f;
@@ -333,7 +333,7 @@ void rendershadows(void)
 
           subtractvectors(vec2,frame.light[lightcount].position,particle[object[count].particle[count2]].position);
           if (dotproduct(vec2,normal)<0.0f)
-            {
+          {
             subtractvectors(vec3,frame.light[lightcount].position,particle[object[count].particle[((count2+1)&3)]].position);
 
             normalizevector(vec2,vec2);
@@ -354,19 +354,19 @@ void rendershadows(void)
             glVertex3fv(vec);
 
             glEnd();
-            }
           }
         }
       }
     }
+  }
 
   glDisable(GL_STENCIL_TEST);
   glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_FALSE);
   glEnable(GL_TEXTURE_2D);
-  }
+}
 
 void renderobjectspecular(int objectnum)
-  {
+{
   int count,count2;
   int lightcount;
   float vec[3],vec2[3],vec3[3];
@@ -379,7 +379,7 @@ void renderobjectspecular(int objectnum)
     return;
 
   for (lightcount=0;lightcount<frame.numoflights;lightcount++)
-    {
+  {
     glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_COMBINE);
     glTexEnvi(GL_TEXTURE_ENV,GL_COMBINE_RGB,GL_DOT3_RGBA);
     glTexEnvi(GL_TEXTURE_ENV,GL_SOURCE0_RGB,GL_TEXTURE);
@@ -417,7 +417,7 @@ void renderobjectspecular(int objectnum)
     glTexSubImage2D(GL_TEXTURE_2D,0,0,0,1,1,GL_RGBA,GL_UNSIGNED_BYTE,tempcolor);
 
     for (count=0;count<32;count++)
-      {
+    {
       glBegin(GL_TRIANGLES);
 
       subtractvectors(vec,frame.light[lightcount].position,objectrender[objectnum].vertex[count]);
@@ -480,7 +480,7 @@ void renderobjectspecular(int objectnum)
       glVertex3fv(objectrender[objectnum].vertex[32]);
   
       glEnd();
-      }
+    }
     /*
     glAlphaFunc(GL_GREATER,1.0f-1.0f/32.0f-1.0f/32.0f);
 
@@ -496,7 +496,7 @@ void renderobjectspecular(int objectnum)
     glTexSubImage2D(GL_TEXTURE_2D,0,0,0,1,1,GL_RGBA,GL_UNSIGNED_BYTE,tempcolor);
 
     for (count=0;count<32;count++)
-      {
+    {
       glBegin(GL_TRIANGLES);
 
       subtractvectors(vec,frame.light[lightcount].position,objectrender[objectnum].vertex[count]);
@@ -559,7 +559,7 @@ void renderobjectspecular(int objectnum)
       glVertex3fv(objectrender[objectnum].vertex[32]);
   
       glEnd();
-      }
+    }
     */
 
     glDisable(GL_TEXTURE_2D);
@@ -572,6 +572,6 @@ void renderobjectspecular(int objectnum)
     glDisable(GL_STENCIL_TEST);
 
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    }
   }
+}
 

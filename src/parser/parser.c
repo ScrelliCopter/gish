@@ -27,36 +27,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct PARSER parser;
 
 void loadtextfile(char *filename)
-  {
+{
   int temp;
   FILE *fp;
 
   parser.textsize=0;
 
   if ((fp=fopen(filename,"rb"))!=NULL)
-    {
+  {
     temp=fgetc(fp);
     while (temp!=EOF)
-      {
+    {
       parser.text[parser.textsize]=temp;
       parser.textsize++;
       temp=fgetc(fp);
-      }
+    }
     parser.text[parser.textsize]=0;
 
     fclose(fp);
-    }
+  }
 
   parser.textloc=0;
-  }
+}
 
 void resetparser(void)
-  {
+{
   parser.textloc=0;
-  }
+}
 
 int findstring(char *str)
-  {
+{
   while (parser.textloc<parser.textsize && !checkstring(str))
     parser.textloc++;
 
@@ -65,10 +65,10 @@ int findstring(char *str)
   if (parser.textloc<parser.textsize)
     return(1);
   return(0);
-  }
+}
 
 int checkstring(char *str)
-  {
+{
   int count;
 
   count=0;
@@ -78,10 +78,10 @@ int checkstring(char *str)
   if (str[count]==0)
     return(1);
   return(0);
-  }
+}
 
 int getint(void)
-  {
+{
   int count;
   int temp;
 
@@ -90,19 +90,19 @@ int getint(void)
 
   count=0;
   while (parser.textloc<parser.textsize && count<255 && ((parser.text[parser.textloc]>=48 && parser.text[parser.textloc]<=57) || parser.text[parser.textloc]=='-'))
-    {
+  {
     parser.numtemp[count]=parser.text[parser.textloc];
     parser.textloc++;
     count++;
-    }
+  }
   parser.numtemp[count]=0;
   sscanf(parser.numtemp,"%d",&temp);
 
   return(temp);
-  }
+}
 
 float getfloat(void)
-  {
+{
   int count;
   float temp;
 
@@ -111,28 +111,28 @@ float getfloat(void)
 
   count=0;
   while (parser.textloc<parser.textsize && count<255 && ((parser.text[parser.textloc]>=48 && parser.text[parser.textloc]<=57) || parser.text[parser.textloc]=='-' || parser.text[parser.textloc]=='.'))
-    {
+  {
     parser.numtemp[count]=parser.text[parser.textloc];
     parser.textloc++;
     count++;
-    }
+  }
   parser.numtemp[count]=0;
   sscanf(parser.numtemp,"%f",&temp);
 
   return(temp);
-  }
+}
 
 void getstring(char *str,int size)
-  {
+{
   int count;
 
   count=0;
   while (parser.textloc<parser.textsize && count<size-1 && parser.text[parser.textloc]!=13 && parser.text[parser.textloc]!=10)
-    {
+  {
     str[count]=parser.text[parser.textloc];
     parser.textloc++;
     count++;
-    }
-  str[count]=0;
   }
+  str[count]=0;
+}
 

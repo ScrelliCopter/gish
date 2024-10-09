@@ -29,7 +29,7 @@ SDL_Joystick *joy[16];
 struct JOYSTICK joystick[16], prevjoystick[16];
 
 void checkjoystick(void)
-  {
+{
   int count,count2;
 
   if (!config.joystick)
@@ -41,7 +41,7 @@ void checkjoystick(void)
   SDL_UpdateJoysticks();
   for (count=0;count<numofjoysticks;count++)
     if (joy[count])
-      {
+    {
       joystick[count].x=SDL_GetJoystickAxis(joy[count],0);
       joystick[count].y=SDL_GetJoystickAxis(joy[count],1);
       for (count2=0;count2<joystick[count].numofbuttons;count2++)
@@ -59,7 +59,7 @@ void checkjoystick(void)
         joystick[count].axis[1]=-1.0f;
 
       if (joystick[count].numofhats>0)
-        {
+      {
         joystick[count].hat[0]=SDL_GetJoystickHat(joy[count],0);
         if (joystick[count].hat[0]==SDL_HAT_UP || joystick[count].hat[0]==SDL_HAT_RIGHTUP || joystick[count].hat[0]==SDL_HAT_LEFTUP)
           joystick[count].axis[1]=1.0f;
@@ -69,6 +69,6 @@ void checkjoystick(void)
           joystick[count].axis[0]=-1.0f;
         if (joystick[count].hat[0]==SDL_HAT_RIGHT || joystick[count].hat[0]==SDL_HAT_RIGHTUP || joystick[count].hat[0]==SDL_HAT_RIGHTDOWN)
           joystick[count].axis[0]=1.0f;
-        }
       }
-  }
+    }
+}

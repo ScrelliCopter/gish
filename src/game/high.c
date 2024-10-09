@@ -42,13 +42,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 struct
-  {
+{
   char name[32];
   int time;
-  } highscore[32][16];
+} highscore[32][16];
 
 void highscoremenu(int levelnum)
-  {
+{
   int count,count2;
   int replaysaved;
   float bright;
@@ -58,28 +58,28 @@ void highscoremenu(int levelnum)
   count2=-1;
 
   if (game.exit==4)
-    {
+  {
     count2=10;
 
     while (count2>0 && game.time>highscore[levelnum][count2-1].time)
       count2--;
 
     if (count2!=10)
-      {
+    {
       for (count=10;count>=count2;count--)
-        {
+      {
         highscore[levelnum][count+1].time=highscore[levelnum][count].time;
         memcpy(highscore[levelnum][count+1].name,highscore[levelnum][count].name,32);
-        }
+      }
       highscore[levelnum][count2].time=game.time;
       memcpy(highscore[levelnum][count2].name,player[playernum].name,32);
-      }
     }
+  }
   
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -92,7 +92,7 @@ void highscoremenu(int levelnum)
       createmenuitem(TXT_SAVEREPLAY,96,356,16,1.0f,1.0f,1.0f,1.0f);
 
     if (game.exit!=4)
-      {
+    {
       count=320;
       createmenuitem(TXT_LEVEL" 1",64,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&levelnum,1);
@@ -167,7 +167,7 @@ void highscoremenu(int levelnum)
       createmenuitem(TXT_LEVEL" 23",416,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_SET,&levelnum,23);
       count+=16;
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -190,7 +190,7 @@ void highscoremenu(int levelnum)
     drawtext(TXT_NAME,96+64,80,16,1.0f,1.0f,1.0f,1.0f);
     drawtext(TXT_TIME,96+320,80,16,1.0f,1.0f,1.0f,1.0f);
     for (count=0;count<10;count++)
-      {
+    {
       if (count==count2 || count2==-1)
         bright=1.0f;
       else
@@ -202,15 +202,15 @@ void highscoremenu(int levelnum)
         drawtext("/i:/i./i",96+320,112+count*16,16,bright,bright,bright,1.0f,(highscore[levelnum][count].time/3000),((highscore[levelnum][count].time/50)%60),((highscore[levelnum][count].time/5)%10));
       else
         drawtext("/i:0/i./i",96+320,112+count*16,16,bright,bright,bright,1.0f,(highscore[levelnum][count].time/3000),((highscore[levelnum][count].time/50)%60),((highscore[levelnum][count].time/5)%10));
-      }
+    }
     if (game.exit==4)
-      {
+    {
       drawtext(player[playernum].name,96+64,292,16,1.0f,1.0f,1.0f,1.0f);
       if (((game.time/50)%60)>=10)
         drawtext("/i:/i./i",96+320,292,16,1.0f,1.0f,1.0f,1.0f,(game.time/3000),((game.time/50)%60),((game.time/5)%10));
       else
         drawtext("/i:0/i./i",96+320,292,16,1.0f,1.0f,1.0f,1.0f,(game.time/3000),((game.time/50)%60),((game.time/5)%10));
-      }
+    }
     if (game.exit==4)
     if (replaysaved)
       createmenuitem(TXT_REPLAYSAVED,96,356,16,1.0f,1.0f,1.0f,1.0f);
@@ -223,62 +223,62 @@ void highscoremenu(int levelnum)
 
     if (game.exit==4)
     if (menuitem[1].active)
-      {
+    {
       savereplay(levelnum);
       replaysaved=1;
       menuitem[1].active=0;
-      }
     }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void savescores(void)
-  {
+{
   int count,count2;
   int version;
   FILE *fp;
 
   if ((fp=fopen("gish.his","wb"))!=NULL)
-    {
+  {
     version=2;
     fwrite2(&version,4,1,fp);
     for (count=0;count<32;count++)
     for (count2=0;count2<16;count2++)
-      {
+    {
       fwrite2(&highscore[count][count2].time,4,1,fp);
       fwrite2(highscore[count][count2].name,1,32,fp);
-      }
-    fclose(fp);
     }
+    fclose(fp);
   }
+}
 
 void loadscores(void)
-  {
+{
   int count,count2;
   int version;
   FILE *fp;
 
   for (count=0;count<32;count++)
   for (count2=0;count2<16;count2++)
-    {
+  {
     highscore[count][count2].time=0;
     strcpy(highscore[count][count2].name,"Empty");
-    }
+  }
 
   if ((fp=fopen("gish.his","rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
     if (version==2)
-      {
+    {
       for (count=0;count<32;count++)
       for (count2=0;count2<16;count2++)
-        {
+      {
         fread2(&highscore[count][count2].time,4,1,fp);
         fread2(highscore[count][count2].name,1,32,fp);
-        }
       }
-    fclose(fp);
     }
+    fclose(fp);
   }
+}
 

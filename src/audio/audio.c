@@ -45,7 +45,7 @@ ALuint oggsource;
 ALuint oggbuffer[2];
 
 void setupaudio(void)
-  {
+{
   int count;
   ALsizei size,freq;
   ALenum format;
@@ -55,14 +55,14 @@ void setupaudio(void)
 
   aldevice=alcOpenDevice(NULL);
   if (aldevice!=NULL)
-    {
+  {
     alcontext=alcCreateContext(aldevice,NULL);
     if (alcontext!=NULL)
-      {
+    {
       alcMakeContextCurrent(alcontext);
       soundenabled=1;
-      }
     }
+  }
 
   if (!soundenabled)
     return;
@@ -117,10 +117,10 @@ void setupaudio(void)
     alGenSources(1,&sound[count].alname);
 
   //alDistanceModel(AL_INVERSE_DISTANCE_CLAMPED);
-  }
+}
 
 int updateogg(void)
-  {
+{
   int processed;
   int buffernum;
   int active;
@@ -135,7 +135,7 @@ int updateogg(void)
   alGetSourcei(oggsource,AL_BUFFERS_PROCESSED,&processed);
 
   while (processed>0)
-    {
+  {
     alSourceUnqueueBuffers(oggsource,1,&buffernum);
 
     active=streamogg(buffernum);
@@ -144,24 +144,24 @@ int updateogg(void)
       alSourceQueueBuffers(oggsource,1,&buffernum);
 
     processed--;
-    }
+  }
   if (!active)
-    {
+  {
     game.songnum=-1;
     /*
     if (level.gametype<10)
-      {
+    {
       game.songnum++;
       if (game.songnum>3)
         game.songnum=0;
-      }
-    */
     }
-  return(active);
+    */
   }
+  return(active);
+}
 
 int streamogg(int buffernum)
-  {
+{
   int size;
   int section;
   int result;
@@ -170,14 +170,14 @@ int streamogg(int buffernum)
 
   size=0;
   while (size<OGGBUFFERSIZE)
-    {
+  {
     result=ov_read(&oggstream[0],oggdata+size,OGGBUFFERSIZE-size,0,2,1,&section);
 
     if (result>0)
       size+=result;
     else
       goto streamoggbypass;
-    }
+  }
   streamoggbypass:;
 
   if (size==0)
@@ -185,20 +185,20 @@ int streamogg(int buffernum)
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
   for (count=0;count<size/2;count++)
-    {
+  {
     temp=oggdata[count*2];
     oggdata[count*2]=oggdata[count*2+1];
     oggdata[count*2+1]=temp;
-    }
+  }
 #endif
 
   alBufferData(buffernum,oggformat,oggdata,size,vorbisinfo->rate);
 
   return(1);
-  }
+}
 
 void shutdownaudio(void)
-  {
+{
   alcontext=alcGetCurrentContext();
   aldevice=alcGetContextsDevice(alcontext);
   alcMakeContextCurrent(NULL);
@@ -206,10 +206,10 @@ void shutdownaudio(void)
   alcCloseDevice(aldevice);
 
   //ov_clear(&oggstream[0]);
-  }
+}
 
 void loadwav(int buffernum,char *filename)
-  {
+{
   int count;
   SDL_AudioSpec wavspec;
   unsigned int wavlength;
@@ -218,9 +218,9 @@ void loadwav(int buffernum,char *filename)
   ALenum format;
 
   if (SDL_LoadWAV(filename,&wavspec,&wavbuffer,&wavlength))
-    {
+  {
     if (wavspec.channels==1)
-      {
+    {
       if (wavspec.format==SDL_AUDIO_U8 || wavspec.format==SDL_AUDIO_S8)
         format=AL_FORMAT_MONO8;
       else
@@ -228,20 +228,20 @@ void loadwav(int buffernum,char *filename)
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
       if (format==AL_FORMAT_MONO16)
-        {
+      {
         for (count=0;count<wavlength/2;count++)
-          {
+        {
           temp=wavbuffer[count*2+0];
           wavbuffer[count*2+0]=wavbuffer[count*2+1];
           wavbuffer[count*2+1]=temp;
-          }
         }
+      }
 #endif
 
       alBufferData(soundbuffer[buffernum],format,wavbuffer,wavlength,wavspec.freq);
       bufferloaded[buffernum]=1;
-      }
-    SDL_free(wavbuffer);
     }
+    SDL_free(wavbuffer);
   }
+}
 

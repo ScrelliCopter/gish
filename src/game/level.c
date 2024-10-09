@@ -48,7 +48,7 @@ float levelfriction;
 struct LEVEL level;
 
 int lineintersectlevel(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint)
-  {
+{
   int count,count2,count3;
   int blocknum;
   int min[2],max[2];
@@ -58,17 +58,17 @@ int lineintersectlevel(float *intersectpoint,float *normal,float *scale,float *s
   float scaletemp;
 
   for (count=0;count<2;count++)
-    {
+  {
     if (startpoint[count]<endpoint[count])
-      {
+    {
       min[count]=startpoint[count];
       max[count]=endpoint[count];
-      }
+    }
     else
-      {
+    {
       min[count]=endpoint[count];
       max[count]=startpoint[count];
-      }
+    }
     if (min[count]<0)
       min[count]=0;
     if (max[count]<0)
@@ -77,20 +77,20 @@ int lineintersectlevel(float *intersectpoint,float *normal,float *scale,float *s
       min[count]=255;
     if (max[count]>255)
       max[count]=255;
-    }
+  }
 
   *scale=1.0f;
 
   for (count=min[1];count<=max[1];count++)
   for (count2=min[0];count2<=max[0];count2++)
-    {
+  {
     blocknum=level.grid[count][count2];
     if (level.gridmod[count][count2]!=0)
       blocknum=0;
 
     for (count3=0;count3<block[blocknum].numoflines;count3++)
     if (((level.gridflags[count][count2]>>count3)&1)==0)
-      {
+    {
       vec[0]=(float)count2+block[blocknum].line[count3][0];
       vec[1]=(float)count+block[blocknum].line[count3][1];
       vec[2]=0.0f;
@@ -99,7 +99,7 @@ int lineintersectlevel(float *intersectpoint,float *normal,float *scale,float *s
       vec2[2]=0.0f;
       if (lineintersectline2(intersectpointtemp,normaltemp,&scaletemp,startpoint,endpoint,vec,vec2))
       if (scaletemp<*scale)
-        {
+      {
         collision.blocknum=blocknum;
         collision.blockx=count2;
         collision.blocky=count;
@@ -111,28 +111,28 @@ int lineintersectlevel(float *intersectpoint,float *normal,float *scale,float *s
         subtractvectors(vec3,endpoint,vec);
         subtractvectors(vec4,vec2,vec);
         if (dotproduct(vec3,vec4)>0.0f)
-          {
+        {
           subtractvectors(vec3,endpoint,vec2);
           subtractvectors(vec4,vec,vec2);
           if (dotproduct(vec3,vec4)>0.0f)
-            {
+          {
             copyvector(intersectpoint,intersectpointtemp);
             copyvector(normal,normaltemp);
             *scale=scaletemp;
-            }
           }
-        */
         }
+        */
       }
     }
+  }
   if (*scale<1.0f)
     return(1);
 
   return(0);
-  }
+}
 
 void savelevel(char *filename)
-  {
+{
   int count,count2,count3;
   int blocknum;
   int changeddir;
@@ -144,7 +144,7 @@ void savelevel(char *filename)
 
   for (count=0;count<256;count++)
   for (count2=0;count2<256;count2++)
-    {
+  {
     blocknum=level.backgrid[count][count2];
     textureused[blocknum]=1;
     if (block[blocknum].animation!=0)
@@ -162,7 +162,7 @@ void savelevel(char *filename)
     if (block[blocknum].animation!=0)
       for (count3=1;count3<=block[blocknum].animation;count3++)
         textureused[blocknum+count3]=1;
-    }
+  }
 
   /*
   for (count=0;count<256;count++)
@@ -173,7 +173,7 @@ void savelevel(char *filename)
   changeddir=chdir("level");
 
   if ((fp=fopen(filename,"wb"))!=NULL)
-    {
+  {
     version=10;
 
     fwrite2(&version,4,1,fp);
@@ -193,7 +193,7 @@ void savelevel(char *filename)
     fwrite2(level.ambient,4,12,fp);
     fwrite2(&level.numofobjects,4,1,fp);
     for (count=0;count<level.numofobjects;count++)
-      {
+    {
       fwrite2(&level.object[count].type,4,1,fp);
       fwrite2(&level.object[count].texturenum,4,1,fp);
       fwrite2(&level.object[count].link,4,1,fp);
@@ -206,36 +206,36 @@ void savelevel(char *filename)
       fwrite2(level.object[count].lightcolor,4,3,fp);
       fwrite2(&level.object[count].lightintensity,4,1,fp);
       fwrite2(&level.object[count].ai,4,1,fp);
-      }
+    }
     fwrite2(&level.numofropes,4,1,fp);
     for (count=0;count<level.numofropes;count++)
-      {
+    {
       fwrite2(&level.rope[count].type,4,1,fp);
       fwrite2(&level.rope[count].texturenum,4,1,fp);
       fwrite2(&level.rope[count].obj1,4,1,fp);
       fwrite2(&level.rope[count].obj1part,4,1,fp);
       fwrite2(&level.rope[count].obj2,4,1,fp);
       fwrite2(&level.rope[count].obj2part,4,1,fp);
-      }
+    }
 
     for (count=1;count<251;count++)
-      {
+    {
       if (textureused[count])
-        {
+      {
         fwrite2(&texture[count].sizex,4,1,fp);
         if (texture[count].sizex!=0)
-          {
+        {
           fwrite2(&texture[count].sizey,4,1,fp);
           fwrite2(&texture[count].magfilter,4,1,fp);
           fwrite2(&texture[count].minfilter,4,1,fp);
           fwrite2(texture[count].rgba[0],4,texture[count].sizex*texture[count].sizey,fp);
-          }
         }
+      }
       else
-        {
+      {
         count2=0;
         fwrite2(&count2,4,1,fp);
-        }
+      }
 
       fwrite2(&block[count].numoflines,4,1,fp);
       for (count2=0;count2<block[count].numoflines;count2++)
@@ -248,17 +248,17 @@ void savelevel(char *filename)
       fwrite2(&block[count].drag,4,1,fp);
       fwrite2(&block[count].animation,4,1,fp);
       fwrite2(&block[count].animationspeed,4,1,fp);
-      }
+    }
 
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void loadlevel(char *filename)
-  {
+{
   int count,count2;
   int changeddir;
   int version;
@@ -270,11 +270,11 @@ void loadlevel(char *filename)
   changeddir=chdir("level");
 
   if ((fp=fopen(filename,"rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
 
     if (version==9)
-      {
+    {
       gstrlcpy(editor.filename,filename,EDITOR_FILENAME_LEN);
 
       fread2(level.background,1,32,fp);
@@ -303,14 +303,14 @@ void loadlevel(char *filename)
       fread2(&level.numofobjects,4,1,fp);
 
       if (level.numofobjects<0 || level.numofobjects>=256)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
       for (count=0;count<level.numofobjects;count++)
-        {
+      {
         fread2(&level.object[count].type,4,1,fp);
         fread2(&level.object[count].texturenum,4,1,fp);
         fread2(&level.object[count].link,4,1,fp);
@@ -323,36 +323,36 @@ void loadlevel(char *filename)
         fread2(level.object[count].lightcolor,4,3,fp);
         fread2(&level.object[count].lightintensity,4,1,fp);
         fread2(&level.object[count].ai,4,1,fp);
-        }
+      }
       fread2(&level.numofropes,4,1,fp);
       if (level.numofropes<0 || level.numofropes>=1024)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
       for (count=0;count<level.numofropes;count++)
-        {
+      {
         fread2(&level.rope[count].type,4,1,fp);
         fread2(&level.rope[count].texturenum,4,1,fp);
         fread2(&level.rope[count].obj1,4,1,fp);
         fread2(&level.rope[count].obj1part,4,1,fp);
         fread2(&level.rope[count].obj2,4,1,fp);
         fread2(&level.rope[count].obj2part,4,1,fp);
-        }
+      }
       for (count=1;count<251;count++)
-        {
+      {
         fread2(&texture[count].sizex,4,1,fp);
         if (texture[count].sizex<0 || texture[count].sizex>=1024)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         if (texture[count].sizex!=0)
-          {
+        {
           fread2(&texture[count].sizey,4,1,fp);
           fread2(&texture[count].magfilter,4,1,fp);
           fread2(&texture[count].minfilter,4,1,fp);
@@ -376,16 +376,16 @@ void loadlevel(char *filename)
           if ((texture[count].sizex&(texture[count].sizex-1))==0)
           if ((texture[count].sizey&(texture[count].sizey-1))==0)
             setuptexture(count);
-          }
+        }
   
         fread2(&block[count].numoflines,4,1,fp);
         if (block[count].numoflines<0 || block[count].numoflines>=64)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         for (count2=0;count2<block[count].numoflines;count2++)
           fread2(block[count].line[count2],4,8,fp);
         fread2(&block[count].friction,4,1,fp);
@@ -396,10 +396,10 @@ void loadlevel(char *filename)
         fread2(&block[count].drag,4,1,fp);
         fread2(&block[count].animation,4,1,fp);
         fread2(&block[count].animationspeed,4,1,fp);
-        }
       }
+    }
     if (version==10)
-      {
+    {
       gstrlcpy(editor.filename,filename,EDITOR_FILENAME_LEN);
 
       fread2(level.background,1,32,fp);
@@ -419,14 +419,14 @@ void loadlevel(char *filename)
       fread2(&level.numofobjects,4,1,fp);
 
       if (level.numofobjects<0 || level.numofobjects>=256)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
       for (count=0;count<level.numofobjects;count++)
-        {
+      {
         fread2(&level.object[count].type,4,1,fp);
         fread2(&level.object[count].texturenum,4,1,fp);
         fread2(&level.object[count].link,4,1,fp);
@@ -439,36 +439,36 @@ void loadlevel(char *filename)
         fread2(level.object[count].lightcolor,4,3,fp);
         fread2(&level.object[count].lightintensity,4,1,fp);
         fread2(&level.object[count].ai,4,1,fp);
-        }
+      }
       fread2(&level.numofropes,4,1,fp);
       if (level.numofropes<0 || level.numofropes>=1024)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
       for (count=0;count<level.numofropes;count++)
-        {
+      {
         fread2(&level.rope[count].type,4,1,fp);
         fread2(&level.rope[count].texturenum,4,1,fp);
         fread2(&level.rope[count].obj1,4,1,fp);
         fread2(&level.rope[count].obj1part,4,1,fp);
         fread2(&level.rope[count].obj2,4,1,fp);
         fread2(&level.rope[count].obj2part,4,1,fp);
-        }
+      }
       for (count=1;count<251;count++)
-        {
+      {
         fread2(&texture[count].sizex,4,1,fp);
         if (texture[count].sizex<0 || texture[count].sizex>=1024)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         if (texture[count].sizex!=0)
-          {
+        {
           fread2(&texture[count].sizey,4,1,fp);
           fread2(&texture[count].magfilter,4,1,fp);
           fread2(&texture[count].minfilter,4,1,fp);
@@ -489,16 +489,16 @@ void loadlevel(char *filename)
           if ((texture[count].sizex&(texture[count].sizex-1))==0)
           if ((texture[count].sizey&(texture[count].sizey-1))==0)
             setuptexture(count);
-          }
+        }
   
         fread2(&block[count].numoflines,4,1,fp);
         if (block[count].numoflines<0 || block[count].numoflines>=64)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         for (count2=0;count2<block[count].numoflines;count2++)
           fread2(block[count].line[count2],4,8,fp);
         fread2(&block[count].friction,4,1,fp);
@@ -509,11 +509,11 @@ void loadlevel(char *filename)
         fread2(&block[count].drag,4,1,fp);
         fread2(&block[count].animation,4,1,fp);
         fread2(&block[count].animationspeed,4,1,fp);
-        }
       }
+    }
 
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
@@ -521,21 +521,21 @@ void loadlevel(char *filename)
   if (version<7)
     loadleveltextures();
   else
-    {
+  {
     lasttextureloaded[0]=0;
     if (level.background[0]!=0)
       loadbackground(660,level.background);
-    }
+  }
 
   loadtexturetga(251,"oneup.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(252,"tarball.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(253,"amber1.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(254,"amber2.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(255,"amber3.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-  }
+}
 
 void createlevel(void)
-  {
+{
   int count,count2;
 
   memset(&level,0,sizeof(level));
@@ -581,10 +581,10 @@ void createlevel(void)
   loadtexturetga(255,"amber3.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
 
   editor.filename[0]=0;
-  }
+}
 
 void getlevellines(int objectnum)
-  {
+{
   int count,count2,count3;
   int min[2],max[2];
   int blocknum;
@@ -594,31 +594,31 @@ void getlevellines(int objectnum)
   numoflevellines=0;
 
   for (count2=0;count2<2;count2++)
-    {
+  {
     min[count2]=object[objectnum].position[count2];
     max[count2]=object[objectnum].position[count2];
-    }
+  }
 
   for (count=0;count<object[objectnum].numofparticles;count++)
-    {
+  {
     for (count2=0;count2<2;count2++)
-      {
+    {
       if (min[count2]>particle[object[objectnum].particle[count]].position[count2])
         min[count2]=particle[object[objectnum].particle[count]].position[count2];
       if (max[count2]<particle[object[objectnum].particle[count]].position[count2])
         max[count2]=particle[object[objectnum].particle[count]].position[count2];
-      }
     }
+  }
 
   for (count=min[1];count<=max[1];count++)
   for (count2=min[0];count2<=max[0];count2++)
-    {
+  {
     blocknum=level.grid[count][count2];
     if (level.gridmod[count][count2]!=0)
       blocknum=0;
     for (count3=0;count3<block[blocknum].numoflines;count3++)
     if (((level.gridflags[count][count2]>>count3)&1)==0)
-      {
+    {
       vec[0]=(float)count2+(block[blocknum].line[count3][0]+block[blocknum].line[count3][2])*0.5f;
       vec[1]=(float)count+(block[blocknum].line[count3][1]+block[blocknum].line[count3][3])*0.5f;
       vec[2]=0.0f;
@@ -655,12 +655,12 @@ void getlevellines(int objectnum)
       levelline[numoflevellines].blockx=count2;
       levelline[numoflevellines].blocky=count;
       numoflevellines++;
-      }
     }
   }
+}
 
 void setuplevellines(int xstart,int ystart,int xend,int yend)
-  {
+{
   int count,count2,count3,count4;
   int blocknum,blocknum2;
 
@@ -675,15 +675,15 @@ void setuplevellines(int xstart,int ystart,int xend,int yend)
 
   for (count=ystart;count<=yend;count++)
   for (count2=xstart;count2<=xend;count2++)
-    {
+  {
     level.gridflags[count][count2]=0;
 
     blocknum=level.grid[count][count2];
 
     for (count3=0;count3<block[blocknum].numoflines;count3++)
-      {
+    {
       if (level.gridmod[count-1][count2]==0)
-        {
+      {
         blocknum2=level.grid[count-1][count2];
         for (count4=0;count4<block[blocknum2].numoflines;count4++)
         if (block[blocknum].line[count3][1]==0.0f)
@@ -693,9 +693,9 @@ void setuplevellines(int xstart,int ystart,int xend,int yend)
         if (block[blocknum].line[count3][0]<=block[blocknum2].line[count4][2])
         if (block[blocknum].line[count3][2]>=block[blocknum2].line[count4][0])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
       if (level.gridmod[count+1][count2]==0)
-        {
+      {
         blocknum2=level.grid[count+1][count2];
         for (count4=0;count4<block[blocknum2].numoflines;count4++)
         if (block[blocknum].line[count3][1]==1.0f)
@@ -705,9 +705,9 @@ void setuplevellines(int xstart,int ystart,int xend,int yend)
         if (block[blocknum].line[count3][0]>=block[blocknum2].line[count4][2])
         if (block[blocknum].line[count3][2]<=block[blocknum2].line[count4][0])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
       if (level.gridmod[count][count2-1]==0)
-        {
+      {
         blocknum2=level.grid[count][count2-1];
         for (count4=0;count4<block[blocknum2].numoflines;count4++)
         if (block[blocknum].line[count3][0]==0.0f)
@@ -717,9 +717,9 @@ void setuplevellines(int xstart,int ystart,int xend,int yend)
         if (block[blocknum].line[count3][1]>=block[blocknum2].line[count4][3])
         if (block[blocknum].line[count3][3]<=block[blocknum2].line[count4][1])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
       if (level.gridmod[count][count2+1]==0)
-        {
+      {
         blocknum2=level.grid[count][count2+1];
         for (count4=0;count4<block[blocknum2].numoflines;count4++)
         if (block[blocknum].line[count3][0]==1.0f)
@@ -729,50 +729,50 @@ void setuplevellines(int xstart,int ystart,int xend,int yend)
         if (block[blocknum].line[count3][1]<=block[blocknum2].line[count4][3])
         if (block[blocknum].line[count3][3]>=block[blocknum2].line[count4][1])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
 
       /*
       if ((block[level.grid[count-1][count2]].flags&1)==1)
       if (level.gridmod[count-1][count2]==0)
-        {
+      {
         if (block[blocknum].line[count3][1]==0.0f)
         if (block[blocknum].line[count3][3]==0.0f)
         if (block[blocknum].line[count3][0]>block[blocknum].line[count3][2])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
       if ((block[level.grid[count][count2-1]].flags&2)==2)
       if (level.gridmod[count][count2-1]==0)
-        {
+      {
         if (block[blocknum].line[count3][0]==0.0f)
         if (block[blocknum].line[count3][2]==0.0f)
         if (block[blocknum].line[count3][1]<block[blocknum].line[count3][3])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
       if ((block[level.grid[count+1][count2]].flags&4)==4)
       if (level.gridmod[count+1][count2]==0)
-        {
+      {
         if (block[blocknum].line[count3][1]==1.0f)
         if (block[blocknum].line[count3][3]==1.0f)
         if (block[blocknum].line[count3][0]<block[blocknum].line[count3][2])
           level.gridflags[count][count2]|=(1<<count3);
-        }
+      }
       if ((block[level.grid[count][count2+1]].flags&8)==8)
       if (level.gridmod[count][count2+1]==0)
-        {
+      {
         if (block[blocknum].line[count3][0]==1.0f)
         if (block[blocknum].line[count3][2]==1.0f)
         if (block[blocknum].line[count3][1]>block[blocknum].line[count3][3])
           level.gridflags[count][count2]|=(1<<count3);
-        }
-      */
       }
+      */
+    }
     if (level.gridmod[count][count2]!=0)
       level.gridflags[count][count2]=0xFFFFFFFF;
-    }
   }
+}
 
 void loadleveltextures(void)
-  {
+{
   int count;
   int changeddir;
   char texfilename[32]="text000.tga";
@@ -785,7 +785,7 @@ void loadleveltextures(void)
   for (count=1;count<251;count++)
     loadblock(count);
   for (count=0;count<251;count++)
-    {
+  {
     texfilename[4]=48+(count/100)%10;
     texfilename[5]=48+(count/10)%10;
     texfilename[6]=48+count%10;
@@ -793,14 +793,14 @@ void loadleveltextures(void)
       loadtexturetga(count,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
     else
       loadtexturetga(count,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_NEAREST,GL_NEAREST);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 int lineintersectline3(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2)
-  {
+{
   float vec[3],vec2[3];
   float dot1,dot2;
 
@@ -883,11 +883,11 @@ int lineintersectline3(float *intersectpoint,float *normal,float *scale,float *s
     return(0);
 
   return(1);
-  }
+}
 
 
 int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *point)
-  {
+{
   int count,count2,count3;
   int blocknum;
   int min[2],max[2];
@@ -897,7 +897,7 @@ int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *
   float scaletemp;
 
   for (count=0;count<2;count++)
-    {
+  {
     min[count]=point[count]-1.0f;
     max[count]=point[count]+1.0f;
 
@@ -909,20 +909,20 @@ int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *
       min[count]=255;
     if (max[count]>255)
       max[count]=255;
-    }
+  }
 
   *scale=0.0f;
 
   for (count=min[1];count<=max[1];count++)
   for (count2=min[0];count2<=max[0];count2++)
-    {
+  {
     blocknum=level.grid[count][count2];
     if (level.gridmod[count][count2]!=0)
       blocknum=0;
 
     for (count3=0;count3<block[blocknum].numoflines;count3++)
     if (((level.gridflags[count][count2]>>count3)&1)==0)
-      {
+    {
       vec[0]=(float)count2+block[blocknum].line[count3][0];
       vec[1]=(float)count+block[blocknum].line[count3][1];
       vec[2]=0.0f;
@@ -938,7 +938,7 @@ int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *
       scaleaddvectors(vec3,point,normaltemp,0.25f);
       if (lineintersectline2(intersectpointtemp,normaltemp,&scaletemp,vec3,point,vec,vec2))
       if (scaletemp>*scale)
-        {
+      {
         collision.blocknum=blocknum;
         collision.blockx=count2;
         collision.blocky=count;
@@ -946,17 +946,17 @@ int pointintersectlevel(float *intersectpoint,float *normal,float *scale,float *
         copyvector(intersectpoint,intersectpointtemp);
         copyvector(normal,normaltemp);
         *scale=scaletemp;
-        }
       }
     }
+  }
   if (*scale>0.0f)
     return(1);
 
   return(0);
-  }
+}
 
 int changetilesetdir(void)
-  {
+{
   int changeddir;
 
   changeddir=1;
@@ -979,10 +979,10 @@ int changetilesetdir(void)
     changeddir=chdir("tile08");
 
   return(changeddir);
-  }
+}
 
 void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize)
-  {
+{
   int count;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -990,19 +990,19 @@ void encryptdata(unsigned int code,unsigned int codepair,int cryptdatasize)
 #endif
 
   for (count=0;count<cryptdatasize;count++)
-    {
+  {
     cryptdata[count]+=code;
     cryptdata[count]=rotint(cryptdata[count],(code&31));
     cryptdata[count]*=codepair;
-    }
+  }
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
   byteswapdata(cryptdatasize);
 #endif
-  }
+}
 
 void decryptdata(unsigned int code,int cryptdatasize)
-  {
+{
   int count;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -1010,26 +1010,26 @@ void decryptdata(unsigned int code,int cryptdatasize)
 #endif
 
   for (count=0;count<cryptdatasize;count++)
-    {
+  {
     cryptdata[count]*=code;
     cryptdata[count]=rotint(cryptdata[count],(code&31));
     cryptdata[count]-=code;
-    }
+  }
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
   byteswapdata(cryptdatasize);
 #endif
-  }
+}
 
 void byteswapdata(int cryptdatasize)
-  {
+{
   int count;
   unsigned int temp;
 
   for (count=0;count<cryptdatasize;count++)
-    {
+  {
     temp=((cryptdata[count]&255)<<24)+(((cryptdata[count]>>8)&255)<<16);
     temp+=(((cryptdata[count]>>16)&255)<<8)+((cryptdata[count]>>24)&255);
     cryptdata[count]=temp;
-    }
   }
+}

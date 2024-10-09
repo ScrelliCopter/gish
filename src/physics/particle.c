@@ -35,7 +35,7 @@ struct PARTICLE particle[16384];
 struct PARTICLETYPE particletype[16384];
 
 void particlecollisionlevel(int particlenum)
-  {
+{
   int count;
   float vec[3],vec2[3],vec3[3];
   float normal[3];
@@ -51,12 +51,12 @@ void particlecollisionlevel(int particlenum)
   scale=1.0f;
 
   while (count<10 && lineintersectlevel(intersectpoint,normal,&scaletemp,particle[particlenum].prevposition,particle[particlenum].position))
-    {
+  {
     scaleaddvectors(particle[particlenum].position,intersectpoint,normal,0.01f);
 
     scale*=1.0f-scaletemp;
     if (dotproduct(particle[particlenum].velocity,normal)<0.0f)
-      {
+    {
       copyvector(vec,particle[particlenum].velocity);
       calculatefriction(vec,vec2,normal,particle[particlenum].friction);
   
@@ -65,19 +65,19 @@ void particlecollisionlevel(int particlenum)
 
       copyvector(particle[particlenum].prevposition,particle[particlenum].position);
       scaleaddvectors(particle[particlenum].position,particle[particlenum].prevposition,particle[particlenum].velocity,scale);
-      }
+    }
     else
-      {
+    {
       copyvector(particle[particlenum].prevposition,particle[particlenum].position);
       scaleaddvectors(particle[particlenum].position,particle[particlenum].prevposition,particle[particlenum].velocity,scale);
-      }
+    }
 
     count++;
-    }
   }
+}
 
 void calculatefriction(float *nforce,float *fforce,const float *normal,float cofric)
-  {
+{
   float vec[3];
   float veclength;
 
@@ -87,18 +87,18 @@ void calculatefriction(float *nforce,float *fforce,const float *normal,float cof
 
   veclength=vectorlength(fforce);
   if (veclength>0.00001f)
-    {
+  {
     normalizevector(vec,fforce);
     if (veclength>cofric*vectorlength(nforce))
       veclength=cofric*vectorlength(nforce);
     scalevector(fforce,vec,veclength);
-    }
+  }
   else
     zerovector(fforce);
-  }
+}
 
 void particlesimulation(void)
-  {
+{
   int count,count2;
   int x,y;
   int blocknum;
@@ -106,14 +106,14 @@ void particlesimulation(void)
   float scale;
 
   for (count=0;count<numofparticles;count++)
-    {
+  {
     //particle[count].velocity[1]-=particle[count].gravity;
     scalevector(particle[count].velocity,particle[count].velocity,particle[count].drag);
     x=particle[count].position[0];
     y=particle[count].position[1];
     blocknum=level.foregrid[y][x];
     if (block[blocknum].density!=0.0f)
-      {
+    {
       scale=1.0f;
 
       /*
@@ -137,55 +137,55 @@ void particlesimulation(void)
         scale=6.0f;
       if (level.gametype!=16)
         particle[count].velocity[1]+=particle[count].gravity*scale;
-      }
+    }
     else
-      {
+    {
       if (particle[count].texturenum==366)
       if (particle[count].timetolive>5)
         particle[count].timetolive=5;
-      }
+    }
     if (block[blocknum].drag!=0.0f)
       scalevector(particle[count].velocity,particle[count].velocity,(1.0f-block[blocknum].drag));
 
     copyvector(particle[count].prevvelocity,particle[count].velocity);
-    }
-
-  for (count=0;count<numofparticles;count++)
-    {
-    copyvector(particle[count].prevposition,particle[count].position);
-    addvectors(particle[count].position,particle[count].position,particle[count].velocity);
-    }
-  /*
-  for (count=0;count<numofparticles;count++)
-    {
-    if (particle[count].levelcollision)
-      particlecollisionlevel(count);
-    }
-  */
   }
 
-void particletimetolive(void)
+  for (count=0;count<numofparticles;count++)
   {
+    copyvector(particle[count].prevposition,particle[count].position);
+    addvectors(particle[count].position,particle[count].position,particle[count].velocity);
+  }
+  /*
+  for (count=0;count<numofparticles;count++)
+  {
+    if (particle[count].levelcollision)
+      particlecollisionlevel(count);
+  }
+  */
+}
+
+void particletimetolive(void)
+{
   int count;
 
   count=0;
   while (count<numofparticles)
-    {
+  {
     if (particle[count].timetolive<10000)
       particle[count].timetolive--;
     while (count<numofparticles && particle[count].timetolive<0)
-      {
+    {
       deleteparticle(count);
 
       if (particle[count].timetolive<10000)
         particle[count].timetolive--;
-      }
-    count++;
     }
+    count++;
   }
+}
 
 void createparticle(int type,float *position,float *velocity,float mass,int objectnum,int timetolive)
-  {
+{
   float scale;
 
   if (numofparticles>10000)
@@ -219,10 +219,10 @@ void createparticle(int type,float *position,float *velocity,float mass,int obje
   particle[numofparticles].rendertype=particletype[type].rendertype;
 
   numofparticles++;
-  }
+}
 
 void deleteparticle(int particlenum)
-  {
+{
   int count,count2;
 
   if (particlenum>=numofparticles)
@@ -232,38 +232,38 @@ void deleteparticle(int particlenum)
 
   count=0;
   while (count<numofbonds)
-    {
+  {
     while (count<numofbonds && (bond[count].part1==particlenum || bond[count].part2==particlenum))
       deletebond(count);
     count++;
-    }
+  }
   count=0;
   while (count<numofropes)
-    {
+  {
     while (count<numofropes && (rope[count].part1==particlenum || rope[count].part2==particlenum))
       deleterope(count);
     count++;
-    }
+  }
 
   for (count=0;count<physicstemp.numofbonds;count++)
   if (physicstemp.bond[count].type==5)
-    {
+  {
     if (physicstemp.bond[count].part1==particlenum)
-      {
+    {
       physicstemp.bond[count].type=-1;
       object[physicstemp.bond[count].objectnum[0]].particlestick[physicstemp.bond[count].part4]=0;
-      }
-    if (physicstemp.bond[count].part2==particlenum)
-      {
-      physicstemp.bond[count].type=-1;
-      object[physicstemp.bond[count].objectnum[0]].particlestick[physicstemp.bond[count].part4]=0;
-      }
-    if (physicstemp.bond[count].part3==particlenum)
-      {
-      physicstemp.bond[count].type=-1;
-      object[physicstemp.bond[count].objectnum[0]].particlestick[physicstemp.bond[count].part4]=0;
-      }
     }
+    if (physicstemp.bond[count].part2==particlenum)
+    {
+      physicstemp.bond[count].type=-1;
+      object[physicstemp.bond[count].objectnum[0]].particlestick[physicstemp.bond[count].part4]=0;
+    }
+    if (physicstemp.bond[count].part3==particlenum)
+    {
+      physicstemp.bond[count].type=-1;
+      object[physicstemp.bond[count].objectnum[0]].particlestick[physicstemp.bond[count].part4]=0;
+    }
+  }
 
   if (particlenum==numofparticles)
     return;
@@ -279,40 +279,40 @@ void deleteparticle(int particlenum)
     game.godparticle=particlenum;
 
   for (count=0;count<numofbonds;count++)
-    {
+  {
     if (bond[count].part1==numofparticles)
       bond[count].part1=particlenum;
     if (bond[count].part2==numofparticles)
       bond[count].part2=particlenum;
-    }
+  }
   for (count=0;count<numofropes;count++)
-    {
+  {
     if (rope[count].part1==numofparticles)
       rope[count].part1=particlenum;
     if (rope[count].part2==numofparticles)
       rope[count].part2=particlenum;
-    }
+  }
 
   for (count=0;count<physicstemp.numofbonds;count++)
   if (physicstemp.bond[count].type==5)
-    {
+  {
     if (physicstemp.bond[count].part1==numofparticles)
       physicstemp.bond[count].part1=particlenum;
     if (physicstemp.bond[count].part2==numofparticles)
       physicstemp.bond[count].part2=particlenum;
     if (physicstemp.bond[count].part3==numofparticles)
       physicstemp.bond[count].part3=particlenum;
-    }
   }
+}
 
 void applyforceparticle(int particlenum,float force[3])
-  {
+{
   scaleaddvectors(particle[particlenum].velocity,particle[particlenum].velocity,force,1.0f/particle[particlenum].mass);
-  }
+}
 
 void getforceparticle(int particlenum,float force[3])
-  {
+{
   scalevector(force,particle[particlenum].prevvelocity,particle[particlenum].mass);
-  }
+}
 
 

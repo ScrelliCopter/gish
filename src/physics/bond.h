@@ -30,7 +30,7 @@ void deletebond(int bondnum);
 
 extern int numofbonds;
 struct BOND
-  {
+{
   int part1;
   int part2;
   int type;
@@ -50,18 +50,18 @@ struct BOND
   float bondnormal[3];
   float veclength;
   float oomass;
-  };
+};
 extern struct BOND bond[16384];
 
 struct BONDTYPE
-  {
+{
   float elasticity;
   float compression;
   float tension;
   int cycles;
   int rendertype;
   float rendersize;
-  };
+};
 extern struct BONDTYPE bondtype[256];
 
 #endif

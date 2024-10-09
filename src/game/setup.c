@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "editor.h"
 
 void setuplevel(void)
-  {
+{
   int count,count2;
   int numofobjectstemp;
   float vec[3];
@@ -60,7 +60,7 @@ void setuplevel(void)
 
   for (count=0;count<level.numofobjects;count++)
     if (level.object[count].type>=20 && level.object[count].type<40)
-      {
+    {
       if (animation[level.object[count].type-20].loaded==0)
         animation[level.object[count].type-20].loaded=2;
       if (level.object[count].type-20==7)
@@ -72,33 +72,33 @@ void setuplevel(void)
       if (level.object[count].type-20==12)
         if (animation[11].loaded==0)
           animation[11].loaded=2;
-      }
+    }
   loadanimations();
 
   for (count=0;count<level.numofobjects;count++)
-    {
+  {
     numofobjectstemp=numofobjects;
 
     if (level.object[count].type==1)
-      {
+    {
       createtarboy(level.object[count].position);
       object[numofobjects-1].texturenum=1;
-      }
+    }
     if (level.object[count].type==2)
       createbox(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction);
     if (level.object[count].type==3)
-      {
+    {
       createbox(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction);
       createparticle(2,level.object[count].position,NULL,10000.0f,-1,10000);
       createbond(numofparticles-5,numofparticles-1,1,-1);
       createbond(numofparticles-4,numofparticles-1,1,-1);
       createbond(numofparticles-3,numofparticles-1,1,-1);
       createbond(numofparticles-2,numofparticles-1,1,-1);
-      }
+    }
     if (level.object[count].type==4)
-      {
+    {
       if (level.gametype!=16)
-        {
+      {
         createbox(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction);
         vec[0]=level.object[count].position[0]-(level.object[count].size[0]-1.0f)*0.5f;
         vec[1]=level.object[count].position[1]-(level.object[count].size[1]-1.0f)*0.5f;
@@ -108,12 +108,12 @@ void setuplevel(void)
         createbond(numofparticles-4,numofparticles-1,1,-1);
         createbond(numofparticles-3,numofparticles-1,1,-1);
         createbond(numofparticles-2,numofparticles-1,1,-1);
-        }
+      }
       else
         createcar(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction);
-      }
+    }
     if (level.object[count].type==5)
-      {
+    {
       createbox(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction);
       vec[0]=level.object[count].position[0]+(level.object[count].size[0]-1.0f)*0.5f;
       vec[1]=level.object[count].position[1]+(level.object[count].size[1]-1.0f)*0.5f;
@@ -123,27 +123,27 @@ void setuplevel(void)
       createbond(numofparticles-4,numofparticles-1,1,-1);
       createbond(numofparticles-3,numofparticles-1,1,-1);
       createbond(numofparticles-2,numofparticles-1,1,-1);
-      }
+    }
     if (level.object[count].type==6)
-      {
+    {
       createwheel(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction,0);
-      }
+    }
     if (level.object[count].type==7)
-      {
+    {
       createwheel(level.object[count].position,level.object[count].size[0],level.object[count].size[1],level.object[count].mass,level.object[count].friction,1);
       //createparticle(2,level.object[count].position,NULL,10000.0f,-1,10000);
       //for (count2=0;count2<16;count2++)
       //  createbond(numofparticles-17+count2,numofparticles-1,1,-1);
-      }
+    }
     if (level.object[count].type==8)
       createanchor(level.object[count].position);
     if (level.object[count].type==9)
       createbutton(level.object[count].position,level.object[count].mass);
     if (level.object[count].type==10)
-      {
+    {
       createbutton(level.object[count].position,level.object[count].mass);
       object[numofobjects-1].idata[1]=1;
-      }
+    }
     if (level.object[count].type==11)
       createswitch(level.object[count].position,level.object[count].mass,0);
     if (level.object[count].type==12)
@@ -155,15 +155,15 @@ void setuplevel(void)
     if (level.object[count].type==15)
       createareaswitch(level.object[count].position,level.object[count].size[0],level.object[count].size[1]);
     if (level.object[count].type==16)
-      {
+    {
       createareaswitch(level.object[count].position,level.object[count].size[0],level.object[count].size[1]);
       object[numofobjects-1].idata[1]=1;
-      }
+    }
     if (level.object[count].type==18)
-      {
+    {
       createareaswitch(level.object[count].position,level.object[count].size[0],level.object[count].size[1]);
       object[numofobjects-1].idata[1]=2;
-      }
+    }
     if (level.object[count].type==17)
       creategenerator(level.object[count].position,level.object[count].mass);
 
@@ -203,7 +203,7 @@ void setuplevel(void)
       createbeast(16,level.object[count].position,1.0f,1.0f,1.0f,0.2f);
 
     if (numofobjects!=numofobjectstemp)
-      {
+    {
       if (level.object[count].type>1 && level.object[count].type<20)
         object[numofobjects-1].texturenum=level.object[count].texturenum;
       object[numofobjects-1].link=level.object[count].link;
@@ -221,13 +221,13 @@ void setuplevel(void)
       object[numofobjects-1].lightcolor[2]=level.object[count].lightcolor[2];
       object[numofobjects-1].lightintensity=level.object[count].lightintensity;
       object[numofobjects-1].lightintensitymax=level.object[count].lightintensity;
-      }
     }
+  }
 
   for (count=0;count<level.numofobjects;count++)
-    {
+  {
     if ((level.object[count].type>=23 && level.object[count].type<=26) || level.object[count].type==29 || level.object[count].type==30)
-      {
+    {
       vec[0]=level.object[count].position[0];
       vec[1]=level.object[count].position[1]+1.4f;//+1.42f;
       vec[2]=0.0f;
@@ -241,17 +241,17 @@ void setuplevel(void)
       createbond(object[numofobjects-1].particle[0],object[count].particle[1],6,count);
       createbond(object[numofobjects-1].particle[2],object[count].particle[1],6,count);
       //createbond(object[numofobjects-1].particle[4],object[count].particle[1],6,count);
-      }
-    }
-
-  for (count=0;count<level.numofropes;count++)
-    {
-    createrope(level.rope[count].type,object[level.rope[count].obj1].particle[level.rope[count].obj1part],object[level.rope[count].obj2].particle[level.rope[count].obj2part],level.rope[count].obj1,level.rope[count].obj2,level.rope[count].texturenum);
     }
   }
 
-void setupgame(void)
+  for (count=0;count<level.numofropes;count++)
   {
+    createrope(level.rope[count].type,object[level.rope[count].obj1].particle[level.rope[count].obj1part],object[level.rope[count].obj2].particle[level.rope[count].obj2part],level.rope[count].obj1,level.rope[count].obj2,level.rope[count].texturenum);
+  }
+}
+
+void setupgame(void)
+{
   int count,count2;
 
   srand(time(NULL));
@@ -278,47 +278,47 @@ void setupgame(void)
   game.dialog=0;
 
   if (game.levelnum==6)
-    {
+  {
     game.bosslevel=1;
     game.dialog=2;
     game.dialogdelay=1000;
-    }
+  }
   if (game.levelnum==13)
-    {
+  {
     game.bosslevel=1;
     game.dialog=3;
     game.dialogdelay=1000;
-    }
+  }
   if (game.levelnum==20)
-    {
+  {
     game.bosslevel=1;
     game.dialog=3;
     game.dialogdelay=1000;
-    }
+  }
   if (game.levelnum==27)
-    {
+  {
     game.bosslevel=1;
     game.dialog=3;
     game.dialogdelay=1000;
-    }
+  }
   if (game.levelnum==33)
-    {
+  {
     game.bosslevel=1;
     game.dialog=3;
     game.dialogdelay=1000;
-    }
+  }
   if (game.levelnum==34)
-    {
+  {
     game.bosslevel=1;
     game.dialog=8;
     game.dialogdelay=1000;
-    }
+  }
   if (game.levelnum==68)
-    {
+  {
     game.bosslevel=1;
     game.dialog=16;
     game.dialogdelay=1000;
-    }
+  }
 
   if (level.gametype==10)
     game.time=6000;
@@ -328,19 +328,19 @@ void setupgame(void)
     game.time=6000;
 
   for (count=0;count<16;count++)
-    {
+  {
     game.bonus[count]=0;
     game.numofbonus[count]=0;
-    }
+  }
 
   for (count=0;count<256;count++)
   for (count2=0;count2<256;count2++)
-    {
+  {
     if (level.grid[count][count2]>=240 && level.grid[count][count2]<=247)
       game.numofbonus[level.grid[count][count2]-240]++;
     if (level.grid[count][count2]>=248 && level.grid[count][count2]<=255)
       game.numofbonus[level.grid[count][count2]-248]++;
-    }
+  }
 
   for (count=0;count<numofobjects;count++)
   if (object[count].type==16)
@@ -354,69 +354,69 @@ void setupgame(void)
     game.startdelay=100;
 
   if (level.gametype<10 && !editor.active)
-    {
+  {
     view.position[0]=object[0].position[0];
     view.position[1]=object[0].position[1];
     view.position[2]=10.0f;
     if (game.levelnum==64)
       view.position[1]=131.5f;
     if (game.levelnum==65)
-      {
+    {
       count=object[0].position[0]+16.0f;
       count/=32;
       count*=32;
       view.position[0]=count;
       view.position[1]=126.0f;
-      }
     }
+  }
   if (level.gametype==10)
-    {
+  {
     view.position[0]=127.5f;
     view.position[1]=127.5f;
     view.position[2]=10.0f;
-    }
+  }
   if (level.gametype==11)
-    {
+  {
     view.position[0]=127.0f;
     view.position[1]=124.5f;
     view.position[2]=10.0f;
-    }
+  }
   if (level.gametype==12)
-    {
+  {
     view.position[0]=126.5f;
     view.position[1]=130.0f;
     view.position[2]=10.0f;
-    }
+  }
   if (level.gametype==13)
-    {
+  {
     view.position[0]=127.0f;
     view.position[1]=124.5f;
     view.position[2]=10.0f;
-    }
+  }
   if (level.gametype==14)
-    {
+  {
     view.position[0]=127.5f;
     view.position[1]=127.5f;
     view.position[2]=10.0f;
-    }
+  }
   if (level.gametype==17)
-    {
+  {
     view.position[0]=127.5f;
     view.position[1]=127.5f;
     view.position[2]=10.0f;
-    }
+  }
   if (level.gametype==18)
-    {
+  {
     view.position[0]=127.0f;
     view.position[1]=127.5f;
     view.position[2]=10.0f;
-    }
-
-  resetorientation(view.orientation);
   }
 
+  resetorientation(view.orientation);
+}
+
 void loadstorylevel(int levelnum)
-  {
+{
 #ifndef DEMO
   if (levelnum==1)
     loadlevel("sewer1.lvl");
@@ -512,15 +512,15 @@ void loadstorylevel(int levelnum)
   if (levelnum==5)
     loadlevel("demo5.lvl");
 #endif
-  }
+}
 
 void loadcollectionlevel(int levelnum)
-  {
+{
   char loadfilename[32]="co00.lvl";
 
   loadfilename[2]=48+levelnum/10;
   loadfilename[3]=48+levelnum%10;
 
   loadlevel(loadfilename);
-  }
+}
 

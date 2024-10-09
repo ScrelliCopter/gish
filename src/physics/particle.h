@@ -35,7 +35,7 @@ void getforceparticle(int particlenum,float force[3]);
 
 extern int numofparticles;
 struct PARTICLE
-  {
+{
   float position[3];
   float prevposition[3];
   float velocity[3];
@@ -55,11 +55,11 @@ struct PARTICLE
   int rendertype;
   float rendersize;
   int texturenum;
-  };
+};
 extern struct PARTICLE particle[16384];
 
 struct PARTICLETYPE
-  {
+{
   float drag;
   float gravity;
   float elasticity;
@@ -67,7 +67,7 @@ struct PARTICLETYPE
   int levelcollision;
   int objectcollision;
   int rendertype;
-  };
+};
 extern struct PARTICLETYPE particletype[16384];
 
 #endif

@@ -32,7 +32,7 @@ void singlelevelmenu(void);
 
 extern int playernum;
 struct PLAYER
-  {
+{
   char name[32];
   int levelnum;
   int numoflives;
@@ -41,7 +41,7 @@ struct PLAYER
   int gamepassed;
   int highscore;
   int unlock[16];
-  };
+};
 extern struct PLAYER player[16];
 
 #endif

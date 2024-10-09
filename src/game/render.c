@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct FRAME frame;
 
 void renderlevelback(void)
-  {
+{
   int count,count2;
   int lightcount;
   int blocknum;
@@ -58,7 +58,7 @@ void renderlevelback(void)
   if (count>=0 && count<256)
   for (count2=view.position[0]-view.zoomx;count2<=view.position[0]+view.zoomx;count2++)
   if (count2>=0 && count2<256)
-    {
+  {
     blocknum=level.backgrid[count][count2];
 
     if (block[blocknum].animation!=0)
@@ -78,7 +78,7 @@ void renderlevelback(void)
       blocknum=0;
 
     if (blocknum!=0)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
   
       glBegin(GL_QUADS);
@@ -106,8 +106,8 @@ void renderlevelback(void)
       glVertex3f(vec[0],vec[1],0.0f);
   
       glEnd();
-      }
     }
+  }
 
   glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 
@@ -120,7 +120,7 @@ void renderlevelback(void)
   glActiveTexture(GL_TEXTURE0);
 
   for (lightcount=0;lightcount<frame.numoflights;lightcount++)
-    {
+  {
     glStencilMask((1<<lightcount));
     glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
     glStencilFunc(GL_NOTEQUAL,(1<<lightcount),(1<<lightcount));
@@ -129,7 +129,7 @@ void renderlevelback(void)
     if (count>=0 && count<256)
     for (count2=view.position[0]-view.zoomx;count2<=view.position[0]+view.zoomx;count2++)
     if (count2>=0 && count2<256)
-      {
+    {
       blocknum=level.backgrid[count][count2];
 
       if (block[blocknum].animation!=0)
@@ -153,7 +153,7 @@ void renderlevelback(void)
         blocknum=0;
 
       if (blocknum!=0)
-        {
+      {
         glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
     
         glActiveTexture(GL_TEXTURE1);
@@ -191,17 +191,17 @@ void renderlevelback(void)
     
         glDisable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0);
-        }
       }
     }
+  }
 
   glDisable(GL_STENCIL_TEST);
 
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-  }
+}
 
 void renderlevel(void)
-  {
+{
   int count,count2,count3;
   int lightcount;
   int blocknum;
@@ -216,7 +216,7 @@ void renderlevel(void)
   if (count>=0 && count<256)
   for (count2=view.position[0]-view.zoomx;count2<=view.position[0]+view.zoomx;count2++)
   if (count2>=0 && count2<256)
-    {
+  {
     blocknum=level.grid[count][count2];
 
     if (block[blocknum].animation!=0)
@@ -236,7 +236,7 @@ void renderlevel(void)
       blocknum=0;
 
     if (blocknum!=0)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
 
       glBegin(GL_QUADS);
@@ -266,12 +266,12 @@ void renderlevel(void)
       glEnd();
       /*
       if (block[blocknum].friction<0.1f)
-        {
+      {
         glDisable(GL_TEXTURE_2D);
 
         for (count3=0;count3<block[blocknum].numoflines;count3++)
         if (((level.gridflags[count][count2]>>count3)&1)==0)
-          {
+        {
           normal[0]=-(block[blocknum].line[count3][3]-block[blocknum].line[count3][1]);
           normal[1]=(block[blocknum].line[count3][2]-block[blocknum].line[count3][0]);
           normal[2]=0.0f;
@@ -304,20 +304,20 @@ void renderlevel(void)
           glVertex3fv(vec);
 
           glEnd();
-          }
+        }
 
         glEnable(GL_TEXTURE_2D);
-        }
-      */
       }
+      */
     }
+  }
 
   glBlendFunc(GL_ONE,GL_ONE);
 
   glEnable(GL_STENCIL_TEST);
 
   for (lightcount=0;lightcount<frame.numoflights;lightcount++)
-    {
+  {
     glStencilMask((1<<lightcount));
     glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
     glStencilFunc(GL_NOTEQUAL,(1<<lightcount),(1<<lightcount));
@@ -326,7 +326,7 @@ void renderlevel(void)
     if (count>=0 && count<256)
     for (count2=view.position[0]-view.zoomx;count2<=view.position[0]+view.zoomx;count2++)
     if (count2>=0 && count2<256)
-      {
+    {
       blocknum=level.grid[count][count2];
 
       if (block[blocknum].animation!=0)
@@ -353,12 +353,12 @@ void renderlevel(void)
         blocknum=0;
 
       if (blocknum!=0)
-        {
+      {
         glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
   
         for (count3=0;count3<block[blocknum].numoflines;count3++)
         if (((level.gridflags[count][count2]>>count3)&1)==0)
-          {
+        {
           normal[0]=-(block[blocknum].line[count3][3]-block[blocknum].line[count3][1]);
           normal[1]=(block[blocknum].line[count3][2]-block[blocknum].line[count3][0]);
           normal[2]=0.0f;
@@ -401,18 +401,18 @@ void renderlevel(void)
           glVertex3f(vec[0],vec[1],0.0f);
   
           glEnd();
-          }
         }
       }
     }
+  }
 
   glDisable(GL_STENCIL_TEST);
 
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-  }
+}
 
 void renderlevelfore(void)
-  {
+{
   int count,count2;
   int blocknum;
   float vec[3];
@@ -423,7 +423,7 @@ void renderlevelfore(void)
   if (count>=0 && count<256)
   for (count2=view.position[0]-view.zoomx;count2<=view.position[0]+view.zoomx;count2++)
   if (count2>=0 && count2<256)
-    {
+  {
     blocknum=level.foregrid[count][count2];
 
     if (block[blocknum].animation!=0)
@@ -431,7 +431,7 @@ void renderlevelfore(void)
       blocknum+=(game.framenum/block[blocknum].animationspeed)%block[blocknum].animation;
 
     if (blocknum!=0)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[blocknum].glname);
 
       glBegin(GL_QUADS);
@@ -459,12 +459,12 @@ void renderlevelfore(void)
       glVertex3f(vec[0],vec[1],0.0f);
   
       glEnd();
-      }
     }
   }
+}
 
 void renderbonds(void)
-  {
+{
   int count;
   float vec[3];
 
@@ -475,7 +475,7 @@ void renderbonds(void)
   glColor4f(0.0f,1.0f,0.0f,1.0f);
 
   for (count=0;count<numofbonds;count++)
-    {
+  {
     vec[0]=particle[bond[count].part1].position[0];
     vec[1]=particle[bond[count].part1].position[1];
     vec[2]=particle[bond[count].part1].position[2];
@@ -485,39 +485,39 @@ void renderbonds(void)
     vec[1]=particle[bond[count].part2].position[1];
     vec[2]=particle[bond[count].part2].position[2];
     glVertex3fv(vec);
-    }
+  }
 
   glColor4f(1.0f,1.0f,0.0f,1.0f);
 
   for (count=0;count<physicstemp.numofbonds;count++)
-    {
+  {
     if (physicstemp.bond[count].type==0)
-      {
+    {
       glVertex3fv(particle[physicstemp.bond[count].part1].position);
       glVertex3fv(physicstemp.bond[count].point);
-      }
+    }
     if (physicstemp.bond[count].type==1)
-      {
+    {
       glVertex3fv(particle[physicstemp.bond[count].part1].position);
       glVertex3fv(physicstemp.bond[count].point);
-      }
+    }
     if (physicstemp.bond[count].type==5)
-      {
+    {
       scalevector(vec,particle[physicstemp.bond[count].part1].position,physicstemp.bond[count].force[0]);
       scaleaddvectors(vec,vec,particle[physicstemp.bond[count].part2].position,physicstemp.bond[count].force[1]);
 
       glVertex3fv(vec);
       glVertex3fv(particle[physicstemp.bond[count].part3].position);
-      }
     }
+  }
 
   glEnd();
 
   glEnable(GL_TEXTURE_2D);
-  }
+}
 
 void renderobjectinvisible(int objectnum)
-  {
+{
   int count,count2;
   float vec[3],vec2[3];
   float windowsize;
@@ -555,7 +555,7 @@ void renderobjectinvisible(int objectnum)
   glColor3f(0.75f,0.75f,0.75f);
 
   for (count2=0;count2<32;count2++)
-    {
+  {
     subtractvectors(vec2,objectrender[objectnum].vertex[count2],object[objectrender[objectnum].objectnum].position);
     normalizevector(vec2,vec2);
     glTexCoord2f(0.5f+vec2[0]*0.3f,0.5f+vec2[1]*0.3f);
@@ -568,13 +568,13 @@ void renderobjectinvisible(int objectnum)
 
     glTexCoord2f(0.5f,0.5f);
     glVertex3fv(objectrender[objectnum].vertex[32]);
-    }
+  }
 
   glEnd();
 
   /*
   for (count=0;count<16;count++)
-    {
+  {
     glBegin(GL_TRIANGLES);
 
     glColor3f(0.5f,0.5f,0.5f);
@@ -593,25 +593,25 @@ void renderobjectinvisible(int objectnum)
     glVertex3fv(object[objectnum].position);
 
     glEnd();
-    }
+  }
   */
   //glEnable(GL_ALPHA_TEST);
 
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-  }
+}
 
 void setuplighttexcoord(int lightcount,float position[3])
-  {
+{
   float texcoord[2];
 
   texcoord[0]=(position[0]-frame.light[lightcount].position[0])/frame.light[lightcount].intensity+0.5f;
   texcoord[1]=(position[1]-frame.light[lightcount].position[1])/frame.light[lightcount].intensity+0.5f;
 
   glMultiTexCoord2f(GL_TEXTURE1,texcoord[0],texcoord[1]);
-  }
+}
 
 float calclight(int lightcount,float position[3],float normal[3])
-  {
+{
   float vec[3],vec2[3];
   float scale;
 
@@ -620,10 +620,10 @@ float calclight(int lightcount,float position[3],float normal[3])
   scale=frame.light[lightcount].intensity*dotproduct(vec2,normal)/(vec[0]*vec[0]+vec[1]*vec[1]);
 
   return(scale);
-  }
+}
 
 void renderparticles(void)
-  {
+{
   int count;
   float vec[3];
   float alpha;
@@ -631,7 +631,7 @@ void renderparticles(void)
   for (count=0;count<numofparticles;count++)
   if (particle[count].type==5)
   if (particle[count].texturenum!=366)
-    {
+  {
     alpha=1.0f;
     if (particle[count].timetolive<50)
       alpha=(float)particle[count].timetolive/50.0f;
@@ -663,11 +663,11 @@ void renderparticles(void)
     glVertex3f(vec[0],vec[1],0.0f);
 
     glEnd();
-    }
   }
+}
 
 void renderparticles2(void)
-  {
+{
   int count;
   float vec[3];
   float alpha;
@@ -675,7 +675,7 @@ void renderparticles2(void)
   for (count=0;count<numofparticles;count++)
   if (particle[count].type==5)
   if (particle[count].texturenum==366)
-    {
+  {
     alpha=1.0f;
     if (particle[count].timetolive<50)
       alpha=(float)particle[count].timetolive/50.0f;
@@ -707,11 +707,11 @@ void renderparticles2(void)
     glVertex3f(vec[0],vec[1],0.0f);
 
     glEnd();
-    }
   }
+}
 
 void renderobjects(void)
-  {
+{
   int count,count2;
   int lightcount;
   float vec[3],vec2[3];
@@ -722,13 +722,13 @@ void renderobjects(void)
   updateogg();
 
   for (count=0;count<numofobjectrenders;count++)
-    {
+  {
     if (objectrender[count].type==1)
-      {
+    {
       if (game.godmode && game.oldschool==0)
         renderobjectinvisible(count);
       else
-        {
+      {
         glDisable(GL_TEXTURE_2D);
   
         glBegin(GL_TRIANGLES);
@@ -745,16 +745,16 @@ void renderobjects(void)
           glColor4f(0.25f,0.0f,0.0f,1.0f);
   
         for (count2=0;count2<32;count2++)
-          {
+        {
           glVertex3fv(objectrender[count].vertex[count2]);
           glVertex3fv(objectrender[count].vertex[((count2+1)&31)]);
           glVertex3fv(objectrender[count].vertex[32]);
-          }
+        }
   
         glEnd();
 
         glEnable(GL_TEXTURE_2D);
-        }
+      }
 
       renderobjectspecular(count);
 
@@ -805,14 +805,14 @@ void renderobjects(void)
       glEnd();
 
       if (!object[objectrender[count].objectnum].idata[0])
-        {
+      {
         if (game.oldschool==0)
           glEnable(GL_LINE_SMOOTH);
 
         glDisable(GL_TEXTURE_2D);
   
         for (count2=0;count2<32;count2++)
-          {
+        {
           glBegin(GL_LINES);
   
           if (objectrender[count].objectnum==0)
@@ -824,10 +824,10 @@ void renderobjects(void)
           glVertex3fv(objectrender[count].vertex[((count2+1)&31)]);
   
           glEnd();
-          }
+        }
         if ((object[objectrender[count].objectnum].button&4)==4)
         for (count2=0;count2<32;count2++)
-          {
+        {
           glBegin(GL_LINES);
   
           if (objectrender[count].objectnum==0)
@@ -852,24 +852,24 @@ void renderobjects(void)
           glVertex3fv(vec);
   
           glEnd();
-          }
+        }
         if ((object[objectrender[count].objectnum].button&1)==1)
         for (count2=0;count2<32;count2++)
-          {
+        {
           glBegin(GL_LINES);
   
           if (objectrender[count].objectnum==0)
-            {
+          {
             color[0]=0.5f;
             color[1]=0.5f;
             color[2]=0.5f;
-            }
+          }
           else
-            {
+          {
             color[0]=0.25f;
             color[1]=0.25f;
             color[2]=0.25f;
-            }
+          }
   
           normal[0]=objectrender[count].vertex[count2][1]-objectrender[count].vertex[((count2+1)&31)][1];
           normal[1]=objectrender[count].vertex[((count2+1)&31)][0]-objectrender[count].vertex[count2][0];
@@ -896,15 +896,15 @@ void renderobjects(void)
           glVertex3fv(vec);
 
           glEnd();
-          }
+        }
   
         glEnable(GL_TEXTURE_2D);
 
         glDisable(GL_LINE_SMOOTH);
-        }
       }
+    }
     else
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[objectrender[count].texturenum].glname);
 
       glBegin(GL_TRIANGLES);
@@ -916,14 +916,14 @@ void renderobjects(void)
         glColor3fv(object[objectrender[count].objectnum].lightcolor);
 
       for (count2=0;count2<objectrender[count].numoftris;count2++)
-        {
+      {
         glTexCoord2fv(objectrender[count].texcoord[objectrender[count].tri[count2][0]]);
         glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][0]]);
         glTexCoord2fv(objectrender[count].texcoord[objectrender[count].tri[count2][1]]);
         glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][1]]);
         glTexCoord2fv(objectrender[count].texcoord[objectrender[count].tri[count2][2]]);
         glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][2]]);
-        }
+      }
 
       glEnd();
 
@@ -932,7 +932,7 @@ void renderobjects(void)
 
       for (lightcount=0;lightcount<frame.numoflights;lightcount++)
       if (((objectrender[count].lightflags>>lightcount)&1)==1)
-        {
+      {
         glStencilMask((1<<lightcount));
         glStencilOp(GL_KEEP,GL_KEEP,GL_KEEP);
         glStencilFunc(GL_NOTEQUAL,(1<<lightcount),(1<<lightcount));
@@ -942,13 +942,13 @@ void renderobjects(void)
         glBindTexture(GL_TEXTURE_2D,texture[332].glname);
 
         if (objectrender[count].type!=2 && objectrender[count].type!=10)
-          {
+        {
           glBegin(GL_TRIANGLES);
   
           glColor4f(level.ambient[1][0],level.ambient[1][1],level.ambient[1][2],objectrender[count].alpha);
   
           for (count2=0;count2<objectrender[count].numoftris;count2++)
-            {
+          {
             glTexCoord2fv(objectrender[count].texcoord[objectrender[count].tri[count2][0]]);
             setuplighttexcoord(lightcount,objectrender[count].vertex[objectrender[count].tri[count2][0]]);
             glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][0]]);
@@ -960,16 +960,16 @@ void renderobjects(void)
             glTexCoord2fv(objectrender[count].texcoord[objectrender[count].tri[count2][2]]);
             setuplighttexcoord(lightcount,objectrender[count].vertex[objectrender[count].tri[count2][2]]);
             glVertex3fv(objectrender[count].vertex[objectrender[count].tri[count2][2]]);
-            }
+          }
   
           glEnd();
-          }
+        }
         else
-          {
+        {
           glBegin(GL_QUADS);
 
           for (count2=0;count2<objectrender[count].numofedges;count2++)
-            {
+          {
             subtractvectors(vec2,frame.light[lightcount].position,objectrender[count].edgevertex[count2][0]);
             scalevector(vec,frame.light[lightcount].color,dotproduct(vec2,objectrender[count].edgenormal[count2]));
             glColor4f(vec[0],vec[1],vec[2],objectrender[count].alpha);
@@ -999,21 +999,21 @@ void renderobjects(void)
             glTexCoord2fv(objectrender[count].edgetexcoord[count2][3]);
             setuplighttexcoord(lightcount,objectrender[count].edgevertex[count2][3]);
             glVertex3fv(objectrender[count].edgevertex[count2][3]);
-            }
+          }
 
           glEnd();
-          }
+        }
 
         glDisable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0);
-        }
+      }
 
       glDisable(GL_STENCIL_TEST);
       glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
       if (game.oldschool==2)
       if (objectrender[count].type==32)
-        {
+      {
         glDisable(GL_TEXTURE_2D);
 
         glBegin(GL_LINES);
@@ -1026,19 +1026,19 @@ void renderobjects(void)
         glEnd();
 
         glEnable(GL_TEXTURE_2D);
-        }
       }
     }
   }
+}
 
 void rendersprites(void)
-  {
+{
   int count;
   int x,y;
   float vec[3];
 
   for (count=0;count<numofsprites;count++)
-    {
+  {
     subtractvectors(vec,sprite[count].position,view.position);
     vec[0]/=view.zoom;
     vec[1]/=view.zoom;
@@ -1050,6 +1050,6 @@ void rendersprites(void)
     y=vec[1];
 
     drawtext(sprite[count].text,(x|TEXT_CENTER),(y|TEXT_CENTER),sprite[count].size,sprite[count].red,sprite[count].green,sprite[count].blue,sprite[count].alpha);
-    }
   }
+}
 

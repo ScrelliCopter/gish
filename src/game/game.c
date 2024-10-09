@@ -65,7 +65,7 @@ struct VIEW view;
 struct GAME game;
 
 void gameloop(void)
-  {
+{
   int count,count2;
   int simtimer;
   int simcount;
@@ -81,10 +81,10 @@ void gameloop(void)
   if (game.levelnum==64)
     game.oldschool=1;
   if (game.levelnum==65)
-    {
+  {
     game.oldschool=2;
     game.oldschoolsound=-200;
-    }
+  }
   if (game.levelnum==66)
     game.oldschool=3;
 
@@ -102,7 +102,7 @@ void gameloop(void)
   resetmenuitems();
 
   while ((game.exit<2 || game.exitdelay>0) && !windowinfo.shutdown)
-    {
+  {
     frametimer=SDL_GetTicks();
 
     glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -120,49 +120,49 @@ void gameloop(void)
 
     if (game.over!=0 && level.gametype<10)
     if (game.exit==0)
-      {
+    {
       if (game.over>=3 && game.over<=5)
-        {
+      {
         game.exit=5;
         game.exitdelay=100;
-        }
+      }
       if (game.over==2)
-        {
+      {
         game.exit=4;
         game.exitdelay=100;
-        }
+      }
       if (game.over==1)
-        {
+      {
         game.exit=3;
         game.exitdelay=100;
         if (game.levelnum==65)
           game.exitdelay=200;
-        }
       }
+    }
 
     numofmenuitems=0;
     if (game.exit==0)
-      {
+    {
       createmenuitem("",0,0,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_ESC);
       setmenuitem(MO_SET,&game.exit,1);
-      }
+    }
     if (game.exit==1)
-      {
+    {
       count=240;
 
       if (game.over==0)
-        {
+      {
         createmenuitem(TXT_RETURN_TO_GAME,(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_HOTKEY,SCAN_ESC);
         setmenuitem(MO_SET,&game.exit,0);
-        }
+      }
       else
         createmenuitemempty();
       count+=16;
 
       if (game.levelnum<64)
-        {
+      {
         if (level.gametype==0 && (game.levelnum>0 || mappack.active) && !game.playreplay)
           createmenuitem(TXT_RESETLEVEL_MINUSONE,(320|TEXT_CENTER),count,16,1.0f,1.0f,1.0f,1.0f);
         else
@@ -171,7 +171,7 @@ void gameloop(void)
         if (level.gametype==0)
           setmenuitem(MO_SET,&game.exit,3);
         count+=16;
-        }
+      }
       else
         createmenuitemempty();
 
@@ -182,44 +182,44 @@ void gameloop(void)
       setmenuitem(MO_HOTKEY,SCAN_E);
       setmenuitem(MO_SET,&game.exit,2);
       count+=16;
-      }
+    }
     if (game.exit==3)
-      {
+    {
       if (game.time>0)
-        {
+      {
         createmenuitem("       ",(320|TEXT_CENTER),(240|TEXT_CENTER),20,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_SET,&game.exitdelay,0);
-        }
+      }
       else
-        {
+      {
         createmenuitem(TXT_TIMEUP,(320|TEXT_CENTER),(240|TEXT_CENTER),20,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_SET,&game.exitdelay,0);
-        }
       }
+    }
     if (game.exit==4)
-      {
+    {
       createmenuitem(TXT_COMPLETE,524|TEXT_CENTER,266,20,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_IMAGE,462);
       setmenuitem(MO_RESIZE,(320|TEXT_CENTER),(240|TEXT_CENTER),256,128);
       setmenuitem(MO_SET,&game.exitdelay,0);
-      }
+    }
     if (game.exit==5)
-      {
+    {
       if (game.levelnum!=34)
-        {
+      {
         createmenuitem(TXT_WARPZONE,(320|TEXT_CENTER),(240|TEXT_CENTER),24,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_SET,&game.exitdelay,0);
-        }
+      }
       else
-        {
+      {
         //createmenuitem("OOPS!",(320|TEXT_CENTER),(240|TEXT_CENTER),24,1.0f,1.0f,1.0f,1.0f);
         //setmenuitem(MO_SET,&game.exitdelay,0);
         createmenuitem(TXT_OOPS,(320|TEXT_CENTER),(240|TEXT_CENTER),24,1.0f,1.0f,1.0f,1.0f);
         setmenuitem(MO_IMAGE,465);
         setmenuitem(MO_RESIZE,(320|TEXT_CENTER),(240|TEXT_CENTER),256,128);
         setmenuitem(MO_SET,&game.exitdelay,0);
-        }
       }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -230,18 +230,18 @@ void gameloop(void)
     if (game.exit==1)
     if (level.gametype!=0)
     if (menuitem[1].active)
-      {
+    {
       setuplevel();
       setupgame();
 
       game.exit=0;
       menuitem[1].active=0;
-      }
+    }
 
     if (game.dialog>0)
-      {
+    {
       if (game.levelnum!=68 || (game.dialog!=13 && game.dialog!=14))
-        {
+      {
         if (game.dialogdelay>0)
           game.dialogdelay--;
   
@@ -258,40 +258,40 @@ void gameloop(void)
           count2=1;
   
         if (count2==1)
-          {
+        {
           game.dialog--;
           game.dialogdelay=1000;
 
           if (game.levelnum==68)
           if (game.dialog==4)
-            {
+          {
             game.numoflives=99;
             game.exit=4;
             game.exitdelay=0;
-            }
           }
         }
+      }
       else
-        {
+      {
         count2=0;
         if (keyboard[control[0].key[2]] && !prevkeyboard[control[0].key[2]])
           count2=1;
         if (keyboard[control[0].key[3]] && !prevkeyboard[control[0].key[3]])
           count2=1;
         if (control[0].joysticknum!=-1)
-          {
+        {
           if (joystick[control[0].joysticknum].axis[1]>=0.5f && prevjoystick[control[0].joysticknum].axis[1]<0.5f)
             count2=1;
           if (joystick[control[0].joysticknum].axis[1]<=-0.5f && prevjoystick[control[0].joysticknum].axis[1]>-0.5f)
             count2=1;
-          }
+        }
         if (count2==1)
-          {
+        {
           if (game.dialog==14)
             game.dialog=13;
           else
             game.dialog=14;
-          }
+        }
 
         count2=0;
         for (count=4;count<8;count++)
@@ -304,14 +304,14 @@ void gameloop(void)
           count2=1;
 
         if (count2==1)
-          {
+        {
           if (game.dialog==14)
             game.dialog=12;
           else
             game.dialog=1;
-          }
         }
       }
+    }
     checkmusic();
 
     if (game.levelnum>=1 && game.levelnum<=7)
@@ -332,10 +332,10 @@ void gameloop(void)
       game.songnum=2;
 
     if (game.levelnum==0)
-      {
+    {
       if (game.songnum==-1)
         game.songnum=rand()%5;
-      }
+    }
     if (level.gametype==11)
       game.songnum=7;
     /*
@@ -348,11 +348,11 @@ void gameloop(void)
     */
 #ifdef TESTIT
     if (keyboard[SCAN_M] && !prevkeyboard[SCAN_M])
-      {
+    {
       game.songnum++;
       if (game.songnum>3)
         game.songnum=0;
-      }
+    }
     if (keyboard[SCAN_N] && !prevkeyboard[SCAN_N])
       game.songnum=-1;
     if (keyboard[SCAN_T] && !prevkeyboard[SCAN_T])
@@ -360,10 +360,10 @@ void gameloop(void)
 #endif
     if (game.levelnum==0)
     if (keyboard[SCAN_F5] && !prevkeyboard[SCAN_F5])
-      {
+    {
       setuplevel();
       setupgame();
-      }
+    }
     if (keyboard[SCAN_P] && !prevkeyboard[SCAN_P] && game.exit==0)
       game.pause^=1;
     //if (keyboard[SCAN_R] && !prevkeyboard[SCAN_R])
@@ -449,18 +449,18 @@ void gameloop(void)
     //stoptimer(7);
 
     if (game.oldschool==1)// || game.oldschool==3)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[334].glname);
       glCopyTexImage2D(GL_TEXTURE_2D,0,GL_RGB,0,0,256,256,0);
-      }
+    }
     if (game.oldschool==2)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[333].glname);
       glCopyTexImage2D(GL_TEXTURE_2D,0,GL_RGB,0,0,128,128,0);
-      }
+    }
 
     if (game.oldschool==1 || game.oldschool==2)// || game.oldschool==3)
-      {
+    {
       setuptextdisplay();
   
       if (game.oldschool==1)// || game.oldschool==3)
@@ -485,12 +485,12 @@ void gameloop(void)
       glVertex3f(-1.0f,-0.75f,-1.0f);
     
       glEnd();
-      }
+    }
 
     setuptextdisplay();
 
     if (game.exit==4 || game.exit==5)
-      {
+    {
       glDisable(GL_TEXTURE_2D);
 
       glBegin(GL_QUADS);
@@ -505,9 +505,9 @@ void gameloop(void)
       glEnd();
 
       glEnable(GL_TEXTURE_2D);
-      }
+    }
     if (game.exit==3)
-      {
+    {
       glDisable(GL_TEXTURE_2D);
 
       glBegin(GL_QUADS);
@@ -525,7 +525,7 @@ void gameloop(void)
       glEnd();
 
       glEnable(GL_TEXTURE_2D);
-      }
+    }
 
     if (game.oldschool==0 && !game.bosslevel && level.gametype!=15)
       rendersprites();
@@ -548,7 +548,7 @@ void gameloop(void)
 
     if (game.exit==3 || game.exit==4 || game.exit==5)
     if (game.exitdelay<20)
-      {
+    {
       glDisable(GL_TEXTURE_2D);
 
       glBegin(GL_QUADS);
@@ -563,13 +563,13 @@ void gameloop(void)
       glEnd();
 
       glEnable(GL_TEXTURE_2D);
-      }
+    }
     if (movie.record)
-      {
+    {
       if (movie.framenum<game.framenum/2)
         recordframe();
       drawtext("RECORD",0,64,16,1.0f,0.0f,0.0f,1.0f);
-      }
+    }
 #ifdef TESTIT
     /*
     fuckedup[0]=timer[0].totaltime;
@@ -588,12 +588,12 @@ void gameloop(void)
     */
     fuckedup[7]=game.levelnum;
     for (count=0;count<16;count++)
-      {
+    {
       if (fuckedup[count]<8000000)
         drawtext("/i",0,128+count*12,12,1.0f,1.0f,1.0f,1.0f,fuckedup[count]);
       else
         drawtext("/i",0,128+count*12,12,1.0f,0.0f,0.0f,1.0f,fuckedup[count]);
-      }
+    }
 
     drawtext("/f",0,368,16,1.0f,1.0f,1.0f,1.0f,object[0].data[0]);
     drawtext("/f",0,384,16,1.0f,1.0f,1.0f,1.0f,object[0].data[1]);
@@ -608,10 +608,10 @@ void gameloop(void)
       drawtext(TXT_REPLAY,(612|TEXT_END),64,16,1.0f,1.0f,0.0f,1.0f);
 
     if (game.pause && game.exit==0)
-      {
+    {
       drawtext(TXT_PAUSED,(320|TEXT_CENTER),240,16,1.0f,1.0f,1.0f,1.0f);
       drawtext(TXT_PRESS_P,(320|TEXT_CENTER),256,12,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
 
     if (game.exit!=0 || game.godmode)
       drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
@@ -625,7 +625,7 @@ void gameloop(void)
       SDL_Delay(1);
 
     while (SDL_GetTicks()-simtimer>game.simspeed && simcount<3)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-game.simspeed;
       simtimer=SDL_GetTicks()-count;
@@ -639,7 +639,7 @@ void gameloop(void)
         game.exitdelay=0;
 
       if (game.exit==0 && !game.pause && game.dialog==0 && !game.over)
-        {
+      {
         getinputs();
 
         if (!game.playreplay)
@@ -655,12 +655,12 @@ void gameloop(void)
         gamelogic();
 
         //stoptimer(8);
-        }
       }
+    }
 
     if (game.levelnum==0 && game.editing)
     if (keyboard[SCAN_F1] && !prevkeyboard[SCAN_F1])
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -684,13 +684,13 @@ void gameloop(void)
       savelevel("backup.lvl");
 
       simtimer=SDL_GetTicks();
-      }
+    }
 
     SDL_GL_SwapWindow(sdlwindow);
 
     if ((SDL_GetTicks()-frametimer)!=0)
       fps=1000/(SDL_GetTicks()-frametimer);
-    }
+  }
 
   game.songnum=-1;
   checkmusic();
@@ -699,10 +699,10 @@ void gameloop(void)
     deletesound(count);
 
   resetmenuitems();
-  }
+}
 
 void simulation(void)
-  {
+{
   int count,count2;
   float vec[3],vec2[3];
   float intersectpoint[3];
@@ -713,29 +713,29 @@ void simulation(void)
 
   if (game.godmode)
   if (!game.playreplay)
-    {
+  {
     vec[0]=view.position[0]+(float)(mouse.x-320)/32.0f;
     vec[1]=view.position[1]+(float)(240-mouse.y)/32.0f;
     vec[2]=0.0f;
 
     if (mouse.lmb)
-      {
+    {
       if (game.godparticle==-1)
-        {
+      {
         game.godparticle=numofparticles;
         createparticle(16,vec,NULL,10000.0f,-1,10000);
 
         for (count=0;count<numofparticles;count++)
         if (count!=game.godparticle)
         if (particle[count].type==3)
-          {
+        {
           subtractvectors(vec2,vec,particle[count].position);
           if (vectorlength(vec2)<3.0f)
             createbond(count,game.godparticle,16,-1);
-          }
         }
+      }
       else
-        {
+      {
         subtractvectors(vec2,vec,particle[game.godparticle].position);
         scaleaddvectors2(vec2,vec2,particle[game.godparticle].velocity,-4.0f);
 
@@ -744,17 +744,17 @@ void simulation(void)
         scale*=0.01f;
 
         scaleaddvectors2(particle[game.godparticle].velocity,particle[game.godparticle].velocity,vec2,scale);
-        }
-      }
-    else
-      {
-      if (game.godparticle!=-1)
-        {
-        deleteparticle(game.godparticle);
-        game.godparticle=-1;
-        }
       }
     }
+    else
+    {
+      if (game.godparticle!=-1)
+      {
+        deleteparticle(game.godparticle);
+        game.godparticle=-1;
+      }
+    }
+  }
 
   particlesimulation();
   particletimetolive();
@@ -773,16 +773,16 @@ void simulation(void)
       particlecollision(count);
 
   for (count=0;count<numofobjects;count++)
-    {
+  {
     updateogg();
     objectcollision(count);
-    }
+  }
 
   for (count=0;count<numofobjects;count++)
-    {
+  {
     updateogg();
     objectcollisionobject(count);
-    }
+  }
 
   objectcycle();
   objectanimation();
@@ -800,16 +800,16 @@ void simulation(void)
   bosstimetolive();
 
   for (count=0;count<numofobjects;count++)
-    {
+  {
     if (object[count].type==1)
-      {
+    {
       if (object[count].hitpoints<0)
         object[count].hitpoints=0;
 
       if (object[count].hitpoints<object[count].prevhitpoints)
-        {
+      {
         for (count2=0;count2<=(object[count].prevhitpoints-object[count].hitpoints)/20;count2++)
-          {
+        {
           vec[0]=(float)((rnd()&255)-127)/1270.0f;
           vec[1]=(float)((rnd()&255)-127)/1270.0f;
           vec[2]=0.0f;
@@ -825,27 +825,27 @@ void simulation(void)
             particle[numofparticles-1].texturenum=383+40;
           else
             particle[numofparticles-1].texturenum=383+60;
-          }
+        }
         object[count].frame=12;
         object[count].framedelay=0.0f;
         playsound(16,object[count].position,NULL,0.5f,0,1.0f,count,2);
-        }
       }
     }
   }
+}
 
 void getinputs(void)
-  {
+{
   int count;
 
   for (count=0;count<4;count++)
-    {
+  {
     object[count].axis[0]=0.0f;
     object[count].axis[1]=0.0f;
     object[count].button=0;
-    }
+  }
   for (count=0;count<4;count++)
-    {
+  {
     if (keyboard[control[count].key[0]])
       object[count].axis[0]-=1.0f;
     if (keyboard[control[count].key[1]])
@@ -864,7 +864,7 @@ void getinputs(void)
       object[count].button|=8;
 
     if (control[count].joysticknum!=-1)
-      {
+    {
       object[count].axis[0]+=joystick[control[count].joysticknum].axis[0];
       object[count].axis[1]+=joystick[control[count].joysticknum].axis[1];
 
@@ -893,7 +893,7 @@ void getinputs(void)
       if (control[count].button[7]!=-1)
       if (joystick[control[count].joysticknum].button[control[count].button[7]])
         object[count].button|=8;
-      }
+    }
     if (object[count].axis[0]<-1.0f)
       object[count].axis[0]=-1.0f;
     if (object[count].axis[0]>1.0f)
@@ -902,5 +902,5 @@ void getinputs(void)
       object[count].axis[1]=-1.0f;
     if (object[count].axis[1]>1.0f)
       object[count].axis[1]=1.0f;
-    }
   }
+}

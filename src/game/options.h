@@ -28,21 +28,21 @@ void drawsliderbars(void);
 void optionsmenu2(void);
 
 struct OPTION
-  {
+{
   int sound;
   int music;
   float soundvolume;
   float musicvolume;
-  };
+};
 extern struct OPTION option;
 
 struct CONTROL
-  {
+{
   int key[16];
   int joysticknum;
   int axis[4];
   int button[16];
-  };
+};
 extern struct CONTROL control[8];
 
 #endif

@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 void mappackpostgamemenu(void)
-  {
+{
   int count;
   int scoretemp;
   int scorecountdelay;
@@ -58,7 +58,7 @@ void mappackpostgamemenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -66,15 +66,15 @@ void mappackpostgamemenu(void)
     createmenuitem(TXT_BACK,0,0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_ESC);
     if (playermappack[playernum].levelnum!=mappack.numoflevels)
-      {
+    {
       createmenuitem(TXT_NEXTLEVEL,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_N);
-      }
+    }
     else
-      {
+    {
       createmenuitem(TXT_ENDING,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_N);
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -120,7 +120,7 @@ void mappackpostgamemenu(void)
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
@@ -129,16 +129,16 @@ void mappackpostgamemenu(void)
 
       if (scorecountdelay>=25)
       if (scoretemp<playermappack[playernum].totalscore+game.score[0])
-        {
+      {
         if (scoretemp<=playermappack[playernum].totalscore+game.score[0]-10)
           scoretemp+=10;
         else
           scoretemp++;
         if ((scorecountdelay&1)==1)
           playsound(15,view.position,NULL,0.2f,0,1.0f,-1,0);
-        }
       }
     }
+  }
 
   if (menuitem[0].active)
     game.exit=2;
@@ -147,10 +147,10 @@ void mappackpostgamemenu(void)
     deletesound(count);
 
   resetmenuitems();
-  }
+}
 
 void mappackpregamemenu(void)
-  {
+{
   int count,count2;
   int simtimer;
   int simcount;
@@ -166,7 +166,7 @@ void mappackpregamemenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -201,7 +201,7 @@ void mappackpregamemenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
-      {
+    {
       if (playermappack[playernum].levelnum<1)
         playermappack[playernum].levelnum=1;
       if (playermappack[playernum].levelnum>mappack.numoflevels)
@@ -218,11 +218,11 @@ void mappackpregamemenu(void)
       mappack.active=0;
 
       if (game.exit==2 || game.exit==3)
-        {
+      {
         if (playermappack[playernum].numoflives<99)
           playermappack[playernum].numoflives--;
         if (playermappack[playernum].numoflives<0)
-          {
+        {
           if (playermappack[playernum].highscore<playermappack[playernum].totalscore)
             playermappack[playernum].highscore=playermappack[playernum].totalscore;
 
@@ -234,11 +234,11 @@ void mappackpregamemenu(void)
           gameovermenu();
 
           goto changelevelbypass;
-          }
         }
+      }
 
       if (game.exit==4)
-        {
+      {
         game.score[0]+=(object[0].hitpoints/50)*10;
         mappackpostgamemenu();
         playermappack[playernum].totalscore+=game.score[0];
@@ -247,17 +247,17 @@ void mappackpregamemenu(void)
           playermappack[playernum].highscore=playermappack[playernum].totalscore;
 
         if (playermappack[playernum].levelnum==mappack.numoflevels)
-          {
+        {
           mappackendingmenu();
           playermappack[playernum].levelnum=0;
           game.exit=2;
-          }
+        }
         else
           playermappack[playernum].levelnum++;
 
         if (game.exit==2)
           menuitem[0].active=1;
-        }
+      }
 
       changelevelbypass:;
 
@@ -265,31 +265,31 @@ void mappackpregamemenu(void)
       startdelay=0;
 
       joymenunum=1;
-      }
+    }
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
-      }
+    }
 
     if (game.exit==2)
       menuitem[0].active=1;
-    }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void mappackendingmenu(void)
-  {
+{
   int count;
 
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -315,7 +315,7 @@ void mappackendingmenu(void)
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
     SDL_GL_SwapWindow(sdlwindow);
-    }
+  }
 
   resetmenuitems();
-  }
+}

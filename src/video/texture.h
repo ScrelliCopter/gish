@@ -32,7 +32,7 @@ void setuptexture(int texturenum);
 extern char lasttextureloaded[LASTTEXTURELOADED_LEN];
 
 struct TEXTURE
-  {
+{
   int sizex;
   int sizey;
   int mipmaplevels;
@@ -51,7 +51,7 @@ struct TEXTURE
   unsigned int *normal[16];
   int glnamegloss;
   unsigned char *gloss[16];
-  };
+};
 extern struct TEXTURE texture[2048];
 
 #endif

@@ -31,7 +31,7 @@ void renderlevellines(void);
 
 #define EDITOR_FILENAME_LEN 32
 struct EDITOR
-  {
+{
   int active;
   int mode;
   int showgrid;
@@ -45,7 +45,7 @@ struct EDITOR
   int copysize[2];
   int copybuffer[128][128];
   int paste;
-  };
+};
 extern struct EDITOR editor;
 
 #endif

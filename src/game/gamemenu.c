@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 void postgamemenu(void)
-  {
+{
   int count;
   int scoretemp;
   int scorecountdelay;
@@ -60,7 +60,7 @@ void postgamemenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -68,15 +68,15 @@ void postgamemenu(void)
     createmenuitem(TXT_BACK,0,0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_ESC);
     if (game.levelnum!=34)
-      {
+    {
       createmenuitem(TXT_NEXTLEVEL,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_N);
-      }
+    }
     else
-      {
+    {
       createmenuitem(TXT_ENDING,(640|TEXT_END),0,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_N);
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -95,7 +95,7 @@ void postgamemenu(void)
     drawbackground(469,400,160,128,128,640,480);
 
     if (!game.bosslevel)
-      {
+    {
       count=128;
       drawtext(TXT_SMALL_AMBER" /i///i",64,count,16,1.0f,1.0f,1.0f,1.0f,game.bonus[5],game.numofbonus[5]);
       count+=16;
@@ -112,9 +112,9 @@ void postgamemenu(void)
 
       drawtext(TXT_LIFE_BONUS":/i",64,352,16,1.0f,1.0f,1.0f,1.0f,(object[0].hitpoints/50)*10);
       drawtext(TXT_LEVEL_POINTS":/i",64,368,16,1.0f,1.0f,1.0f,1.0f,game.score[0]-(object[0].hitpoints/50)*10);
-      }
+    }
     else
-      {
+    {
       if (game.levelnum==34 && game.exit==4)
         drawtext(TXT_GF_RESCUING_BONUS,64,336,16,1.0f,1.0f,1.0f,1.0f);
       drawtext(TXT_LIFE_BONUS":/i",64,352,16,1.0f,1.0f,1.0f,1.0f,(object[0].hitpoints/50)*10);
@@ -122,7 +122,7 @@ void postgamemenu(void)
         drawtext(TXT_BOSS_POINTS":/i",64,368,16,1.0f,1.0f,1.0f,1.0f,game.score[0]-(object[0].hitpoints/50)*10-1);
       else
         drawtext(TXT_BOSS_POINTS":/i",64,368,16,1.0f,1.0f,1.0f,1.0f,game.score[0]-(object[0].hitpoints/50)*10);
-      }
+    }
 
     drawtext(TXT_TOTAL_POINTS":/i",64,384,16,1.0f,1.0f,1.0f,1.0f,scoretemp);
     drawtext("+/i",64+19*16,384,16,1.0f,1.0f,1.0f,1.0f,game.score[0]-(scoretemp-game.totalscore));
@@ -135,7 +135,7 @@ void postgamemenu(void)
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
@@ -144,16 +144,16 @@ void postgamemenu(void)
 
       if (scorecountdelay>=25)
       if (scoretemp<game.totalscore+game.score[0])
-        {
+      {
         if (scoretemp<=game.totalscore+game.score[0]-10)
           scoretemp+=10;
         else
           scoretemp++;
         if ((scorecountdelay&1)==1)
           playsound(15,view.position,NULL,0.2f,0,1.0f,-1,0);
-        }
       }
     }
+  }
 
   if (menuitem[0].active)
     game.exit=2;
@@ -162,10 +162,10 @@ void postgamemenu(void)
     deletesound(count);
 
   resetmenuitems();
-  }
+}
 
 void pregamemenu(void)
-  {
+{
   int count,count2;
   int simtimer;
   int simcount;
@@ -181,7 +181,7 @@ void pregamemenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -205,18 +205,18 @@ void pregamemenu(void)
 
 #ifdef TESTIT
   if (game.levelnum>=1 && game.levelnum<=34)
-    {
+  {
     if (keyboard[SCAN_R] && !prevkeyboard[SCAN_R])
     if (game.levelnum<34)
       game.levelnum++;
     if (keyboard[SCAN_F] && !prevkeyboard[SCAN_F])
     if (game.levelnum>1)
       game.levelnum--;
-    }
+  }
 #endif
 
     if (game.levelnum<35)
-      {
+    {
       count=(game.levelnum-1)/7+1;
       count2=(game.levelnum-1)%7+1;
       if (count==1)
@@ -233,33 +233,33 @@ void pregamemenu(void)
       drawtext("/i-/i",(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f,count,count2);
       drawtext(TXT_LIVES" /i",(320|TEXT_CENTER),272,16,1.0f,1.0f,1.0f,1.0f,game.numoflives);
       drawtext(TXT_POINTS" /i",(320|TEXT_CENTER),288,16,1.0f,1.0f,1.0f,1.0f,game.totalscore);
-      }
+    }
     if (game.levelnum==64)
-      {
+    {
       drawbackground(526,(320|TEXT_CENTER),48,192,192,640,480);
       drawtext(" -1",(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     if (game.levelnum==65)
-      {
+    {
       drawbackground(526,(320|TEXT_CENTER),48,192,192,640,480);
       drawtext(" -2",(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     if (game.levelnum==66)
-      {
+    {
       drawbackground(526,(320|TEXT_CENTER),48,192,192,640,480);
       drawtext(" -3",(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     if (game.levelnum==67)
-      {
+    {
       drawbackground(526,(320|TEXT_CENTER),48,192,192,640,480);
       drawtext(TXT_ISLE_OF_THE,(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f);
       drawtext(TXT_DEAD,(320|TEXT_CENTER),272,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
     if (game.levelnum==68)
-      {
+    {
       drawbackground(526,(320|TEXT_CENTER),48,192,192,640,480);
       drawtext(TXT_SATANS_LAIR,(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
 
     drawmenuitems();
 
@@ -268,45 +268,45 @@ void pregamemenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)// || startdelay>=150)
-      {
+    {
       loadstorylevel(game.levelnum);
 
       gameloop();
 
       if (game.exit==2 || game.exit==3)
       if (game.levelnum<64)
-        {
+      {
         if (game.numoflives<99)
           game.numoflives--;
         if (game.numoflives<0)
-          {
+        {
           if (player[playernum].highscore<game.totalscore)
             player[playernum].highscore=game.totalscore;
 
           game.totalscore=0;
           game.numoflives=5;
           if (game.difficulty==1)
-            {
+          {
             count2=(game.levelnum-1)%7+1;
             if (count2!=7)
-              {
+            {
               count=(game.levelnum-1)/7;
               game.levelnum=count*7+1;
-              }
             }
+          }
           if (game.difficulty>=2)
             game.levelnum=0;
 
           gameovermenu();
 
           goto changelevelbypass;
-          }
         }
+      }
 
 #ifdef DEMO
       if (game.levelnum==4)
       if (game.exit==4 || game.exit==5)
-        {
+      {
         game.score[0]+=(object[0].hitpoints/50)*10;
         postgamemenu();
         game.totalscore+=game.score[0];
@@ -317,11 +317,11 @@ void pregamemenu(void)
         game.levelnum=5;
 
         goto changelevelbypass;
-        }
+      }
 #endif
       if (game.levelnum==34)
       if (game.exit==4 || game.exit==5)
-        {
+      {
         game.score[0]=10000;
         if (game.levelnum==34 && game.exit==4)
           game.score[0]+=1;
@@ -336,13 +336,13 @@ void pregamemenu(void)
         game.levelnum=35;
 
         goto changelevelbypass;
-        }
+      }
 
       if (game.exit==4)
-        {
+      {
         //if (!game.bosslevel)
         if (game.levelnum!=68 || game.dialog==0)
-          {
+        {
           if (game.levelnum==6)
             game.score[0]=1000;
           if (game.levelnum==13)
@@ -366,16 +366,16 @@ void pregamemenu(void)
           postgamemenu();
           game.totalscore+=game.score[0];
           if (game.exit==2)
-            {
+          {
             game.exit=4;
             menuitem[0].active=1;
-            }
           }
+        }
         if (game.levelnum<35)
           game.levelnum++;
-        }
+      }
       if (game.levelnum==64)
-        {
+      {
         game.levelnum=4;
         if (game.over==3)
           game.levelnum=22;
@@ -385,36 +385,36 @@ void pregamemenu(void)
           game.levelnum=8;
 
         goto changelevelbypass;
-        }
+      }
       if (game.levelnum==65)
-        {
+      {
         game.levelnum=9;
 
         goto changelevelbypass;
-        }
+      }
       if (game.levelnum==66)
-        {
+      {
         game.levelnum=26;
 
         goto changelevelbypass;
-        }
+      }
       if (game.levelnum==67)
-        {
+      {
         if (game.exit==2 || game.exit==3)
           game.levelnum=19;
         else
           game.levelnum=68;
 
         goto changelevelbypass;
-        }
+      }
       if (game.levelnum==68)
-        {
+      {
         game.levelnum=19;
 
         goto changelevelbypass;
-        }
+      }
       if (game.exit==5)
-        {
+      {
         game.totalscore+=game.score[0];
 
         if (game.levelnum==3)
@@ -429,7 +429,7 @@ void pregamemenu(void)
           game.levelnum=66;
 
         goto changelevelbypass;
-        }
+      }
 
       changelevelbypass:;
 
@@ -437,27 +437,27 @@ void pregamemenu(void)
       startdelay=0;
 
       joymenunum=1;
-      }
+    }
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
 
       //startdelay++;
-      }
+    }
 
     if (game.exit==2)
       menuitem[0].active=1;
-    }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void gameovermenu(void)
-  {
+{
   int count;
   int scoretemp;
   int scorecountdelay;
@@ -469,7 +469,7 @@ void gameovermenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -477,10 +477,10 @@ void gameovermenu(void)
     createmenuitem(TXT_BACK,0,0,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_ESC);
     if (game.difficulty<2)
-      {
+    {
       createmenuitem(TXT_CONTINUE,(320|TEXT_CENTER),256,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_C);
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -500,7 +500,7 @@ void gameovermenu(void)
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
     SDL_GL_SwapWindow(sdlwindow);
-    }
+  }
 
   if (menuitem[0].active)
     game.exit=2;
@@ -508,17 +508,17 @@ void gameovermenu(void)
     game.exit=3;
 
   resetmenuitems();
-  }
+}
 
 void endingmenu(void)
-  {
+{
 #ifndef DEMO
   int count;
 
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -539,7 +539,7 @@ void endingmenu(void)
 
     count=192;
     if (game.exit==4)
-      {
+    {
       drawbackground(520,(320|TEXT_CENTER),48,256,128,640,480);
 
       drawtext(TXT_ENDING_LINE1,64,count,14,1.0f,1.0f,1.0f,1.0f);
@@ -567,9 +567,9 @@ void endingmenu(void)
       count+=14;
       drawtext(TXT_ENDING_LINE12,64,count,14,1.0f,1.0f,1.0f,1.0f);
       count+=14;
-      }
+    }
     if (game.exit==5)
-      {
+    {
       drawbackground(519,(320|TEXT_CENTER),48,256,128,640,480);
 
       drawtext(TXT_ENDING_BAD_LINE1,64,count,14,1.0f,1.0f,1.0f,1.0f);
@@ -599,7 +599,7 @@ void endingmenu(void)
       count+=14;
       drawtext(TXT_ENDING_BAD_LINE13,64,count,14,1.0f,1.0f,1.0f,1.0f);
       count+=14;
-      }
+    }
 
     drawtext(TXT_TOTAL_POINTS":/i",64,400,16,1.0f,1.0f,1.0f,1.0f,game.totalscore);
     if (player[playernum].difficulty==1 || player[playernum].difficulty==2)
@@ -613,12 +613,12 @@ void endingmenu(void)
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
     SDL_GL_SwapWindow(sdlwindow);
-    }
+  }
 
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -645,7 +645,7 @@ void endingmenu(void)
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
     SDL_GL_SwapWindow(sdlwindow);
-    }
+  }
 
   resetmenuitems();
 #endif
@@ -655,7 +655,7 @@ void endingmenu(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -703,9 +703,9 @@ void endingmenu(void)
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
 
     SDL_GL_SwapWindow(sdlwindow);
-    }
+  }
 
   resetmenuitems();
 #endif
-  }
+}
 

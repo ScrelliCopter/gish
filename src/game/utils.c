@@ -24,18 +24,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef WINDOZE
 void getcputime(__int64 *ptime);
 struct TIMER
-  {
+{
   __int64 starttime;
   __int64 totaltime;
-  };
+};
 
 __int64 timetemp;
 #else
 struct TIMER
-  {
+{
   int starttime;
   int totaltime;
-  };
+};
 
 int timetemp;
 #endif
@@ -44,34 +44,34 @@ struct TIMER timer[64];
 
 #ifdef WINDOZE
 void getcputime(__int64 *ptime)
-  {
+{
   __asm
-    {
+  {
     rdtsc
     mov esi,ptime
     mov dword ptr [esi],eax
     mov dword ptr 4[esi],edx
-    }
   }
+}
 #endif
 
 void resettimer(int timernum)
-  {
+{
   timer[timernum].totaltime=0;
-  }
+}
 
 void starttimer(int timernum)
-  {
+{
 #ifdef WINDOZE
   getcputime(&timer[timernum].starttime);
 #endif
-  }
+}
 
 void stoptimer(int timernum)
-  {
+{
 #ifdef WINDOZE
   getcputime(&timetemp);
 
   timer[timernum].totaltime+=(timetemp-timer[timernum].starttime);
 #endif
-  }
+}

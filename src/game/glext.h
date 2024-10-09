@@ -34,13 +34,13 @@ PFNGLMULTITEXCOORD4FARBPROC glMultiTexCoord4fARB=NULL;
 #endif
 
 struct GLEXT
-  {
+{
   int compiled_vertex_array;
   int multitexture;
   int texture_env_dot3;
   int stencil_two_side;
   int fragment_program;
-  };
+};
 extern struct GLEXT glext;
 
 #endif

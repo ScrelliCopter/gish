@@ -30,10 +30,10 @@ void bondsimulation2(void);
 int lineintersectline2(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2);
 
 struct PHYSICSTEMP
-  {
+{
   int numofbonds;
   struct
-    {
+  {
     int part1;
     int part2;
     int part3;
@@ -52,20 +52,20 @@ struct PHYSICSTEMP
     int blockx;
     int blocky;
     float forceapplied[2][3];
-    } bond[8192];
-  };
+  } bond[8192];
+};
 extern struct PHYSICSTEMP physicstemp;
 
 extern int numoflevellines;
 struct LEVELLINE
-  {
+{
   float line[2][3];
   float normal[3];
   float friction;
   int blocknum;
   int blockx;
   int blocky;
-  };
+};
 extern struct LEVELLINE levelline[1024];
 
 #endif

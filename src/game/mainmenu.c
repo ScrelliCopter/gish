@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 void mainmenu(void)
-  {
+{
   int count,temp;
   int prevjoymenunum;
   int registered;
@@ -81,12 +81,12 @@ void mainmenu(void)
   SDL_GL_SwapWindow(sdlwindow);
 
   for (count=0;count<64;count++)
-    {
+  {
     texfilename[4]=48+(count/100)%10;
     texfilename[5]=48+(count/10)%10;
     texfilename[6]=48+count%10;
     loadtexturetga(count+256,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-    }
+  }
 
   loadtexturetga(256+64,"cage1.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(256+65,"cage2.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
@@ -266,7 +266,7 @@ void mainmenu(void)
   game.turbomode=config.turbomode;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -322,54 +322,54 @@ void mainmenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[5].active)
-      {
+    {
       launchwebpage("http://www.crypticsea.com");
       menuitem[5].active=0;
-      }
+    }
     if (menuitem[4].active)
-      {
+    {
       //game.songnum=-1;
       //checkmusic();
 
       prevjoymenunum=4;
       creditsmenu();
       joymenunum=prevjoymenunum;
-      }
+    }
     if (menuitem[3].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
       prevjoymenunum=3;
       optionsmenu();
       joymenunum=prevjoymenunum;
-      }
+    }
     if (menuitem[2].active)
-      {
+    {
       //game.songnum=-1;
       //checkmusic();
 
       prevjoymenunum=2;
       versusmenu();
       joymenunum=prevjoymenunum;
-      }
+    }
     if (menuitem[1].active)
-      {
+    {
       //game.songnum=-1;
       //checkmusic();
 
       prevjoymenunum=1;
       playermenu();
       joymenunum=prevjoymenunum;
-      }
     }
+  }
 
   game.songnum=-1;
   checkmusic();
-  }
+}
 
 void loadbackground(int texturenum,char *filename)
-  {
+{
   loadtexturetgapartial(texturenum,filename,0,0,256,256);
   loadtexturetgapartial(texturenum+1,filename,256,0,256,256);
   loadtexturetgapartial(texturenum+2,filename,512,0,256,256);
@@ -382,10 +382,10 @@ void loadbackground(int texturenum,char *filename)
   loadtexturetgapartial(texturenum+9,filename,256,512,256,256);
   loadtexturetgapartial(texturenum+10,filename,512,512,256,256);
   loadtexturetgapartial(texturenum+11,filename,768,512,256,256);
-  }
+}
 
 void displaybackground(int texturenum)
-  {
+{
   drawbackground(texturenum,0,0,256,256,800,600);
   drawbackground(texturenum+1,256,0,256,256,800,600);
   drawbackground(texturenum+2,512,0,256,256,800,600);
@@ -398,10 +398,10 @@ void displaybackground(int texturenum)
   drawbackground(texturenum+9,256,512,256,256,800,600);
   drawbackground(texturenum+10,512,512,256,256,800,600);
   drawbackground(texturenum+11,768,512,256,256,800,600);
-  }
+}
 
 void versusmenu(void)
-  {
+{
   int count;
   int unlocked;
 
@@ -415,7 +415,7 @@ void versusmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -435,10 +435,10 @@ void versusmenu(void)
     createmenuitem(TXT_DRAGSTER,(320|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_D);
     if (unlocked)
-      {
+    {
       createmenuitem(TXT_COLLECTION,(512|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_C);
-      }
+    }
 
     checksystemmessages();
     checkkeyboard();
@@ -457,10 +457,10 @@ void versusmenu(void)
     displaybackground(600);
 
     if (!unlocked)
-      {
+    {
       drawbackground(256+68,448,328,96,96,640,480);
       drawtext("?????",(512|TEXT_CENTER),444,16,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
 
     drawmenuitems();
 
@@ -472,13 +472,13 @@ void versusmenu(void)
     for (count=1;count<=7;count++)
     if (menuitem[count].active)
       versusmodemenu(count-1);
-    }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void storyscreen(void)
-  {
+{
   int count;
   int simtimer;
   int simcount;
@@ -497,7 +497,7 @@ void storyscreen(void)
   joymenunum=1;
 
   while (!menuitem[0].active && screennum<8 && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -531,14 +531,14 @@ void storyscreen(void)
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
 
       loaddelay++;
       if (loaddelay>=400)
-        {
+      {
         screennum++;
         if (screennum==1)
           loadbackground(824,"story2.tga");
@@ -555,10 +555,10 @@ void storyscreen(void)
         if (screennum==7)
           loadbackground(824,"story8.tga");
         loaddelay=0;
-        }
       }
+    }
     if (menuitem[1].active)
-      {
+    {
       screennum++;
       if (screennum==1)
         loadbackground(824,"story2.tga");
@@ -576,14 +576,14 @@ void storyscreen(void)
         loadbackground(824,"story8.tga");
       loaddelay=0;
       menuitem[1].active=0;
-      }
     }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void introscreen(void)
-  {
+{
   int count,count2;
   int simtimer;
   int simcount;
@@ -603,7 +603,7 @@ void introscreen(void)
   resetmenuitems();
 
   while (!menuitem[0].active && loaddelay<200 && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -638,71 +638,71 @@ void introscreen(void)
     if (secretsequence==9)
       count2=5;
     if (secretsequence==10)
-      {
+    {
       if (game.turbomode==0)
-        {
+      {
         vec[0]=0.0f;
         vec[1]=0.0f;
         vec[2]=0.0f;
         playsound(10,vec,NULL,0.4f,0,1.0f,-1,0);
-        }
-      game.turbomode=1;
       }
+      game.turbomode=1;
+    }
 
     for (count=0;count<8;count++)
-      {
+    {
       if (keyboard[control[0].key[count]] && !prevkeyboard[control[0].key[count]])
-        {
+      {
         if (count==count2)
           secretsequence++;
         else
           secretsequence=0;
-        }
+      }
 
       if (control[0].joysticknum!=-1)
-        {
+      {
         if (count==0)
         if (joystick[control[0].joysticknum].axis[0]<=-0.5f && prevjoystick[control[0].joysticknum].axis[0]>-0.5f)
-          {
+        {
           if (count==count2)
             secretsequence++;
           else
             secretsequence=0;
-          }
+        }
         if (count==1)
         if (joystick[control[0].joysticknum].axis[0]>=0.5f && prevjoystick[control[0].joysticknum].axis[0]<0.5f)
-          {
+        {
           if (count==count2)
             secretsequence++;
           else
             secretsequence=0;
-          }
+        }
         if (count==2)
         if (joystick[control[0].joysticknum].axis[1]<=-0.5f && prevjoystick[control[0].joysticknum].axis[1]>-0.5f)
-          {
+        {
           if (count==count2)
             secretsequence++;
           else
             secretsequence=0;
-          }
+        }
         if (count==3)
         if (joystick[control[0].joysticknum].axis[1]>=0.5f && prevjoystick[control[0].joysticknum].axis[1]<0.5f)
-          {
+        {
           if (count==count2)
             secretsequence++;
           else
             secretsequence=0;
-          }
+        }
         if (control[0].button[count]!=-1)
         if (joystick[control[0].joysticknum].button[control[0].button[count]] && !prevjoystick[control[0].joysticknum].button[control[0].button[count]])
-          {
+        {
           if (count==count2)
             secretsequence++;
           else
             secretsequence=0;
-          }
         }
       }
+    }
 
     updateogg();
     checkmusic();
@@ -712,13 +712,13 @@ void introscreen(void)
     setuptextdisplay();
 
     if (loaddelay<100)
-      {
+    {
       alpha=(float)(100-loaddelay)/100.0f;
       glColor4f(1.0f,1.0f,1.0f,alpha);
       displaybackground(800);
-      }
+    }
     else
-      {
+    {
       alpha=(float)(loaddelay-100)/100.0f;
       glColor4f(1.0f,1.0f,1.0f,alpha);
       displaybackground(470);
@@ -734,7 +734,7 @@ void introscreen(void)
       drawtext(VERSIONTEXT,0,470,10,1.0f,1.0f,1.0f,1.0f);
 
       drawtext(TXT_COPYRIGHT,(320|TEXT_CENTER),470,10,0.75f,0.75f,0.75f,alpha);
-      }
+    }
     drawmenuitems();
 
     drawmousecursor(768+font.cursornum,mouse.x,mouse.y,16,1.0f,1.0f,1.0f,1.0f);
@@ -743,14 +743,14 @@ void introscreen(void)
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
 
       loaddelay++;
-      }
     }
+  }
 
   resetmenuitems();
-  }
+}

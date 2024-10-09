@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct CONFIG config;
 
 void loadconfig(void)
-  {
+{
   int count,count2;
   char tempstr[32];
 
@@ -126,27 +126,27 @@ void loadconfig(void)
     option.musicvolume=(float)count/100.0f;
 
   for (count=0;count<4;count++)
-    {
+  {
     for (count2=0;count2<16;count2++)
-      {
+    {
       sprintf(tempstr,"player%dkey%d=",count+1,count2+1);
       optionreadint(&control[count].key[count2],tempstr);
-      }
+    }
 
     sprintf(tempstr,"player%djoysticknum=",count+1);
     optionreadint(&control[count].joysticknum,tempstr);
 
     for (count2=0;count2<4;count2++)
-      {
+    {
       sprintf(tempstr,"player%daxis%d=",count+1,count2+1);
       optionreadint(&control[count].axis[count2],tempstr);
-      }
+    }
     for (count2=0;count2<16;count2++)
-      {
+    {
       sprintf(tempstr,"player%dbutton%d=",count+1,count2+1);
       optionreadint(&control[count].button[count2],tempstr);
-      }
     }
+  }
 
   windowinfo.displayid=config.displayid;
   windowinfo.resolutionx=config.resolutionx;
@@ -156,12 +156,12 @@ void loadconfig(void)
   windowinfo.depthbits=config.depthbits;
   windowinfo.stencilbits=config.stencilbits;
   windowinfo.fullscreen=config.fullscreen;
-  }
+}
 
 FILE *fp;
 
 void saveconfig(void)
-  {
+{
   int count,count2;
   char tempstr[32];
 
@@ -198,33 +198,33 @@ void saveconfig(void)
   optionwriteint(&count,"musicvolume=");
 
   for (count=0;count<4;count++)
-    {
+  {
     for (count2=0;count2<16;count2++)
-      {
+    {
       sprintf(tempstr,"player%dkey%d=",count+1,count2+1);
       optionwriteint(&control[count].key[count2],tempstr);
-      }
+    }
 
     sprintf(tempstr,"player%djoysticknum=",count+1);
     optionwriteint(&control[count].joysticknum,tempstr);
 
     for (count2=0;count2<4;count2++)
-      {
+    {
       sprintf(tempstr,"player%daxis%d=",count+1,count2+1);
       optionwriteint(&control[count].axis[count2],tempstr);
-      }
+    }
     for (count2=0;count2<16;count2++)
-      {
+    {
       sprintf(tempstr,"player%dbutton%d=",count+1,count2+1);
       optionwriteint(&control[count].button[count2],tempstr);
-      }
     }
-
-  fclose(fp);
   }
 
+  fclose(fp);
+}
+
 void notsupportedmenu(void)
-  {
+{
   int count;
   char *glvendor;
   char *glrenderer;
@@ -240,7 +240,7 @@ void notsupportedmenu(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -288,21 +288,21 @@ void notsupportedmenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
-      {
+    {
       launchwebpage("https://www.nvidia.com/Download/index.aspx");
       menuitem[1].active=0;
-      }
+    }
     if (menuitem[2].active)
-      {
+    {
       launchwebpage("https://www.amd.com/en/support");
       menuitem[2].active=0;
-      }
+    }
     if (menuitem[3].active)
-      {
+    {
       launchwebpage("https://downloadcenter.intel.com");
       menuitem[3].active=0;
-      }
     }
+  }
 
   resetmenuitems();
 
@@ -313,31 +313,31 @@ void notsupportedmenu(void)
   fprintf(fp,"%s\r\n",glvendor);
   fprintf(fp,"%s\r\n",glrenderer);
   fprintf(fp,"%s\r\n",ext);
-  }
+}
 
 void optionreadint(int *ptr,char *str)
-  {
+{
   if (findstring(str))
     *ptr=getint();
 
   parser.textloc=0;
-  }
+}
 
 void optionwriteint(int *ptr,char *str)
-  {
+{
   fprintf(fp,"%s%d\r\n",str,*ptr);
-  }
+}
 
 void optionreadstring(char *ptr,char *str,int size)
-  {
+{
   if (findstring(str))
     getstring(ptr,size);
 
   parser.textloc=0;
-  }
+}
 
 void optionwritestring(char *ptr,char *str,int size)
-  {
+{
   fprintf(fp,"%s%s\r\n",str,ptr);
-  }
+}
 

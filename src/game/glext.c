@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct GLEXT glext;
 
 void loadglextentions(void)
-  {
+{
   char *ext;
   char *glversion;
 
@@ -36,7 +36,7 @@ void loadglextentions(void)
   ext=(char *) glGetString(GL_EXTENSIONS);
 #ifdef WINDOZE
   if (strstr(ext,"GL_ARB_multitexture")!=NULL || SDL_GL_GetProcAddress("glActiveTextureARB")!=NULL)
-    {
+  {
     glActiveTextureARB=(void *) SDL_GL_GetProcAddress("glActiveTextureARB");
     glClientActiveTextureARB=(void *) SDL_GL_GetProcAddress("glClientActiveTextureARB");
     glMultiTexCoord2fARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord2fARB");
@@ -44,20 +44,20 @@ void loadglextentions(void)
     glMultiTexCoord3fARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord3fARB");
     glMultiTexCoord4fARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord4fARB");
     glext.multitexture=1;
-    }
+  }
   else if ((glActiveTextureARB=(void *) SDL_GL_GetProcAddress("glActiveTexture"))!=NULL)
-    {
+  {
     glClientActiveTextureARB=(void *) SDL_GL_GetProcAddress("glClientActiveTexture");
     glMultiTexCoord2fARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord2f");
     glMultiTexCoord2fvARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord2fv");
     glMultiTexCoord3fARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord3f");
     glMultiTexCoord4fARB=(void *) SDL_GL_GetProcAddress("glMultiTexCoord4f");
     glext.multitexture=1;
-    }
+  }
 #endif
 #ifndef WINDOZE
   glext.multitexture=1;
 #endif
   if (strstr(ext,"GL_ARB_texture_env_dot3")!=NULL || (glversion[0]>='2' || glversion[2]>='3'))
     glext.texture_env_dot3=1;
-  }
+}

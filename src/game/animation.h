@@ -27,13 +27,13 @@ void loadanimations(void);
 
 extern int numofanimations;
 struct ANIMATION
-  {
+{
   int loaded;
   int stand[2];
   int walk[2];
   int attack[2];
   int die[2];
-  };
+};
 extern struct ANIMATION animation[128];
 
 #endif

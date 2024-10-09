@@ -31,20 +31,20 @@ void seticon(void);
 
 extern int numofsdldisplays;
 struct SDLDISPLAY
-  {
+{
   SDL_DisplayID id;
   char name[32];
   SDL_Rect bounds;
-  };
+};
 extern struct SDLDISPLAY sdldisplay[32];
 
 extern int numofsdlvideomodes;
 struct SDLVIDEOMODE
-  {
+{
   SDL_DisplayID displayid;
   SDL_DisplayMode displaymode;
   int bitsperpixel;
-  };
+};
 extern struct SDLVIDEOMODE sdlvideomode[4096];
 
 extern SDL_Window *sdlwindow;

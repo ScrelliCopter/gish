@@ -55,7 +55,7 @@ int deleteselectedtext(void);
 extern int numofmenuitems;
 #define MENUITEM_LABEL_LEN 64
 struct MENUITEM
-  {
+{
   char label[MENUITEM_LABEL_LEN];
 	int x;
 	int y;
@@ -79,7 +79,7 @@ struct MENUITEM
   int background;
   void *inputpointer;
   void (*function)();
-  };
+};
 extern struct MENUITEM menuitem[MAXMENUITEMS];
 
 extern int menuinputkeyboard;

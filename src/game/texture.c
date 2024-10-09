@@ -40,16 +40,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <unistd.h>
 
 struct
-  {
+{
   int pagenum;
   int texturenum;
   int tileset;
   int tilepagenum;
   char filename[32];
-  } textureedit;
+} textureedit;
 
 void edittextures(void)
-  {
+{
   int count,count2;
   int texturenum;
   float vec[3];
@@ -61,7 +61,7 @@ void edittextures(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -83,7 +83,7 @@ void edittextures(void)
     setuptextdisplay();
 
     for (count=0;count<32;count++)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[count+textureedit.pagenum*32].glname);
 
       glBegin(GL_QUADS);
@@ -113,9 +113,9 @@ void edittextures(void)
       glVertex3f(vec[0],vec[1],-1.0f);
 
       glEnd();
-      }
+    }
     for (count=0;count<16;count++)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[1792+count+textureedit.tilepagenum*16].glname);
 
       glBegin(GL_QUADS);
@@ -145,10 +145,10 @@ void edittextures(void)
       glVertex3f(vec[0],vec[1],-1.0f);
 
       glEnd();
-      }
+    }
 
     if (textureedit.texturenum!=-1)
-      {
+    {
       glBindTexture(GL_TEXTURE_2D,texture[textureedit.texturenum].glname);
 
       glBegin(GL_QUADS);
@@ -178,7 +178,7 @@ void edittextures(void)
       glVertex3f(vec[0],vec[1],-1.0f);
 
       glEnd();
-      }
+    }
 
     drawtext(TXT_TILESET":/i",0,292,16,1.0f,1.0f,1.0f,1.0f,textureedit.tileset);
 
@@ -190,16 +190,16 @@ void edittextures(void)
 
     if (keyboard[SCAN_LFT_BRACKET] && !prevkeyboard[SCAN_LFT_BRACKET])
     if (textureedit.tileset>0)
-      {
+    {
       textureedit.tileset--;
       loadtilesettemp();
-      }
+    }
     if (keyboard[SCAN_RGT_BRACKET] && !prevkeyboard[SCAN_RGT_BRACKET])
     if (textureedit.tileset<7)
-      {
+    {
       textureedit.tileset++;
       loadtilesettemp();
-      }
+    }
 
     if (keyboard[SCAN_Q] && !prevkeyboard[SCAN_Q])
     if (textureedit.pagenum<7)
@@ -215,7 +215,7 @@ void edittextures(void)
       textureedit.tilepagenum--;
 
     if (mouse.lmb && !prevmouse.lmb)
-      {
+    {
       textureedit.texturenum=-1;
 
       for (count=0;count<32;count++)
@@ -227,9 +227,9 @@ void edittextures(void)
       if (mouse.x>=(count&7)*64+4 && mouse.x<(count&7)*64+60)
       if (mouse.y>=320+4+(count>>3)*64 && mouse.y<320+60+(count>>3)*64)
         textureedit.texturenum=1792+count+textureedit.tilepagenum*16;
-      }
+    }
     if (!mouse.lmb && prevmouse.lmb)
-      {
+    {
       texturenum=-1;
 
       for (count=0;count<32;count++)
@@ -252,20 +252,20 @@ void edittextures(void)
         editor.blocknum=texturenum;
 
       textureedit.texturenum=-1;
-      }
+    }
     if (menuitem[1].active)
-      {
+    {
       loadleveltiles(textureedit.filename);
 
       menuitem[1].active=0;
-      }
     }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void copytexture(int texturenum,int oldtexturenum)
-  {
+{
   int mipmaplevel;
   int count,count2;
   /*
@@ -287,20 +287,20 @@ void copytexture(int texturenum,int oldtexturenum)
   texture[texturenum].minfilter=texture[oldtexturenum].minfilter;
 
   for (mipmaplevel=0;mipmaplevel<texture[texturenum].mipmaplevels;mipmaplevel++)
-    {
+  {
     free(texture[texturenum].rgba[mipmaplevel]);
     texture[texturenum].rgba[mipmaplevel]=(unsigned int *) malloc((texture[texturenum].sizex>>mipmaplevel)*(texture[texturenum].sizey>>mipmaplevel)*4);
 
     for (count=0;count<(texture[texturenum].sizey>>mipmaplevel);count++)
     for (count2=0;count2<(texture[texturenum].sizex>>mipmaplevel);count2++)
       texture[texturenum].rgba[mipmaplevel][count*(texture[texturenum].sizex>>mipmaplevel)+count2]=texture[oldtexturenum].rgba[mipmaplevel][count*(texture[oldtexturenum].sizex>>mipmaplevel)+count2];
-    }
-
-  setuptexture(texturenum);
   }
 
+  setuptexture(texturenum);
+}
+
 void loadtilesettemp(void)
-  {
+{
   int count;
   int changeddir;
   char texfilename[13]="text000.tga";
@@ -325,7 +325,7 @@ void loadtilesettemp(void)
     changeddir=chdir("tile08");
 
   for (count=0;count<256;count++)
-    {
+  {
     texfilename[4]=48+(count/100)%10;
     texfilename[5]=48+(count/10)%10;
     texfilename[6]=48+count%10;
@@ -333,14 +333,14 @@ void loadtilesettemp(void)
       loadtexturetga(count+1792,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
     else
       loadtexturetga(count+1792,texfilename,0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_NEAREST,GL_NEAREST);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void loadleveltiles(char *filename)
-  {
+{
   int count,count2;
   int changeddir;
   int version;
@@ -351,11 +351,11 @@ void loadleveltiles(char *filename)
   changeddir=chdir("level");
 
   if ((fp=fopen(filename,"rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
 
     if (version==9)
-      {
+    {
       fread2(cryptdata,1,32,fp);
       fread2(cryptdata,4,1,fp);
       fread2(cryptdata,4,1,fp);
@@ -373,15 +373,15 @@ void loadleveltiles(char *filename)
 
       fread2(&count2,4,1,fp);
       if (count2<0 || count2>=256)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
 
       for (count=0;count<count2;count++)
-        {
+      {
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
@@ -394,36 +394,36 @@ void loadleveltiles(char *filename)
         fread2(cryptdata,4,3,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
-        }
+      }
       fread2(&count2,4,1,fp);
       if (count2<0 || count2>=1024)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
       for (count=0;count<count2;count++)
-        {
+      {
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
-        }
+      }
       for (count=1;count<251;count++)
-        {
+      {
         fread2(&texture[count].sizex,4,1,fp);
         if (texture[count].sizex<0 || texture[count].sizex>=1024)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         if (texture[count].sizex!=0)
-          {
+        {
           fread2(&texture[count].sizey,4,1,fp);
           fread2(&texture[count].magfilter,4,1,fp);
           fread2(&texture[count].minfilter,4,1,fp);
@@ -447,16 +447,16 @@ void loadleveltiles(char *filename)
           if ((texture[count].sizex&(texture[count].sizex-1))==0)
           if ((texture[count].sizey&(texture[count].sizey-1))==0)
             setuptexture(count);
-          }
+        }
   
         fread2(&block[count].numoflines,4,1,fp);
         if (block[count].numoflines<0 || block[count].numoflines>=64)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         for (count2=0;count2<block[count].numoflines;count2++)
           fread2(block[count].line[count2],4,8,fp);
         fread2(&block[count].friction,4,1,fp);
@@ -467,11 +467,11 @@ void loadleveltiles(char *filename)
         fread2(&block[count].drag,4,1,fp);
         fread2(&block[count].animation,4,1,fp);
         fread2(&block[count].animationspeed,4,1,fp);
-        }
       }
+    }
 
     if (version==10)
-      {
+    {
       fread2(cryptdata,1,32,fp);
       fread2(cryptdata,4,1,fp);
       fread2(cryptdata,4,1,fp);
@@ -489,15 +489,15 @@ void loadleveltiles(char *filename)
 
       fread2(&count2,4,1,fp);
       if (count2<0 || count2>=256)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
 
       for (count=0;count<count2;count++)
-        {
+      {
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
@@ -510,36 +510,36 @@ void loadleveltiles(char *filename)
         fread2(cryptdata,4,3,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
-        }
+      }
       fread2(&count2,4,1,fp);
       if (count2<0 || count2>=1024)
-        {
+      {
         fclose(fp);
         if (changeddir==0)
           chdir("..");
         return;
-        }
+      }
       for (count=0;count<count2;count++)
-        {
+      {
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
         fread2(cryptdata,4,1,fp);
-        }
+      }
       for (count=1;count<251;count++)
-        {
+      {
         fread2(&texture[count].sizex,4,1,fp);
         if (texture[count].sizex<0 || texture[count].sizex>=1024)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         if (texture[count].sizex!=0)
-          {
+        {
           fread2(&texture[count].sizey,4,1,fp);
           fread2(&texture[count].magfilter,4,1,fp);
           fread2(&texture[count].minfilter,4,1,fp);
@@ -560,16 +560,16 @@ void loadleveltiles(char *filename)
           if ((texture[count].sizex&(texture[count].sizex-1))==0)
           if ((texture[count].sizey&(texture[count].sizey-1))==0)
             setuptexture(count);
-          }
+        }
   
         fread2(&block[count].numoflines,4,1,fp);
         if (block[count].numoflines<0 || block[count].numoflines>=64)
-          {
+        {
           fclose(fp);
           if (changeddir==0)
             chdir("..");
           return;
-          }
+        }
         for (count2=0;count2<block[count].numoflines;count2++)
           fread2(block[count].line[count2],4,8,fp);
         fread2(&block[count].friction,4,1,fp);
@@ -580,11 +580,11 @@ void loadleveltiles(char *filename)
         fread2(&block[count].drag,4,1,fp);
         fread2(&block[count].animation,4,1,fp);
         fread2(&block[count].animationspeed,4,1,fp);
-        }
       }
+    }
 
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
@@ -594,4 +594,4 @@ void loadleveltiles(char *filename)
   loadtexturetga(253,"amber1.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(254,"amber2.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
   loadtexturetga(255,"amber3.tga",0,GL_CLAMP_TO_EDGE,GL_CLAMP_TO_EDGE,GL_LINEAR,GL_LINEAR);
-  }
+}

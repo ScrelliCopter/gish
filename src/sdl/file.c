@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 int comparestrings(const void *arg1,const void *arg2)
-  {
+{
   return(strcmp(arg1,arg2));
-  }
+}
 
 int checkfilespec(char *filespec,char *filename)
-  {
+{
   int count,count2;
   int namesize;
 
@@ -46,7 +46,7 @@ int checkfilespec(char *filespec,char *filename)
   count=0;
   count2=0;
   while (filespec[count]!=0 && filename[count2]!=0)
-    {
+  {
     if (filespec[count]!=filename[count2] && filespec[count]!='*')
       return(0);
 
@@ -55,12 +55,12 @@ int checkfilespec(char *filespec,char *filename)
     else if (filespec[count]=='*' && filespec[count+1]==filename[count2])
       count+=2;
     count2++;
-    }
-  return(1);
   }
+  return(1);
+}
 
 void listfiles(char *filespec,filelist_t filelist,int directories)
-  {
+{
 #ifdef WINDOZE
   int count,count2;
   int handle;
@@ -71,26 +71,26 @@ void listfiles(char *filespec,filelist_t filelist,int directories)
   count=0;
   count2=handle;
   while (count2!=-1 && count<FILELIST_COUNT)
-    {
+  {
     if (!directories)
-      {
+    {
       if ((fileinfo.attrib&_A_SUBDIR)==0)
-        {
+      {
         gstrlcpy(filelist[count],fileinfo.name,FILELIST_NAMELEN);
         count++;
-        }
       }
+    }
     else
-      {
+    {
       if ((fileinfo.attrib&_A_SUBDIR)!=0)
       if (fileinfo.name[0]!='.')
-        {
+      {
         gstrlcpy(filelist[count],fileinfo.name,FILELIST_NAMELEN);
         count++;
-        }
       }
-    count2=_findnext(handle,&fileinfo);
     }
+    count2=_findnext(handle,&fileinfo);
+  }
 
   filelist[count][0]=0;
 
@@ -109,33 +109,33 @@ void listfiles(char *filespec,filelist_t filelist,int directories)
 
   count=0;
   if (dfd!=NULL)
-    {
+  {
     while ((dp=readdir(dfd))!=NULL && count<FILELIST_COUNT)
-      {
+    {
       stat(dp->d_name,&stbuf);
       if (!directories)
-        {
+      {
         if ((stbuf.st_mode&S_IFMT)!=S_IFDIR)
         if (dp->d_name[0]!='<')
         if (checkfilespec(filespec,dp->d_name))
-          {
+        {
           gstrlcpy(filelist[count],dp->d_name,FILELIST_NAMELEN);
           count++;
-          }
         }
+      }
       else
-        {
+      {
         if ((stbuf.st_mode&S_IFMT)==S_IFDIR)
         if (dp->d_name[0]!='.')
         if (dp->d_name[0]!='<')
         if (checkfilespec(filespec,dp->d_name))
-          { 
+        { 
           gstrlcpy(filelist[count],dp->d_name,FILELIST_NAMELEN);
           count++;
-          }
         }
       }
     }
+  }
 
   filelist[count][0]=0;
 
@@ -143,10 +143,10 @@ void listfiles(char *filespec,filelist_t filelist,int directories)
 
   qsort(filelist,count,FILELIST_NAMELEN,comparestrings);
 #endif
-  }
+}
 /*
 size_t fread2(void *ptr,size_t psize,size_t pnum,FILE *pfp)
-  {
+{
   int count;
   unsigned char *cptr;
 
@@ -156,33 +156,33 @@ size_t fread2(void *ptr,size_t psize,size_t pnum,FILE *pfp)
 #ifdef THINKSTUPID
   cptr=(unsigned char *) ptr;
   if (psize==1)
-    {
+  {
     for (count=0;count<pnum;count++)
       cptr[count]=fgetc(fp);
-    }
+  }
   if (psize==2)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       cptr[count*2+1]=fgetc(fp);
       cptr[count*2]=fgetc(fp);
-      }
     }
+  }
   if (psize==4)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       cptr[count*4+3]=fgetc(fp);
       cptr[count*4+2]=fgetc(fp);
       cptr[count*4+1]=fgetc(fp);
       cptr[count*4]=fgetc(fp);
-      }
     }
-#endif
   }
+#endif
+}
 
 size_t fwrite2(const void *ptr,size_t psize,size_t pnum,FILE *pfp)
-  {
+{
   int count;
   unsigned char *cptr;
 
@@ -192,94 +192,94 @@ size_t fwrite2(const void *ptr,size_t psize,size_t pnum,FILE *pfp)
 #ifdef THINKSTUPID
   cptr=(unsigned char *) ptr;
   if (psize==1)
-    {
+  {
     for (count=0;count<pnum;count++)
       fputc(cptr[count],fp);
-    }
+  }
   if (psize==2)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       fputc(cptr[count*2+1],fp);
       fputc(cptr[count*2],fp);
-      }
     }
+  }
   if (psize==4)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       fputc(cptr[count*4+3],fp);
       fputc(cptr[count*4+2],fp);
       fputc(cptr[count*4+1],fp);
       fputc(cptr[count*4],fp);
-      }
     }
-#endif
   }
+#endif
+}
 */
 
 size_t freadswap(void *ptr,size_t psize,size_t pnum,FILE *pfp)
-  {
+{
   int count;
   unsigned char *cptr;
 
   cptr=(unsigned char *) ptr;
   if (psize==1)
-    {
+  {
     for (count=0;count<pnum;count++)
       cptr[count]=fgetc(pfp);
-    }
+  }
   else if (psize==2)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       cptr[(count<<1)+1]=fgetc(pfp);
       cptr[(count<<1)]=fgetc(pfp);
-      }
     }
+  }
   else if (psize==4)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       cptr[(count<<2)+3]=fgetc(pfp);
       cptr[(count<<2)+2]=fgetc(pfp);
       cptr[(count<<2)+1]=fgetc(pfp);
       cptr[(count<<2)]=fgetc(pfp);
-      }
     }
-
-  return(pnum);
   }
 
+  return(pnum);
+}
+
 size_t fwriteswap(const void *ptr,size_t psize,size_t pnum,FILE *pfp)
-  {
+{
   int count;
   unsigned char *cptr;
 
   cptr=(unsigned char *) ptr;
   if (psize==1)
-    {
+  {
     for (count=0;count<pnum;count++)
       fputc(cptr[count],pfp);
-    }
+  }
   else if (psize==2)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       fputc(cptr[(count<<1)+1],pfp);
       fputc(cptr[(count<<1)],pfp);
-      }
     }
+  }
   else if (psize==4)
-    {
+  {
     for (count=0;count<pnum;count++)
-      {
+    {
       fputc(cptr[(count<<2)+3],pfp);
       fputc(cptr[(count<<2)+2],pfp);
       fputc(cptr[(count<<2)+1],pfp);
       fputc(cptr[(count<<2)],pfp);
-      }
     }
+  }
 
   return(pnum);
-  }
+}

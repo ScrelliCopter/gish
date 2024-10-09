@@ -39,7 +39,7 @@ int numoflevellines;
 struct LEVELLINE levelline[1024];
 
 void setupphysics(void)
-  {
+{
   int count;
 
   count=1;
@@ -184,17 +184,17 @@ void setupphysics(void)
   bondtype[count].tension=1.5f;
   bondtype[count].rendertype=1;
   bondtype[count].rendersize=0.4f;
-  }
+}
 
 void particlecollision(int particlenum)
-  {
+{
   float vec[3],vec2[3],vec3[3];
   float intersectpoint[3];
   float normal[3];
   float scale;
 
   if (pointintersectlevel(intersectpoint,normal,&scale,particle[particlenum].position))
-    {
+  {
     subtractvectors(vec2,intersectpoint,particle[particlenum].position);
     scaleaddvectors(vec,particle[particlenum].position,normal,dotproduct(vec2,normal));
 
@@ -214,11 +214,11 @@ void particlecollision(int particlenum)
     copyvector(physicstemp.bond[physicstemp.numofbonds].point,vec);
     copyvector(physicstemp.bond[physicstemp.numofbonds].normal,normal);
     physicstemp.numofbonds++;
-    }
   }
+}
 
 void objectcollision(int objectnum)
-  {
+{
   int count,count2;
   int part1,part2;
   int blocknum;
@@ -234,7 +234,7 @@ void objectcollision(int objectnum)
   copyvector(object[objectnum].prevposition,object[objectnum].position);
 
   if (object[objectnum].numofparticles!=0)
-    {
+  {
     zerovector(object[objectnum].position);
     for (count=0;count<object[objectnum].numofparticles;count++)
       addvectors(object[objectnum].position,object[objectnum].position,particle[object[objectnum].particle[count]].position);
@@ -245,17 +245,17 @@ void objectcollision(int objectnum)
 
     if (object[objectnum].type!=1)
     if (object[objectnum].type!=2 || object[objectnum].size[0]>0.5f)
-      {
+    {
       getlevellines(objectnum);
       for (count=0;count<numoflevellines;count++)
-        {
+      {
         if (lineintersectobject(intersectpoint,normal,&scale,levelline[count].line[0],levelline[count].line[1],objectnum,particlelist))
-          {
+        {
           part1=particlelist[0];
           part2=particlelist[1];
   
           if (dotproduct(normal,levelline[count].normal)<-0.707f)
-            {
+          {
             subtractvectors(object[objectnum].orientation[1],object[objectnum].orientation[1],normal);
             object[objectnum].numoforientations++;
   
@@ -299,21 +299,21 @@ void objectcollision(int objectnum)
             physicstemp.bond[physicstemp.numofbonds].blocky=collision.blocky;
     
             physicstemp.numofbonds++;
-            }
           }
         }
       }
+    }
     for (count=0;count<object[objectnum].numofparticles;count++)
-      {
+    {
       if (object[objectnum].particlestick[count])
-        {
+      {
         scaleaddvectors(object[objectnum].orientation[1],object[objectnum].orientation[1],object[objectnum].particlesticknormal[count],0.5f);
         object[objectnum].numoforientations++;
-        }
+      }
 
       particlenum=object[objectnum].particle[count];
       if (pointintersectlevel(intersectpoint,normal,&scale,particle[particlenum].position))
-        {
+      {
         addvectors(object[objectnum].orientation[1],object[objectnum].orientation[1],normal);
         object[objectnum].numoforientations++;
 
@@ -321,7 +321,7 @@ void objectcollision(int objectnum)
           object[objectnum].timetolive=50;
 
         if (object[objectnum].type==1 || object[objectnum].type==4)
-          {
+        {
           blocknum=collision.blocknum;
 
           if (block[blocknum].animation!=0)
@@ -329,13 +329,13 @@ void objectcollision(int objectnum)
             blocknum+=(game.framenum/block[blocknum].animationspeed)%block[blocknum].animation;
 
           if (block[blocknum].middamage!=0)
-            {
+          {
             if (object[objectnum].type==1)
               object[objectnum].hitpoints-=block[blocknum].middamage;
             if (object[objectnum].type==4)
               object[objectnum].hitpoints-=block[blocknum].middamage*4;
-            }
           }
+        }
 
         subtractvectors(vec2,intersectpoint,particle[particlenum].position);
         scaleaddvectors(vec,particle[particlenum].position,normal,dotproduct(vec2,normal));
@@ -359,9 +359,9 @@ void objectcollision(int objectnum)
 
         if ((object[objectnum].button&1)==1 && object[objectnum].type==1)
         if (collision.friction>0.1f)
-          {
+        {
           if (!object[objectnum].particlestick[count])
-            {
+          {
             object[objectnum].particlestick[count]=1;
             copyvector(object[objectnum].particlesticknormal[count],normal);
 
@@ -385,15 +385,15 @@ void objectcollision(int objectnum)
             copyvector(physicstemp.bond[physicstemp.numofbonds].point,vec);
             copyvector(physicstemp.bond[physicstemp.numofbonds].normal,normal);
             physicstemp.numofbonds++;
-            }
           }
         }
       }
     }
   }
+}
 
 void objectcollisionobject(int objectnum)
-  {
+{
   int count,count2;
   int part1,part2;
   int objectcount;
@@ -408,13 +408,13 @@ void objectcollisionobject(int objectnum)
 
   if (object[objectnum].type==3)
     for (count=0;count<object[objectnum].numofparticles;count++)
-      {
+    {
       particlenum=object[objectnum].particle[count];
 
       for (count2=0;count2<numofropes;count2++)
       if (rope[count2].type<=4)
       if (lineintersectline(intersectpoint,normal,&scale,object[objectnum].position,particle[object[objectnum].particle[count]].position,particle[rope[count2].part1].position,particle[rope[count2].part2].position))
-        {
+      {
         subtractvectors(vec,intersectpoint,particle[particlenum].position);
         scaleaddvectors(vec2,particle[particlenum].position,normal,dotproduct(vec,normal));
 
@@ -448,8 +448,8 @@ void objectcollisionobject(int objectnum)
         physicstemp.bond[physicstemp.numofbonds].blockx=0;
         physicstemp.bond[physicstemp.numofbonds].blocky=0;
         physicstemp.numofbonds++;
-        }
       }
+    }
 
   updateogg();
 
@@ -458,23 +458,23 @@ void objectcollisionobject(int objectnum)
   if (objecttype[object[objectnum].type].collide[object[objectcount].type])
   if ((object[objectnum].type!=2 || object[objectnum].timetolive>175) && (object[objectcount].type!=2 || object[objectcount].timetolive>175))
   if (object[objectnum].timetolive>40 && object[objectcount].timetolive>40)
-    {
+  {
     subtractvectors(vec,object[objectnum].position,object[objectcount].position);
 
     if (vectorlength(vec)<object[objectnum].radius+object[objectcount].radius)
     for (count=0;count<object[objectnum].numofparticles;count++)
-      {
+    {
       particlenum=object[objectnum].particle[count];
       //for (count2=0;count2<object[objectcount].numofcdlines;count2++)
       if (pointintersectobject(intersectpoint,normal,&scale,particle[object[objectnum].particle[count]].position,objectcount,objectnum,particlelist))
-        {
+      {
         //part1=object[objectcount].cdline[count2][0];
         //part2=object[objectcount].cdline[count2][1];
         part1=particlelist[0];
         part2=particlelist[1];
 
         //if (lineintersectline2(intersectpoint,normal,&scale,object[objectnum].position,particle[object[objectnum].particle[count]].position,particle[object[objectcount].particle[part1]].position,particle[object[objectcount].particle[part2]].position))
-          {
+        {
           scaleaddvectors(object[objectnum].orientation[1],object[objectnum].orientation[1],normal,0.5f);
           object[objectnum].numoforientations++;
 
@@ -482,10 +482,10 @@ void objectcollisionobject(int objectnum)
           if (game.levelnum==29)
           if (objectcount==38)
           if (game.godmode==0)
-            {
+          {
             game.godmode=1;
             playsound(10,object[objectnum].position,NULL,0.4f,0,1.0f,-1,0);
-            }
+          }
 
           if (object[objectnum].type==1)
           if (object[objectcount].type==4)
@@ -495,16 +495,16 @@ void objectcollisionobject(int objectnum)
           if (object[objectnum].type==1)
           if (object[objectcount].type==6)
           if (object[objectcount].timetolive>16)
-            {
+          {
             object[objectcount].timetolive=16;
             if (level.gametype==12)
-              {
+            {
               if (objectnum==0)
                 game.score[0]++;
               if (objectnum==1)
                 game.score[1]++;
-              }
             }
+          }
 
           //subtractvectors(vec,intersectpoint,particle[particlenum].position);
           //scaleaddvectors(vec2,particle[particlenum].position,normal,dotproduct(vec,normal));
@@ -550,17 +550,17 @@ void objectcollisionobject(int objectnum)
 
           if ((object[objectnum].button&1)==1 && object[objectnum].type==1)
           if (object[objectcount].type!=1 || (object[objectcount].button&4)==0)
-            {
+          {
             //if (!object[objectnum].particlestick[count])
-              {
+            {
               if (object[objectnum].particlestick[count])
-                {
+              {
                 for (count2=0;count2<physicstemp.numofbonds;count2++)
                 if (physicstemp.bond[count2].type==5)
                 if (physicstemp.bond[count2].objectnum[0]==objectnum)
                 if (physicstemp.bond[count2].part4==count)
                   physicstemp.bond[count2].type=-1;
-                }
+              }
 
               object[objectnum].particlestick[count]=1;
 
@@ -592,29 +592,29 @@ void objectcollisionobject(int objectnum)
               if (game.oldschool==2)
               if (object[objectcount].type==3)
               if (game.framenum-game.oldschoolsound>200)
-                {
+              {
                 playsound(22,object[objectnum].position,NULL,1.0f,0,1.0f,objectnum,1);
                 game.oldschoolsound=game.framenum;
-                }
               }
             }
           }
         }
       }
     }
+  }
 
   if (level.gametype>=10)
   for (objectcount=0;objectcount<numofobjects;objectcount++)
   if (object[objectcount].type==1)
-    {
+  {
     for (count=0;count<object[objectcount].numofparticles;count++)
-      {
+    {
       particlenum=object[objectcount].particle[count];
       part1=object[objectcount].particle[((count+4)&15)];
       part2=object[objectcount].particle[((count-4)&15)];
 
       //for (count2=-6;count2<6;count2++)
-        {
+      {
         //part1=object[objectcount].particle[((count+8+count2)&15)];
         //part2=object[objectcount].particle[((count+8+count2+1)&15)];
 
@@ -624,21 +624,21 @@ void objectcollisionobject(int objectnum)
         normalizevector(normal,normal);
         scaleaddvectors(vec,particle[particlenum].position,normal,1.0f);
         if (lineintersectline2(intersectpoint,normal,&scale,vec,particle[particlenum].position,particle[part1].position,particle[part2].position))
-          {
+        {
           subtractvectors(vec,particle[part2].position,particle[part1].position);
           scale=vectorlength(vec);
           if (scale>0.00000001f)
-            {
+          {
             subtractvectors(vec,particle[part1].position,intersectpoint);
             force[0]=vectorlength(vec)/scale;
             subtractvectors(vec,particle[part2].position,intersectpoint);
             force[1]=vectorlength(vec)/scale;
-            }
+          }
           else
-            {
+          {
             force[0]=0.5f;
             force[1]=0.5f;
-            }
+          }
           if (force[0]>1.0f)
             force[0]=1.0f;
           if (force[1]>1.0f)
@@ -663,14 +663,14 @@ void objectcollisionobject(int objectnum)
           physicstemp.bond[physicstemp.numofbonds].blockx=0;
           physicstemp.bond[physicstemp.numofbonds].blocky=0;
           physicstemp.numofbonds++;
-          }
         }
       }
     }
   }
+}
 
 void bondsimulation2(void)
-  {
+{
   int count,count2;
   int part1,part2,part3;
   int blocknum;
@@ -683,23 +683,23 @@ void bondsimulation2(void)
   float scale;
 
   for (count2=0;count2<physicstemp.numofbonds;count2++)
-    {
+  {
     zerovector(physicstemp.bond[count2].forceapplied[0]);
     zerovector(physicstemp.bond[count2].forceapplied[1]);
-    }
+  }
 
   for (count2=0;count2<numofbonds;count2++)
-    {
+  {
     part1=bond[count2].part1;
     part2=bond[count2].part2;
     subtractvectors(bond[count2].bondnormal,particle[part2].position,particle[part1].position);
     bond[count2].veclength=vectorlength(bond[count2].bondnormal);
     normalizevector(bond[count2].bondnormal,bond[count2].bondnormal);
     bond[count2].oomass=1.0f/(particle[part1].mass+particle[part2].mass);
-    }
+  }
 
   for (count=0;count<32;count++)
-    {
+  {
     //starttimer(0);
 
     updateogg();
@@ -709,7 +709,7 @@ void bondsimulation2(void)
 
     for (count2=0;count2<numofbonds;count2++)
     if ((count&bond[count2].cycles)==0)
-      {
+    {
       part1=bond[count2].part1;
       part2=bond[count2].part2;
 
@@ -740,16 +740,16 @@ void bondsimulation2(void)
 
       scaleaddvectors2(particle[part1].velocity,particle[part1].velocity,bondnormal,force[0]);
       scaleaddvectors2(particle[part2].velocity,particle[part2].velocity,bondnormal,-force[1]);
-      }
+    }
     //stoptimer(0);
 
     //starttimer(1);
 
     for (count2=0;count2<physicstemp.numofbonds;count2++)
     if ((count&physicstemp.bond[count2].cycles)==0)
-      {
+    {
       if (physicstemp.bond[count2].type==0)
-        {
+      {
         part1=physicstemp.bond[count2].part1;
     
         subtractvectors2(bondnormal,physicstemp.bond[count2].point,particle[part1].position);
@@ -758,26 +758,26 @@ void bondsimulation2(void)
         scaleaddvectors2(vec,vec,particle[part1].prevvelocity,-1.0f);
   
         if (dotproduct(vec,physicstemp.bond[count2].normal)>0.0f)
-          {
+        {
           scalevector2(vec,vec,physicstemp.bond[count2].elasticity);
           calculatefriction(vec,vec2,physicstemp.bond[count2].normal,physicstemp.bond[count2].friction);
           addvectors2(vec,vec,vec2);
           addvectors2(particle[part1].velocity,particle[part1].velocity,vec);
 
           if (particle[part1].type!=5)
-            {
+          {
             addvectors2(physicstemp.bond[count2].forceapplied[0],physicstemp.bond[count2].forceapplied[0],vec);
             if (block[physicstemp.bond[count2].blocknum].breakpoint!=0.0f)
-              {
+            {
               level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]+=vectorlength(vec)*particle[part1].mass;
               if (level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]>block[physicstemp.bond[count2].blocknum].breakpoint)
                 physicstemp.bond[count2].type=-1;
-              }
             }
           }
         }
+      }
       if (physicstemp.bond[count2].type==1)
-        {
+      {
         part1=physicstemp.bond[count2].part1;
     
         subtractvectors2(bondnormal,physicstemp.bond[count2].point,particle[part1].position);
@@ -792,17 +792,17 @@ void bondsimulation2(void)
         addvectors2(particle[part1].velocity,particle[part1].velocity,vec);
         addvectors2(physicstemp.bond[count2].forceapplied[0],physicstemp.bond[count2].forceapplied[0],vec);
         if (block[physicstemp.bond[count2].blocknum].breakpoint!=0.0f)
-          {
+        {
           level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]+=vectorlength(vec)*particle[part1].mass;
           if (level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]>block[physicstemp.bond[count2].blocknum].breakpoint || level.gridmod[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]!=0)
-            {
+          {
             physicstemp.bond[count2].type=-1;
             object[physicstemp.bond[count2].objectnum[0]].particlestick[physicstemp.bond[count2].part4]=0;
-            }
           }
         }
+      }
       if (physicstemp.bond[count2].type==2)
-        {
+      {
         part1=physicstemp.bond[count2].part1;
         part2=physicstemp.bond[count2].part2;
     
@@ -812,7 +812,7 @@ void bondsimulation2(void)
         copyvector(vec,bondnormal);
   
         if (dotproduct(vec,physicstemp.bond[count2].normal)<0.0f)
-          {
+        {
           scalevector2(vec,vec,physicstemp.bond[count2].elasticity);
           calculatefriction(vec,vec2,physicstemp.bond[count2].normal,physicstemp.bond[count2].friction);
           addvectors2(vec,vec,vec2);
@@ -820,15 +820,15 @@ void bondsimulation2(void)
           scaleaddvectors2(particle[part2].velocity,particle[part2].velocity,vec,physicstemp.bond[count2].force[1]);
           addvectors2(physicstemp.bond[count2].forceapplied[0],physicstemp.bond[count2].forceapplied[0],vec);
           if (block[physicstemp.bond[count2].blocknum].breakpoint!=0.0f)
-            {
+          {
             level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]+=vectorlength(vec)*particle[part1].mass;
             if (level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]>block[physicstemp.bond[count2].blocknum].breakpoint)
               physicstemp.bond[count2].type=-1;
-            }
           }
         }
+      }
       if (physicstemp.bond[count2].type==4)
-        {
+      {
         part1=physicstemp.bond[count2].part1;
         part2=physicstemp.bond[count2].part2;
         part3=physicstemp.bond[count2].part3;
@@ -845,7 +845,7 @@ void bondsimulation2(void)
         force[1]=veclength*(particle[part1].mass*physicstemp.bond[count2].force[0]+particle[part2].mass*physicstemp.bond[count2].force[1]);
   
         if (dotproduct(bondnormal,physicstemp.bond[count2].normal)*force[0]<0.0f)
-          {
+        {
           scalevector2(vec,bondnormal,force[0]);
   
           calculatefriction(vec,vec2,physicstemp.bond[count2].normal,physicstemp.bond[count2].friction);
@@ -862,10 +862,10 @@ void bondsimulation2(void)
   
           addvectors2(particle[part3].velocity,particle[part3].velocity,vec);
           addvectors2(physicstemp.bond[count2].forceapplied[1],physicstemp.bond[count2].forceapplied[1],vec);
-          }
         }
+      }
       if (physicstemp.bond[count2].type==5)
-        {
+      {
         part1=physicstemp.bond[count2].part1;
         part2=physicstemp.bond[count2].part2;
         part3=physicstemp.bond[count2].part3;
@@ -897,29 +897,29 @@ void bondsimulation2(void)
 
         addvectors2(particle[part3].velocity,particle[part3].velocity,vec);
         addvectors2(physicstemp.bond[count2].forceapplied[1],physicstemp.bond[count2].forceapplied[1],vec);
-        }
       }
-    //stoptimer(1);
     }
+    //stoptimer(1);
+  }
 
   for (count2=0;count2<physicstemp.numofbonds;count2++)
-    {
+  {
     if (physicstemp.bond[count2].type==0)
     if (physicstemp.bond[count2].objectnum[0]!=-1)
-      {
+    {
       force[0]=dotproduct(physicstemp.bond[count2].forceapplied[0],physicstemp.bond[count2].normal);
       force[1]=vectorlength(physicstemp.bond[count2].forceapplied[0]);
       scale=sqrt(force[1]*force[1]-force[0]*force[0]);
 
       object[physicstemp.bond[count2].objectnum[0]].frictionapplied+=scale;
-      }
     }
+  }
 
   for (count2=0;count2<physicstemp.numofbonds;count2++)
   if (particle[physicstemp.bond[count2].part1].type!=5)
-    {
+  {
     if (physicstemp.bond[count2].type==1)
-      {
+    {
       part1=physicstemp.bond[count2].part1;
   
       subtractvectors(bondnormal,physicstemp.bond[count2].point,particle[part1].position);
@@ -929,13 +929,13 @@ void bondsimulation2(void)
 
       veclength=(vectorlength(bondnormal)-physicstemp.bond[count2].length)-dotproduct(bondnormal,particle[part1].prevvelocity)/vectorlength(bondnormal);
       if (fabs(veclength)>physicstemp.bond[count2].breakpoint || (object[physicstemp.bond[count2].objectnum[0]].button&1)==0)
-        {
+      {
         physicstemp.bond[count2].type=-1;
         object[physicstemp.bond[count2].objectnum[0]].particlestick[physicstemp.bond[count2].part4]=0;
-        }
       }
+    }
     if (physicstemp.bond[count2].type==5)
-      {
+    {
       part1=physicstemp.bond[count2].part1;
       part2=physicstemp.bond[count2].part2;
       part3=physicstemp.bond[count2].part3;
@@ -959,17 +959,17 @@ void bondsimulation2(void)
 
       veclength=vectorlength(bondnormal);
       if (fabs(veclength)>physicstemp.bond[count2].breakpoint || (object[physicstemp.bond[count2].objectnum[0]].button&1)==0 || (object[physicstemp.bond[count2].objectnum[0]].button&4)==4 || (object[physicstemp.bond[count2].objectnum[1]].button&4)==4)
-        {
+      {
         physicstemp.bond[count2].type=-1;
         object[physicstemp.bond[count2].objectnum[0]].particlestick[physicstemp.bond[count2].part4]=0;
-        }
       }
+    }
 
     blocknum=physicstemp.bond[count2].blocknum;
     if (block[blocknum].breakpoint!=0.0f)
-      {
+    {
       if (level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]>block[blocknum].breakpoint)
-        {
+      {
         level.gridmod[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]=1;
         if (blocknum>=240 && blocknum<248)
           level.gridmod[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]=2;
@@ -981,10 +981,10 @@ void bondsimulation2(void)
         playsound(0,vec,NULL,0.75f,0,0.5f/block[blocknum].breakpoint,-1,0);
 
         if (level.gametype==0)
-          {
+        {
           game.score[0]+=10;
           createsprite(10,vec);
-          }
+        }
         /*
         vec[0]=(float)physicstemp.bond[count2].blockx+0.5f;
         vec[1]=(float)physicstemp.bond[count2].blocky+0.5f;
@@ -1002,7 +1002,7 @@ void bondsimulation2(void)
         object[numofobjects-1].texcoord[3][1]=1.0f;
         */
         if (numofobjects<500)
-          {
+        {
           vec[0]=(float)physicstemp.bond[count2].blockx+0.25f;
           vec[1]=(float)physicstemp.bond[count2].blocky+0.75f;
           vec[2]=0.0f;
@@ -1062,26 +1062,26 @@ void bondsimulation2(void)
           object[numofobjects-1].texcoord[2][1]=0.5f+0.5f;
           object[numofobjects-1].texcoord[3][0]=0.0f;
           object[numofobjects-1].texcoord[3][1]=0.5f+0.5f;
-          }
         }
+      }
       level.gridforce[physicstemp.bond[count2].blocky][physicstemp.bond[count2].blockx]=0.0f;
-      }
-    }
-
-  count2=0;
-  while (count2<physicstemp.numofbonds)
-    {
-    while (count2<physicstemp.numofbonds && physicstemp.bond[count2].type!=1 && physicstemp.bond[count2].type!=5)
-      {
-      physicstemp.numofbonds--;
-      memcpy(&physicstemp.bond[count2],&physicstemp.bond[physicstemp.numofbonds],sizeof(physicstemp.bond[0]));
-      }
-    count2++;
     }
   }
 
-int lineintersectline2(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2)
+  count2=0;
+  while (count2<physicstemp.numofbonds)
   {
+    while (count2<physicstemp.numofbonds && physicstemp.bond[count2].type!=1 && physicstemp.bond[count2].type!=5)
+    {
+      physicstemp.numofbonds--;
+      memcpy(&physicstemp.bond[count2],&physicstemp.bond[physicstemp.numofbonds],sizeof(physicstemp.bond[0]));
+    }
+    count2++;
+  }
+}
+
+int lineintersectline2(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2)
+{
   float vec[3],vec2[3];
   float dot1,dot2;
 
@@ -1142,5 +1142,5 @@ int lineintersectline2(float *intersectpoint,float *normal,float *scale,float *s
     return(0);
 
   return(1);
-  }
+}
 

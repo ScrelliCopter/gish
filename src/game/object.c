@@ -41,7 +41,7 @@ int numofropes;
 struct ROPE rope[1024];
 
 void createbox(float position[3],float sizex,float sizey,float mass,float friction)
-  {
+{
   int count,count2;
   float vec[3];
 
@@ -105,10 +105,10 @@ void createbox(float position[3],float sizex,float sizey,float mass,float fricti
   object[numofobjects].numofcdlines=4;
 
   for (count=0;count<4;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&3);
-    }
+  }
   object[numofobjects].texcoord[0][0]=0.0f;
   object[numofobjects].texcoord[0][1]=0.0f;
   object[numofobjects].texcoord[1][0]=1.0f;
@@ -124,10 +124,10 @@ void createbox(float position[3],float sizex,float sizey,float mass,float fricti
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createtarboy(float position[3])
-  {
+{
   int count;
   float vec[3];
   float angle;
@@ -150,7 +150,7 @@ void createtarboy(float position[3])
 
   object[numofobjects].numofparticles=16;
   for (count=0;count<16;count++)
-    {
+  {
     angle=(float)count*pi/8.0f;
     size=0.9f;
     if (game.supersize)
@@ -162,23 +162,23 @@ void createtarboy(float position[3])
     vec[2]=0.0f;
     createparticle(1,vec,NULL,0.25f,numofobjects,10000);
     object[numofobjects].particle[count]=numofparticles-1;
-    }
+  }
 
   for (count=0;count<16;count++)
-    {
+  {
     createbond(object[numofobjects].particle[((count+1)&15)],object[numofobjects].particle[(count&15)],3,-1);
     createbond(object[numofobjects].particle[((count+2)&15)],object[numofobjects].particle[(count&15)],3,-1);
     createbond(object[numofobjects].particle[((count+8)&15)],object[numofobjects].particle[(count&15)],2,numofobjects);
-    }
+  }
   copyvector(object[numofobjects].position,position);
 
   object[numofobjects].numofcdlines=16;
 
   for (count=0;count<16;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&15);
-    }
+  }
 
   object[numofobjects].soundnum[0]=-1;
   object[numofobjects].soundnum[1]=-1;
@@ -186,10 +186,10 @@ void createtarboy(float position[3])
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createwheel(float position[3],float sizex,float sizey,float mass,float friction,int anchor)
-  {
+{
   int count;
   float vec[3];
   float angle;
@@ -209,7 +209,7 @@ void createwheel(float position[3],float sizex,float sizey,float mass,float fric
 
   object[numofobjects].numofparticles=17;
   for (count=0;count<16;count++)
-    {
+  {
     angle=(float)count*pi/8.0f;
     vec[0]=position[0]+cos(angle)*sizex*0.5f;
     vec[1]=position[1]-sin(angle)*sizey*0.5f;
@@ -217,7 +217,7 @@ void createwheel(float position[3],float sizex,float sizey,float mass,float fric
 
     createparticle(3,vec,NULL,mass/20.0f,numofobjects,10000);
     object[numofobjects].particle[count]=numofparticles-1;
-    }
+  }
 
   count=16;
   if (!anchor)
@@ -228,23 +228,23 @@ void createwheel(float position[3],float sizex,float sizey,float mass,float fric
 
 
   for (count=0;count<16;count++)
-    {
+  {
     createbond(object[numofobjects].particle[((count+1)&15)],object[numofobjects].particle[(count&15)],1,numofobjects);
     createbond(object[numofobjects].particle[((count+2)&15)],object[numofobjects].particle[(count&15)],1,numofobjects);
     createbond(object[numofobjects].particle[((count+3)&15)],object[numofobjects].particle[(count&15)],1,numofobjects);
     //createbond(object[numofobjects].particle[((count+4)&15)],object[numofobjects].particle[(count&15)],1,numofobjects);
     //createbond(object[numofobjects].particle[((count+8)&15)],object[numofobjects].particle[(count&15)],1,numofobjects);
     createbond(object[numofobjects].particle[16],object[numofobjects].particle[(count&15)],1,numofobjects);
-    }
+  }
   copyvector(object[numofobjects].position,position);
 
   object[numofobjects].numofcdlines=16;
 
   for (count=0;count<16;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&15);
-    }
+  }
 
   object[numofobjects].soundnum[0]=-1;
   object[numofobjects].soundnum[1]=-1;
@@ -252,10 +252,10 @@ void createwheel(float position[3],float sizex,float sizey,float mass,float fric
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void setupobjecttypes(void)
-  {
+{
   int count;
 
   count=1;
@@ -356,17 +356,17 @@ void setupobjecttypes(void)
   objecttype[count].collide[9]=1;
   objecttype[count].collide[10]=1;
   objecttype[count].collide[20]=1;
-  }
+}
 
 void createrope(int type,int particlenum,int particlenum2,int objectnum,int objectnum2,int texturenum)
-  {
+{
   int count,count2;
   int length;
   float vec[3],vec2[3];
   float mass;
 
   if (type<5)
-    {
+  {
     if (type==1)
       mass=0.125f;
     if (type==2)
@@ -397,7 +397,7 @@ void createrope(int type,int particlenum,int particlenum2,int objectnum,int obje
     numofropes++;
   
     for (count=1;count<length-1;count++)
-      {
+    {
       addvectors(vec2,vec2,vec);
       createparticle(4,vec2,NULL,mass,-1,10000);
       createbond(numofparticles-2,numofparticles-1,4,numofropes);
@@ -409,7 +409,7 @@ void createrope(int type,int particlenum,int particlenum2,int objectnum,int obje
       else
         rope[numofropes].texturenum=361;
       numofropes++;
-      }
+    }
     createbond(numofparticles-1,particlenum2,4,numofropes);
     rope[numofropes].type=type;
     rope[numofropes].part1=numofparticles-1;
@@ -419,27 +419,27 @@ void createrope(int type,int particlenum,int particlenum2,int objectnum,int obje
     else
       rope[numofropes].texturenum=361;
     numofropes++;
-    }
+  }
   else 
-    {
+  {
     if (type<10)
       createbond(particlenum,particlenum2,7,numofropes);
     else
       createbond(particlenum,particlenum2,8,numofropes);
 
     if (type<9)
-      {
+    {
       if (level.object[objectnum2].type==6 || level.object[objectnum2].type==7)
-        {
+      {
         subtractvectors(vec,level.object[objectnum2].position,particle[particlenum].position);
         subtractvectors(vec2,particle[particlenum2].position,object[objectnum2].position);
         rope[numofropes].range=vectorlength(vec2);
   
         bond[numofbonds-1].length=vectorlength(vec)-rope[numofropes].range;
         bond[numofbonds-1].maxlength=vectorlength(vec)-rope[numofropes].range;
-        }
+      }
       if (level.object[objectnum2].type>=2 && level.object[objectnum2].type<6)
-        {
+      {
         subtractvectors(vec2,level.object[objectnum2].position,object[objectnum].position);
         subtractvectors(vec,particle[particlenum2].position,particle[particlenum].position);
   
@@ -468,8 +468,8 @@ void createrope(int type,int particlenum,int particlenum2,int objectnum,int obje
           copyvector(vec2,particle[particlenum2].position);
         subtractvectors(vec2,particle[particlenum].position,vec2);
         rope[numofropes].range=(vectorlength(vec2)-bond[numofbonds-1].maxlength)*0.5f;
-        }
       }
+    }
 
     rope[numofropes].type=type;
     rope[numofropes].part1=particlenum;
@@ -498,11 +498,11 @@ void createrope(int type,int particlenum,int particlenum2,int objectnum,int obje
       rope[numofropes].texturenum=362;
 
     numofropes++;
-    }
   }
+}
 
 void createanchor(float position[3])
-  {
+{
   int count;
   float vec[3];
 
@@ -531,10 +531,10 @@ void createanchor(float position[3])
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createbutton(float position[3],float mass)
-  {
+{
   int count,count2;
   float vec[3];
 
@@ -607,10 +607,10 @@ void createbutton(float position[3],float mass)
 
   object[numofobjects].numofcdlines=6;
   for (count=0;count<6;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)%6);
-    }
+  }
 
   object[numofobjects].soundnum[0]=-1;
   object[numofobjects].soundnum[1]=-1;
@@ -618,42 +618,42 @@ void createbutton(float position[3],float mass)
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createswitch(float position[3],float mass,int rotate)
-  {
+{
   int count,count2;
   float vec[3],vec2[3];
   float orientation[2][2];
 
   if (rotate==0)
-    {
+  {
     orientation[0][0]=1.0f;
     orientation[0][1]=0.0f;
     orientation[1][0]=0.0f;
     orientation[1][1]=1.0f;
-    }
+  }
   if (rotate==1)
-    {
+  {
     orientation[0][0]=0.0f;
     orientation[0][1]=-1.0f;
     orientation[1][0]=1.0f;
     orientation[1][1]=0.0f;
-    }
+  }
   if (rotate==2)
-    {
+  {
     orientation[0][0]=-1.0f;
     orientation[0][1]=0.0f;
     orientation[1][0]=0.0f;
     orientation[1][1]=-1.0f;
-    }
+  }
   if (rotate==3)
-    {
+  {
     orientation[0][0]=0.0f;
     orientation[0][1]=-1.0f;
     orientation[1][0]=-1.0f;
     orientation[1][1]=0.0f;
-    }
+  }
 
   memset(&object[numofobjects],0,sizeof(object[numofobjects]));
 
@@ -726,13 +726,13 @@ void createswitch(float position[3],float mass,int rotate)
 
   object[numofobjects].numofcdlines=4;
   for (count=0;count<4;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     if (rotate!=3)
       object[numofobjects].cdline[count][1]=((count+1)&3);
     else
       object[numofobjects].cdline[count][1]=((count-1)&3);
-    }
+  }
 
   object[numofobjects].texcoord[0][0]=0.0f;
   object[numofobjects].texcoord[0][1]=0.0f;
@@ -749,10 +749,10 @@ void createswitch(float position[3],float mass,int rotate)
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createbeast(int beasttype,float position[3],float sizex,float sizey,float mass,float friction)
-  {
+{
   int count,count2;
   float vec[3];
 
@@ -831,10 +831,10 @@ void createbeast(int beasttype,float position[3],float sizex,float sizey,float m
   object[numofobjects].numofcdlines=4;
 
   for (count=0;count<4;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&3);
-    }
+  }
 
   object[numofobjects].soundnum[0]=-1;
   object[numofobjects].soundnum[1]=-1;
@@ -842,10 +842,10 @@ void createbeast(int beasttype,float position[3],float sizex,float sizey,float m
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createbobble(int beasttype,float position[3],float sizex,float sizey,float mass,float friction)
-  {
+{
   int count,count2;
   float vec[3];
 
@@ -951,10 +951,10 @@ void createbobble(int beasttype,float position[3],float sizex,float sizey,float 
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createhead(float position[3],float sizex,float sizey,float mass,float friction)
-  {
+{
   int count;
   float vec[3];
   float angle;
@@ -976,7 +976,7 @@ void createhead(float position[3],float sizex,float sizey,float mass,float frict
 
   object[numofobjects].numofparticles=8;
   for (count=0;count<8;count++)
-    {
+  {
     angle=(float)count*pi/4.0f;
     vec[0]=position[0]+cos(angle)*sizex*0.5f;
     vec[1]=position[1]-sin(angle)*sizey*0.5f;
@@ -984,23 +984,23 @@ void createhead(float position[3],float sizex,float sizey,float mass,float frict
 
     createparticle(3,vec,NULL,mass/8.0f,numofobjects,10000);
     object[numofobjects].particle[count]=numofparticles-1;
-    }
+  }
 
   for (count=0;count<8;count++)
-    {
+  {
     createbond(object[numofobjects].particle[((count+1)&7)],object[numofobjects].particle[count],1,numofobjects);
     createbond(object[numofobjects].particle[((count+2)&7)],object[numofobjects].particle[count],1,numofobjects);
     createbond(object[numofobjects].particle[((count+4)&7)],object[numofobjects].particle[count],1,numofobjects);
-    }
+  }
   copyvector(object[numofobjects].position,position);
 
   object[numofobjects].numofcdlines=8;
 
   for (count=0;count<8;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&7);
-    }
+  }
 
   object[numofobjects].soundnum[0]=-1;
   object[numofobjects].soundnum[1]=-1;
@@ -1008,10 +1008,10 @@ void createhead(float position[3],float sizex,float sizey,float mass,float frict
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createamber(float position[3])
-  {
+{
   int count;
   float vec[3];
   float angle;
@@ -1027,7 +1027,7 @@ void createamber(float position[3])
 
   object[numofobjects].numofparticles=8;
   for (count=0;count<8;count++)
-    {
+  {
     angle=(float)count*pi/4.0f;
     vec[0]=position[0]+cos(angle)*0.35f;
     vec[1]=position[1]-sin(angle)*0.35f;
@@ -1035,23 +1035,23 @@ void createamber(float position[3])
 
     createparticle(3,vec,NULL,0.125f,numofobjects,10000);
     object[numofobjects].particle[count]=numofparticles-1;
-    }
+  }
 
   for (count=0;count<8;count++)
-    {
+  {
     createbond(object[numofobjects].particle[((count+1)&7)],object[numofobjects].particle[count],1,numofobjects);
     createbond(object[numofobjects].particle[((count+2)&7)],object[numofobjects].particle[count],1,numofobjects);
     createbond(object[numofobjects].particle[((count+4)&7)],object[numofobjects].particle[count],1,numofobjects);
-    }
+  }
   copyvector(object[numofobjects].position,position);
 
   object[numofobjects].numofcdlines=8;
 
   for (count=0;count<8;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&7);
-    }
+  }
 
   object[numofobjects].soundnum[0]=-1;
   object[numofobjects].soundnum[1]=-1;
@@ -1059,10 +1059,10 @@ void createamber(float position[3])
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void createareaswitch(float position[3],float sizex,float sizey)
-  {
+{
   memset(&object[numofobjects],0,sizeof(object[numofobjects]));
 
   object[numofobjects].type=16;
@@ -1077,10 +1077,10 @@ void createareaswitch(float position[3],float sizex,float sizey)
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void creategenerator(float position[3],float mass)
-  {
+{
   memset(&object[numofobjects],0,sizeof(object[numofobjects]));
 
   object[numofobjects].type=15;
@@ -1096,10 +1096,10 @@ void creategenerator(float position[3],float mass)
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}
 
 void deleteobject(int objectnum)
-  {
+{
   int count;
 
   if (objectnum<0)
@@ -1108,10 +1108,10 @@ void deleteobject(int objectnum)
     return;
 
   for (count=0;count<object[objectnum].numofparticles;count++)
-    {
+  {
     particle[object[objectnum].particle[count]].timetolive=1;
     particle[object[objectnum].particle[count]].objectnum=-1;
-    }
+  }
   for (count=0;count<numofobjects;count++)
   if (object[count].link==objectnum)
     object[count].link=-1;
@@ -1157,10 +1157,10 @@ void deleteobject(int objectnum)
   for (count=0;count<numofsounds;count++)
   if (sound[count].objectnum==numofobjects)
     sound[count].objectnum=objectnum;
-  }
+}
 
 void deleterope(int ropenum)
-  {
+{
   int count;
 
   if (ropenum<0)
@@ -1188,30 +1188,30 @@ void deleterope(int ropenum)
     if (bond[count].type==4 || bond[count].type==7)
       if (bond[count].objectnum==numofropes)
         bond[count].objectnum=ropenum;
-  }
+}
 
 void objecttimetolive(void)
-  {
+{
   int count;
 
   count=0;
   while (count<numofobjects)
-    {
+  {
     if (object[count].timetolive<10000)
       object[count].timetolive--;
     while (count<numofobjects && object[count].timetolive<0)
-      {
+    {
       deleteobject(count);
 
       if (object[count].timetolive<10000)
         object[count].timetolive--;
-      }
-    count++;
     }
+    count++;
   }
+}
 
 void createcar(float position[3],float sizex,float sizey,float mass,float friction)
-  {
+{
   int count,count2;
   float vec[3];
 
@@ -1275,10 +1275,10 @@ void createcar(float position[3],float sizex,float sizey,float mass,float fricti
   object[numofobjects].numofcdlines=4;
 
   for (count=0;count<4;count++)
-    {
+  {
     object[numofobjects].cdline[count][0]=count;
     object[numofobjects].cdline[count][1]=((count+1)&3);
-    }
+  }
   object[numofobjects].texcoord[0][0]=0.0f;
   object[numofobjects].texcoord[0][1]=0.0f;
   object[numofobjects].texcoord[1][0]=1.0f;
@@ -1294,4 +1294,4 @@ void createcar(float position[3],float sizex,float sizey,float mass,float fricti
   object[numofobjects].soundnum[3]=-1;
 
   numofobjects++;
-  }
+}

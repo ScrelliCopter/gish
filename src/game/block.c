@@ -33,7 +33,7 @@ struct BLOCK block[1024];
 struct POLYGONTEMP polygontemp[16];
 
 void saveblock(int blocknum)
-  {
+{
   int count;
   int changeddir;
   char filename[13]="blck000.blk";
@@ -46,20 +46,20 @@ void saveblock(int blocknum)
   filename[6]=48+blocknum%10;
 
   if ((fp=fopen(filename,"wb"))!=NULL)
-    {
+  {
     fwrite2(&block[blocknum].numoflines,4,1,fp);
     for (count=0;count<block[blocknum].numoflines;count++)
       fwrite2(block[blocknum].line[count],4,8,fp);
 
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void loadblock(int blocknum)
-  {
+{
   int count;
   int changeddir;
   char filename[13]="blck000.blk";
@@ -73,10 +73,10 @@ void loadblock(int blocknum)
   block[blocknum].numoflines=0;
   /*
   if ((fp=fopen(filename,"rb"))!=NULL)
-    {
+  {
     fread2(&block[blocknum].numoflines,4,1,fp);
     for (count=0;count<block[blocknum].numoflines;count++)
-      {
+    {
       fread2(block[blocknum].line[count],4,8,fp);
       if (block[blocknum].line[count][4]==0.0f)
         block[blocknum].line[count][4]=1.0f;
@@ -102,10 +102,10 @@ void loadblock(int blocknum)
       block[blocknum].density=0.0f;
       block[blocknum].drag=0.0f;
       block[blocknum].animation=0;
-      }
+    }
 
     fclose(fp);
-    }
+  }
   */
 
   block[blocknum].numoflines=4;
@@ -142,15 +142,15 @@ void loadblock(int blocknum)
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void setupblockflags(int blocknum)
-  {
+{
   int count;
 
   block[blocknum].flags=0;
   for (count=0;count<block[blocknum].numoflines;count++)
-    {
+  {
     if (block[blocknum].line[count][0]==0.0f)
     if (block[blocknum].line[count][1]==1.0f)
     if (block[blocknum].line[count][2]==1.0f)
@@ -174,11 +174,11 @@ void setupblockflags(int blocknum)
     if (block[blocknum].line[count][2]==0.0f)
     if (block[blocknum].line[count][3]==1.0f)
       block[blocknum].flags|=8;
-    }
   }
+}
 
 void setupblockalpha(int blocknum)
-  {
+{
   int count,count2;
   float x,y;
   int yline;
@@ -192,7 +192,7 @@ void setupblockalpha(int blocknum)
   numofpolygontemps=0;
 
   for (count=0;count<block[blocknum].numoflines;count++)
-    {
+  {
     x=block[blocknum].line[count][0];
     y=block[blocknum].line[count][1];
     y=1.0f-y;
@@ -200,7 +200,7 @@ void setupblockalpha(int blocknum)
     for (count2=0;count2<numofpolygontemps;count2++)
     if (x==polygontemp[count2].vertex[polygontemp[count2].numofverts-1][0])
     if (y==polygontemp[count2].vertex[polygontemp[count2].numofverts-1][1])
-      {
+    {
       x=block[blocknum].line[count][2];
       y=block[blocknum].line[count][3];
       y=1.0f-y;
@@ -210,7 +210,7 @@ void setupblockalpha(int blocknum)
       polygontemp[count2].numofverts++;
 
       goto createpolybypass;
-      }
+    }
 
     polygontemp[numofpolygontemps].numofverts=0;
 
@@ -228,22 +228,22 @@ void setupblockalpha(int blocknum)
     numofpolygontemps++;
 
     createpolybypass:;
-    }
+  }
 
   for (count2=0;count2<numofpolygontemps;count2++)
     polygontemp[count2].numofverts--;
 
   for (count2=0;count2<numofpolygontemps;count2++)
   for (count=0;count<polygontemp[count2].numofverts;count++)
-    {
+  {
     polygontemp[count2].ivertex[count][0]=polygontemp[count2].vertex[count][0]*(texture[blocknum].sizex+0);
     polygontemp[count2].ivertex[count][1]=polygontemp[count2].vertex[count][1]*(texture[blocknum].sizey+0);
-    }
+  }
 
 
   for (count2=0;count2<numofpolygontemps;count2++)
   if (polygontemp[count2].numofverts>2)
-    {
+  {
     yline=polygontemp[count2].ivertex[0][1];
     xleft=polygontemp[count2].ivertex[0][0];
     xright=polygontemp[count2].ivertex[0][0];
@@ -251,16 +251,16 @@ void setupblockalpha(int blocknum)
     vertright=0;
 
     for (count=1;count<polygontemp[count2].numofverts;count++)
-      {
+    {
       if (yline>polygontemp[count2].ivertex[count][1] || (yline==polygontemp[count2].ivertex[count][1] && xleft>polygontemp[count2].ivertex[count][0]))
-        {
+      {
         yline=polygontemp[count2].ivertex[count][1];
         xleft=polygontemp[count2].ivertex[count][0];
         xright=polygontemp[count2].ivertex[count][0];
         vertleft=count;
         vertright=count;
-        }
       }
+    }
 
     if (yline<0)
       yline=0;
@@ -289,12 +289,12 @@ void setupblockalpha(int blocknum)
       xrightadd/=(polygontemp[count2].ivertex[vertrightnext][1]-yline);
 
     while (yline<yend && yline<texture[blocknum].sizey)
-      {
+    {
       xleft+=xleftadd;
       xright+=xrightadd;
 
       if (yline==polygontemp[count2].ivertex[vertleftnext][1])
-        {
+      {
         vertleft=vertleftnext;
 
         if (vertleft>0)
@@ -305,9 +305,9 @@ void setupblockalpha(int blocknum)
         xleftadd=(polygontemp[count2].ivertex[vertleftnext][0]<<16)-xleft;
         if ((polygontemp[count2].ivertex[vertleftnext][1]-yline)>0)
           xleftadd/=(polygontemp[count2].ivertex[vertleftnext][1]-yline);
-        }
+      }
       if (yline==polygontemp[count2].ivertex[vertrightnext][1])
-        {
+      {
         vertright=vertrightnext;
 
         vertrightnext=(vertright+1)%polygontemp[count2].numofverts;
@@ -315,7 +315,7 @@ void setupblockalpha(int blocknum)
         xrightadd=(polygontemp[count2].ivertex[vertrightnext][0]<<16)-xright;
         if ((polygontemp[count2].ivertex[vertrightnext][1]-yline)>0)
           xrightadd/=(polygontemp[count2].ivertex[vertrightnext][1]-yline);
-        }
+      }
 
       xstart=xleft>>16;
       if (xstart<0)
@@ -329,15 +329,15 @@ void setupblockalpha(int blocknum)
         xend=texture[blocknum].sizex;
 
       while (xstart<xend)
-        {
+      {
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
           texture[blocknum].rgba[0][yline*texture[blocknum].sizex+xstart]|=0xFF000000;
 #else
           texture[blocknum].rgba[0][yline*texture[blocknum].sizex+xstart]|=0x000000FF;
 #endif
         xstart++;
-        }
-      yline++;
       }
+      yline++;
     }
   }
+}

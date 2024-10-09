@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "object.h"
 
 void applydamageobject(int objectnum,int hitpoints)
-  {
+{
   if (level.gametype<10)
   if (object[objectnum].damagedelay<=0)
-    {
+  {
     object[objectnum].hitpoints-=hitpoints;
     object[objectnum].damagedelay=50;
-    }
   }
+}

@@ -28,7 +28,7 @@ bool keyboard[SDL_SCANCODE_COUNT];
 bool prevkeyboard[SDL_SCANCODE_COUNT];
 
 void checkkeyboard(void)
-  {
+{
   memcpy(prevkeyboard,keyboard,SDL_SCANCODE_COUNT);
   memcpy(keyboard,SDL_GetKeyboardState(NULL),SDL_SCANCODE_COUNT);
 
@@ -47,5 +47,5 @@ void checkkeyboard(void)
     keyboard[SCAN_UP]=1;
   if (keyboard[SCAN_NUMDOWN])
     keyboard[SCAN_DOWN]=1;
-  }
+}
 

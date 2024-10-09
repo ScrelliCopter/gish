@@ -35,15 +35,15 @@ void renderobjects(void);
 void rendersprites(void);
 
 struct FRAME
-  {
+{
   int numoflights;
   struct
-    {
+  {
     float position[3];
     float color[3];
     float intensity;
-    } light[16];
-  };
+  } light[16];
+};
 extern struct FRAME frame;
 
 #endif

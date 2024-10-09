@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "vector.h"
 
 int lineintersectplane(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *point)
-  {
+{
   float vec[3],vec2[3],vec3[3];
 
   subtractvectors(vec,endpoint,point);
@@ -43,10 +43,10 @@ int lineintersectplane(float *intersectpoint,float *normal,float *scale,float *s
   scaleaddvectors(intersectpoint,startpoint,vec2,*scale);
 
   return(1);
-  }
+}
 
 int lineintersecttriangle(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2,float *vertex3)
-  {
+{
   float vec[3],vec2[3],vec3[3];
 
   subtractvectors(vec,endpoint,vertex1);
@@ -83,10 +83,10 @@ int lineintersecttriangle(float *intersectpoint,float *normal,float *scale,float
     return(0);
 
   return(1);
-  }
+}
 
 int pointintersectline(float *point,float *vertex1,float *vertex2,float bias)
-  {
+{
   float vec[3],vec2[3];
   float normal[3];
   float scale;
@@ -113,10 +113,10 @@ int pointintersectline(float *point,float *vertex1,float *vertex2,float bias)
     return(0);
 
   return(1);
-  }
+}
 
 int lineintersectline(float *intersectpoint,float *normal,float *scale,float *startpoint,float *endpoint,float *vertex1,float *vertex2)
-  {
+{
   float vec[3],vec2[3];
   float dot1,dot2;
 
@@ -145,10 +145,10 @@ int lineintersectline(float *intersectpoint,float *normal,float *scale,float *st
   normalizevector(normal,normal);
 
   if (dot1<0.0f)
-    {
+  {
     normal[0]=-normal[0];
     normal[1]=-normal[1];
-    }
+  }
 
   vec[0]=vertex1[0]-startpoint[0];
   vec[1]=vertex1[1]-startpoint[1];
@@ -184,10 +184,10 @@ int lineintersectline(float *intersectpoint,float *normal,float *scale,float *st
     return(0);
 
   return(1);
-  }
+}
 
 float intersectdistance(float *point,float *startpoint,float *endpoint,float *normal)
-  {
+{
   float scale;
   float vec[3];
 
@@ -197,10 +197,10 @@ float intersectdistance(float *point,float *startpoint,float *endpoint,float *no
   scale/=dotproduct(vec,normal);
 
   return(scale);
-  }
+}
 
 void generatepolygonnormal(float *normal,float *vertex1,float *vertex2,float *vertex3)
-  {
+{
   float vec[3],vec2[3];
 
   subtractvectors(vec,vertex2,vertex1);
@@ -208,5 +208,5 @@ void generatepolygonnormal(float *normal,float *vertex1,float *vertex2,float *ve
   crossproduct(normal,vec,vec2);
 
   normalizevector(normal,normal);
-  }
+}
 

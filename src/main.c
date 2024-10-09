@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "game/high.h"
 
 int main (int argc,char *argv[])
-  {
+{
   loadconfig();
   loadscores();
   loadplayers();
@@ -54,25 +54,25 @@ int main (int argc,char *argv[])
     flags|=SDL_INIT_JOYSTICK;
 
   if (!SDL_Init(flags))
-    {
+  {
     return(1);
-    }
+  }
 
   getvideoinfo();
 
   for (int count=1;count<argc;count++)
-    {
+  {
     if (strcmp("-nosound",argv[count])==0)
-      {
+    {
       config.sound=0;
       option.sound=0;
       option.music=0;
-      }
+    }
     if (strcmp("-sound",argv[count])==0)
       config.sound=1;
     if (strcmp("-nomusic",argv[count])==0)
       option.music=0;
-    }
+  }
 
   saveconfig();
 
@@ -87,30 +87,30 @@ int main (int argc,char *argv[])
     glGenTextures(1,&texture[count].glname);
 
   if (config.joystick)
-    {
+  {
     SDL_JoystickID *joyids=SDL_GetJoysticks(&numofjoysticks);
     if (numofjoysticks > 16)
       numofjoysticks = 16;
     for (int count=0;count<numofjoysticks;count++)
-      {
+    {
       joy[count]=SDL_OpenJoystick(joyids[count]);
       const char *temp=SDL_GetJoystickName(joy[count]);
       if (temp)
-        {
+      {
         gstrlcpy(joystick[count].name,temp,64);
-        }
+      }
       else
-        {
+      {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,"SDL_GetJoystickName: %s",SDL_GetError());
         gstrlcpy(joystick[count].name,"Unknown",64);
-        }
+      }
       joystick[count].numofbuttons=SDL_GetNumJoystickButtons(joy[count]);
       joystick[count].numofhats=SDL_GetNumJoystickHats(joy[count]);
-      }
+    }
 
     SDL_SetJoystickEventsEnabled(false);
     SDL_free(joyids);
-    }
+  }
 
   font.texturenum=0;
   font.cursornum=0;
@@ -126,11 +126,11 @@ int main (int argc,char *argv[])
   setupmenuitems();
 
   if (!glext.multitexture)
-    {
+  {
     notsupportedmenu();
     SDL_Quit();
     return(0);
-    }
+  }
     
   if (config.sound)
     setupaudio();
@@ -149,4 +149,4 @@ int main (int argc,char *argv[])
   SDL_Quit();
 
   return(0);
-  }
+}

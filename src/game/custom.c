@@ -48,7 +48,7 @@ struct MAPPACK mappack;
 struct PLAYERMAPPACK playermappack[16];
 
 void custommenu(void)
-  {
+{
   int count;
 
   resetmenuitems();
@@ -56,7 +56,7 @@ void custommenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -102,25 +102,25 @@ void custommenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
       game.editing=0;
 
       playcampaignmenu();
-      }
+    }
     if (menuitem[2].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
       game.editing=0;
 
       loadlevelmenu();
-      }
+    }
     if (menuitem[3].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -130,18 +130,18 @@ void custommenu(void)
       gameloop();
 
       game.editing=0;
-      }
-    if (menuitem[4].active)
-      {
-      newmappackmenu();
-      }
     }
-
-  resetmenuitems();
+    if (menuitem[4].active)
+    {
+      newmappackmenu();
+    }
   }
 
+  resetmenuitems();
+}
+
 void loadlevelmenu(void)
-  {
+{
   int count,count2;
   int changeddir;
   int numoffiles;
@@ -165,7 +165,7 @@ void loadlevelmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -176,22 +176,22 @@ void loadlevelmenu(void)
     count=0;
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],64,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],256,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],448,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
 
     createmenuitem(TXT_PAGE_UP,(304|TEXT_END),416,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_PAGEUP);
@@ -227,21 +227,21 @@ void loadlevelmenu(void)
     for (count=1;count<=24;count++)
     if (pagenum+count-1<numoffiles)
     if (menuitem[count].active)
-      {
+    {
       game.editing=0;
       game.levelnum=0;
       loadlevel(levellist[pagenum+count-1]);
       gameloop();
 
       joymenunum=count;
-      }
     }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void playcampaignmenu(void)
-  {
+{
   int count,count2;
   int changeddir;
   int numoffiles;
@@ -265,7 +265,7 @@ void playcampaignmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -276,22 +276,22 @@ void playcampaignmenu(void)
     count=0;
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],64,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],256,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],448,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
 
     createmenuitem(TXT_PAGE_UP,(304|TEXT_END),416,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_PAGEUP);
@@ -327,18 +327,18 @@ void playcampaignmenu(void)
     for (count=1;count<=24;count++)
     if (pagenum+count-1<numoffiles)
     if (menuitem[count].active)
-      {
+    {
       gstrlcpy(mappack.filename,levellist[pagenum+count-1],MAPPACK_FILENAME_LEN);
       loadmappack();
       campaignmenu();
-      }
     }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void campaignmenu(void)
-  {
+{
   int count;
 
   loadplayermappack();
@@ -348,7 +348,7 @@ void campaignmenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -358,11 +358,11 @@ void campaignmenu(void)
 
     count=352;
     if (playermappack[playernum].levelnum>0)
-      {
+    {
       createmenuitem(TXT_CONTINUE,48,count,16,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_C);
       count+=16;
-      }
+    }
     else
       createmenuitemempty();
     createmenuitem(TXT_NEW_GAME,48,count,16,1.0f,1.0f,1.0f,1.0f);
@@ -392,15 +392,15 @@ void campaignmenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active || menuitem[2].active)
-      {
+    {
       if (menuitem[2].active)
-        {
+      {
         playerdifficultymenu();
         if (game.difficulty==-1)
-          {
+        {
           game.difficulty=0;
           goto newgamebypass;
-          }
+        }
 
         playermappack[playernum].difficulty=game.difficulty;
 
@@ -409,21 +409,21 @@ void campaignmenu(void)
         playermappack[playernum].numoflives=5;
         if (playermappack[playernum].difficulty==3)
           playermappack[playernum].numoflives=0;
-        }
+      }
 
       mappackpregamemenu();
 
       newgamebypass:;
-      }
     }
+  }
 
   resetmenuitems();
 
   saveplayermappack();
-  }
+}
 
 void loadplayermappack(void)
-  {
+{
   int count;
   int version;
   int changeddir;
@@ -434,10 +434,10 @@ void loadplayermappack(void)
 
   count=0;
   while (count<24 && mappack.filename[count]!='.')
-    {
+  {
     filename[count]=mappack.filename[count];
     count++;
-    }
+  }
   filename[count]=0;
 
   strcat(filename,".gpp");
@@ -445,28 +445,28 @@ void loadplayermappack(void)
   playermappack[playernum].levelnum=0;
 
   if ((fp=fopen(filename,"rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
     if (version==1)
-      {
+    {
       for (count=0;count<8;count++)
-        {
+      {
         fread2(&playermappack[count].levelnum,4,1,fp);
         fread2(&playermappack[count].numoflives,4,1,fp);
         fread2(&playermappack[count].totalscore,4,1,fp);
         fread2(&playermappack[count].difficulty,4,1,fp);
         fread2(&player[count].highscore,4,1,fp);
-        }
       }
-    fclose(fp);
     }
+    fclose(fp);
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void saveplayermappack(void)
-  {
+{
   int count;
   int version;
   int changeddir;
@@ -477,35 +477,35 @@ void saveplayermappack(void)
 
   count=0;
   while (count<24 && mappack.filename[count]!='.')
-    {
+  {
     filename[count]=mappack.filename[count];
     count++;
-    }
+  }
   filename[count]=0;
 
   strcat(filename,".gpp");
 
   if ((fp=fopen(filename,"wb"))!=NULL)
-    {
+  {
     version=1;
     fwrite2(&version,4,1,fp);
     for (count=0;count<8;count++)
-      {
+    {
       fwrite2(&playermappack[count].levelnum,4,1,fp);
       fwrite2(&playermappack[count].numoflives,4,1,fp);
       fwrite2(&playermappack[count].totalscore,4,1,fp);
       fwrite2(&playermappack[count].difficulty,4,1,fp);
       fwrite2(&player[count].highscore,4,1,fp);
-      }
-    fclose(fp);
     }
+    fclose(fp);
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void loadmappack(void)
-  {
+{
   int count;
   int version;
   int changeddir;
@@ -514,32 +514,32 @@ void loadmappack(void)
   changeddir=chdir("level");
 
   if ((fp=fopen(mappack.filename,"rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
 
     if (version==1)
-      {
+    {
       fread2(&mappack.numoflevels,4,1,fp);
       fread2(mappack.name,1,32,fp);
       for (count=0;count<64;count++)
-        {
+      {
         fread2(mappack.level[count],1,32,fp);
         fread2(mappack.levelname[count],1,32,fp);
         fread2(mappack.levelmusic[count],1,32,fp);
-        }
+      }
       for (count=0;count<16;count++)
         fread2(mappack.ending[count],1,64,fp);
-      }
+    }
 
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void savemappack(void)
-  {
+{
   int count;
   int version;
   int changeddir;
@@ -548,30 +548,30 @@ void savemappack(void)
   changeddir=chdir("level");
 
   if ((fp=fopen(mappack.filename,"wb"))!=NULL)
-    {
+  {
     version=1;
     fwrite2(&version,4,1,fp);
 
     fwrite2(&mappack.numoflevels,4,1,fp);
     fwrite2(mappack.name,1,32,fp);
     for (count=0;count<64;count++)
-      {
+    {
       fwrite2(mappack.level[count],1,32,fp);
       fwrite2(mappack.levelname[count],1,32,fp);
       fwrite2(mappack.levelmusic[count],1,32,fp);
-      }
+    }
     for (count=0;count<16;count++)
       fwrite2(mappack.ending[count],1,64,fp);
 
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 void newmappackmenu(void)
-  {
+{
   int count;
 
   joystickmenu=0;
@@ -579,7 +579,7 @@ void newmappackmenu(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !menuitem[1].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -619,10 +619,10 @@ void newmappackmenu(void)
     drawtext(TXT_LEVELNAME,480,52,12,1.0f,1.0f,1.0f,1.0f);
 
     for (count=0;count<mappack.numoflevels;count++)
-      {
+    {
       drawtext(mappack.level[count],320,64+count*12,12,1.0f,1.0f,1.0f,1.0f);
       drawtext(mappack.levelname[count],480,64+count*12,12,1.0f,1.0f,1.0f,1.0f);
-      }
+    }
 
     drawmenuitems();
 
@@ -631,23 +631,23 @@ void newmappackmenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[2].active)
-      {
+    {
       if (mappack.level[mappack.numoflevels][0]!=0)
       if (mappack.numoflevels<63)
-        {
+      {
         gstrlcpy(mappack.level[mappack.numoflevels+1],mappack.level[mappack.numoflevels],MAPPACK_LEVEL_LEN);
         gstrlcpy(mappack.levelname[mappack.numoflevels+1],mappack.levelname[mappack.numoflevels],MAPPACK_LEVELNAME_LEN);
         mappack.numoflevels++;
-        }
-      menuitem[2].active=0;
       }
+      menuitem[2].active=0;
+    }
     if (menuitem[3].active)
-      {
+    {
       if (mappack.numoflevels>0)
         mappack.numoflevels--;
       menuitem[3].active=0;
-      }
     }
+  }
 
   if (menuitem[1].active)
     savemappack();
@@ -655,5 +655,5 @@ void newmappackmenu(void)
   resetmenuitems();
 
   joystickmenu=1;
-  }
+}
 

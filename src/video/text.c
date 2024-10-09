@@ -34,7 +34,7 @@ unsigned char textstring3[1024];
 struct FONT font;
 
 void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float green,float blue,float alpha,...)
-  {
+{
   int count,count2;
   int variabletemp;
   int texturenum;
@@ -47,11 +47,11 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
 
   va_start(ap,alpha);
   while (textstring[count]!=0 && count2<1000)
-    {
+  {
     if (textstring[count]=='/')
-      {
+    {
       switch (textstring[count+1])
-        {
+      {
         case '/':
           count++;
           textstring2[count2++]='/';
@@ -68,14 +68,14 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
           count++;
           variabletemp=(int)va_arg(ap,int);
           if (variabletemp>=1000000)
-            {
+          {
             sprintf(textstring3,"%d",(variabletemp/1000000));
             memcpy(textstring2+count2,textstring3,strlen(textstring3));
             count2+=strlen(textstring3);
             textstring2[count2++]=',';
-            }
+          }
           if (variabletemp>=1000)
-            {
+          {
             if (variabletemp>=1000000)
               sprintf(textstring3,"%.3d",((variabletemp/1000)%1000));
             else
@@ -83,7 +83,7 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
             memcpy(textstring2+count2,textstring3,strlen(textstring3));
             count2+=strlen(textstring3);
             textstring2[count2++]=',';
-            }
+          }
           if (variabletemp>=1000)
             sprintf(textstring3,"%.3d",(variabletemp%1000));
           else
@@ -126,13 +126,13 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
           memcpy(textstring2+count2,textstring3,strlen(textstring3));
           count2+=strlen(textstring3);
           break;
-        }
       }
+    }
     else
       textstring2[count2++]=textstring[count];
 
     count++;
-    }
+  }
   va_end(ap);
 
   textstring2[count2]=0;
@@ -152,9 +152,9 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
 
   count=0;
   while (textstring2[count]!=0)
-    {
+  {
     if (textstring2[count]!=127)
-      {
+    {
       glBegin(GL_QUADS);
 
       glColor4f(red,green,blue,alpha);
@@ -204,9 +204,9 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
       glVertex3fv(vec);
   
       glEnd();
-      }
+    }
     else
-      {
+    {
       glDisable(GL_TEXTURE_2D);
 
       glBegin(GL_QUADS);
@@ -236,14 +236,14 @@ void drawtext(unsigned char *textstring,int x,int y,int textsize,float red,float
       glEnd();
 
       glEnable(GL_TEXTURE_2D);
-      }
+    }
 
     count++;
-    }
   }
+}
 
 void setuptextdisplay(void)
-  {
+{
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
@@ -259,17 +259,17 @@ void setuptextdisplay(void)
 
   glMatrixMode(GL_TEXTURE);
   glLoadIdentity();
-  }
+}
 
 void convertscreenvertex(float vec[3],int resolutionx,int resolutiony)
-  {
+{
   vec[0]=(vec[0]-(float)(resolutionx>>1))/(float)(resolutionx>>1);
   vec[1]=((float)(resolutiony>>1)-vec[1])/(float)(resolutionx>>1);
   vec[2]=-1.0f;
-  }
+}
 
 void drawbackground(int texturenum,int x,int y,int sizex,int sizey,int resolutionx,int resolutiony)
-  {
+{
   float vec[3];
 
   if ((x&TEXT_CENTER)==TEXT_CENTER)
@@ -316,10 +316,10 @@ void drawbackground(int texturenum,int x,int y,int sizex,int sizey,int resolutio
   glVertex3fv(vec);
 
   glEnd();
-  }
+}
 
 void drawmousecursor(int texturenum,int x,int y,int textsize,float red,float green,float blue,float alpha)
-  {
+{
   float vec[3];
 
   glBindTexture(GL_TEXTURE_2D,texture[texturenum].glname);
@@ -356,5 +356,5 @@ void drawmousecursor(int texturenum,int x,int y,int textsize,float red,float gre
   glVertex3fv(vec);
 
   glEnd();
-  }
+}
 

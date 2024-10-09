@@ -30,7 +30,7 @@ extern int numofjoysticks;
 extern SDL_Joystick *joy[16];
 
 struct JOYSTICK
-  {
+{
   int x;
   int y;
   float axis[2];
@@ -40,7 +40,7 @@ struct JOYSTICK
   int numofhats;
   int hat[4];
   char name[64];
-  };
+};
 extern struct JOYSTICK joystick[16], prevjoystick[16];
 
 #endif

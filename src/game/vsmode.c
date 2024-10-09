@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "english.h"
 
 void versusmodemenu(int versusnum)
-  {
+{
   int count;
   int unlocked;
   char filename[32];
@@ -55,7 +55,7 @@ void versusmodemenu(int versusnum)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -81,25 +81,25 @@ void versusmodemenu(int versusnum)
     count+=20;
 #ifndef DEMO
     if (unlocked)
-      {
+    {
       createmenuitem(TXT_LEVEL" 4",(320|TEXT_CENTER),count,20,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_4);
       count+=20;
-      }
+    }
     else
       createmenuitemempty();
 #endif
 #ifndef DEMO
     count=360;
     if (versusnum==0 || versusnum==1)
-      {
+    {
       createmenuitem(TXT_LEVEL" 5",(320|TEXT_CENTER),count,20,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_5);
       count+=20;
       createmenuitem(TXT_LEVEL" 6",(320|TEXT_CENTER),count,20,1.0f,1.0f,1.0f,1.0f);
       setmenuitem(MO_HOTKEY,SCAN_6);
       count+=20;
-      }
+    }
 #endif
 
     checksystemmessages();
@@ -146,7 +146,7 @@ void versusmodemenu(int versusnum)
       strcpy(filename,"racing");
 
     if (menuitem[1].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -154,9 +154,9 @@ void versusmodemenu(int versusnum)
       strcat(filename,".lvl");
       loadlevel(filename);
       gameloop();
-      }
+    }
     if (menuitem[2].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -164,9 +164,9 @@ void versusmodemenu(int versusnum)
       strcat(filename,"2.lvl");
       loadlevel(filename);
       gameloop();
-      }
+    }
     if (menuitem[3].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -174,9 +174,9 @@ void versusmodemenu(int versusnum)
       strcat(filename,"3.lvl");
       loadlevel(filename);
       gameloop();
-      }
+    }
     if (menuitem[4].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -184,9 +184,9 @@ void versusmodemenu(int versusnum)
       strcat(filename,"4.lvl");
       loadlevel(filename);
       gameloop();
-      }
+    }
     if (menuitem[5].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -199,9 +199,9 @@ void versusmodemenu(int versusnum)
       strcat(filename,".lvl");
       loadlevel(filename);
       gameloop();
-      }
+    }
     if (menuitem[6].active)
-      {
+    {
       game.songnum=-1;
       checkmusic();
 
@@ -214,8 +214,8 @@ void versusmodemenu(int versusnum)
       strcat(filename,"2.lvl");
       loadlevel(filename);
       gameloop();
-      }
     }
+  }
 
   resetmenuitems();
-  }
+}

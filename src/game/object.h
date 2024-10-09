@@ -43,7 +43,7 @@ void createcar(float position[3],float sizex,float sizey,float mass,float fricti
 
 extern int numofobjects;
 struct OBJECT
-  {
+{
   int type;
   int texturenum;
   int timetolive;
@@ -89,32 +89,32 @@ struct OBJECT
   int rotate;
   int ai;
   int beasttype;
-  };
+};
 extern struct OBJECT object[512];
 
 struct OBJECTTYPE
-  {
+{
   int collide[256];
   int numofpoints;
   struct
-    {
+  {
     int type;
     float position[3];
     float mass;
-    } point[64];
+  } point[64];
   int numoflinks;
   struct
-    {
+  {
     int type;
     int part1;
     int part2;
-    } link[256];
-  };
+  } link[256];
+};
 extern struct OBJECTTYPE objecttype[128];
 
 extern int numofropes;
 struct ROPE
-  {
+{
   int type;
   int part1;
   int part2;
@@ -126,7 +126,7 @@ struct ROPE
   float cyclelength;
   float cyclecount;
   float range;
-  };
+};
 extern struct ROPE rope[1024];
 
 #endif

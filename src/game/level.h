@@ -39,19 +39,19 @@ void byteswapdata(int cryptdatasize);
 extern unsigned int cryptdata[1048576];
 
 struct COLLISION
-  {
+{
   int blocknum;
   int blockx;
   int blocky;
   float friction;
-  };
+};
 extern struct COLLISION collision;
 
 extern int levelblocknum;
 extern float levelfriction;
 
 struct LEVEL
-  {
+{
   char background[32];
   int tileset;
   int gametype;
@@ -67,7 +67,7 @@ struct LEVEL
   float ambient[4][3];
   int numofobjects;
   struct
-    {
+  {
     int type;
     int texturenum;
     int link;
@@ -81,18 +81,18 @@ struct LEVEL
     float lightcolor[3];
     float lightintensity;
     int ai;
-    } object[256];
+  } object[256];
   int numofropes;
   struct
-    {
+  {
     int type;
     int texturenum;
     int obj1;
     int obj1part;
     int obj2;
     int obj2part;
-    } rope[1024];
-  };
+  } rope[1024];
+};
 extern struct LEVEL level;
 
 #endif

@@ -31,7 +31,7 @@ struct BOND bond[16384];
 struct BONDTYPE bondtype[256];
 
 void bondsimulation(void)
-  {
+{
   int count,count2;
   int part1,part2;
   float vec[3];
@@ -40,13 +40,13 @@ void bondsimulation(void)
   float force[2];
 
   for (count=0;count<32;count++)
-    {
+  {
     for (count2=0;count2<numofparticles;count2++)
       copyvector(particle[count2].prevvelocity,particle[count2].velocity);
 
     for (count2=0;count2<numofbonds;count2++)
     if ((count&bond[count2].cycles)==0)
-      {
+    {
       part1=bond[count2].part1;
       part2=bond[count2].part2;
   
@@ -72,12 +72,12 @@ void bondsimulation(void)
 
       scaleaddvectors(particle[part1].velocity,particle[part1].velocity,bondnormal,force[0]);
       scaleaddvectors(particle[part2].velocity,particle[part2].velocity,bondnormal,-force[1]);
-      }
     }
   }
+}
 
 void checkbonds(void)
-  {
+{
   int count,count2;
   int numofbondstemp;
   int part1,part2;
@@ -88,7 +88,7 @@ void checkbonds(void)
   for (count=0;count<numofbonds;count++)
   if (bond[count].type==4 || bond[count].type==6 || bond[count].type==16)
   if (bond[count].timetolive!=-1)
-    {
+  {
     part1=bond[count].part1;
     part2=bond[count].part2;
 
@@ -101,44 +101,44 @@ void checkbonds(void)
 
     if (bondtype[bond[count].type].compression!=0.0f)
     if (veclength<bond[count].length*bond[count].compression)
-      {
-      bond[count].timetolive=-1;
-      /*
-      if (bond[count].type==6)
-        {
-        for (count2=0;count2<numofbonds;count2++)
-        if (bond[count2].type==6)
-          if (bond[count2].objectnum==bond[count].objectnum)
-            bond[count2].timetolive=-1;
-        }
-      */
-      }
-    if (veclength>bond[count].length*bond[count].tension)
-      {
-      bond[count].timetolive=-1;
-      /*
-      if (bond[count].type==6)
-        {
-        for (count2=0;count2<numofbonds;count2++)
-        if (bond[count2].type==6)
-          if (bond[count2].objectnum==bond[count].objectnum)
-            bond[count2].timetolive=-1;
-        }
-      */
-      }
-    }
-
-  count=0;
-  while (count<numofbonds)
     {
-    while (count<numofbonds && bond[count].timetolive==-1)
-      deletebond(count);
-    count++;
+      bond[count].timetolive=-1;
+      /*
+      if (bond[count].type==6)
+      {
+        for (count2=0;count2<numofbonds;count2++)
+        if (bond[count2].type==6)
+          if (bond[count2].objectnum==bond[count].objectnum)
+            bond[count2].timetolive=-1;
+      }
+      */
+    }
+    if (veclength>bond[count].length*bond[count].tension)
+    {
+      bond[count].timetolive=-1;
+      /*
+      if (bond[count].type==6)
+      {
+        for (count2=0;count2<numofbonds;count2++)
+        if (bond[count2].type==6)
+          if (bond[count2].objectnum==bond[count].objectnum)
+            bond[count2].timetolive=-1;
+      }
+      */
     }
   }
 
-void createbond(int part1,int part2,int type,int objectnum)
+  count=0;
+  while (count<numofbonds)
   {
+    while (count<numofbonds && bond[count].timetolive==-1)
+      deletebond(count);
+    count++;
+  }
+}
+
+void createbond(int part1,int part2,int type,int objectnum)
+{
   int count;
   float vec[3];
   float length;
@@ -149,12 +149,12 @@ void createbond(int part1,int part2,int type,int objectnum)
     return;
 
   for (count=0;count<numofbonds;count++)
-    {
+  {
     if (bond[count].part1==part1 && bond[count].part2==part2)
       return;
     if (bond[count].part1==part2 && bond[count].part2==part1)
       return;
-    }
+  }
 
   subtractvectors(vec,particle[part1].position,particle[part2].position);
   length=vectorlength(vec);
@@ -178,10 +178,10 @@ void createbond(int part1,int part2,int type,int objectnum)
   bond[numofbonds].objectnum=objectnum;
 
   numofbonds++;
-  }
+}
 
 void deletebond(int bondnum)
-  {
+{
   int count;
 
   if (bondnum<0)
@@ -208,5 +208,5 @@ void deletebond(int bondnum)
   if (rope[count].type>=5 && rope[count].type<9)
   if (rope[count].bondnum==numofbonds)
     rope[count].bondnum=bondnum;
-  }
+}
 

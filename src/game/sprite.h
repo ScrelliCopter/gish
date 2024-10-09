@@ -29,7 +29,7 @@ void spritesimulation(void);
 
 extern int numofsprites;
 struct SPRITE
-  {
+{
   int type;
   int timetolive;
   char text[64];
@@ -39,7 +39,7 @@ struct SPRITE
   float blue;
   float alpha;
   int size;
-  };
+};
 extern struct SPRITE sprite[256];
 
 #endif

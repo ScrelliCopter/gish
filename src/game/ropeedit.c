@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct ROPEEDIT ropeedit;
 
 void editlevelrope(void)
-  {
+{
   int count,count2;
   int simtimer;
   int simcount;
@@ -51,11 +51,11 @@ void editlevelrope(void)
 
   ropeedit.numofpoints=0;
   for (count=0;count<level.numofobjects;count++)
-    {
+  {
     if (level.object[count].type>=2 && level.object[count].type<=5)
-      {
+    {
       for (count2=0;count2<4;count2++)
-        {
+      {
         if (count2==0 || count2==3)
           vec[0]=level.object[count].position[0]-level.object[count].size[0]*0.5f;
         else
@@ -71,12 +71,12 @@ void editlevelrope(void)
         ropeedit.numofpoints++;
 
         copyvector(level.object[count].vertex[count2],vec);
-        }
       }
+    }
     if (level.object[count].type>=6 && level.object[count].type<=7)
-      {
+    {
       for (count2=0;count2<4;count2++)
-        {
+      {
         vec[0]=level.object[count].position[0];
         vec[1]=level.object[count].position[1];
         if (count2==0)
@@ -94,7 +94,7 @@ void editlevelrope(void)
         ropeedit.numofpoints++;
 
         copyvector(level.object[count].vertex[count2],vec);
-        }
+      }
 
       count2=4;
       vec[0]=level.object[count].position[0];
@@ -107,9 +107,9 @@ void editlevelrope(void)
       ropeedit.numofpoints++;
 
       copyvector(level.object[count].vertex[count2],vec);
-      }
+    }
     if (level.object[count].type==8)
-      {
+    {
       vec[0]=level.object[count].position[0];
       vec[1]=level.object[count].position[1];
       vec[2]=0.0f;
@@ -118,8 +118,8 @@ void editlevelrope(void)
       ropeedit.point[ropeedit.numofpoints].particlenum=0;
       ropeedit.numofpoints++;
       copyvector(level.object[count].vertex[0],vec);
-      }
     }
+  }
   ropeedit.pointnum=-1;
 
   simtimer=SDL_GetTicks();
@@ -127,7 +127,7 @@ void editlevelrope(void)
   resetmenuitems();
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glColorMask(GL_TRUE,GL_TRUE,GL_TRUE,GL_TRUE);
     glStencilMask(~0);
@@ -187,25 +187,25 @@ void editlevelrope(void)
 
     ropeedit.pointhighlight=-1;
     for (count=0;count<ropeedit.numofpoints;count++)
-      {
+    {
       subtractvectors(vec2,ropeedit.point[count].position,vec);
       if (vectorlength(vec2)<0.25f)
         ropeedit.pointhighlight=count;
-      }
+    }
 
     if (ropeedit.pointnum==-1)
-      {
+    {
       if (mouse.lmb && !prevmouse.lmb)
       if (ropeedit.pointhighlight!=-1)
         ropeedit.pointnum=ropeedit.pointhighlight;
-      }
+    }
     else
-      {
+    {
       if (mouse.lmb && !prevmouse.lmb)
-        {
+      {
         if (ropeedit.pointhighlight!=-1)
         if (ropeedit.point[ropeedit.pointnum].objectnum!=ropeedit.point[ropeedit.pointhighlight].objectnum)
-          {
+        {
           level.rope[level.numofropes].type=1;
           if (keyboard[SCAN_2])
             level.rope[level.numofropes].type=2;
@@ -233,41 +233,41 @@ void editlevelrope(void)
           level.rope[level.numofropes].texturenum=ropeedit.texturenum;
   
           level.numofropes++;
-          }
-        ropeedit.pointnum=-1;
         }
+        ropeedit.pointnum=-1;
       }
+    }
 
     if (mouse.rmb && !prevmouse.rmb)
-      {
+    {
       for (count=0;count<level.numofropes;count++)
-        {
+      {
         if (ropeedit.point[ropeedit.pointhighlight].objectnum==level.rope[count].obj1 && ropeedit.point[ropeedit.pointhighlight].particlenum==level.rope[count].obj1part)
           deletelevelrope(count);
-        }
+      }
       for (count=0;count<level.numofropes;count++)
-        {
+      {
         if (ropeedit.point[ropeedit.pointhighlight].objectnum==level.rope[count].obj2 && ropeedit.point[ropeedit.pointhighlight].particlenum==level.rope[count].obj2part)
           deletelevelrope(count);
-        }
+      }
       /*
       for (count=0;count<level.numofropes;count++)
-        {
+      {
         if (pointintersectline(vec,level.object[level.rope[count].obj1].vertex[level.rope[count].obj1part],level.object[level.rope[count].obj2].vertex[level.rope[count].obj2part],0.25f))
           deletelevelrope(count);
-        }
-      */
       }
+      */
+    }
 
     simcount=0;
     while (SDL_GetTicks()-simtimer>20 && simcount<5)
-      {
+    {
       simcount++;
       count=SDL_GetTicks()-simtimer-20;
       simtimer=SDL_GetTicks()-count;
 
       if (!menuinputkeyboard)
-        {
+      {
         if (keyboard[SCAN_W])
           view.position[1]+=0.2f;
         if (keyboard[SCAN_S])
@@ -276,8 +276,8 @@ void editlevelrope(void)
           view.position[0]-=0.2f;
         if (keyboard[SCAN_D])
           view.position[0]+=0.2f;
-        }
       }
+    }
 
     if (keyboard[SCAN_Q] && !prevkeyboard[SCAN_Q])
     if (ropeedit.texturenum<3)
@@ -286,13 +286,13 @@ void editlevelrope(void)
     if (keyboard[SCAN_Z] && !prevkeyboard[SCAN_Z])
     if (ropeedit.texturenum>0)
       ropeedit.texturenum--;
-    }
-
-  resetmenuitems();
   }
 
+  resetmenuitems();
+}
+
 void renderropeedit(void)
-  {
+{
   int count;
   float vec[3];
 
@@ -303,7 +303,7 @@ void renderropeedit(void)
   glColor4f(0.0f,1.0f,0.0f,1.0f);
 
   for (count=0;count<ropeedit.numofpoints;count++)
-    {
+  {
     if (count==ropeedit.pointnum)
       glColor4f(1.0f,1.0f,1.0f,1.0f);
     else if (count==ropeedit.pointhighlight)
@@ -334,9 +334,9 @@ void renderropeedit(void)
     vec[2]=0.0f;
 
     glVertex3fv(vec);
-    }
+  }
 
   glEnd();
 
   glEnable(GL_TEXTURE_2D);
-  }
+}

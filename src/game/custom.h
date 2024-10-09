@@ -40,7 +40,7 @@ extern filelist_t levellist;
 #define MAPPACK_LEVEL_LEN 32
 #define MAPPACK_LEVELNAME_LEN 32
 struct MAPPACK
-  {
+{
   int active;
   int numoflevels;
   char filename[MAPPACK_FILENAME_LEN];
@@ -49,17 +49,17 @@ struct MAPPACK
   char levelname[64][MAPPACK_LEVELNAME_LEN];
   char levelmusic[64][32];
   char ending[16][64];
-  };
+};
 extern struct MAPPACK mappack;
 
 struct PLAYERMAPPACK
-  {
+{
   int levelnum;
   int numoflives;
   int totalscore;
   int difficulty;
   int highscore;
-  };
+};
 extern struct PLAYERMAPPACK playermappack[16];
 
 #endif

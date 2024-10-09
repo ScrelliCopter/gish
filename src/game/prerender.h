@@ -28,7 +28,7 @@ int setuprenderropelight(int ropenum,float radius);
 
 extern int numofobjectrenders;
 struct OBJECTRENDER
-  {
+{
   int type;
   int texturenum;
   int objectnum;
@@ -45,7 +45,7 @@ struct OBJECTRENDER
   float edgenormal[32][3];
   float depth;
   float alpha;
-  };
+};
 extern struct OBJECTRENDER objectrender[512];
 
 #endif

@@ -35,14 +35,14 @@ void deletesound(int soundnum);
 
 extern int numofsounds;
 struct SOUND
-  {
+{
   int buffernum;
   int objectnum;
   int looping;
   int pitchshift;
   ALuint alname;
   int delay;
-  };
+};
 extern struct SOUND sound[64];
 
 #endif

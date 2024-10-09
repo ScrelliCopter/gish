@@ -43,17 +43,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int numofreplayframes;
 struct
-  {
+{
   unsigned char button;
-  } replayframe[65536];
+} replayframe[65536];
 
 void resetreplay(void)
-  {
+{
   numofreplayframes=0;
-  }
+}
 
 void saveinputs(void)
-  {
+{
   if (numofreplayframes>=65535)
     return;
 
@@ -67,10 +67,10 @@ void saveinputs(void)
   if (object[0].axis[1]==1.0f)
     replayframe[numofreplayframes].button|=128;
   numofreplayframes++;
-  }
+}
 
 void loadinputs(void)
-  {
+{
   if (numofreplayframes>=65535)
     return;
 
@@ -86,10 +86,10 @@ void loadinputs(void)
     object[0].axis[1]=1.0f;
   object[0].button=replayframe[numofreplayframes].button&15;
   numofreplayframes++;
-  }
+}
 
 void savereplay(int levelnum)
-  {
+{
   int count;
   int version;
   int changeddir;
@@ -98,28 +98,28 @@ void savereplay(int levelnum)
 
   count=0;
   while (count<12 && player[playernum].name[count]!=0)
-    {
+  {
     filename[count]=player[playernum].name[count];
     count++;
-    }
+  }
   filename[count]='-';
   count++;
   if (levelnum<100)
-    {
+  {
     filename[count]='C';
     count++;
     filename[count]=48+levelnum/10;
     count++;
     filename[count]=48+levelnum%10;
     count++;
-    }
+  }
   else
-    {
+  {
     filename[count]=48+(levelnum-100)/10;
     count++;
     filename[count]=48+(levelnum-100)%10;
     count++;
-    }
+  }
   filename[count]='.';
   count++;
   filename[count]='g';
@@ -134,7 +134,7 @@ void savereplay(int levelnum)
   changeddir=chdir("replay");
 
   if ((fp=fopen(filename,"wb"))!=NULL)
-    {
+  {
     version=1;
     fwrite2(&version,4,1,fp);
     fwrite2(&levelnum,4,1,fp);
@@ -143,14 +143,14 @@ void savereplay(int levelnum)
     for (count=0;count<numofreplayframes;count++)
       fwrite2(&replayframe[count].button,1,1,fp);
     fclose(fp);
-    }
+  }
 
   if (changeddir==0)
     chdir("..");
-  }
+}
 
 int loadreplay(char *filename)
-  {
+{
   int count;
   int version;
   int levelnum;
@@ -160,10 +160,10 @@ int loadreplay(char *filename)
 
   count=0;
   while (count<16 && filename[count]!=0 && filename[count]!='.')
-    {
+  {
     filenametemp[count]=filename[count];
     count++;
-    }
+  }
   filenametemp[count]='.';
   count++;
   filenametemp[count]='g';
@@ -180,27 +180,27 @@ int loadreplay(char *filename)
   levelnum=-1;
 
   if ((fp=fopen(filenametemp,"rb"))!=NULL)
-    {
+  {
     fread2(&version,4,1,fp);
     if (version==1)
-      {
+    {
       fread2(&levelnum,4,1,fp);
       fread2(&numofreplayframes,4,1,fp);
       if (numofreplayframes<65536)
       for (count=0;count<numofreplayframes;count++)
         fread2(&replayframe[count].button,1,1,fp);
-      }
-    fclose(fp);
     }
+    fclose(fp);
+  }
 
   if (changeddir==0)
     chdir("..");
 
   return(levelnum);
-  }
+}
 
 void replaymenu(void)
-  {
+{
 #ifndef DEMO
   int count,count2;
   int changeddir;
@@ -225,7 +225,7 @@ void replaymenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -236,22 +236,22 @@ void replaymenu(void)
     count=0;
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],64,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],256,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
     for (count2=0;count2<8;count2++)
     if (pagenum+count<numoffiles)
-      {
+    {
       createmenuitem(levellist[pagenum+count],448,320+count2*12,12,1.0f,1.0f,1.0f,1.0f);
       count++;
-      }
+    }
 
     createmenuitem(TXT_PAGE_UP,(304|TEXT_END),416,16,1.0f,1.0f,1.0f,1.0f);
     setmenuitem(MO_HOTKEY,SCAN_PAGEUP);
@@ -287,27 +287,27 @@ void replaymenu(void)
     for (count=1;count<=24;count++)
     if (pagenum+count-1<numoffiles)
     if (menuitem[count].active)
-      {
+    {
       game.editing=0;
       game.levelnum=0;
       count2=loadreplay(levellist[pagenum+count-1]);
 
       if (count2!=-1)
-        {
+      {
         if (count2<100)
           loadcollectionlevel(count2);
         else
-          {
+        {
           game.levelnum=count2-100;
           loadstorylevel(game.levelnum);
-          }
+        }
         game.playreplay=1;
         gameloop();
         game.playreplay=0;
-        }
-      joymenunum=count;
       }
+      joymenunum=count;
     }
+  }
 
   resetmenuitems();
 #else
@@ -321,7 +321,7 @@ void replaymenu(void)
   joymenunum=1;
 
   while (!menuitem[0].active && !windowinfo.shutdown)
-    {
+  {
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -358,68 +358,68 @@ void replaymenu(void)
     SDL_GL_SwapWindow(sdlwindow);
 
     if (menuitem[1].active)
-      {
+    {
       count=loadreplay("demo01.gre");
     
       if (count!=-1)
-        {
+      {
         game.levelnum=count-100;
         loadstorylevel(game.levelnum);
       
         game.playreplay=1;
         gameloop();
         game.playreplay=0;
-        }
-      menuitem[1].active=0;
       }
+      menuitem[1].active=0;
+    }
     if (menuitem[2].active)
-      {
+    {
       count=loadreplay("demo02.gre");
     
       if (count!=-1)
-        {
+      {
         game.levelnum=count-100;
         loadstorylevel(game.levelnum);
       
         game.playreplay=1;
         gameloop();
         game.playreplay=0;
-        }
-      menuitem[2].active=0;
       }
+      menuitem[2].active=0;
+    }
     if (menuitem[3].active)
-      {
+    {
       count=loadreplay("demo03.gre");
     
       if (count!=-1)
-        {
+      {
         game.levelnum=count-100;
         loadstorylevel(game.levelnum);
       
         game.playreplay=1;
         gameloop();
         game.playreplay=0;
-        }
-      menuitem[3].active=0;
       }
+      menuitem[3].active=0;
+    }
     if (menuitem[4].active)
-      {
+    {
       count=loadreplay("demo04.gre");
     
       if (count!=-1)
-        {
+      {
         game.levelnum=count-100;
         loadstorylevel(game.levelnum);
       
         game.playreplay=1;
         gameloop();
         game.playreplay=0;
-        }
-      menuitem[4].active=0;
       }
+      menuitem[4].active=0;
     }
+  }
 
   resetmenuitems();
 #endif
-  }
+}
 

@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct MOVIE movie;
 
 void recordframe(void)
-  {
+{
   int count,count2;
   int changeddir;
   char filename[16]="gish0000.bmp";
@@ -57,7 +57,7 @@ void recordframe(void)
   changeddir=chdir("movie");
 
   if((fp=fopen(filename,"wb"))!=NULL)
-    {
+  {
     /*
     bytetemp=0;
     fwrite(&bytetemp,1,1,fp);
@@ -89,19 +89,19 @@ void recordframe(void)
     fwrite(bmpheader,27,2,fp);
 
     for (count=0;count<windowinfo.resolutiony;count++)
-      {
+    {
       for (count2=0;count2<windowinfo.resolutionx;count2++)
-        {
+      {
         red=screenshotbuffer[count*windowinfo.resolutionx+count2]&0xFF;
         green=(screenshotbuffer[count*windowinfo.resolutionx+count2]>>8)&0xFF;
         blue=(screenshotbuffer[count*windowinfo.resolutionx+count2]>>16)&0xFF;
         fputc(blue,fp); 
         fputc(green,fp); 
         fputc(red,fp); 
-        }
       }
-    fclose(fp);
     }
+    fclose(fp);
+  }
 
   free(screenshotbuffer);
 
@@ -109,4 +109,4 @@ void recordframe(void)
     chdir("..");
 
   movie.framenum++;
-  }
+}

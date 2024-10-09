@@ -43,19 +43,19 @@ void createwindow(void)
     SDL_DestroyWindow(sdlwindow);
 
   if (windowinfo.bitsperpixel==16)
-    {
+  {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,6);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,5);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,0);
-    }
+  }
   if (windowinfo.bitsperpixel==32)
-    {
+  {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,8);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,8);
-    }
+  }
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,windowinfo.depthbits);
   SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE,windowinfo.stencilbits);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
@@ -63,20 +63,20 @@ void createwindow(void)
   int displayidx=0;
   for (int i=0;i<numofsdldisplays;++i)
     if (windowinfo.displayid==sdldisplay[i].id)
-      {
+    {
       displayidx=i;
       break;
-      }
+    }
 
   int windowposx=SDL_WINDOWPOS_CENTERED_DISPLAY(windowinfo.displayid);
   int windowposy=SDL_WINDOWPOS_CENTERED_DISPLAY(windowinfo.displayid);
   Uint32 flags=SDL_WINDOW_OPENGL;
   if (windowinfo.fullscreen)
-    {
+  {
     windowposx=sdldisplay[displayidx].bounds.x;
     windowposy=sdldisplay[displayidx].bounds.y;
     flags|=SDL_WINDOW_FULLSCREEN;
-    }
+  }
 
   SDL_PropertiesID windowprops = SDL_CreateProperties();
   SDL_SetNumberProperty(windowprops, SDL_PROP_WINDOW_CREATE_X_NUMBER, (Sint64)windowposx);
@@ -89,10 +89,10 @@ void createwindow(void)
   SDL_DestroyProperties(windowprops);
 
   if (windowinfo.fullscreen==1)
-    {
+  {
     int videomodenum=-1;
     for (int i=0;i<numofsdlvideomodes;i++)
-      {
+    {
       if (windowinfo.displayid!=sdlvideomode[i].displayid)
         continue;
       if (windowinfo.resolutionx!=sdlvideomode[i].displaymode.w)
@@ -106,11 +106,11 @@ void createwindow(void)
 
       videomodenum=i;
       break;
-      }
+    }
 
     if (videomodenum>=0)
       SDL_SetWindowFullscreenMode(sdlwindow,&sdlvideomode[videomodenum].displaymode);
-    }
+  }
 
   seticon();
 
@@ -122,19 +122,19 @@ void createwindow(void)
 }
 
 void getvideoinfo(void)
-  {
+{
   Uint32 rmask,gmask,bmask,amask;
 
   const SDL_DisplayMode *sdlvideoinfo = SDL_GetCurrentDisplayMode(SDL_GetDisplayForWindow(sdlwindow));
   if (sdlvideoinfo)
-    {
+  {
     SDL_GetMasksForPixelFormat(sdlvideoinfo->format,&config.bitsperpixel,&rmask,&gmask,&bmask,&amask);
     config.refreshrate=sdlvideoinfo->refresh_rate;
-    }
   }
+}
 
 void listvideomodes(void)
-  {
+{
   Uint32 rmask,gmask,bmask,amask;
   numofsdlvideomodes=0;
   SDL_DisplayID *displays=SDL_GetDisplays(&numofsdldisplays);
@@ -142,7 +142,7 @@ void listvideomodes(void)
     numofsdldisplays=32;
 
   for (int i=0;i<numofsdldisplays;++i)
-    {
+  {
     SDL_DisplayID dispid=displays[i];
     const char *dispname=SDL_GetDisplayName(dispid);
     sdldisplay[i].id=dispid;
@@ -155,7 +155,7 @@ void listvideomodes(void)
     if (nummodes>192)
       nummodes=192;
     for (int j=0;modes && j<nummodes;j++)
-      {
+    {
       SDL_DisplayMode *mode=modes[j];
       if (!mode)
         break;
@@ -167,11 +167,11 @@ void listvideomodes(void)
         &sdlvideomode[numofsdlvideomodes].bitsperpixel,
         &rmask,&gmask,&bmask,&amask);
       numofsdlvideomodes++;
-      }
-    SDL_free(modes);
     }
-  SDL_free(displays);
+    SDL_free(modes);
   }
+  SDL_free(displays);
+}
 
 static const Uint8 iconmask[128]={
 0x00,0x00,0x00,0x00,
@@ -207,7 +207,7 @@ static const Uint8 iconmask[128]={
 0x00,0x00,0x00,0x00 };
 
 void seticon(void)
-  {
+{
   //load original icon
   SDL_Surface *iconrgb=SDL_LoadBMP("gish.bmp");
   if (!iconrgb)
@@ -216,30 +216,30 @@ void seticon(void)
   //create copy with alpha channel
   SDL_Surface *icon=SDL_CreateSurface(iconrgb->w,iconrgb->h,SDL_PIXELFORMAT_RGBA32);
   if (!icon)
-    {
+  {
     SDL_DestroySurface(iconrgb);
     return;
-    }
+  }
   SDL_BlitSurface(iconrgb,NULL,icon,NULL);
   SDL_DestroySurface(iconrgb);
 
   //apply transparency mask
   const SDL_PixelFormatDetails *format = SDL_GetPixelFormatDetails(icon->format);
   for (int i=0;i<icon->w;i++)
-    {
+  {
     Uint32 *dst=(Uint32 *)((Uint8 *)icon->pixels+icon->pitch*i);
     Uint32 src=SDL_Swap32BE(*(Uint32 *)&iconmask[i*4]);
     for (int j=0;j<icon->h;j++)
-      {
+    {
       Uint32 pix=(*dst)&~format->Amask;
       Uint32 alpha=(src&0x80000000)?0xFF:0x00;
       pix|=alpha<<format->Ashift;
       (*dst++)=pix;
       src=src<<1;
-      }
     }
+  }
 
   //set as window icon
   SDL_SetWindowIcon(sdlwindow,icon);
   SDL_DestroySurface(icon);
-  }
+}

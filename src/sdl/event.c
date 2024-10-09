@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct WINDOWINFO windowinfo;
 
 void checksystemmessages(void)
-  {
+{
   int count;
 	SDL_Event event;
 
@@ -36,18 +36,18 @@ void checksystemmessages(void)
     SDL_Delay(20);
 
   while (SDL_PollEvent(&event))
-    {
+  {
     if (event.type==SDL_EVENT_WINDOW_FOCUS_GAINED)
-      {
+    {
       windowinfo.minimized=0;
-      }
+    }
     else if (event.type==SDL_EVENT_WINDOW_FOCUS_LOST)
-      {
+    {
       if(game.exit==0)
         game.pause=1;
       windowinfo.minimized=1;
-      }
+    }
     else if (event.type==SDL_EVENT_QUIT)
       windowinfo.shutdown=1;
-    }
   }
+}
